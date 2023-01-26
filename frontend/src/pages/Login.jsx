@@ -31,6 +31,8 @@ export default function Login() {
         <div className={styles.title}>로그인 하기</div>
       </div>
       <div className={styles.logo}>zum:go</div>
+      
+      {/* 로그인 버튼을 누르면 인가코드를 발급 받기 */}
       <a href={KAKAO_AUTH_URI}>
         <img 
           className={styles.kakaoBtn} 
