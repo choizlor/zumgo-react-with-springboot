@@ -1,12 +1,14 @@
 import React from 'react';
-import Topnav from '../components/Nav/Topnav';
+import BottomNav from '../components/Nav/BottomNav';
+import Topnav from '../components/Nav/TopNav';
 
 
 export default function Home() {
     return (
         <div>
-            <Topnav/>
+            <Topnav />
             Home
+            <BottomNav />
         </div>
     );
 }
