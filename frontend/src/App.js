@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Root  from './pages/Root';
+import Oauth from './components/Login/Oauth';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound/>, 
     children : [
       { index: true, element: <Home/>, },
+      { path: '/oauth', element: <Oauth/>, },
       { path: '/live', element: <Live/>, },
       { path: '/live/:productId', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
