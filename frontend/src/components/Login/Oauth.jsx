@@ -13,7 +13,7 @@ export default function Oauth() {
     (async () => {
       try {
         // 토큰 axios 요청
-        const res = await axios.get(`http://localhost:3000/code=${code}`);
+        const res = await axios.get(`api/oauth/token/code=${code}`);
         const token = res.headers.authorization;
         // 받아온 토큰을 로컬 스토리지에 token으로 저장
         window.localStorage.setItem('token', token);

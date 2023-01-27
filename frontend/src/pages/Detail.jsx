@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles/Detail.module.css";
 import LiveBtn from "../components/Detail/LiveBtn";
 import z from '../assets/images/z.png';
+import DetailModal from "../components/Detail/DetailModal";
 
 // heroicons
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
@@ -12,10 +13,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { Navigation } from "swiper";
-import { Pagination } from "swiper";
+import { Navigation , Pagination } from "swiper";
 
 export default function Detail() {
+
+  const [modalOpen, setModalOpen] = useState(false);
+  
+
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -57,10 +61,21 @@ export default function Detail() {
           </div>
           <div className={styles.sellerName}>딸기우유 서녕</div>
         </div>
-        <select className={styles.dropdown} name="" id="">
-          <option value="">판매 중</option>
-          <option value="">예약 중</option>
-          <option value="">거래완료</option>
+        {/* 드롭다운 */}
+        <select 
+          className={styles.dropdown} 
+          onChange={(e) => {
+            if(e.target.value === '거래완료') {
+              setModalOpen(true)
+            } else {
+              setModalOpen(false)
+            }
+          }} 
+          name="" id=""
+        >
+          <option value="판매 중">판매 중</option>
+          <option value="예약 중">예약 중</option>
+          <option value="거래완료">거래완료</option>
         </select>
         <div className={styles.title}>나이키 레거시 모자 판매합니다</div>
         <div className={styles.price}>10,000원</div>
@@ -93,6 +108,7 @@ export default function Detail() {
         </div>
         <LiveBtn />
       </div>
+      { modalOpen ? <DetailModal/> : null}
     </div>
   );
 }
