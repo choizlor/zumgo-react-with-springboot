@@ -22,4 +22,14 @@
   background-color: #bcff5e;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.livebtntitle {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.livebtnpoint {
+  font-size: 9px;
 }

@@ -10,8 +10,8 @@ export default function LiveBtn() {
         </span>
       </div>
       <div className={styles.liveBtn}>
-        <div>LIVE 요청하기!</div>
-        <div>-2 pt</div>
+        <span className={styles.livebtntitle}>LIVE 요청하기!</span>
+        <span className={styles.livebtnpoint}>-2 pt</span>
       </div>
     </div>
   );
