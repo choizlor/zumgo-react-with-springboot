@@ -19,7 +19,7 @@ export default function BottomNav() {
         <ChatBubbleOvalLeftIcon className={styles.icon} />
       </Link>
       <Link to="/live">
-        <img className={styles.liveicon} src={LiveIcon} />
+        <img className={styles.liveicon} src={LiveIcon} alt="live" />
       </Link>
       <Link to="/addproduct">
         <PlusCircleIcon className={styles.icon} />

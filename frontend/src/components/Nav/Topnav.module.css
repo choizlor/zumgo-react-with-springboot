@@ -12,7 +12,11 @@
   margin: 10%;
 }
 
-.icon {
-  float: right;
-  border: 1px solid red;
+.glassicon {
+  margin-top: 30%;
+}
+
+.container {
+  display: inline-flex;
+  margin-right: 3%;
 }
