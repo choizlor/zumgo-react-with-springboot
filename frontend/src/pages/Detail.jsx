@@ -86,16 +86,18 @@ export default function Detail() {
         </div>
         <div className={styles.icons}>
           <div className={styles.zBox}>
-            <img src={z} className={styles.z} />
-            <div>2</div>
+            <div className={styles.z}>
+              <img src={z} className={styles.zimg} alt="" />
+            </div>
+            <div className={styles.count}>2</div>
           </div>
           <div className={styles.chatBox}>
             <ChatBubbleLeftRightIcon />
-            <div>2</div>
+            <div className={styles.count}>2</div>
           </div>
           <div className={styles.heartBox}>
             <HeartIcon />
-            <div>5</div>
+            <div className={styles.count}>5</div>
           </div>
         </div>
         <div className={styles.timeBox}>
@@ -108,7 +110,7 @@ export default function Detail() {
         </div>
         <LiveBtn />
       </div>
-      { modalOpen ? <DetailModal/> : null}
+      { modalOpen ? <DetailModal setModalOpen={setModalOpen}/> : null}
     </div>
   );
 }
