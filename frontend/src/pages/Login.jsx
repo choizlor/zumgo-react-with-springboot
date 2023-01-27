@@ -5,7 +5,8 @@ import kakaoBtn from '../assets/images/kakao_login_medium_wide.png';
 
 export default function Login() {
 
-  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+  // const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+  const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c' ;
   console.log(REST_API_KEY)
 
   const REDIRECT_URI = "http://localhost:3000/oauth";
