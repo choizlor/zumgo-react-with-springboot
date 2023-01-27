@@ -1,20 +1,50 @@
 import React from "react";
 import styles from "./styles/Detail.module.css";
 import LiveBtn from "../components/Detail/LiveBtn";
+import z from '../assets/images/z.png';
+
+// heroicons
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import { HeartIcon } from '@heroicons/react/24/outline';
-import z from '../assets/images/z.png';
+// swiper - 이미지 슬라이더
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { Navigation } from "swiper";
+import { Pagination } from "swiper";
 
 export default function Detail() {
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
-      <div className={styles.image}>
-        <img
-          src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-          alt=""
-        />
-      </div>
+      <Swiper className={styles.image} navigation={true} pagination={true} modules={[Navigation, Pagination]}>
+        <SwiperSlide>
+          <img
+            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+            alt=""
+          />
+        </SwiperSlide>
+      </Swiper>
 
       {/* 상품 정보 container */}
       <div className={styles.container}>
