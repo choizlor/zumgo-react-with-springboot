@@ -1,4 +1,7 @@
 # :pushpin: Git Commit Convention
+* 커밋 타입: 내용 자세히 적어주기  
+ex) FEAT: 로그인 rest api 추가   
+
 |Type|Description|
 |---|---------------|
 |FEAT|새로운 기능을 추가할 경우|
@@ -10,9 +13,11 @@
 |REMOVE|파일 삭제|
 |CHORE|build task 수정, 프로젝트 매니저 설정 수정 등|
 
-* 커밋 타입: 내용 자세히 적어주기  
-ex) FEAT: 로그인 rest api 추가
-
-
 
 # :pushpin: Git Branch  
+
+* 네이밍 규칙   
+ex) feature/fe/login   
+ex) feature/be/login-api   
+
+* Merge 주기   
