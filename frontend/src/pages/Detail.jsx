@@ -24,9 +24,14 @@ export default function Detail() {
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
       <div className={styles.swiperbox}>
-        <ChevronLeftIcon className="w-6 h-6 text-gray-100" />
+        {/* <ChevronLeftIcon className="w-6 h-6 text-gray-100" /> */}
 
-        <Swiper className={styles.swiper} navigation={true} pagination={true} modules={[Navigation, Pagination]}>
+        <Swiper 
+          className={styles.swiper} 
+          navigation={true} 
+          pagination={true}
+          loop={true} 
+          modules={[Navigation, Pagination]}>
           <SwiperSlide>
             <img
               src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
@@ -95,7 +100,7 @@ export default function Detail() {
           취준생이걸랑요,,
         </div>
         <div className={styles.icons}>
-          <div className={styles.zBox}>
+          <div className={styles.zbox}>
             <div className={styles.z}>
               <img src={z} className={styles.zimg} alt="" />
             </div>

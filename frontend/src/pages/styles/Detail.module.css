@@ -12,6 +12,8 @@
   height : 100%;
 }
 
+
+
 img {
   width : 100%;
   height : 100%;
@@ -106,7 +108,7 @@ img {
   margin: 1% 0;
 }
 
-.icons > div {
+.icons > div > div{
   display: flex;
   position: relative;
 }
@@ -116,6 +118,10 @@ img {
   bottom: 0;
   right:0;
   font-size: 8px;
+}
+
+.zbox {
+  border: solid red 2px ;
 }
 
 .z {
