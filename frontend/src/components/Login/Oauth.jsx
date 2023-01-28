@@ -14,20 +14,11 @@ export default function Oauth() {
     (async () => {
       try {
         // 토큰 axios 요청
-<<<<<<< HEAD
-        const res = await axios.get(`api/oauth/token?code=${code}`)
-
-        // const token = res.headers.authorization;
-        // // 받아온 토큰을 로컬 스토리지에 token으로 저장
-        // window.localStorage.setItem('token', token);
-        // // home으로 이동
-=======
         const res = await axios.get(`api/oauth/token/code=${code}`);
         const token = res.headers.authorization;
         // 받아온 토큰을 로컬 스토리지에 token으로 저장
         window.localStorage.setItem('token', token);
         // home으로 이동
->>>>>>> 7e31659fafde5a27cfa56a2dc884ab3d99cfa884
         navigate('/');
       } catch (e) {
         console.error(e);
