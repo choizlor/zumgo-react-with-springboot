@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "./DetailModal.module.css";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
-export default function DetailModal() {
+export default function DetailModal({setModalOpen}) {
+  const closeModal = () => {
+    setModalOpen(false)
+  }
+  
   return (
     <div className={styles.body}>
+      <XMarkIcon onClick={closeModal}/>
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
         <div className={styles.userbox}>

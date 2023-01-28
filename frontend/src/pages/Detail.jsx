@@ -6,50 +6,60 @@ import DetailModal from "../components/Detail/DetailModal";
 
 // heroicons
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
-import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 // swiper - 이미지 슬라이더
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { Navigation , Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper";
 
 export default function Detail() {
 
   const [modalOpen, setModalOpen] = useState(false);
-  
+
 
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
-      <Swiper className={styles.image} navigation={true} pagination={true} modules={[Navigation, Pagination]}>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-      </Swiper>
+      <div className={styles.swiperbox}>
+        <ChevronLeftIcon className="w-6 h-6 text-gray-100" />
 
+        <Swiper className={styles.swiper} navigation={true} pagination={true} modules={[Navigation, Pagination]}>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+        </Swiper>
+
+        {/* 라이브 예약 알림 */}
+        <div className={styles.livealert}>
+          <span>1/24 16시</span>
+          <span>LIVE 예정</span>
+        </div>
+
+      </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
         <div className={styles.seller}>
@@ -62,15 +72,15 @@ export default function Detail() {
           <div className={styles.sellerName}>딸기우유 서녕</div>
         </div>
         {/* 드롭다운 */}
-        <select 
-          className={styles.dropdown} 
+        <select
+          className={styles.dropdown}
           onChange={(e) => {
-            if(e.target.value === '거래완료') {
+            if (e.target.value === '거래완료') {
               setModalOpen(true)
             } else {
               setModalOpen(false)
             }
-          }} 
+          }}
           name="" id=""
         >
           <option value="판매 중">판매 중</option>
@@ -110,7 +120,7 @@ export default function Detail() {
         </div>
         <LiveBtn />
       </div>
-      { modalOpen ? <DetailModal setModalOpen={setModalOpen}/> : null}
+      {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>
   );
 }
