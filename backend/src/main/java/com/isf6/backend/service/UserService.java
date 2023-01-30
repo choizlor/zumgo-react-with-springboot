@@ -9,6 +9,7 @@ import com.isf6.kakaologintest.model.User;
 import com.isf6.kakaologintest.model.oauth.KakaoProfile;
 import com.isf6.kakaologintest.model.oauth.OauthToken;
 import com.isf6.kakaologintest.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -175,9 +177,10 @@ public class UserService {
     public User getUser(HttpServletRequest request) { //(1)
         //(2)
         Long userCode = (Long) request.getAttribute("userCode");
+        log.info("넘겨 받은 userCode : {}", userCode);
 
         //(3)
-        User user = userRepository.findByUserCode(String.valueOf(userCode));
+        User user = userRepository.findByUserCode(userCode);
 
         //(4)
         return user;

@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./styles/Login.module.css";
-import kakaoBtn from '../assets/images/kakao_login_medium_wide.png';
+import kakaoBtn from "../assets/images/kakao_login_medium_wide.png";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 
 export default function Login() {
 
-  // const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-  const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c' ;
+  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   console.log(REST_API_KEY)
 
   const REDIRECT_URI = "http://localhost:3000/oauth";
@@ -16,33 +16,15 @@ export default function Login() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="white"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
-
+        <ChevronLeftIcon className="w-6 h-6 text-gray-100" />
         <div className={styles.title}>로그인 하기</div>
       </div>
       <div className={styles.logo}>zum:go</div>
       
       {/* 로그인 버튼을 누르면 인가코드를 발급 받기 */}
       <a href={KAKAO_AUTH_URI}>
-        <img 
-          className={styles.kakaoBtn} 
-          src={kakaoBtn} 
-        />
+        <img className={styles.kakaoBtn} src={kakaoBtn} />
       </a>
-        
     </div>
   );
 }

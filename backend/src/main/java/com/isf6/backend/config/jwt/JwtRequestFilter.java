@@ -38,6 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // jwt 토큰을 검증해서 정상적인 사용자인지 확인
         String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
+        log.info("token 검증 : {}", token);
 
         Long userCode = null;
 
@@ -53,6 +54,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             request.setAttribute(JwtProperties.HEADER_STRING, "유효하지 않은 토큰입니다.");
         }
 
+        log.info("userCode : {}", userCode);
         request.setAttribute("userCode", userCode);
 
         filterChain.doFilter(request, response);
