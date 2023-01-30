@@ -1,11 +1,8 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
-import {createGlobalStyle} from 'styled-components';
-import reset from 'styled-reset';
 
 
 const Chat = () => {
     const [msg, setMsg] = useState("");
-    // 접속한 사람의 이름
     const [name, setName] = useState("");
     const [chatt, setChatt] = useState([]);
     const [chkLog, setChkLog] = useState(false);
@@ -22,7 +19,6 @@ const Chat = () => {
     ));
 
     useEffect(() => {
-        // socket데이터가 있을때 
         if(socketData !== undefined) {
             const tempData = chatt.concat(socketData);
             console.log(tempData);
@@ -31,9 +27,9 @@ const Chat = () => {
     }, [socketData]);
 
 
-    const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
-        ${reset}
-    `;
+    // const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
+    //     ${reset}
+    // `;
 
 
     //webSocket
@@ -104,7 +100,7 @@ const Chat = () => {
     
     return (
         <>
-            <GlobalStyle/>
+            {/* <GlobalStyle/> */}
             <div id="chat-wrap">
                 <div id='chatt'>
                     <h1 id="title">WebSocket Chatting</h1>
