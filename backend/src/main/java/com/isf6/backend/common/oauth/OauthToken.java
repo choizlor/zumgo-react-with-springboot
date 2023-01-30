@@ -1,4 +1,4 @@
-package com.isf6.backend.model.oauth;
+package com.isf6.backend.common.oauth;
 
 import lombok.Data;
 

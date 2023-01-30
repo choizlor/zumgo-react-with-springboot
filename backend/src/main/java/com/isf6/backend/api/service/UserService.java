@@ -1,14 +1,14 @@
-package com.isf6.backend.service;
+package com.isf6.backend.api.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isf6.backend.common.oauth.KakaoProfile;
+import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
-import com.isf6.backend.model.User;
-import com.isf6.backend.model.oauth.KakaoProfile;
-import com.isf6.backend.model.oauth.OauthToken;
-import com.isf6.backend.repository.UserRepository;
+import com.isf6.backend.db.repository.UserRepository;
+import com.isf6.backend.db.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,8 +20,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Slf4j
 @Service
