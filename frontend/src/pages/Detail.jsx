@@ -1,51 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles/Detail.module.css";
 import LiveBtn from "../components/Detail/LiveBtn";
 import z from '../assets/images/z.png';
+import DetailModal from "../components/Detail/DetailModal";
 
 // heroicons
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
-import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 // swiper - 이미지 슬라이더
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { Navigation } from "swiper";
-import { Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper";
 
 export default function Detail() {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
-      <Swiper className={styles.image} navigation={true} pagination={true} modules={[Navigation, Pagination]}>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-            alt=""
-          />
-        </SwiperSlide>
-      </Swiper>
+      <div className={styles.swiperbox}>
+        {/* <ChevronLeftIcon className="w-6 h-6 text-gray-100" /> */}
 
+        <Swiper 
+          className={styles.swiper} 
+          navigation={true} 
+          pagination={true}
+          loop={true} 
+          modules={[Navigation, Pagination]}>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
+              alt=""
+            />
+          </SwiperSlide>
+        </Swiper>
+
+        {/* 라이브 예약 알림 */}
+        <div className={styles.livealert}>
+          <span>1/24 16시</span>
+          <span>LIVE 예정</span>
+        </div>
+
+      </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
         <div className={styles.seller}>
@@ -57,10 +76,21 @@ export default function Detail() {
           </div>
           <div className={styles.sellerName}>딸기우유 서녕</div>
         </div>
-        <select className={styles.dropdown} name="" id="">
-          <option value="">판매 중</option>
-          <option value="">예약 중</option>
-          <option value="">거래완료</option>
+        {/* 드롭다운 */}
+        <select
+          className={styles.dropdown}
+          onChange={(e) => {
+            if (e.target.value === '거래완료') {
+              setModalOpen(true)
+            } else {
+              setModalOpen(false)
+            }
+          }}
+          name="" id=""
+        >
+          <option value="판매 중">판매 중</option>
+          <option value="예약 중">예약 중</option>
+          <option value="거래완료">거래완료</option>
         </select>
         <div className={styles.title}>나이키 레거시 모자 판매합니다</div>
         <div className={styles.price}>10,000원</div>
@@ -70,17 +100,19 @@ export default function Detail() {
           취준생이걸랑요,,
         </div>
         <div className={styles.icons}>
-          <div className={styles.zBox}>
-            <img src={z} className={styles.z} />
-            <div>2</div>
+          <div className={styles.zbox}>
+            <div className={styles.z}>
+              <img src={z} className={styles.zimg} alt="" />
+            </div>
+            <div className={styles.count}>2</div>
           </div>
           <div className={styles.chatBox}>
             <ChatBubbleLeftRightIcon />
-            <div>2</div>
+            <div className={styles.count}>2</div>
           </div>
           <div className={styles.heartBox}>
             <HeartIcon />
-            <div>5</div>
+            <div className={styles.count}>5</div>
           </div>
         </div>
         <div className={styles.timeBox}>
@@ -93,6 +125,7 @@ export default function Detail() {
         </div>
         <LiveBtn />
       </div>
+      {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>
   );
 }

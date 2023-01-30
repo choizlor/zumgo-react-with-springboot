@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 3%;
 }
 
 .liveBtn {
@@ -23,13 +24,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .livebtntitle {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .livebtnpoint {
   font-size: 9px;
+  position : absolute;
+  right : 7%;
 }

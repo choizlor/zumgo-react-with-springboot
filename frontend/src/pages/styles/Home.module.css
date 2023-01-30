@@ -1,0 +1,44 @@
+.body {
+  height: 70%;
+}
+
+.text {
+  font-weight: 800;
+  font-size: 1.1em;
+  margin: 4%;
+}
+
+.image {
+  width: 25%;
+  float: left;
+  margin: 5%;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.icons {
+  display: flex;
+  margin: 1% 0;
+}
+
+.icons div {
+  display: flex;
+}
+
+.z {
+  width : 15px;
+  height : 18px;
+}
+
+.icons svg {
+  width : 20px;
+  height : 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 4%;
+}

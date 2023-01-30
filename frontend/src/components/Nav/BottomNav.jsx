@@ -1,24 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HomeIcon, ChatBubbleOvalLeftIcon, PlusCircleIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import styles from "./BottomNav.module.css";
+import {
+  HomeIcon,
+  ChatBubbleOvalLeftIcon,
+  PlusCircleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
+import LiveIcon from "../../assets/images/LiveIcon.png";
 
 export default function BottomNav() {
   return (
-    <nav>
+    <nav className={styles.body}>
       <Link to="/">
-        <HomeIcon className="w-10 h-10 mr-5" />
+        <HomeIcon className={styles.icon} />
       </Link>
       <Link to="/chatlist">
-        <ChatBubbleOvalLeftIcon className="w-10 h-10 mr-5" />
+        <ChatBubbleOvalLeftIcon className={styles.icon} />
       </Link>
       <Link to="/live">
-        Live
+        <img className={styles.liveicon} src={LiveIcon} alt="live" />
       </Link>
       <Link to="/addproduct">
-        <PlusCircleIcon className="w-10 h-10 mr-5" />
+        <PlusCircleIcon className={styles.icon} />
       </Link>
       <Link to="/userinfo">
-        <UserCircleIcon className="w-10 h-10 mr-5" />
+        <UserCircleIcon className={styles.icon} />
       </Link>
     </nav>
   );
