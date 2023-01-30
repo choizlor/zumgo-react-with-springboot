@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 
-
 export default function Root() {
     const [userInfo, setUserInfo] = useState({});
-    
-    // redux 
+
     useEffect(() => {
        //state는 기존 값
        const token = window.localStorage.getItem('token')
