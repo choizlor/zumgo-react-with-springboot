@@ -1,9 +1,9 @@
-package com.isf6.kakaologintest.controller;
+package com.isf6.backend.controller;
 
-import com.isf6.kakaologintest.model.oauth.OauthToken;
-import com.isf6.kakaologintest.service.UserService;
-import com.isf6.kakaologintest.model.User;
-import com.isf6.kakaologintest.config.jwt.JwtProperties;
+import com.isf6.backend.model.oauth.OauthToken;
+import com.isf6.backend.service.UserService;
+import com.isf6.backend.model.User;
+import com.isf6.backend.config.jwt.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,31 +23,7 @@ public class UserController {
     @Autowired
     private UserService userService; //(2)
 
-//    // 프론트에서 인가코드 받아오는 url - 1단계 단독 확인
-//    @GetMapping("/oauth/token") // (3)
-//    public OauthToken getLogin(@RequestParam("code") String code) { //(4)
-//
-//        // 넘어온 인가 코드를 통해 access_token 발급 //(5)
-//        OauthToken oauthToken = userService.getAccessToken(code);
-//
-//        return oauthToken;
-//    }
-
-//    // 프론트에서 인가코드 받아오는 url - 2단계 단독 확인
-//    @GetMapping("/oauth/token")
-//    public String getLogin(@RequestParam("code") String code) {
-//
-//        // 넘어온 인가 코드를 통해 access_token 발급
-//        OauthToken oauthToken = userService.getAccessToken(code);
-//
-//        //(1)
-//        // 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장
-//        String User = String.valueOf(userService.saveUser(oauthToken.getAccess_token()));
-//
-//        return User;
-//    }
-
-    // 프론트에서 인가코드 받아오는 url - 3단계, 4단계
+    // 프론트에서 인가코드 받아오는 url
     @GetMapping("/oauth/token")
     public ResponseEntity getLogin(@RequestParam("code") String code) { //(1)
         log.info("code : {} ", code);
@@ -70,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok().headers(headers).body("success");
     }
 
-    //4단계 추가
+    //유저 정보 조회
     @GetMapping("/me")
     public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) { //(1)
 

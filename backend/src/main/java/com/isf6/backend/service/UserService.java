@@ -1,14 +1,14 @@
-package com.isf6.kakaologintest.service;
+package com.isf6.backend.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isf6.kakaologintest.config.jwt.JwtProperties;
-import com.isf6.kakaologintest.model.User;
-import com.isf6.kakaologintest.model.oauth.KakaoProfile;
-import com.isf6.kakaologintest.model.oauth.OauthToken;
-import com.isf6.kakaologintest.repository.UserRepository;
+import com.isf6.backend.config.jwt.JwtProperties;
+import com.isf6.backend.model.User;
+import com.isf6.backend.model.oauth.KakaoProfile;
+import com.isf6.backend.model.oauth.OauthToken;
+import com.isf6.backend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -70,33 +70,6 @@ public class UserService {
 
         return oauthToken; //(8)
     }
-
-    //2단계 대체(주석)
-//    public User saveUser(String token) {
-//
-//        //(1)
-//        KakaoProfile profile = findProfile(token);
-//
-//        //(2)
-//        User user = userRepository.findByKakaoEmail(profile.getKakao_account().getEmail());
-//
-//        //(3)
-//        if(user == null) {
-//            user = User.builder()
-//                    .kakaoId(profile.getId())
-//                    //(4)
-//                    .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())
-//                    .kakaoNickname(profile.getKakao_account().getProfile().getNickname())
-//                    .kakaoEmail(profile.getKakao_account().getEmail())
-//                    //(5)
-//                    .build();
-//
-//            userRepository.save(user);
-//        }
-//
-//        return user;
-//    }
-
 
     //(1-1) 2단계 유지
     public KakaoProfile findProfile(String token) {

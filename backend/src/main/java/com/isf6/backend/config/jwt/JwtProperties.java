@@ -1,4 +1,4 @@
-package com.isf6.kakaologintest.config.jwt;
+package com.isf6.backend.config.jwt;
 
 public interface JwtProperties {
 

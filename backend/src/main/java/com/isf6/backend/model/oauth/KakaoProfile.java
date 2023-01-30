@@ -1,4 +1,4 @@
-package com.isf6.kakaologintest.model.oauth;
+package com.isf6.backend.model.oauth;
 
 import lombok.Data;
 

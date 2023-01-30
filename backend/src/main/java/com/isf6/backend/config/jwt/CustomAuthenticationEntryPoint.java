@@ -1,4 +1,4 @@
-package com.isf6.kakaologintest.config.jwt;
+package com.isf6.backend.config.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

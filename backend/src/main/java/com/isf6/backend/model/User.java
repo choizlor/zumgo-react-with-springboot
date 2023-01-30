@@ -1,4 +1,4 @@
-package com.isf6.kakaologintest.model;
+package com.isf6.backend.model;
 
 import lombok.Builder;
 import lombok.Data;
