@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +26,7 @@ public class ChatRoom {
     @ManyToOne
     @JoinColumn(name="seller_id")
     private User seller;
+
+    @OneToMany(mappedBy = "chatRoom")
+    private List<Chat> chats = new ArrayList<>();
 }
