@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 
-
-const Chat = () => {
+export default function Chat() {
     const [msg, setMsg] = useState("");
     const [name, setName] = useState("");
     const [chatt, setChatt] = useState([]);
@@ -12,7 +11,7 @@ const Chat = () => {
                                 //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
     const msgBox = chatt.map((item, idx) => (
-        <div key={idx} className={item.name === name ? 'me' : 'other'}>
+        <div key={idx}>
             <span><b>{item.name}</b></span> [ {item.date} ]<br/>
             <span>{item.msg}</span>
         </div>
@@ -25,11 +24,6 @@ const Chat = () => {
             setChatt(tempData);
         }
     }, [socketData]);
-
-
-    // const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
-    //     ${reset}
-    // `;
 
 
     //webSocket
@@ -45,23 +39,25 @@ const Chat = () => {
 
     
     const webSocketLogin = useCallback(() => {
+        // 소켓 생성
         ws.current = new WebSocket("ws://localhost:8080/socket/chatt");
 
+        // 메시지가 입력됐을때
         ws.current.onmessage = (message) => {
             const dataSet = JSON.parse(message.data);
+            // 소켓 데이터를 갱신
             setSocketData(dataSet);
         }
     });
 
 
     const send = useCallback(() => {
+        // 로그가 없을 때
         if(!chkLog) {
-            if(name === "") {
-                alert("이름을 입력하세요.");
-                document.getElementById("name").focus();
-                return;
-            }
+            
+            // 소켓에 로그인
             webSocketLogin();
+            // 로그인 상태 - true로 변경
             setChkLog(true);
         }
 
@@ -95,9 +91,6 @@ const Chat = () => {
     //webSocket
     //webSocket
     //webSocket
-
-
-    
     return (
         <>
             {/* <GlobalStyle/> */}
@@ -124,6 +117,7 @@ const Chat = () => {
             </div>
         </>
     );
-};
+}
 
-export default Chat;
+
+
