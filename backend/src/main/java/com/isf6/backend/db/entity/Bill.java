@@ -16,12 +16,15 @@ public class Bill {
 
     private String review;
 
-    @OneToOne(mappedBy = "bill")
+    @OneToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToOne(mappedBy = "bill")
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
     private User buyer;
 
-    @OneToOne(mappedBy = "bill")
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
     private User seller;
 }

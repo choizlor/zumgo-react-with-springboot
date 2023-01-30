@@ -45,7 +45,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Wish> wishes = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "bill_id")
+    @OneToOne(mappedBy = "product")
     private Bill bill;
 }
