@@ -19,6 +19,7 @@ public class WebSocketChat {
     private static Logger logger = LoggerFactory.getLogger(WebSocketChat.class);
 
     @OnOpen
+    // 클라이언트가 접속할 때마다 실행
     public void onOpen(Session session) {
         logger.info("open session : {}, clients={}", session.toString(), clients);
         Map<String, List<String>> res = session.getRequestParameterMap();
@@ -33,6 +34,7 @@ public class WebSocketChat {
     }
 
     @OnMessage
+    // 메세지 수신 시
     public void onMessage(String message, Session session) throws IOException {
         logger.info("receive message : {}", message);
 
@@ -43,6 +45,7 @@ public class WebSocketChat {
     }
 
     @OnClose
+    // 클라이언트가 접속을 종료할 시
     public void onClose(Session session) {
         logger.info("session close : {}", session);
         clients.remove(session);
