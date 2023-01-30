@@ -15,6 +15,7 @@ export default function Root() {
                }}
            );
            res.then((user) => {
+            console.log(user.data)
             setUserInfo(user.data)
         })
        } catch (err) {
