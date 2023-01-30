@@ -34,4 +34,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Wish> wishes = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
+
 }

@@ -19,10 +19,6 @@ public class Product {
     @Column(name="product_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
     private String title;
 
     private int price;
@@ -32,6 +28,10 @@ public class Product {
     private Timestamp reservation;
 
     private String photo;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status; // INPROGRESS, SOLD
@@ -44,4 +44,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Wish> wishes = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
 }
