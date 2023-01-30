@@ -1,6 +1,10 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Chat() {
+
+    const user = useSelector((state) => { return state.user})
+    
     const [msg, setMsg] = useState("");
     const [name, setName] = useState("");
     const [chatt, setChatt] = useState([]);
@@ -94,6 +98,7 @@ export default function Chat() {
     return (
         <>
             {/* <GlobalStyle/> */}
+            { JSON.stringify(user) }
             <div id="chat-wrap">
                 <div id='chatt'>
                     <h1 id="title">WebSocket Chatting</h1>

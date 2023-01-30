@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 // import store
 import { Provider } from 'react-redux';
-import store from './app/store';
+import store from './store/userSlice.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
