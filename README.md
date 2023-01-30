@@ -17,7 +17,7 @@ ex) FEAT: 로그인 rest api 추가
 # :pushpin: Git Branch  
 
 * 네이밍 규칙   
-ex) feature/fe/login   
-ex) feature/be/login-api   
+ex) feature/login   
+ex) feature/login-api   
 
 * Merge 주기   
