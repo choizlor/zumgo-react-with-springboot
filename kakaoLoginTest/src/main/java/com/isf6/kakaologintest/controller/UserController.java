@@ -4,6 +4,7 @@ import com.isf6.kakaologintest.model.oauth.OauthToken;
 import com.isf6.kakaologintest.service.UserService;
 import com.isf6.kakaologintest.model.User;
 import com.isf6.kakaologintest.config.jwt.JwtProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -48,17 +50,21 @@ public class UserController {
     // 프론트에서 인가코드 받아오는 url - 3단계, 4단계
     @GetMapping("/oauth/token")
     public ResponseEntity getLogin(@RequestParam("code") String code) { //(1)
+        log.info("code : {} ", code);
 
         // 넘어온 인가 코드를 통해 access_token 발급
         OauthToken oauthToken = userService.getAccessToken(code);
+        log.info("oauthToken : {} ", oauthToken);
 
         //(2)
         // 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장 후 JWT 를 생성
         String jwtToken = userService.saveUserAndGetToken(oauthToken.getAccess_token());
+        log.info("jwtToken : {} ", jwtToken);
 
         //(3)
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        log.info("headers : {} ", headers);
 
         //(4)
         return ResponseEntity.ok().headers(headers).body("success");
