@@ -2,7 +2,7 @@ package com.isf6.backend.config;
 
 import com.isf6.backend.config.jwt.CustomAuthenticationEntryPoint;
 import com.isf6.backend.config.jwt.JwtRequestFilter;
-import com.isf6.backend.repository.UserRepository;
+import com.isf6.backend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

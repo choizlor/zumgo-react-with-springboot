@@ -1,25 +1,33 @@
 package com.isf6.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Getter
 @Setter
 public class User {
-    @Id @GeneratedValue
-    @Column(name = "user_id")
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_code")
+    private Long userCode;
 
-    private String name;
+    @Column(name = "kakao_id")
+    private Long kakaoId;
 
-    private String token;
+    @Column(name = "kakao_profile_img")
+    private String kakaoProfileImg;
 
-    private String photo;
+    @Column(name = "kakao_nickname")
+    private String kakaoNickname;
+
+    @Column(name = "kakao_email")
+    private String kakaoEmail;
 
     private int point;
 
@@ -34,5 +42,14 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Wish> wishes = new ArrayList<>();
+
+    @Builder
+    public User(Long kakaoId, String kakaoProfileImg, String kakaoNickname, String kakaoEmail, int point) {
+        this.kakaoId = kakaoId;
+        this.kakaoProfileImg = kakaoProfileImg;
+        this.kakaoNickname = kakaoNickname;
+        this.kakaoEmail = kakaoEmail;
+        this.point = point;
+    }
 
 }
