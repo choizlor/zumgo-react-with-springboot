@@ -6,7 +6,7 @@ export default function Chat() {
     const user = useSelector((state) => { return state.user})
     
     const [msg, setMsg] = useState("");
-    const [name, setName] = useState("");
+    // const [name, setName] = useState("");
     const [chatt, setChatt] = useState([]);
     const [chkLog, setChkLog] = useState(false);
     const [socketData, setSocketData] = useState();
@@ -67,7 +67,7 @@ export default function Chat() {
 
         if(msg !== ''){
             const data = {
-                name,
+                name: user.kakaoNickname,
                 msg,
                 date: new Date().toLocaleString(),
             };  //전송 데이터(JSON)
@@ -101,18 +101,16 @@ export default function Chat() {
             { JSON.stringify(user) }
             <div id="chat-wrap">
                 <div id='chatt'>
-                    <h1 id="title">WebSocket Chatting</h1>
-                    <br/>
                     <div id='talk'>
                         <div className='talk-shadow'></div>
                         {msgBox}
                     </div>
-                    <input disabled={chkLog}
+                    {/* <input disabled={chkLog}
                         placeholder='이름을 입력하세요.' 
                         type='text' 
                         id='name' 
                         value={name} 
-                        onChange={(event => setName(event.target.value))}/>
+                        onChange={(event => setName(event.target.value))}/> */}
                     <div id='sendZone'>
                         <textarea id='msg' value={msg} onChange={onText}
                             onKeyDown={(ev) => {if(ev.keyCode === 13){send();}}}></textarea>
