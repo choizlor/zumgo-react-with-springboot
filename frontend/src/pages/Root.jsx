@@ -15,7 +15,6 @@ export default function Root() {
                }}
            );
            res.then((user) => {
-            console.log(user.data)
             setUserInfo(user.data)
         })
        } catch (err) {
@@ -26,7 +25,7 @@ export default function Root() {
     return (
         <div>
             {JSON.stringify(userInfo)}
-            <Outlet />
+            <Outlet/>
         </div>
     );
 }
