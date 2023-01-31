@@ -10,6 +10,7 @@ import LiveRoom from './pages/LiveRoom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import AddProduct from './pages/AddProduct';
+import UpdateProduct from './pages/UpdateProduct';
 import Login from './pages/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: '/live', element: <Live/>, },
       { path: '/live/:productId', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
+      { path: '/update/:productId', element: <UpdateProduct/>, },
       { path: '/chatlist', element: <ChatList/>, },
       { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
       { path: '/addproduct', element: <AddProduct/>, },
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
+    <div className='app'>
       <RouterProvider router={router} />
     </div>
   );
