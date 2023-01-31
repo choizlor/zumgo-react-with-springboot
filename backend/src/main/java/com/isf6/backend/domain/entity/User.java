@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.*;
 
@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Getter
-@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,5 +50,4 @@ public class User {
         this.kakaoEmail = kakaoEmail;
         this.point = point;
     }
-
 }

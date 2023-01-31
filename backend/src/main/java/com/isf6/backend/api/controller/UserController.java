@@ -1,9 +1,9 @@
 package com.isf6.backend.api.controller;
 
-import com.isf6.backend.api.service.UserService;
+import com.isf6.backend.service.UserService;
 import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
-import com.isf6.backend.db.entity.User;
+import com.isf6.backend.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

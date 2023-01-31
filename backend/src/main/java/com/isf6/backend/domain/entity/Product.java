@@ -1,7 +1,8 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 @Table(name="products")
-
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="product_id")
     private Long id;
 
@@ -28,6 +29,17 @@ public class Product {
     private Timestamp reservation;
 
     private String photo;
+
+    // 외래키는 어쩌지..?
+    // Timestamp..?
+    @Builder
+    public Product(String title, int price, String description, Timestamp reservation, String photo) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.reservation = reservation;
+        this.photo = photo;
+    }
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -47,4 +59,12 @@ public class Product {
 
     @OneToOne(mappedBy = "product")
     private Bill bill;
+
+    public void update(String title, int price, String description, Timestamp reservation, String photo) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.reservation = reservation;
+        this.photo = photo;
+    }
 }
