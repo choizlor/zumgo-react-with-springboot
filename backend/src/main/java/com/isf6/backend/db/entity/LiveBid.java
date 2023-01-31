@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class LiveBid {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "liveBid_id")
     private Long id;
 

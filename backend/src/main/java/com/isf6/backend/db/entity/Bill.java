@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 public class Bill {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="bill_id")
     private Long id;
 

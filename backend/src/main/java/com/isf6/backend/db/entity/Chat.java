@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class Chat {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="chat_id")
     private Long id;
 

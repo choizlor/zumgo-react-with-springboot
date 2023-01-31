@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Wish {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wish_id")
     private Long id;
 
