@@ -14,7 +14,7 @@ import java.util.List;
 public class LiveRoom {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="liveRoom_id")
     private Long id;
 

@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class LiveRequest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "liveRequest_id")
     private Long id;
 
