@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/Detail.module.css";
 import LiveBtn from "../components/Detail/LiveBtn";
 import z from '../assets/images/z.png';
 import DetailModal from "../components/Detail/DetailModal";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 // heroicons
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
@@ -16,8 +18,20 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from "swiper";
 
 export default function Detail() {
-
+  
+  const params = useParams();
   const [modalOpen, setModalOpen] = useState(false);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    // 상품 정보를 가져오는 GET 요청
+    axios.get(`http://localhost:8080/product/detail/${params.productId}`)
+    .then((res) => {
+      console.log(res)
+      setProduct(res.data)
+    })
+    .catch((err) => { console.log(err) })
+  })
 
 
   return (

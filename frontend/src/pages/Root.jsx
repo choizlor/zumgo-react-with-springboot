@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/userSlice.js'
 
 export default function Root() {
-    const user = useSelector((state) => { return state.user })
     const dispatch = useDispatch();
     const [userInfo, setUserInfo] = useState({});
 
@@ -20,7 +19,7 @@ export default function Root() {
             }
             );
             res.then((user) => {
-                console.log(user.data.userCode)
+                console.log('로그인된 유저 : ', user.data)
                 dispatch(login({
                     userCode: user.data.userCode,
                     kakaoId : user.data.kakaoId,
@@ -38,7 +37,7 @@ export default function Root() {
     return (
         <div>
             {/* {JSON.stringify(userInfo)} */}
-            <Outlet />
+            <Outlet userInfo={userInfo}/>
         </div>
     );
 }
