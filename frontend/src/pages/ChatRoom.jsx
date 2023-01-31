@@ -51,6 +51,14 @@ export default function ChatRoom() {
             console.log(tempData);
             setChatt(tempData);
         }
+
+         // 로그가 없을 때
+         if (!chkLog) {
+            // 소켓에 로그인
+            webSocketLogin();
+            // 로그인 상태 - true로 변경
+            setChkLog(true);
+        }
     }, [socketData]);
 
 
@@ -80,14 +88,6 @@ export default function ChatRoom() {
 
     // 전송 버튼을 눌렀을 때 실행됨,,, ws.current.send()와 전혀 다른 함수
     const send = useCallback(() => {
-        // 로그가 없을 때
-        if (!chkLog) {
-
-            // 소켓에 로그인
-            webSocketLogin();
-            // 로그인 상태 - true로 변경
-            setChkLog(true);
-        }
 
         if (msg !== '') {
             const date = new Date()
@@ -131,7 +131,7 @@ export default function ChatRoom() {
             <div className={styles.container}>
                 {/* 상단 네비게이션 */}
                 <div className={styles.topbar}>
-                    <ChevronLeftIcon />
+                    <ChevronLeftIcon onClick={() => {navigate('/chatlist ')}}/>
                     <span>상대방 이름</span>
                     <MegaphoneIcon onClick={() => navigate(`/report/1`)}/>
                 </div>
@@ -143,7 +143,8 @@ export default function ChatRoom() {
 
                 {/* 하단 입력폼 */}
                 <div className={styles.sendzone}>
-                    <CameraIcon className={styles.cameraicon}/>
+                    {/* <input type="file" accept='image/*'/>  */}
+                        <CameraIcon className={styles.cameraicon}/>
                     <div className={styles.inputbar}>
                         <div>
 
