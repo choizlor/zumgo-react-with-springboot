@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./styles/AddProduct.module.css";
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
-// import axios from "axios";
+import axios from "axios";
 // import { useSelector } from "react-redux";
 
 export default function AddProduct() {
@@ -16,7 +16,7 @@ export default function AddProduct() {
 
   // 상품등록 axios
   // const addProduct = () => {
-  //   axios.post(`http://localhost:8080/product/${user.userCode}`, {
+  //   axios.post(`http://localhost:8080/product`, {
   //     title,
   //     price,
   //     description,
@@ -24,7 +24,7 @@ export default function AddProduct() {
   //     photos,
   //   });
   // };
-  // }
+  
 
   return (
     <div className={styles.body}>
