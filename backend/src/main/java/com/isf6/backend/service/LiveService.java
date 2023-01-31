@@ -1,0 +1,79 @@
+package com.isf6.backend.service;
+
+import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
+import com.isf6.backend.domain.entity.LiveRoom;
+import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.repository.LiveRoomRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+public class LiveService {
+
+    @Autowired
+    LiveRoomRepository liveRoomRepository;
+
+    @Autowired
+    ProductService productService;
+
+    public LiveRoom createLive(LiveRoomSaveReqDto liveRoomSaveReqDto) {
+        //0. 예약이 삭제되야함,,,,
+
+        //1. 새로운 라이브방 생성
+        LiveRoom liveRoom = new LiveRoom();
+
+        //2. 라이브방 entity에 맞춰서 정보 입력
+        Long productId = liveRoomSaveReqDto.getProductId();
+        log.info("productId : {}", productId);
+        Product product = productService.getProduct(productId); //상품 아이디로 상품 정보 가져오기
+        liveRoom.setProduct(product);
+
+        liveRoom.setTitle(product.getTitle()); //제목 추가
+        liveRoom.setLive_start_time(liveRoomSaveReqDto.getLiveStartTime()); //라이브 시간 추가
+        liveRoom.setLive_status(liveRoomSaveReqDto.getLiveStatus()); //라이브 상태
+
+        liveRoomRepository.save(liveRoom); //라이브 저장
+
+        return liveRoom;
+    }
+
+    public LiveRoom getLiveByProductId(long productId) {
+        log.info("productId : {}", productId);
+        LiveRoom liveRoom = liveRoomRepository.findByProductId(productId);
+        log.info("liveRoom : {}", liveRoom);
+        return liveRoom;
+    }
+
+    public List<LiveRoom> getAllLives() {
+        List<LiveRoom> list = liveRoomRepository.findAll();
+        return list;
+    }
+
+    public LiveRoom updateLive(LiveRoomSaveReqDto liveRoomSaveReqDto, LiveRoom liveRoom) {
+        //1. 라이브방 entity에 맞춰서 정보 입력
+        Long productId = liveRoomSaveReqDto.getProductId();
+        Product product = productService.getProduct(productId); //상품 아이디로 상품 정보 가져오기
+        liveRoom.setProduct(product);
+
+        liveRoom.setLive_start_time(liveRoomSaveReqDto.getLiveStartTime());
+        liveRoom.setLive_status(liveRoomSaveReqDto.getLiveStatus());
+
+        //2. repository에도 라이브 저장하기
+        liveRoomRepository.save(liveRoom); //라이브 저장
+
+        return liveRoom;
+    }
+
+    public void deleteLiveRoom(long productId) {
+        LiveRoom liveRoom = getLiveByProductId(productId);
+        if(liveRoom != null) {
+            liveRoomRepository.delete(liveRoom);
+        }
+    }
+
+
+}
