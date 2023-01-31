@@ -17,13 +17,15 @@ export default function AddProduct() {
 
   // 상품등록 axios
   const addProduct = () => {
-    axios.post(`http://localhost:8080/product`, {
+    axios.post("http://localhost:8080/product", {
       title: '피치우롱',
       price : 5400,
       description : '마라탕 먹고 먹기에 딱',
-      reservation : '평일 이후요',
-      photos : [ testImg ],
-    });
+      reservation : '2014-01-15',
+      photo : '아직 몰라용',
+    })
+    .then((res) => { console.log(res)})
+    .catch((err) => { console.log(err)});
   };
   
 
