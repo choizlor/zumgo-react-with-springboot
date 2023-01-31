@@ -2,10 +2,10 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import styles from './styles/ChatRoom.module.css';
 import { useSelector } from 'react-redux';
 import testImg from '../assets/images/testImg.jpg';
-
+import { useNavigate } from 'react-router-dom';
+// heroicons
 import { CameraIcon, ChevronLeftIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
 import { ArrowUpCircleIcon } from '@heroicons/react/24/solid';
-import { useNavigate } from 'react-router-dom';
 
 export default function ChatRoom() {
     let navigate = useNavigate();
@@ -21,7 +21,6 @@ export default function ChatRoom() {
     //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
     const msgBox = chatt.map((item, idx) => {
-        // if (item.name !== user.kakaoNickname) {
         if (true) {
             return (
                 <div key={idx} className={styles.otherchat}>
