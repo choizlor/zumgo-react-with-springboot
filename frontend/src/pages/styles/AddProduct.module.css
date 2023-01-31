@@ -45,3 +45,15 @@
     color: white;
     margin: 0;
 }
+
+
+.addbtn {
+    width : 90%;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
