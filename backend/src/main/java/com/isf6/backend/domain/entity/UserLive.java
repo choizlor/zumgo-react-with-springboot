@@ -1,26 +1,23 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Getter
 @Setter
-public class LiveBid {
+public class UserLive {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "liveBid_id")
+    @Column(name = "useLive_id")
     private Long id;
 
-    private String bidder;
-
-    private int bid_price;
-
-    private Timestamp bid_time;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "liveRoom_id")

@@ -1,4 +1,4 @@
-package com.isf6.backend.api.service;
+package com.isf6.backend.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isf6.backend.common.oauth.KakaoProfile;
 import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
-import com.isf6.backend.db.repository.UserRepository;
-import com.isf6.backend.db.entity.User;
+import com.isf6.backend.domain.repository.UserRepository;
+import com.isf6.backend.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class UserLive {
+public class LiveRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "useLive_id")
+    @Column(name = "liveRequest_id")
     private Long id;
 
     @ManyToOne
@@ -20,6 +20,6 @@ public class UserLive {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "liveRoom_id")
-    private LiveRoom liveRoom;
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

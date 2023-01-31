@@ -1,7 +1,7 @@
 package com.isf6.backend.domain.product;
 
-import com.isf6.backend.db.entity.Product;
-import com.isf6.backend.db.repository.ProductRepository;
+import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.repository.ProductRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;

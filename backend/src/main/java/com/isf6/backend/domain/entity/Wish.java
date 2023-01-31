@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class LiveRequest {
+public class Wish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "liveRequest_id")
+    @Column(name = "wish_id")
     private Long id;
 
     @ManyToOne
