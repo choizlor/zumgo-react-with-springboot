@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,13 +36,16 @@ public class LiveRoom {
 
     private int final_bid;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "liveRoom")
     private List<UserLive> userLives = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "liveRoom")
     private List<LiveBid> liveBids = new ArrayList<>();
 
