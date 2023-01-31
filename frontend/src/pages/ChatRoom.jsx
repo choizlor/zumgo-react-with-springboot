@@ -5,9 +5,10 @@ import testImg from '../assets/images/testImg.jpg';
 
 import { CameraIcon, ChevronLeftIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
 import { ArrowUpCircleIcon } from '@heroicons/react/24/solid';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatRoom() {
-
+    let navigate = useNavigate();
     const user = useSelector((state) => { return state.user })
 
     const [msg, setMsg] = useState("");
@@ -15,12 +16,13 @@ export default function ChatRoom() {
     const [chkLog, setChkLog] = useState(false);
     const [socketData, setSocketData] = useState();
 
+
     const ws = useRef(null);    //webSocket을 담는 변수, 
     //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
     const msgBox = chatt.map((item, idx) => {
-
-        if (false) {
+        // if (item.name !== user.kakaoNickname) {
+        if (true) {
             return (
                 <div key={idx} className={styles.otherchat}>
                     <div className={styles.otherimg}>
@@ -34,10 +36,10 @@ export default function ChatRoom() {
         } else {
             return (
                 <div key={idx} className={styles.mychat}>
-                    <span className={styles.mydate}>{item.mydate}</span>
                     <div className={styles.mymsg}>
                         <span>{item.msg}</span>
                     </div>
+                    <span className={styles.mydate}>{item.date}</span>
                 </div>
             )
         }
@@ -59,7 +61,6 @@ export default function ChatRoom() {
     //webSocket
     //webSocket
     const onText = event => {
-        console.log(event.target.value);
         setMsg(event.target.value);
     }
 
@@ -125,13 +126,14 @@ export default function ChatRoom() {
     //webSocket
     return (
         <>
+        {JSON.stringify(user)}
             {/* <GlobalStyle/> */}
             <div className={styles.container}>
                 {/* 상단 네비게이션 */}
                 <div className={styles.topbar}>
                     <ChevronLeftIcon />
                     <span>상대방 이름</span>
-                    <MegaphoneIcon />
+                    <MegaphoneIcon onClick={() => navigate(`/report/1`)}/>
                 </div>
 
                 {/* 채팅 리스트 */}
@@ -141,7 +143,7 @@ export default function ChatRoom() {
 
                 {/* 하단 입력폼 */}
                 <div className={styles.sendzone}>
-                    <CameraIcon />
+                    <CameraIcon className={styles.cameraicon}/>
                     <div className={styles.inputbar}>
                         <div>
 
