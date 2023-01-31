@@ -1,7 +1,6 @@
 .container {
     width : 100vw;
     height : 100vh;
-    border : 2px solid red;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,7 +25,10 @@
     overflow: scroll;
     width : 85%;
     margin : auto;
-    border : 2px solid red;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 .otherchat {
@@ -65,7 +67,10 @@
 }
 
 .mychat {
-    border: 2px solid red;
+    margin : 2.5% 0;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
 }
 
 .mymsg {
@@ -78,6 +83,8 @@
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
+    padding : 5%;
+    margin-left: 2%;
 }
 
 .mydate {
@@ -90,8 +97,11 @@
     width : 95%;
     display: flex;
     justify-content: space-between;
-    border : 2px solid blue;
     margin : auto;
+}
+
+.cameraicon {
+
 }
 
 .inputbar {
