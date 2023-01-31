@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, ClockIcon } from "@heroicons/react/24/outline";
 
 export default function ReservationModal({ setModalOpen }) {
   const [selectDate, setSelectDate] = useState(new Date());
@@ -17,9 +17,10 @@ export default function ReservationModal({ setModalOpen }) {
   const handleSubmit = () => {
     setModalOpen(false);
   };
+
   return (
     <div className={styles.container}>
-      <button onClick={handleSubmit}>예약하기</button>
+      <p className={styles.title}><ClockIcon className={styles.icon}/>라이브 예약하기</p>
       <XMarkIcon onClick={closeModal} className={styles.close} />
       <div className={styles.date}>
         <DatePicker
@@ -35,8 +36,9 @@ export default function ReservationModal({ setModalOpen }) {
               enabled: true,
             },
           }}
-          
+          className={styles.datepicker}
         />
+        <button onClick={handleSubmit} className={styles.btn}>예약하기</button>
       </div>
     </div>
   );
