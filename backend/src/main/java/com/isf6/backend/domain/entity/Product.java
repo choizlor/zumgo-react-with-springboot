@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name="products")
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,27 +26,28 @@ public class Product {
 
     private String description;
 
-    private Timestamp reservation;
+    private String reservation;
 
     private String photo;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
     // 외래키는 어쩌지..?
     // Timestamp..?
     @Builder
-    public Product(String title, int price, String description, Timestamp reservation, String photo) {
+    public Product(String title, int price, String description, String reservation, String photo, ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.reservation = reservation;
         this.photo = photo;
+        this.status = status;
     }
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-
-    @Enumerated(EnumType.STRING)
-    private ProductStatus status; // INPROGRESS, SOLD
 
     @OneToOne(mappedBy = "product")
     private LiveRoom liveroom;
@@ -60,11 +61,12 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Bill bill;
 
-    public void update(String title, int price, String description, Timestamp reservation, String photo) {
+    public void update(String title, int price, String description, String reservation, String photo, ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.reservation = reservation;
         this.photo = photo;
+        this.status = status;
     }
 }

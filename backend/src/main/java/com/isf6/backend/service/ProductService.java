@@ -29,11 +29,11 @@ public class ProductService {
                 requestDto.getPrice(),
                 requestDto.getDescription(),
                 requestDto.getReservation(),
-                requestDto.getPhoto());
+                requestDto.getPhoto(),
+                requestDto.getStatus());
 
         return id;
     }
-
     public ProductResponseDto findById (Long id) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 

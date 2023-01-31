@@ -1,9 +1,11 @@
 package com.isf6.backend.api.Response;
 
 import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.entity.ProductStatus;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @Getter
 public class ProductResponseDto {
@@ -12,8 +14,9 @@ public class ProductResponseDto {
     private String title;
     private int price;
     private String description;
-    private Timestamp reservation;
+    private String reservation;
     private String photo;
+    private ProductStatus status;
 
     public ProductResponseDto(Product entity) {
         this.id = entity.getId();
@@ -22,5 +25,6 @@ public class ProductResponseDto {
         this.description = entity.getDescription();
         this.reservation = entity.getReservation();
         this.photo = entity.getPhoto();
+        this.status = entity.getStatus();
     }
 }

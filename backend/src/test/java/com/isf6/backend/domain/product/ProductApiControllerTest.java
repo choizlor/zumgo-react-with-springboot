@@ -3,6 +3,7 @@ package com.isf6.backend.domain.product;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -46,8 +47,9 @@ public class ProductApiControllerTest {
         String title = "상품명";
         int price = 10000;
         String description = "상품 설명글";
-        Timestamp reservation = Timestamp.valueOf(LocalDateTime.now());
+        String reservation = "예약시간";
         String photo = "이미지 링크";
+        ProductStatus status = ProductStatus.ONSALE;
 
         ProductSaveRequestDto requestDto = ProductSaveRequestDto.builder()
                 .title(title)
@@ -55,6 +57,7 @@ public class ProductApiControllerTest {
                 .description(description)
                 .reservation(reservation)
                 .photo(photo)
+                .status(status)
                 .build();
 
         String url = "http://localhost:" + port + "/product";
@@ -69,8 +72,9 @@ public class ProductApiControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getDescription()).isEqualTo(description);
         assertThat(all.get(0).getPrice()).isEqualTo(price);
-        // assertThat(all.get(0).getReservation()).isEqualTo(reservation);
+//      assertThat(all.get(0).getReservation()).isEqualTo(reservation);
         assertThat(all.get(0).getPhoto()).isEqualTo(photo);
+        assertThat(all.get(0).getStatus()).isEqualTo(status);
     }
 
     @Test
@@ -80,19 +84,22 @@ public class ProductApiControllerTest {
                 .title("상품명")
                 .price(10000)
                 .description("상품 설명글")
-                .reservation(Timestamp.valueOf(LocalDateTime.now()))
+                .reservation("예약시간")
                 .photo("이미지 링크")
+                .status(ProductStatus.ONSALE)
                 .build());
 
         Long updateId = savedProduct.getId();
         String expectedTitle = "수정된 상품명";
         int expectedPrice = 20000;
         String expectedDescription = "수정된 상품 설명글";
+        ProductStatus expectedStatus = ProductStatus.BOOKING;
 
         ProductUpdateRequestDto requestDto = ProductUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .price(expectedPrice)
                 .description(expectedDescription)
+                .status(expectedStatus)
                 .build();
 
         String url = "http://localhost:" + port + "/product/" + updateId;
@@ -109,5 +116,6 @@ public class ProductApiControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getPrice()).isEqualTo(expectedPrice);
         assertThat(all.get(0).getDescription()).isEqualTo(expectedDescription);
+        assertThat(all.get(0).getStatus()).isEqualTo(expectedStatus);
     }
 }

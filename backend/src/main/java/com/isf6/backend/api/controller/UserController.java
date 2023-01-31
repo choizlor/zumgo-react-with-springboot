@@ -56,7 +56,4 @@ public class UserController {
         //(3)
         return ResponseEntity.ok().body(user);
     }
-
-
-
 }
