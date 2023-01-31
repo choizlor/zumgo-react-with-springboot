@@ -1,4 +1,4 @@
-package com.isf6.backend.api;
+package com.isf6.backend.api.Request;
 
 import com.isf6.backend.domain.entity.Product;
 import lombok.Builder;

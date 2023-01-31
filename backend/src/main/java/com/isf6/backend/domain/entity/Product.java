@@ -59,4 +59,12 @@ public class Product {
 
     @OneToOne(mappedBy = "product")
     private Bill bill;
+
+    public void update(String title, int price, String description, Timestamp reservation, String photo) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.reservation = reservation;
+        this.photo = photo;
+    }
 }
