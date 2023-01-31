@@ -1,6 +1,6 @@
-package com.isf6.backend.db.repository;
+package com.isf6.backend.domain.repository;
 
-import com.isf6.backend.db.entity.User;
+import com.isf6.backend.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

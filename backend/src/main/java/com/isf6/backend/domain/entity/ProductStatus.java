@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 public enum ProductStatus {
     INPROGRESS, SOLD

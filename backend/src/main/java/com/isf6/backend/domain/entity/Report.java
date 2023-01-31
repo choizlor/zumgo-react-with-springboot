@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Report {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="report_id")
     private Long id;
 

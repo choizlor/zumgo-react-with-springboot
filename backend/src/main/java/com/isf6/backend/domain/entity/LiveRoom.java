@@ -1,4 +1,4 @@
-package com.isf6.backend.db.entity;
+package com.isf6.backend.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.List;
 public class LiveRoom {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="liveRoom_id")
     private Long id;
 
