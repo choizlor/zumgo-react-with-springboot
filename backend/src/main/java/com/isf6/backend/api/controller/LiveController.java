@@ -3,8 +3,11 @@ package com.isf6.backend.api.controller;
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
 import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.service.LiveService;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ApiResponses({
+        @ApiResponse(code = 200, message = "Success"),
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+})
+@Api(value = "/live", description = "live 정보를 처리 하는 Controller")
 @Slf4j
 @RestController
 @RequestMapping("/live")
@@ -20,9 +29,10 @@ public class LiveController {
     @Autowired
     LiveService liveService;
 
+    @ApiOperation(value = "라이브 방 생생", notes = "라이브 방을 생성하여 DB에 저장하고 정보를 반환")
     @PostMapping("/room")
-    public ResponseEntity createLiveRoom(@RequestBody LiveRoomSaveReqDto liveRoomSaveReqDto) {
-        log.info("liveRoomCreateReq.getProductId : {}", liveRoomSaveReqDto.getProductId());
+    public ResponseEntity createLiveRoom(@ApiParam(value = "라이브 방 생성에 필요한 정보", required = true) @RequestBody LiveRoomSaveReqDto liveRoomSaveReqDto) {
+        //log.info("liveRoomCreateReq.getProductId : {}", liveRoomSaveReqDto.getProductId());
 
         //1. 라이브 방을 생성(라이브방정보)
         //2. 성공 실패 결과 담아서 front로 전달
@@ -45,8 +55,9 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "상품 번호로 라이브 방 조회", notes = "DB에서 상품 번호로 라이브 방을 조회하여 정보를 반환")
     @GetMapping("/{productId}")
-    public ResponseEntity selectLiveRoom(@PathVariable long productId) {
+    public ResponseEntity selectLiveRoom(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
         Map<String, Object> response = new HashMap<>();
         LiveRoom liveRoom = liveService.getLiveByProductId(productId);
 
@@ -61,6 +72,7 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "모든 라이브 방 조회", notes = "DB에서 모든 라이브 방을 조회하여 정보를 반환")
     @GetMapping("/all")
     public ResponseEntity selectAllLives() {
         Map<String, Object> response = new HashMap<>();
@@ -77,8 +89,9 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "라이브 방 정보 변경", notes = "DB에서 상품 번호로 라이브 방을 조회하여 정보를 변경한 후 정보를 반환")
     @PatchMapping("/{productId}")
-    public ResponseEntity updateLiveRoom(@PathVariable long productId, @RequestBody LiveRoomSaveReqDto liveRoomSaveReqDto) {
+    public ResponseEntity updateLiveRoom(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId, @ApiParam(value = "라이브 방 생성에 필요한 정보", required = true) @RequestBody LiveRoomSaveReqDto liveRoomSaveReqDto) {
         //1.파라메터로 넘어온 상품 아이디에 해당되는 live 객체 찾기
         LiveRoom liveRoom = liveService.getLiveByProductId(productId);
 
@@ -102,8 +115,9 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "상품 번호로 라이브 방 삭제", notes = "DB에서 상품 번호로 라이브 방을 삭제")
     @DeleteMapping("/{productId}")
-    public ResponseEntity deleteLiveRoom(@PathVariable long productId) {
+    public ResponseEntity deleteLiveRoom(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
         Map<String, Object> response = new HashMap<>();
         liveService.deleteLiveRoom(productId);
         response.put("result", "SUCCESS");
