@@ -2,25 +2,33 @@ import React, { useState } from "react";
 import styles from "./styles/Report.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Report() {
-  const [userId, setuserID] = useState('')
-  const [comment,setComment] = useState('')
+
+  const param = useParams();
+  console.log(param);
+  const reported = param.userId;
+  // 리포터는 store
+  const [reporter, setreporter] = useState("");
+  const [comment, setComment] = useState("");
+
   const report = () => {
-    const context = {
-      userId: "userId",
-      comment: "comment"
-    }
     axios
-    .post('http://localhost:8080/report/', context)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .post(`http://localhost:8080/userreport/${reported}`, {
+        reporter : 2,
+        comment,
+        reported,
+      })
+      .then((res) => {})
+      .catch((err) => {});
+  };
+
+  const handleChange = (e) => {
+    setComment(e.target.value)
+
   }
+
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
@@ -36,9 +44,12 @@ export default function Report() {
           cols="30"
           rows="10"
           placeholder="신고 하는 이유를 상세히 기재해 주세요."
+          onChange={handleChange}
         ></textarea>
       </div>
-      <div className={styles.button} onClick={report}>작성완료</div>
+      <div className={styles.button} onClick={report}>
+        작성완료
+      </div>
     </div>
   );
 }
