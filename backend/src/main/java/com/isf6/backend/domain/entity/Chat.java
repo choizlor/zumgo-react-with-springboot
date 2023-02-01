@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class Chat {
 
     private String chatter;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="chatRoom_id")
     private ChatRoom chatRoom;
