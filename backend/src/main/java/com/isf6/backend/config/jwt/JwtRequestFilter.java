@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwtHeader = ((HttpServletRequest)request).getHeader(JwtProperties.HEADER_STRING);
-        System.out.println("JwtRequestFilter 진입");
+        //System.out.println("JwtRequestFilter 진입");
 
         // header 가 정상적인 형식인지 확인
         if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {

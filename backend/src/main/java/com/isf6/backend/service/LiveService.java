@@ -2,6 +2,7 @@ package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
 import com.isf6.backend.domain.entity.LiveRoom;
+import com.isf6.backend.domain.entity.LiveStatus;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.repository.LiveRoomRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -75,5 +76,16 @@ public class LiveService {
         }
     }
 
+    public void updateStatus(long productId, String status) {
+        LiveRoom liveRoom = liveRoomRepository.findByProductId(productId);
+
+        if(status.equals("start")) {
+            liveRoom.setLive_status(LiveStatus.valueOf("ONAIR"));
+        } else if(status.equals("end")) {
+            liveRoom.setLive_status(LiveStatus.valueOf("CLOSED"));
+        }
+
+        liveRoomRepository.save(liveRoom);
+    }
 
 }
