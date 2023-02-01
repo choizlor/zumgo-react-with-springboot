@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles/LiveRoom.module.css";
 import { ArrowUpCircleIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import testImg from "../assets/images/kim.png";
+import Timer from '../components/Auction/Timer.jsx';
 
 export default function LiveRoom() {
   const [inputData, setInputData] = useState("");
@@ -19,6 +20,7 @@ export default function LiveRoom() {
   };
   return (
     <div className={styles.body}>
+      <Timer/>
       <div className={styles.container}>
         <div className={styles.toplinear}>
           {/* 상단 컨테이너 */}
