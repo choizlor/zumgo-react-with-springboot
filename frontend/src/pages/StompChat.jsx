@@ -11,6 +11,7 @@ export default function StompChat() {
 
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
+  const token = window.localStorage.getItem('token')
 
   const client = new StompJs.Client({
       brokerURL: "ws://localhost:8080/stomp/chat",
@@ -62,7 +63,7 @@ export default function StompChat() {
   // };
 
   const subscribe = () => {
-    client.current.subscribe(`/sub`, (body) => {
+    client.subscribe(`/sub`, (body) => {
       const json_body = JSON.parse(body.body);
       setChatList((chats) => [
         ...chats,
@@ -74,7 +75,7 @@ export default function StompChat() {
   const sendMsg = (chat) => {
     if (!client.current.connected) return; // 비연결 => 메시지 보내지 않음
 
-    client.current.publish({
+    client.publish({
       destination: "/pub",
       body: JSON.stringify({
         // applyId: channelId,
