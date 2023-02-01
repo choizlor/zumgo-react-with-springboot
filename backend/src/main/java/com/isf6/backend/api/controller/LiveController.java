@@ -137,7 +137,7 @@ public class LiveController {
     }
 
     @ApiOperation(value = "라이브방 종료 상태 변경", notes = "DB에서 라이브 방의 상태를 종료로 변경")
-    @PatchMapping("/start/{productId}")
+    @PatchMapping("/end/{productId}")
     public ResponseEntity endLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
         Map<String, Object> response = new HashMap<>();
         liveService.updateStatus(productId, "end");

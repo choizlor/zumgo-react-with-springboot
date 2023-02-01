@@ -3,6 +3,9 @@
   display: flex;
   justify-content: space-between;
   clear: both;
+  position: absolute;
+  width: 100%;
+  bottom : 0;
 }
 
 .icon {

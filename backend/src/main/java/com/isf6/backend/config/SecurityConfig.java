@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(FRONT_URL+"/main/**")
                 .authenticated()
+                .antMatchers().authenticated() //ROLE 을 정해주고 허용되는 url만 적어주거나 하면 된대~~
                 .anyRequest().permitAll()
 
                 .and()
