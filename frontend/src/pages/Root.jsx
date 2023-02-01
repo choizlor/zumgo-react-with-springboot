@@ -25,7 +25,7 @@ export default function Root() {
 
     return (
         <div>
-            {JSON.stringify(userInfo)}
+            {/* {JSON.stringify(userInfo)} */}
             <Outlet />
         </div>
     );

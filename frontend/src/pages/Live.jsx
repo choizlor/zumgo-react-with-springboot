@@ -7,11 +7,11 @@ import styles from "./styles/Live.module.css";
 export default function Live() {
   return (
     <div className={styles.body}>
-      <p className={styles.logo}>LIVE</p>
+      <div className={styles.logo}>LIVE</div>
 
-      <p className={styles.text}>예약 대기</p>
+      <div className={styles.text}>예약 대기</div>
       <LiveReservation />
-      <p className={styles.text}>라이브 시작 가능</p>
+      <div className={styles.text}>라이브 시작 가능</div>
       <LiveStart />
       {/* toggle 사용 */}
       <BottomNavDark />
