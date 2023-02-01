@@ -125,5 +125,26 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "라이브방 시작 상태 변경", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
+    @PatchMapping("/start/{productId}")
+    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
+        Map<String, Object> response = new HashMap<>();
+        liveService.updateStatus(productId, "start");
+        response.put("status", "ONAIR");
+        response.put("result", "SUCCESS");
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @ApiOperation(value = "라이브방 종료 상태 변경", notes = "DB에서 라이브 방의 상태를 종료로 변경")
+    @PatchMapping("/start/{productId}")
+    public ResponseEntity endLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
+        Map<String, Object> response = new HashMap<>();
+        liveService.updateStatus(productId, "end");
+        response.put("status", "CLOSED");
+        response.put("result", "SUCCESS");
+
+        return ResponseEntity.status(200).body(response);
+    }
 
 }
