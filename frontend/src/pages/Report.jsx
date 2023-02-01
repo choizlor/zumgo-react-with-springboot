@@ -11,21 +11,22 @@ export default function Report() {
   const reported = param.userId;
   // 리포터는 store
   const [reporter, setreporter] = useState("");
-  const [comment, setComment] = useState("");
+  const [contents, setContents] = useState("");
 
   const report = () => {
     axios
-      .post(`http://localhost:8080/userreport/${reported}`, {
+      .post(`http://localhost:8080/api/user/report/${reported}`, {
         reporter : 2,
-        comment,
-        reported,
+        content:"신고해븐다,,,",
       })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res)
+      })
       .catch((err) => {});
   };
 
   const handleChange = (e) => {
-    setComment(e.target.value)
+    setContents(e.target.value)
 
   }
 
