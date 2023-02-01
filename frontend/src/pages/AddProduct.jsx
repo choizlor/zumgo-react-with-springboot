@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./styles/AddProduct.module.css";
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import testImg from "../assets/images/kim.png";
+import { useNavigate } from "react-router";
 // import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   // redux 사용하기
   // const user = useSelector((state) => { return state.user});
+  const token = window.localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [reservation, setReservation] = useState("");
   const [photo, setPhoto] = useState([]);
+  // const [userInfo, setUserInfo] = useState({});
 
   // 상품등록 axios
   const addProduct = () => {
@@ -22,12 +26,14 @@ export default function AddProduct() {
         title,
         price,
         description,
-        reservation : '2010-10-14',
-        photo : '아직이용',
+        reservation: "2010-10-14",
+        photo: "아직이용",
+        // user: userInfo,
         // status: 'INPROGRESS' //INPROGRESS, SOLD
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        navigate(`detail/${res.data}`)
       })
       .catch((err) => {
         console.log(err);
@@ -52,6 +58,7 @@ export default function AddProduct() {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
+
 
   return (
     <div className={styles.body}>
