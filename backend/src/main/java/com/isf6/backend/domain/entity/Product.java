@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="products")
 public class Product extends BaseTimeEntity {
 
@@ -35,17 +38,17 @@ public class Product extends BaseTimeEntity {
 
     // 외래키는 어쩌지..?
     // Timestamp..?
-    @Builder
-    public Product(String title, int price, String description, String reservation, String photo, ProductStatus status) {
-        this.title = title;
-        this.price = price;
-        this.description = description;
-        this.reservation = reservation;
-        this.photo = photo;
-        this.status = status;
-    }
+//    @Builder
+//    public Product(String title, int price, String description, String reservation, String photo, ProductStatus status) {
+//        this.title = title;
+//        this.price = price;
+//        this.description = description;
+//        this.reservation = reservation;
+//        this.photo = photo;
+//        this.status = status;
+//    }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 

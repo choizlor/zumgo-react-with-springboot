@@ -5,6 +5,7 @@ import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,11 +55,8 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<ProductListResponseDto> findAllDesc() {
-        return productRepository.findAllDesc().stream()
+        return productRepository.findByStatusByOrderByCreatedDateDesc(ProductStatus.ONSALE).stream()
                 .map(product -> new ProductListResponseDto(product))
                 .collect(Collectors.toList());
     }
-
-
-
 }
