@@ -33,6 +33,7 @@ const router = createBrowserRouter([
       { path: '/oauth', element: <Oauth/>, },
       { path: '/live', element: <Live/>, },
       { path: '/live/:productId', element: <VideoRoom/>, },
+      { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
       { path: '/chatlist', element: <ChatList/>, },
       { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
