@@ -22,6 +22,7 @@ import UserInfo from './pages/UserInfo';
 import AddReview from './pages/AddReview';
 import MyReviewList from './pages/MyReviewList';
 import Report from './pages/Report';
+import StompChat from './pages/StompChat';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
       { path: '/chatlist', element: <ChatList/>, },
-      { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
+      { path: '/chatroom/:chatroomId', element: <StompChat/>, },
       { path: '/addproduct', element: <AddProduct/>, },
       { path: '/review/:productId/create', element: <AddReview/>, },
       { path: '/userinfo', element: <UserInfo/>, },

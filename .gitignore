@@ -285,7 +285,7 @@ dist
 **/*.back.*
 
 node_modules
-
+yarn.lock
 *.sublime*
 
 psd
