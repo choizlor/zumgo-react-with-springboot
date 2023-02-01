@@ -72,14 +72,14 @@ export default function UpdateProduct() {
           onChange={handleTitleChange}
           type="text"
           placeholder="제목"
-          defaultValue={product.title}
+          defaultValue={title}
         />
         <input
           className={styles.input}
           onChange={handlePriceChange}
           type="number"
           placeholder="$ 가격 (0원 가능)"
-          defaultValue={product.price}
+          defaultValue={price}
         />
         <textarea
           className={styles.textarea}

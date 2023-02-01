@@ -24,7 +24,7 @@ export default function AddProduct() {
         description,
         reservation : '2010-10-14',
         photo : '아직이용',
-        status: 'INPROGRESS' //INPROGRESS, SOLD
+        // status: 'INPROGRESS' //INPROGRESS, SOLD
       })
       .then((res) => {
         console.log(res);
