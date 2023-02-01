@@ -55,7 +55,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<ProductListResponseDto> findAllDesc() {
-        return productRepository.findByStatusByOrderByCreatedDateDesc(ProductStatus.ONSALE).stream()
+        return productRepository.findAllDesc().stream()
                 .map(product -> new ProductListResponseDto(product))
                 .collect(Collectors.toList());
     }
