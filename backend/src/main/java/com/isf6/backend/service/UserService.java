@@ -2,6 +2,8 @@ package com.isf6.backend.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isf6.backend.common.oauth.KakaoProfile;
@@ -158,6 +160,25 @@ public class UserService {
         //(4)
         return user;
     }
+
+    public User getUserToken(String token) {
+        Long userCode = null;
+        token = token.replace(JwtProperties.TOKEN_PREFIX, "");
+
+        try{
+            userCode = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asLong();
+        } catch (TokenExpiredException e) {
+            e.printStackTrace();
+        } catch (JWTVerificationException e) {
+            e.printStackTrace();
+        }
+
+        User user = userRepository.findByUserCode(userCode);
+
+        return user;
+    }
+
+
 
 
 }

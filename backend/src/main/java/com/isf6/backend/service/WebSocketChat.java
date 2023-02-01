@@ -1,4 +1,4 @@
-package com.isf6.backend.api.service;
+package com.isf6.backend.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
