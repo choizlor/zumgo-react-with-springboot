@@ -4,7 +4,9 @@ import React, { Component, useCallback } from "react";
 import UserVideoComponent from "../UserVideoComponent";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const OPENVIDU_SERVER_URL = "http://localhost:5000/";
+const OPENVIDU_SERVER_URL = 'https://localhost:8080/';
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
@@ -36,6 +38,20 @@ const VideoRoomTest = () => {
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
       let data = JSON.stringify({ customSessionId: sessionId });
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+          headers: {
+            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+            'Content-Type': 'application/json',
+          },
+        })
+        .then ((res) => {
+          console.log('CREATE SESSION', res);
+          resolve(res.data.id);
+        })
+        .catch((err) => {
+          console.log
+        })
     });
   };
 
@@ -53,7 +69,7 @@ const VideoRoomTest = () => {
           data,
           {
             headers: {
-              Authorization: "token",
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
           }
