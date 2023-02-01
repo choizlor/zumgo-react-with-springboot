@@ -3,17 +3,21 @@ import { OpenVidu } from "openvidu-browser";
 import React, { Component, useCallback } from "react";
 import UserVideoComponent from "../UserVideoComponent";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import styles from "./VideoRoomTest.module.css";
 
-const OPENVIDU_SERVER_URL = 'https://localhost:8080/';
-const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+import basicImg from "../../../assets/images/kim.png";
 
+const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
+  const dispatch = useDispatch();
   const location = useLocation();
   const roomId = location.state !== null ? location.state.id : null;
   const roomTitle = location.state !== null ? location.state.title : null;
-  const isHost = false // useSelector?
+  const isHost = false; // useSelector?
 
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
@@ -24,6 +28,9 @@ const VideoRoomTest = () => {
   const [publisher, setPublisher] = useState(undefined); // 자기 자신의 캠
   const [subscribers, setSubscribers] = useState([]); // 다른 유저의 스트림 정보를 저장할 배열
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
+
+  const [profileImg, setProFileImg] = useState(basicImg); // 프로필 이미지
+  const [hostName, setHostName] = useState(undefined); // host 이름
 
   let OV = undefined;
 
@@ -39,19 +46,20 @@ const VideoRoomTest = () => {
     return new Promise((resolve, reject) => {
       let data = JSON.stringify({ customSessionId: sessionId });
       axios
-        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
           headers: {
-            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
+            Authorization:
+              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+            "Content-Type": "application/json",
           },
         })
-        .then ((res) => {
-          console.log('CREATE SESSION', res);
+        .then((res) => {
+          console.log("CREATE SESSION", res);
           resolve(res.data.id);
         })
         .catch((err) => {
-          console.log
-        })
+          console.log;
+        });
     });
   };
 
@@ -69,7 +77,8 @@ const VideoRoomTest = () => {
           data,
           {
             headers: {
-              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              Authorization:
+                "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
           }
@@ -199,12 +208,54 @@ const VideoRoomTest = () => {
     [subscribers]
   );
 
+  // user정보 가져오기
+  // axios 요청? redux?
+  const getUserInfo = async () => {
+    const user = state.userinfo;
+    const ownerPicturePath = user.picture;
+    const ownerName = user.name;
+    setProFileImg(ownerPicturePath);
+    setHostName(ownerName);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   // 로딩 페이지를 통한 방 입장
   const enterAuctionRoom = () => {
     joinSession();
   };
 
-  return <div></div>;
+  return (
+    <div className={styles.container}>
+      {session === undefined && roomId !== null && (
+        <Loading enterAuctionRoom={enterAuctionRoom}></Loading> // Loading 페이지 만들어야 함.
+      )}
+      {session === undefined ? (
+        <div className={styles.container}>
+          {mainStreamManager !== undefined ? (
+            <div className={styles.mainvideo}>
+              {isHost && <UserVideoComponent streamManager={publisher} />}
+              {!isHost && <UserVideoComponent streamManager={subscribers} />}
+            </div>
+          ) : null}
+          <div className={styles.sessionheader}>
+            <div className={styles.profile}>
+              <img src={profileImg} alt="/" />
+            </div>
+            <div className={styles.hostname}>{hostName}</div>
+          </div>
+          <div className={styles.totaluser}>{totalUsers}</div>
+          <div className={styles.livebtn}>LIVE</div>
+          <button
+            className={styles.leavebtn}
+            leaveSession={leaveSession}
+          ></button>
+        </div>
+      ) : null}
+    </div>
+  );
 };
 
 export default VideoRoomTest;
