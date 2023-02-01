@@ -5,16 +5,16 @@ export default function SellItem({ product }) {
   return (
     <div className={styles.body}>
       <Link to="/detail/:productId"></Link>
-      <div>
+      <div className={styles.image}>
       {JSON.stringify(product.image)}
       </div>
-      <div>
+      <div className={styles.name}>
       {JSON.stringify(product.name)}
       </div>
-      <div>
+      <div className={styles.price}>
       {JSON.stringify(product.price)}
       </div>
-      <div>
+      <div className={styles.status}>
       {JSON.stringify(product.status)}
       </div>
     </div>
