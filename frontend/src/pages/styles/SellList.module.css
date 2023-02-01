@@ -12,8 +12,7 @@
     align-items: center;
 }
 .status {
-    margin: 1.2rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     font-weight: bold;
 }

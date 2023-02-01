@@ -1,0 +1,9 @@
+.btnblock {
+    margin: 0 1.3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn:hover {
+    border-bottom: 2px solid black ;
+}
