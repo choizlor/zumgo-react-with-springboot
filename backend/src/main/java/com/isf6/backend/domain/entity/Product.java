@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,20 +48,24 @@ public class Product extends BaseTimeEntity {
 //        this.photo = photo;
 //        this.status = status;
 //    }
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "product")
     private LiveRoom liveroom;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<LiveRequest> liveRequests = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Wish> wishes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "product")
     private Bill bill;
 
