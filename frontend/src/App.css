@@ -6,6 +6,6 @@
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-/* .app {
-  position: relative;
-} */
+app {
+  width : 100vw;
+}
