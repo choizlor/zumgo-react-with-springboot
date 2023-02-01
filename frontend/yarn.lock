@@ -5047,10 +5047,17 @@ http-proxy-agent@^4.0.1:
     agent-base "6"
     debug "4"
 
+<<<<<<< HEAD
 http-proxy-middleware@^2.0.3:
   version "2.0.6"
   resolved "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.6.tgz"
   integrity sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==
+=======
+"http-proxy-middleware@^2.0.3", "http-proxy-middleware@^2.0.6":
+  "integrity" "sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw=="
+  "resolved" "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.6.tgz"
+  "version" "2.0.6"
+>>>>>>> 8ad62fe1e27d520ce4833e54264151af265434e5
   dependencies:
     "@types/http-proxy" "^1.17.8"
     http-proxy "^1.18.1"
