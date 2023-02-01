@@ -1,0 +1,126 @@
+.container {
+    width : 100vw;
+    height : 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* 상단 바 */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width : 95%;
+    margin : auto;
+}
+
+.topbar span {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* 채팅 리스트 */
+.chatbox {
+    height : 80%;
+    overflow: scroll;
+    width : 85%;
+    margin : auto;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.otherchat {
+    display: flex;
+    align-items: flex-end;
+    margin : 2.5% 0;
+}
+
+.otherimg {
+    width : 35px;
+    height : 35px;
+    margin-right : 2%;
+}
+
+.otherimg img {
+    object-fit: cover;
+    border-radius: 35px;
+}
+
+.othermsg {
+    height : 35px;
+    font-size: 13px;
+    border-radius: 15px 15px 15px 0;
+    background-color: #e9e9e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding : 5%;
+    margin-right : 2%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.otherdate {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+}
+
+.mychat {
+    margin : 2.5% 0;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+.mymsg {
+    height : 35px;
+    font-size: 13px;
+    border-radius: 15px 15px 0 15px;
+    background-color: black;
+    color : white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    padding : 5%;
+    margin-left: 2%;
+}
+
+.mydate {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+}
+
+/* 메시지 입력 바 */
+.sendzone {
+    width : 95%;
+    display: flex;
+    justify-content: space-between;
+    margin : auto;
+}
+
+.cameraicon {
+
+}
+
+.inputbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color : white;
+    width : 90%;
+    height: 45px;
+    border-radius: 45px;
+}
+
+.input {
+    background-color: black;
+    margin-left : 10%;
+    border: none;
+}
+
+.sendbtn {
+    margin-right : 3%;
+}
