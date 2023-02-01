@@ -1,5 +1,6 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
@@ -8,7 +9,10 @@ import com.isf6.backend.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,4 +43,22 @@ public class ProductService {
 
         return new ProductResponseDto(entity);
     }
+
+    @Transactional
+    public void delete (Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+
+        productRepository.delete(product);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductListResponseDto> findAllDesc() {
+        return productRepository.findAllDesc().stream()
+                .map(product -> new ProductListResponseDto(product))
+                .collect(Collectors.toList());
+    }
+
+
+
 }
