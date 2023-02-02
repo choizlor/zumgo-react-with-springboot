@@ -6,14 +6,17 @@ import * as StompJs from "@stomp/stompjs";
 import SockJs from "sockjs-client";
 
 export default function StompChat() {
-  // const client = useRef({});
+  const client = useRef({});
   const { channelId } = useParams(); // 채널을 구분하는 식별자
 
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
+  const token = window.localStorage.getItem("token"); // 현재 로그인 된 사용자의 토큰
 
-  const client = new StompJs.Client({
-      brokerURL: "ws://localhost:8080/stomp/chat",
+  const connect = () => {
+    client.current = new StompJs.Client({
+      webSocketFactory: () => new SockJs("/stomp/chat"),
+      // brokerURL: "ws://localhost:8080/stomp/chat",
       connectHeaders: {
         token: window.localStorage.getItem("token"),
       },
@@ -23,46 +26,32 @@ export default function StompChat() {
       reconnectDelay: 5000, // 자동 재 연결
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
+      onConnect: () => {
+        // 연결 되었을 때 실행할 함수
+        console.log("연결됐어 즐겨 유나");
+        subscribe();
+      },
     });
-  
-  // 연결
-  client.onConnect = function (frame) {
-    // 연결 되었을 때 실행할 함수
-    console.log('연결됐어 즐겨 유나')
-    subscribe();
+
+    client.current.activate();
   };
-  
-  // 에러 처리 함수
+
+  const disconnect = () => {
+    client.current.deactivate();
+  };
+
   client.onStompError = function (frame) {
+    // 에러 처리 함수
     console.log("Broker reported error: " + frame.headers["message"]);
-    console.log("Additional details:  "+ frame.body);
+    console.log("Additional details:  " + frame.body);
   };
-  
-  client.activate();
-  // client.activate();
-  // // 연결
-  // const connect = () => {
-  //   client.current = new StompJs.Client({
-  //     // STOMP 클라이언트 생성
-  //     brokerURL: "ws://localhost:8080/stomp/chat",
-  //     onConnect: () => {
-  //       subscribe(); // 연결 성공하면 구독하기
-  //     },
-  //     connectHeaders: {
-  //       token: window.localStorage.getItem("token"),
-  //     },
-  //   });
 
-  //   client.current.activate(); // 클라이언트 활성화
-  // };
+  // 클라이언트 활성화
 
-  // // 연결 끊기
-  // const disconnect = () => {
-  //   client.current.deactivate();
-  // };
-
+  // 메시지 전달 받기
   const subscribe = () => {
     client.current.subscribe(`/sub`, (body) => {
+      console.log(body, "❤");
       const json_body = JSON.parse(body.body);
       setChatList((chats) => [
         ...chats,
@@ -71,6 +60,7 @@ export default function StompChat() {
     });
   };
 
+  // 메시지 전송하기
   const sendMsg = (chat) => {
     if (!client.current.connected) return; // 비연결 => 메시지 보내지 않음
 
@@ -94,12 +84,12 @@ export default function StompChat() {
     sendMsg(chat);
   };
 
-  // useEffect(() => {
-  //   // 최초 렌더링 시 , 웹소켓에 연결
-  //   connect();
+  useEffect(() => {
+    // 최초 렌더링 시 , 웹소켓에 연결
+    connect();
 
-  //   return () => disconnect();
-  // }, []);
+    return () => disconnect();
+  }, []);
 
   return (
     <div>
