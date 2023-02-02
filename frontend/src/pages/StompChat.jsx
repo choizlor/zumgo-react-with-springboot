@@ -11,14 +11,14 @@ export default function StompChat() {
 
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
-  const token = window.localStorage.getItem("token"); // 현재 로그인 된 사용자의 토큰
+  const token = JSON.stringify(window.localStorage.getItem("token")); // 현재 로그인 된 사용자의 토큰
 
   const connect = () => {
     client.current = new StompJs.Client({
-      webSocketFactory: () => new SockJs("/stomp/chat"),
+      webSocketFactory: () => new SockJs("/stomp/chat/"),
       // brokerURL: "ws://localhost:8080/stomp/chat",
       connectHeaders: {
-        token: window.localStorage.getItem("token"),
+        token,
       },
       debug: function (str) {
         console.log(str);
