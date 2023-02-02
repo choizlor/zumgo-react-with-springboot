@@ -36,23 +36,23 @@ public class UserService {
     public OauthToken getAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
 
-        //(3)
+        //1. Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        //(4)
+        //2.
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "b875d5c09e310962a4402f90c93aa19c");
-        params.add("redirect_uri", "http://localhost:3000/oauth");
+        params.add("client_id", "b875d5c09e310962a4402f90c93aa19c"); //REST API KEY
+        params.add("redirect_uri", "http://localhost:3000/oauth"); //REDIRECT URI
         params.add("code", code);
         params.add("client_secret", "QMJmsfyHMzlMcApqls4Txlhk7CrjE3LU"); // 생략 가능!
 
-        //(5)
+        //3.
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
                 new HttpEntity<>(params, headers);
 
-        //(6)
+        //4. 엑세스 토큰을 발급 받기
         ResponseEntity<String> accessTokenResponse = rt.exchange(
                 "https://kauth.kakao.com/oauth/token",
                 HttpMethod.POST,
@@ -60,7 +60,7 @@ public class UserService {
                 String.class
         );
 
-        //(7)
+        //5.
         ObjectMapper objectMapper = new ObjectMapper();
         OauthToken oauthToken = null;
         try {
@@ -69,26 +69,21 @@ public class UserService {
             e.printStackTrace();
         }
 
-        return oauthToken; //(8)
+        return oauthToken;
     }
 
-    //(1-1) 2단계 유지
     public KakaoProfile findProfile(String token) {
-
-        //(1-2)
         RestTemplate rt = new RestTemplate();
 
-        //(1-3)
+        //1. 헤더 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token); //(1-4)
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        //(1-5)
         HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest =
                 new HttpEntity<>(headers);
 
-        //(1-6)
-        // Http 요청 (POST 방식) 후, response 변수에 응답을 받음
+        //2.Http 요청 (POST 방식) 후, response 변수에 유저 프로필 정보 응답을 받음
         ResponseEntity<String> kakaoProfileResponse = rt.exchange(
                 "https://kapi.kakao.com/v2/user/me",
                 HttpMethod.POST,
@@ -96,7 +91,7 @@ public class UserService {
                 String.class
         );
 
-        //(1-7)
+        //3.
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfile kakaoProfile = null;
         try {
@@ -108,55 +103,51 @@ public class UserService {
         return kakaoProfile;
     }
 
-    //3단계 추가 유지
-    public String saveUserAndGetToken(String token) { //(1)
+    public String saveUserAndGetToken(String token) {
         KakaoProfile profile = findProfile(token);
 
+        //1. 이메일로 유저 정보 찾기
         User user = userRepository.findByKakaoEmail(profile.getKakao_account().getEmail());
+
+        //2. 유저 정보가 없다면 DB에 새로 저장
         if(user == null) {
             user = User.builder()
                     .kakaoId(profile.getId())
                     .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())
                     .kakaoNickname(profile.getKakao_account().getProfile().getNickname())
                     .kakaoEmail(profile.getKakao_account().getEmail())
+                    .point(5) //기본 포인트 5로 설정
                     //.userRole("ROLE_USER")
                     .build();
 
             userRepository.save(user);
         }
 
-        return createToken(user); //(2)
+        return createToken(user);
     }
 
-    public String createToken(User user) { //(2-1)
-
-        //(2-2)
+    public String createToken(User user) {
         String jwtToken = JWT.create()
 
-                //(2-3)
                 .withSubject(user.getKakaoEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
 
-                //(2-4)
                 .withClaim("id", user.getUserCode())
                 .withClaim("nickname", user.getKakaoNickname())
 
-                //(2-5)
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
-        return jwtToken; //(2-6)
+        return jwtToken;
     }
 
-    //4단계
     public User getUser(HttpServletRequest request) { //(1)
-        //(2)
+        //1. request에서 userCode 가져오기
         Long userCode = (Long) request.getAttribute("userCode");
-        log.info("넘겨 받은 userCode : {}", userCode);
+        //log.info("넘겨 받은 userCode : {}", userCode);
 
-        //(3)
+        //2.userCode로 유저 찾기
         User user = userRepository.findByUserCode(userCode);
-
-        //(4)
+        
         return user;
     }
 

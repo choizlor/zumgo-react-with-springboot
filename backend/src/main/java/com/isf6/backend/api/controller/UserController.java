@@ -41,7 +41,7 @@ public class UserController {
         String jwtToken = userService.saveUserAndGetToken(oauthToken.getAccess_token());
         //log.info("jwtToken : {} ", jwtToken);
 
-        // 3.
+        // 3. 헤더에 JWT 토근 정보 담기
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
         log.info("headers : {} ", headers);
@@ -52,9 +52,24 @@ public class UserController {
     //유저 정보 조회
     @GetMapping("/me")
     public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
+
         // 1. token 정보를 포함한 request로 로그인한 유저 정보 가져오기
         User user = userService.getUser(request);
-        return ResponseEntity.ok().body(user);
+
+        //2. user가 null이 아니라면 반환유저객체 만들고 그 정보를 담아서 return
+        if(user != null) {
+            UserResDto userResDto = new UserResDto(user);
+            response.put("result", "SUCCESS");
+            response.put("user", userResDto);
+
+            return ResponseEntity.status(200).body(response);
+        }
+
+        //3. 아니라면 실패 정보를 담아서 return
+        response.put("result", "FAIL");
+        response.put("reason", "유저 정보 수정 실패");
+        return ResponseEntity.status(200).body(response);
     }
 
     //유저 신고 등록
