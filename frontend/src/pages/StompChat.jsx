@@ -7,7 +7,9 @@ import SockJs from "sockjs-client";
 
 export default function StompChat() {
   const client = useRef({});
-  const { channelId } = useParams(); // 채널을 구분하는 식별자
+  const param = useParams(); // 채널을 구분하는 식별자c
+  const chatroomId = param.chatroomId;
+
 
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
@@ -50,7 +52,7 @@ export default function StompChat() {
 
   // 메시지 전달 받기
   const subscribe = () => {
-    client.current.subscribe(`/sub`, (body) => {
+    client.current.subscribe(`/sub/${chatroomId}`, (body) => {
       console.log(body, "❤");
       const json_body = JSON.parse(body.body);
       setChatList((chats) => [
