@@ -7,18 +7,20 @@ import SockJs from "sockjs-client";
 
 export default function StompChat() {
   const client = useRef({});
-  const { channelId } = useParams(); // 채널을 구분하는 식별자
+  const param = useParams(); // 채널을 구분하는 식별자c
+  const chatroomId = param.chatroomId;
+
 
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
-  const token = window.localStorage.getItem("token"); // 현재 로그인 된 사용자의 토큰
+  const token = JSON.stringify(window.localStorage.getItem("token")); // 현재 로그인 된 사용자의 토큰
 
   const connect = () => {
     client.current = new StompJs.Client({
-      webSocketFactory: () => new SockJs("/stomp/chat"),
+      webSocketFactory: () => new SockJs("/stomp/chat/"),
       // brokerURL: "ws://localhost:8080/stomp/chat",
       connectHeaders: {
-        token: window.localStorage.getItem("token"),
+        token,
       },
       debug: function (str) {
         console.log(str);
@@ -32,8 +34,7 @@ export default function StompChat() {
         subscribe();
       },
     });
-
-    client.current.activate();
+    client.current.activate();   // 클라이언트 활성화
   };
 
   const disconnect = () => {
@@ -46,11 +47,11 @@ export default function StompChat() {
     console.log("Additional details:  " + frame.body);
   };
 
-  // 클라이언트 활성화
+  
 
   // 메시지 전달 받기
   const subscribe = () => {
-    client.current.subscribe(`/sub`, (body) => {
+    client.current.subscribe(`/sub/${chatroomId}`, ({body}) => {
       console.log(body, "❤");
       const json_body = JSON.parse(body.body);
       setChatList((chats) => [
@@ -93,7 +94,7 @@ export default function StompChat() {
 
   return (
     <div>
-      <div>{chatList}</div>
+      {chatList[0]}
       <form onSubmit={(event) => handleSubmit(event, chat)}>
         <input type="text" onChange={handleInputChange} value={chat} />
         <input type="submit" value={"전송"} />
