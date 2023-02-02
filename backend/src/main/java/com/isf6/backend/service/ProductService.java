@@ -59,4 +59,11 @@ public class ProductService {
                 .map(product -> new ProductListResponseDto(product))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public Product getProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+
+        return product;
+    }
 }
