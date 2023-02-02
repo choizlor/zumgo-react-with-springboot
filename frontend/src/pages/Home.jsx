@@ -25,7 +25,7 @@ export default function Home() {
           <p className={styles.title}>나이키 레거시 모자 판매합니다</p>
           <p>10,000원</p>
           <div className={styles.container}>
-            <p>판매 중</p>
+            <p>판매 중</p>               
             <div className={styles.icons}>
               <div className={styles.zBox}>
                 <img src={z} className={styles.z} />
@@ -36,7 +36,7 @@ export default function Home() {
                 <div>2</div>
               </div>
               <div className={styles.heartBox}>
-                <HeartIcon />
+                <HeartIcon /> 
                 <div>5</div>
               </div>
             </div>

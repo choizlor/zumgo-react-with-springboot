@@ -39,4 +39,10 @@ public class ProductService {
 
         return new ProductResponseDto(entity);
     }
+
+    public Product getProduct(long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
+        return product;
+    }
+
 }
