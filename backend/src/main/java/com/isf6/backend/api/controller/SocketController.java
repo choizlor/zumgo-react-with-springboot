@@ -1,20 +1,32 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Request.ChatRoomSaveReqDto;
+import com.isf6.backend.api.Response.ChatRoomResDto;
 import com.isf6.backend.api.Request.MessageDto;
+import com.isf6.backend.service.SocketService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@RestController("/socket")
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/socket")
 public class SocketController {
+
+    @Autowired
+    SocketService socketService;
 
     private static Set<Integer> userList = new HashSet<>();
 
@@ -34,6 +46,19 @@ public class SocketController {
         log.info("userId={}", userId);
         userList.add(userId);
         userList.forEach(System.out::println);
+    }
+
+    @PostMapping("/room")
+    public String createRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
+        //body로 유저 코드 2개 넘겨준대 첫글자만 대문자로 Buyer, Seller 코드
+        log.info("방 생성");
+
+        Long buyerCode = chatRoomSaveReqDto.getBuyerCode();
+        Long sellerCode = chatRoomSaveReqDto.getSellerCode();
+        String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
+
+        //room_number만 리턴
+        return chatRoomCode;
     }
 
 }
