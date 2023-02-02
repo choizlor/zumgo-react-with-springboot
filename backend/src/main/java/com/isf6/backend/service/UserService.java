@@ -140,14 +140,20 @@ public class UserService {
         return jwtToken;
     }
 
+    //유저 코드로 유저 찾기
+    public User findUser(Long userCode) {
+        User user = userRepository.findByUserCode(userCode);
+        return user;
+    }
+
     public User getUser(HttpServletRequest request) { //(1)
         //1. request에서 userCode 가져오기
         Long userCode = (Long) request.getAttribute("userCode");
         //log.info("넘겨 받은 userCode : {}", userCode);
 
         //2.userCode로 유저 찾기
-        User user = userRepository.findByUserCode(userCode);
-        
+        User user = findUser(userCode);
+
         return user;
     }
 
@@ -164,7 +170,7 @@ public class UserService {
             e.printStackTrace();
         }
 
-        User user = userRepository.findByUserCode(userCode);
+        User user = findUser(userCode);
 
         return user;
     }

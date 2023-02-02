@@ -72,15 +72,24 @@ public class UserController {
         return ResponseEntity.status(200).body(response);
     }
 
-    //유저 신고 등록
-    @PostMapping("/user/report/{reportedUserCode}")
-    public ResponseEntity report(@PathVariable Long reportedUserCode, @RequestBody ReportSaveReqDto reportSaveReqDto) {
+    //다른 유저 정보 조회
+    @GetMapping("/user/{userCode}")
+    public ResponseEntity getUser(@PathVariable Long userCode) {
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
-        // 1. 신고 당하는 유저의 code와 신고 객체를 넘겨서 DB에 신고 등록
-        reportService.saveReport(reportedUserCode, reportSaveReqDto);
-        response.put("reason", "신고 성공");
+        User user = userService.findUser(userCode);
 
+        if(user != null) {
+            UserResDto userResDto = new UserResDto(user);
+            response.put("result", "SUCCESS");
+            response.put("user", userResDto);
+
+            return ResponseEntity.status(200).body(response);
+        }
+
+        //3. 아니라면 실패 정보를 담아서 return
+        response.put("result", "FAIL");
+        response.put("reason", "유저 정보 수정 실패");
         return ResponseEntity.status(200).body(response);
     }
 
@@ -104,6 +113,18 @@ public class UserController {
         //3. 아니라면 실패 정보를 담아서 return
         response.put("result", "FAIL");
         response.put("reason", "유저 정보 수정 실패");
+        return ResponseEntity.status(200).body(response);
+    }
+
+    //유저 신고 등록
+    @PostMapping("/user/report/{reportedUserCode}")
+    public ResponseEntity report(@PathVariable Long reportedUserCode, @RequestBody ReportSaveReqDto reportSaveReqDto) {
+        Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
+
+        // 1. 신고 당하는 유저의 code와 신고 객체를 넘겨서 DB에 신고 등록
+        reportService.saveReport(reportedUserCode, reportSaveReqDto);
+        response.put("reason", "신고 성공");
+
         return ResponseEntity.status(200).body(response);
     }
 
