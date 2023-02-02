@@ -38,6 +38,8 @@ public class StompHandler implements ChannelInterceptor {
             String roomId = chatService.getRoomId(Optional.ofNullable((String) message.getHeaders().get("simpDestination")).orElse("InvalidRoomId"));
             // 채팅방에 들어온 클라이언트 sessionId를 roomId와 맵핑해 놓는다.(나중에 특정 세션이 어떤 채팅방에 들어가 있는지 알기 위함)
             String sessionId = (String) message.getHeaders().get("simpSessionId");
+            System.out.println(roomId);
+            System.out.println(sessionId);
             chatRepository.setUserEnterInfo(sessionId, roomId);
             // 클라이언트 입장
             String name = Optional.ofNullable((Principal) message.getHeaders().get("simpUser")).map(Principal::getName).orElse("사용자 ");
