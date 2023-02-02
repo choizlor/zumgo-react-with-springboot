@@ -8,8 +8,10 @@ import styles from "./styles/Home.module.css";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+  
   return (
     <div>
       <TopNav />
@@ -42,7 +44,7 @@ export default function Home() {
             </div>
           </div>
         </Link>
-        <BottomNav />
+        <BottomNav/>
       </div>
     </div>
   );
