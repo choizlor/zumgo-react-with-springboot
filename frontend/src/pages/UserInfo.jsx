@@ -10,6 +10,7 @@ export default function UserInfo() {
     const handleLogout = () => {
         window.localStorage.removeItem('token')
     }
+    
     return (
         <div>
             회원 정보 페이지
