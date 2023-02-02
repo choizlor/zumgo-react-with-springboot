@@ -38,7 +38,6 @@ export default function Detail() {
     .catch((err) => { console.log(err) })
   })
 
-  const [product, setProduct] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:8080/product/${productId}`)
