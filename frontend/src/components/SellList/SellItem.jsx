@@ -1,6 +1,14 @@
 import React from "react";
 import styles from "./SellItem.module.css";
 import { Link } from "react-router-dom";
+import z from "../../assets/images/z.png";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/outline";
+
+
+
+
+
 export default function SellItem({ product }) {
   // const image = JSON.stringify(product.image).replace (/"/g,'');
   const name = JSON.stringify(product.name).replace(/"/g, "");
@@ -15,9 +23,30 @@ export default function SellItem({ product }) {
             alt=""
           />
         </div>
-        <div className={styles.name}>{name}</div>
-        <div className={styles.price}>{price}</div>
-        <div className={styles.status}>{status}</div>
+        <div className={styles.info}>
+          <div className={styles.name}>{name}</div>
+          <div className={styles.price}>{price}</div>
+          <div className={styles.statusbox}>
+            <div className={styles.status}>{status}</div>
+            <div className={styles.icons}>
+              <div className={styles.zbox}>
+                <div className={styles.z}>
+                  <img src={z} className={styles.zimg} alt="" />
+                </div>
+                <div className={styles.count}>2</div>
+              </div>
+              <div className={styles.chatBox}>
+                <ChatBubbleLeftRightIcon />
+                <div className={styles.count}>2</div>
+              </div>
+              <div className={styles.heartBox}>
+                <HeartIcon />
+                <div className={styles.count}>5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
       </Link>
     </div>
   );

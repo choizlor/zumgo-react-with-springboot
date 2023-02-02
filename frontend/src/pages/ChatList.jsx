@@ -6,5 +6,5 @@ export default function ChatList() {
             채팅 목록
         </div>
     );
-}
+ }
 
