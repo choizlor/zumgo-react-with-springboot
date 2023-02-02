@@ -1,50 +1,99 @@
-import React, { useEffect,useState } from 'react';
-import styles from './styles/UserInfo.module.css';
-import UserInfoDetail from '../components/UserInfo/UserInfoDetail';
-import BottomNav from '../components/Nav/BottomNav';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import styles from "./styles/UserInfo.module.css";
+import BottomNav from "../components/Nav/BottomNav";
+import Reviews from "../components/UserInfo/Reviews";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+  ChevronLeftIcon,
+  HeartIcon,
+  ShoppingBagIcon,
+  ListBulletIcon,
+  CircleStackIcon,
+} from "@heroicons/react/24/outline";
 
 export default function UserInfo() {
-    const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  // 마이 페이지 인지 확인하기
+  const param = useParams();
+  const userId = param.userId;
+  const me = useSelector((state) => {
+    return state.user;
+  });
+  // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
+  const isMe = Number(userId) === me.userCode ? true : false;
 
-    // 마이 페이지 인지 확인하기
-    const [isMe, setIsMe] = useState(false);
-    const store = useSelector((state) => { return state.user })
-    console.log(store)
+  // 로그아웃
+  const REST_API_KEY = "b875d5c09e310962a4402f90c93aa19c";
+  const LOGOUT_REDIRECT_URI = "http://localhost:3000";
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
-    // 로그아웃
-    const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c';
-    const LOGOUT_REDIRECT_URI = "http://localhost:3000"; 
-    const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+  };
 
-    const handleLogout = () => {
-        window.localStorage.removeItem('token')
-    }
+  //   사용자 정보를 불러오는 api
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/user/${userId}`).then((res) => {
+      setUserInfo(res.data.user);
+    });
+  }, []);
 
-    // 사용자 정보를 불러오는 api
-    // const param = useParams();
-    // const userId = param.userId;
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8080/user/${userId}`)
-    //     .then((res) => {
-    //         console.log('현재 페이지의 유저 : ', res.data)
-    //         setUserInfo(res.data)
-    //     })
-    // })
-
-    
-    return (
-        <div>
-            <span onClick={handleLogout}>
-                <a href={KAKAO_AUTH_URI} className={styles.logout}>
-                로그아웃
-                </a>
-            </span>
-            <UserInfoDetail/>
-            <BottomNav/>
+  return (
+    <div className={styles.body}>
+      <div className={styles.nav}>
+        <div className={styles.navleft}>
+          <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+          <div className={styles.title}>프로필</div>
         </div>
-    );
-}
+        <div className={styles.navright} onClick={handleLogout}>
+          <a href={KAKAO_AUTH_URI} className={styles.logout}>
+            로그아웃
+          </a>
+        </div>
+      </div>
 
+      <div className={styles.userinfo}>
+        <div className={styles.userimg}>
+          <img
+            src={true ? me.kakaoProfileImg : userInfo.kakaoProfileImg}
+            alt=""
+          />
+        </div>
+        <div className={styles.username}>{userInfo.kakaoNickname}</div>
+      </div>
+      {/* 목록 리스트 */}
+      <div className={styles.menus}>
+        <div className={styles.menustitle}>
+          {userInfo.kakaoNickname}님의 거래
+        </div>
+        <div className={styles.menu}>
+          <CircleStackIcon className={styles.menuicon} />
+          <div className={styles.menutitle}>판매목록</div>
+        </div>
+        {isMe ? (
+          <>
+            <div className={styles.menu}>
+              <HeartIcon className={styles.menuicon} />
+              <div className={styles.menutitle}>관심목록</div>
+            </div>
+            <div className={styles.menu}>
+              <ShoppingBagIcon className={styles.menuicon} />
+              <div className={styles.menutitle}>구매목록</div>
+            </div>
+            <div className={styles.menu}>
+              <ListBulletIcon className={styles.menuicon} />
+              <div className={styles.menutitle}>내가 쓴 리뷰</div>
+            </div>
+          </>
+        ) : null}
+      </div>
+      {/* 사용자에게 달린 리뷰 */}
+      <Reviews />
+
+      {/* <UserInfoDetail/> */}
+      <BottomNav />
+    </div>
+  );
+}
