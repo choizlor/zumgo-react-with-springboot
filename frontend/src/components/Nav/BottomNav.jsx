@@ -8,8 +8,11 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import LiveIcon from "../../assets/images/LiveIcon.png";
+import { useSelector } from "react-redux";
 
 export default function BottomNav() {
+  const userId = useSelector((state) => { return state.user.userCode})
+  console.log(userId)
 
   const navigate = useNavigate();
   return (
@@ -18,7 +21,8 @@ export default function BottomNav() {
         <ChatBubbleOvalLeftIcon className={styles.icon} onClick={() => { navigate('/chatlist') }}/>
         <div><img className={styles.liveicon} onClick={() => { navigate('/live') }} src={LiveIcon} alt="live" /></div>
         <PlusCircleIcon className={styles.icon} onClick={() => { navigate('/addproduct') }}/>
-        <UserCircleIcon className={styles.icon} onClick={() => { navigate('/userinfo') }}/>
+        <UserCircleIcon className={styles.icon} onClick={() => { navigate(`/userinfo/${userId}`) }}/>
     </nav>
-  );
-}
+  );  
+} 
+              

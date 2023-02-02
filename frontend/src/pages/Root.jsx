@@ -19,14 +19,14 @@ export default function Root() {
             }
             );
             res.then((user) => {
-                console.log('로그인된 유저 : ', user.data)
+                console.log('로그인된 유저 : ', user.data.user)
                 dispatch(login({
-                    userCode: user.data.userCode,
-                    kakaoId : user.data.kakaoId,
-                    kakaoNickname: user.data.kakaoNickname,
+                    userCode: user.data.user.userCode,
+                    kakaoId : user.data.user.kakaoId,
+                    kakaoNickname: user.data.user.kakaoNickname,
                 }))
 
-                setUserInfo(user.data)
+                setUserInfo(user.data.user)
 
             })
         } catch (err) {
