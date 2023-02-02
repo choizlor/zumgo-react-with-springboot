@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,14 +17,17 @@ public class Bill {
 
     private String review;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;

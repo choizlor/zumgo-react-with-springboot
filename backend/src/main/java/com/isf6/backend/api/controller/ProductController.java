@@ -5,6 +5,7 @@ import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -26,5 +27,17 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public ProductResponseDto findById (@PathVariable Long id) {
         return productService.findById(id);
+    }
+
+    @DeleteMapping("product/{id}")
+    public Long delete(@PathVariable Long id) {
+        productService.delete(id);
+        return id;
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("product", productService.findAllDesc());
+        return "index";
     }
 }
