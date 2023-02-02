@@ -2,6 +2,9 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
 import UserVideoComponent from "../UserVideoComponent";
+import Timer from "../../Auction/Timer"
+import ChattingForm from "../ChattingForm";
+import ChattingList from "../ChattingList";
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 // const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
@@ -19,8 +22,8 @@ class VideoRoom extends Component {
       mainStreamManager: undefined, // 페이지의 메인 비디오 화면(퍼블리셔 또는 참가자의 화면 중 하나)
       publisher: undefined, // 자기 자신의 캠
       subscribers: [], // 다른 유저의 스트림 정보를 저장할 배열
-      // chatDisplay: 'none', // 채팅 display
-      // messageList: [], // 메세지 정보를 담을 배열
+      chatDisplay: 'none', // 채팅 display
+      messageList: [], // 메세지 정보를 담을 배열
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -30,7 +33,7 @@ class VideoRoom extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
-    // this.toggleChat = this.toggleChat.bind(this);
+    this.toggleChat = this.toggleChat.bind(this);
   }
 
   componentDidMount() {
@@ -120,11 +123,11 @@ class VideoRoom extends Component {
         });
 
         // 채팅 신호 수신하여 메세지 리스트 업데이트
-        // mySession.on("signal:chat", (event) => {
-        //   const tmp = this.state.messageList.slice();
-        //   tmp.push(event.data);
-        //   this.setState({messageList: tmp})
-        // });
+        mySession.on("signal:chat", (event) => {
+          const tmp = this.state.messageList.slice();
+          tmp.push(event.data);
+          this.setState({messageList: tmp})
+        });
 
         // --- 4) 유효한 토큰으로 세션에 접속하기 ---
         // 'getToken' method is simulating what your server-side should do.
@@ -194,7 +197,7 @@ class VideoRoom extends Component {
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       mainStreamManager: undefined,
       publisher: undefined,
-      // messageList: []
+      messageList: []
     });
   }
 
@@ -234,37 +237,37 @@ class VideoRoom extends Component {
 }
 
   // 채팅창 열기
-  // toggleChat(property) {
-  //   let display = property;
+  toggleChat(property) {
+    let display = property;
 
-  //   if (display === undefined) {
-  //     display = this.state.chatDisplay === 'none' ? 'block' : 'none';
-  //   }
-  //   if (display === 'block') {
-  //     this.setState({ chatDisplay: display, messageReceived: false });
-  //   } else {
-  //     console.log('chat', display);
-  //     this.setState({ chatDisplay: display });
-  //   }
-  // }
+    if (display === undefined) {
+      display = this.state.chatDisplay === 'none' ? 'block' : 'none';
+    }
+    if (display === 'block') {
+      this.setState({ chatDisplay: display, messageReceived: false });
+    } else {
+      console.log('chat', display);
+      this.setState({ chatDisplay: display });
+    }
+  }
 
   // 메세지 보내기
-  // sendMsg(msg, currentSession) {
-  //   // Sender of the message (after 'session.connect')
-  //   // this.state.session으로는 자식이 인식할 수 없으므로 currentSession을 자식에게 props로 넘겨주고 다시 받음
-  //   currentSession
-  //     .signal({
-  //       data: msg, // Any string (optional)
-  //       to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
-  //       type: "chat", // The type of message (optional)
-  //     })
-  //     .then(() => {
-  //       console.log("Message successfully sent");
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
+  sendMsg(msg, currentSession) {
+    // Sender of the message (after 'session.connect')
+    // this.state.session으로는 자식이 인식할 수 없으므로 currentSession을 자식에게 props로 넘겨주고 다시 받음
+    currentSession
+      .signal({
+        data: msg, // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: "chat", // The type of message (optional)
+      })
+      .then(() => {
+        console.log("Message successfully sent");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   render() {
     const mySessionId = this.state.mySessionId;
@@ -321,6 +324,7 @@ class VideoRoom extends Component {
         {this.state.session !== undefined ? (
           <div id="session">
             <div id="session-header">
+              <Timer />
               <h1 id="session-title">{mySessionId}</h1>
               <input
                 className="btn btn-large btn-danger"
@@ -346,8 +350,8 @@ class VideoRoom extends Component {
                 />
               </div>
             ) : null}
-            {/* <ChattingList messageList={this.state.messageList}></ChattingList>
-            <ChattingForm myUserName={this.state.myUserName} onMessage={this.sendMsg} currentSession={this.state.session}></ChattingForm> */}
+            <ChattingList messageList={this.state.messageList}></ChattingList>
+            <ChattingForm myUserName={this.state.myUserName} onMessage={this.sendMsg} currentSession={this.state.session}></ChattingForm>
             {/* <div id="video-container" className="col-md-6">
               {this.state.publisher !== undefined ? (
                 <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
