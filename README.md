@@ -21,4 +21,5 @@ ex) feature/login
 ex) feature/login-api   
 
 * Merge 주기   
-- master: 매주 금요일
+master: 매주 금요일
+develop: 필요 시
