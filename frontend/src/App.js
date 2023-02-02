@@ -23,6 +23,7 @@ import AddReview from './pages/AddReview';
 import MyReviewList from './pages/MyReviewList';
 import Report from './pages/Report';
 import StompChat from './pages/StompChat';
+// import VideoRoomTest from './components/LiveRoom/test/VideoRoomTest';
 
 const router = createBrowserRouter([
   {

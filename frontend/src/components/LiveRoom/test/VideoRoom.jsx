@@ -2,12 +2,12 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
 import UserVideoComponent from "../UserVideoComponent";
-import Timer from "../../Auction/Timer"
+import Timer from "../../Auction/Timer";
 import ChattingForm from "../ChattingForm";
 import ChattingList from "../ChattingList";
 
-// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
-// const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+// const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
+// const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const OPENVIDU_SERVER_URL = "http://localhost:5000/";
 
@@ -22,7 +22,7 @@ class VideoRoom extends Component {
       mainStreamManager: undefined, // 페이지의 메인 비디오 화면(퍼블리셔 또는 참가자의 화면 중 하나)
       publisher: undefined, // 자기 자신의 캠
       subscribers: [], // 다른 유저의 스트림 정보를 저장할 배열
-      chatDisplay: 'none', // 채팅 display
+      chatDisplay: "none", // 채팅 display
       messageList: [], // 메세지 정보를 담을 배열
     };
 
@@ -126,7 +126,7 @@ class VideoRoom extends Component {
         mySession.on("signal:chat", (event) => {
           const tmp = this.state.messageList.slice();
           tmp.push(event.data);
-          this.setState({messageList: tmp})
+          this.setState({ messageList: tmp });
         });
 
         // --- 4) 유효한 토큰으로 세션에 접속하기 ---
@@ -197,56 +197,59 @@ class VideoRoom extends Component {
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       mainStreamManager: undefined,
       publisher: undefined,
-      messageList: []
+      messageList: [],
     });
   }
 
   async switchCamera() {
     try {
-        const devices = await this.OV.getDevices()
-        var videoDevices = devices.filter(device => device.kind === 'videoinput');
+      const devices = await this.OV.getDevices();
+      var videoDevices = devices.filter(
+        (device) => device.kind === "videoinput"
+      );
 
-        if (videoDevices && videoDevices.length > 1) {
+      if (videoDevices && videoDevices.length > 1) {
+        var newVideoDevice = videoDevices.filter(
+          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
+        );
 
-            var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
+        if (newVideoDevice.length > 0) {
+          // Creating a new publisher with specific videoSource
+          // In mobile devices the default and first camera is the front one
+          var newPublisher = this.OV.initPublisher(undefined, {
+            videoSource: newVideoDevice[0].deviceId,
+            publishAudio: true,
+            publishVideo: true,
+            mirror: true,
+          });
 
-            if (newVideoDevice.length > 0) {
-                // Creating a new publisher with specific videoSource
-                // In mobile devices the default and first camera is the front one
-                var newPublisher = this.OV.initPublisher(undefined, {
-                    videoSource: newVideoDevice[0].deviceId,
-                    publishAudio: true,
-                    publishVideo: true,
-                    mirror: true
-                });
+          //newPublisher.once("accessAllowed", () => {
+          await this.state.session.unpublish(this.state.mainStreamManager);
 
-                //newPublisher.once("accessAllowed", () => {
-                await this.state.session.unpublish(this.state.mainStreamManager)
-
-                await this.state.session.publish(newPublisher)
-                this.setState({
-                    currentVideoDevice: newVideoDevice[0],
-                    mainStreamManager: newPublisher,
-                    publisher: newPublisher,
-                });
-            }
+          await this.state.session.publish(newPublisher);
+          this.setState({
+            currentVideoDevice: newVideoDevice[0],
+            mainStreamManager: newPublisher,
+            publisher: newPublisher,
+          });
         }
+      }
     } catch (e) {
-        console.error(e);
+      console.error(e);
     }
-}
+  }
 
   // 채팅창 열기
   toggleChat(property) {
     let display = property;
 
     if (display === undefined) {
-      display = this.state.chatDisplay === 'none' ? 'block' : 'none';
+      display = this.state.chatDisplay === "none" ? "block" : "none";
     }
-    if (display === 'block') {
+    if (display === "block") {
       this.setState({ chatDisplay: display, messageReceived: false });
     } else {
-      console.log('chat', display);
+      console.log("chat", display);
       this.setState({ chatDisplay: display });
     }
   }
@@ -269,6 +272,10 @@ class VideoRoom extends Component {
       });
   }
 
+  enterRoom = () => {
+    this.joinSession();
+  };
+
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
@@ -277,46 +284,10 @@ class VideoRoom extends Component {
       <div className="container">
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="img-div">
-              <img
-                src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                alt="OpenVidu logo"
-              />
-            </div>
             <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session COPY</h1>
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
+              <h1>{myUserName} 님,</h1>
+              <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
+              <button style={{border: '1px solid red'}} onClick={this.joinSession}>라이브 입장하기</button>
             </div>
           </div>
         ) : null}
@@ -341,17 +312,21 @@ class VideoRoom extends Component {
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
                 />
-                <input
+                {/* <input
                   className="btn btn-large btn-success"
                   type="button"
                   id="buttonSwitchCamera"
                   onClick={this.switchCamera}
                   value="Switch Camera"
-                />
+                /> */}
               </div>
             ) : null}
             <ChattingList messageList={this.state.messageList}></ChattingList>
-            <ChattingForm myUserName={this.state.myUserName} onMessage={this.sendMsg} currentSession={this.state.session}></ChattingForm>
+            <ChattingForm
+              myUserName={this.state.myUserName}
+              onMessage={this.sendMsg}
+              currentSession={this.state.session}
+            ></ChattingForm>
             {/* <div id="video-container" className="col-md-6">
               {this.state.publisher !== undefined ? (
                 <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>

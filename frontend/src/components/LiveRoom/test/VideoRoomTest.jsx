@@ -1,23 +1,31 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import React, { Component, useCallback } from "react";
+import React, { Component, useCallback, useEffect, useState } from "react";
 import UserVideoComponent from "../UserVideoComponent";
+import ChattingForm from "../ChattingForm";
+import ChattingList from "../ChattingList";
+import Timer from "../../Auction/Timer";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./VideoRoomTest.module.css";
 
 import basicImg from "../../../assets/images/kim.png";
 
-const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+// const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
+// const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+
+const OPENVIDU_SERVER_URL = "http://localhost:5000/";
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
   const dispatch = useDispatch();
   const location = useLocation();
-  const roomId = location.state !== null ? location.state.id : null;
-  const roomTitle = location.state !== null ? location.state.title : null;
-  const isHost = false; // useSelector?
+  // const roomId = location.state !== null ? location.state.id : null;
+  // const roomTitle = location.state !== null ? location.state.title : null;
+  const roomId = 1;
+  // const roomTitle = 'hi';
+  const isHost = true; // useSelector?
 
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
@@ -27,8 +35,10 @@ const VideoRoomTest = () => {
   const [mainStreamManager, setMainStreamManager] = useState(undefined); // 페이지의 메인 비디오 화면(퍼블리셔 또는 참가자의 화면 중 하나)
   const [publisher, setPublisher] = useState(undefined); // 자기 자신의 캠
   const [subscribers, setSubscribers] = useState([]); // 다른 유저의 스트림 정보를 저장할 배열
+  const [messageList, setMessageList] = useState([]); // 메세지 정보를 담을 배열
+  const [seconds, setSeconds] = useState(0); //타이머 시작 시간
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
-
+  const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
   const [profileImg, setProFileImg] = useState(basicImg); // 프로필 이미지
   const [hostName, setHostName] = useState(undefined); // host 이름
 
@@ -48,8 +58,8 @@ const VideoRoomTest = () => {
       axios
         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
           headers: {
-            Authorization:
-              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+            // Authorization:
+            //   "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
             "Content-Type": "application/json",
           },
         })
@@ -77,8 +87,8 @@ const VideoRoomTest = () => {
           data,
           {
             headers: {
-              Authorization:
-                "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+              // Authorization:
+              //   "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
           }
@@ -128,6 +138,18 @@ const VideoRoomTest = () => {
       });
     });
 
+    mySession.on("signal:chat", (event) => {
+      // 채팅 신호 수신
+      setMessageList((prevMessageList) => {
+        return [...prevMessageList, event.data];
+      });
+    });
+
+    mySession.on("signal:timer", (event) => {
+      // "timer"라는 시그널 받아서 시간 초기 세팅
+      setSeconds(event.data); // 시간 세팅
+    });
+
     // 유효한 토큰으로 세션에 접속하기
     getToken().then((token) => {
       mySession
@@ -161,17 +183,33 @@ const VideoRoomTest = () => {
   };
 
   // 방 삭제 요청 api
-  const deleteRoomRequest = async () => {
-    if (isHost) {
-      // dispatch(changeStatus(false));
-      // setIsHost(false) // isHost를 false로 설정함
-      const reqeustResponse = await deleteRoom(roomId);
-      if (reqeustResponse) {
-        console.log("Room Deleted Successfully!");
-      } else {
-        console.log("Room Deleted Failed!");
-      }
-    }
+  // const deleteRoomRequest = async () => {
+  //   if (isHost) {
+  //     // dispatch(changeStatus(false));
+  //     // setIsHost(false) // isHost를 false로 설정함
+  //     const reqeustResponse = await deleteRoom(roomId);
+  //     if (reqeustResponse) {
+  //       console.log("Room Deleted Successfully!");
+  //     } else {
+  //       console.log("Room Deleted Failed!");
+  //     }
+  //   }
+  // };
+
+  // 메세지 보내기(Sender of the message (after 'session.connect'))
+  const sendMsg = (msg, currentSession) => {
+    currentSession
+      .signal({
+        data: msg, // .signal의 data는 문자열만 넘겨야한다
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: "chat", // The type of message (optional)
+      })
+      .then(() => {
+        console.log("Message successfully sent");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
@@ -189,10 +227,13 @@ const VideoRoomTest = () => {
     setMyUserName("Participant" + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
+    setMessageList([]);
+    setChatDisplay(true);
     setTotalUsers((prevTotalUsers) => {
       return 0;
     });
-    deleteRoomRequest(); // 방 삭제 요청
+    setSeconds(0);
+    // deleteRoomRequest(); // 방 삭제 요청
   };
 
   // 참가자를 배열에서 제거함
@@ -210,17 +251,17 @@ const VideoRoomTest = () => {
 
   // user정보 가져오기
   // axios 요청? redux?
-  const getUserInfo = async () => {
-    const user = state.userinfo;
-    const ownerPicturePath = user.picture;
-    const ownerName = user.name;
-    setProFileImg(ownerPicturePath);
-    setHostName(ownerName);
-  };
+  // const getUserInfo = async () => {
+  //   const user = state.userinfo;
+  //   const ownerPicturePath = user.picture;
+  //   const ownerName = user.name;
+  //   setProFileImg(ownerPicturePath);
+  //   setHostName(ownerName);
+  // };
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  // useEffect(() => {
+  //   getUserInfo();
+  // }, []);
 
   // 로딩 페이지를 통한 방 입장
   const enterAuctionRoom = () => {
@@ -230,7 +271,7 @@ const VideoRoomTest = () => {
   return (
     <div className={styles.container}>
       {session === undefined && roomId !== null && (
-        <Loading enterAuctionRoom={enterAuctionRoom}></Loading> // Loading 페이지 만들어야 함.
+        <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
       )}
       {session === undefined ? (
         <div className={styles.container}>
@@ -252,6 +293,19 @@ const VideoRoomTest = () => {
             className={styles.leavebtn}
             leaveSession={leaveSession}
           ></button>
+          <div className={styles.timer}>
+            <Timer />
+          </div>
+          {chatDisplay && (
+            <div>
+              <ChattingForm messageList={messageList} />
+              <ChattingList
+                myUserName={myUserName}
+                onMessage={sendMsg}
+                currentSession={session}
+              />
+            </div>
+          )}
         </div>
       ) : null}
     </div>
