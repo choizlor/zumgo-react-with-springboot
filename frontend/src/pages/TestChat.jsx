@@ -10,12 +10,13 @@ function Chat() {
   let [client, changeClient] = useState(null);
   let [subscription, changeSubscription] = useState(null);
 
-  const connect = async () => {
+
+  const connect = () => {    // 연결
     if (id === '') {
       return;
     }
     try {
-      const clientdata = await new StompJs.Client({
+      const clientdata = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/chat',
         connectHeaders: {
           login: id,
@@ -30,12 +31,12 @@ function Chat() {
       });
 
       let subscriptiondata = null;
-      clientdata.onConnect = await function () {
+      clientdata.onConnect = function () {
         subscriptiondata = clientdata.subscribe('/sub/channels/1', callback);
         changeSubscription(subscriptiondata);
       };
 
-      const res = await clientdata.activate();
+      const res = clientdata.activate();
       console.log(res);
       changeClient(clientdata);
     } catch (error) {
