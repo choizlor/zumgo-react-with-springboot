@@ -10,6 +10,7 @@ FROM nginx:stable-alpine as production-stage
 # COPY ["./nginx/default", "/etc/nginx/sites-enabled"]
 
 COPY --from=build-stage /app/build /usr/share/nginx/html
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 # FROM node:16 as build
