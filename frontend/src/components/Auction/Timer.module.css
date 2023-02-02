@@ -1,0 +1,16 @@
+.timer {
+    width : 120px;
+    height : 70px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+}
+
+.count {
+    color : #BCFF5E;
+    font-size: 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
