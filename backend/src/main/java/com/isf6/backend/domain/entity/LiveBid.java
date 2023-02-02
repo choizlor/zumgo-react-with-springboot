@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class LiveBid {
 
     private Timestamp bid_time;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "liveRoom_id")
     private LiveRoom liveRoom;

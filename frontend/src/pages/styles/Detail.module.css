@@ -92,6 +92,17 @@ img {
   margin: 3% 0;
 }
 
+.canedit{
+  display: flex;
+  align-items: center;
+}
+
+.editbtn {
+  width : 20px;
+  height : 20px;
+  color: #636363;
+}
+
 .price {
   font-size: 13px;
   font-weight: 700;

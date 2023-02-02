@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,15 +31,19 @@ public class User {
 
     private int point;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Product> products = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserLive> userLives = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<LiveRequest> liveRequests = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Wish> wishes = new ArrayList<>();
 

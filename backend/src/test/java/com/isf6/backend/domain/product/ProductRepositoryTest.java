@@ -1,6 +1,7 @@
 package com.isf6.backend.domain.product;
 
 import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class ProductRepositoryTest {
         String title = "상품명";
         int price = 10000;
         String description = "상품 설명글";
-        Timestamp reservation = Timestamp.valueOf(LocalDateTime.now());
+        String reservation = "예약시간";
         String photo = "이미지 링크";
 
         productRepository.save(Product.builder()
@@ -54,5 +55,30 @@ public class ProductRepositoryTest {
         assertThat(product.getPrice()).isEqualTo(price);
         // assertThat(product.getReservation()).isEqualTo(reservation);
         assertThat(product.getPhoto()).isEqualTo(photo);
+    }
+
+    @Test
+    public void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2019,6,4,0,0,0);
+        productRepository.save(Product.builder()
+                .title("상품명")
+                .price(10000)
+                .description("상품 설명글")
+                .reservation("예약시간")
+                .photo("이미지 링크")
+                .status(ProductStatus.ONSALE)
+                .build());
+
+        //when
+        List<Product> productList = productRepository.findAll();
+
+        //then
+        Product product = productList.get(0);
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>> createDate="+product.getCreatedDate()+", modifiedDate="+product.getModifiedDate());
+
+        assertThat(product.getCreatedDate()).isAfter(now);
+        assertThat(product.getModifiedDate()).isAfter(now);
     }
 }

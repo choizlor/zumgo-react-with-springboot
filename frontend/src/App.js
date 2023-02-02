@@ -11,6 +11,7 @@ import VideoRoom from './components/LiveRoom/test/VideoRoom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import AddProduct from './pages/AddProduct';
+import UpdateProduct from './pages/UpdateProduct';
 import Login from './pages/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: '/live/:productId', element: <VideoRoom/>, },
       { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
+      { path: '/update/:productId', element: <UpdateProduct/>, },
       { path: '/chatlist', element: <ChatList/>, },
       { path: '/chatroom/:chatroomId', element: <StompChat/>, },
       { path: '/addproduct', element: <AddProduct/>, },
