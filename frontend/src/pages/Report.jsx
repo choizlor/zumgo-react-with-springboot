@@ -11,7 +11,7 @@ export default function Report() {
   const reported = param.userId;
   // 리포터는 store
   const [reporter, setreporter] = useState("");
-  const [contents, setContents] = useState("");
+  const [content, setContents] = useState("");
 
   const report = () => {
     axios
