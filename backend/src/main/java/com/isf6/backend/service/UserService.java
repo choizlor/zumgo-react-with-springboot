@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isf6.backend.api.Request.UserUpdateReqDto;
 import com.isf6.backend.common.oauth.KakaoProfile;
 import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
@@ -33,8 +34,6 @@ public class UserService {
     UserRepository userRepository;
 
     public OauthToken getAccessToken(String code) {
-
-        //(2)
         RestTemplate rt = new RestTemplate();
 
         //(3)
@@ -161,6 +160,7 @@ public class UserService {
         return user;
     }
 
+    //token으로 유저 정보 조회
     public User getUserToken(String token) {
         Long userCode = null;
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
@@ -174,6 +174,18 @@ public class UserService {
         }
 
         User user = userRepository.findByUserCode(userCode);
+
+        return user;
+    }
+
+    //유저 정보 수정
+    public User updateUser(Long userCode, UserUpdateReqDto userUpdateReqDto) {
+        User user = userRepository.findByUserCode(userCode);
+
+        user.setKakaoProfileImg(userUpdateReqDto.getProfileImg());
+        user.setKakaoNickname(userUpdateReqDto.getNickname());
+
+        userRepository.save(user);
 
         return user;
     }
