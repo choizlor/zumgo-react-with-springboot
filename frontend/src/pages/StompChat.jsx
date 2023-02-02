@@ -34,8 +34,7 @@ export default function StompChat() {
         subscribe();
       },
     });
-
-    client.current.activate();
+    client.current.activate();   // 클라이언트 활성화
   };
 
   const disconnect = () => {
@@ -48,11 +47,11 @@ export default function StompChat() {
     console.log("Additional details:  " + frame.body);
   };
 
-  // 클라이언트 활성화
+  
 
   // 메시지 전달 받기
   const subscribe = () => {
-    client.current.subscribe(`/sub/${chatroomId}`, (body) => {
+    client.current.subscribe(`/sub/${chatroomId}`, ({body}) => {
       console.log(body, "❤");
       const json_body = JSON.parse(body.body);
       setChatList((chats) => [
@@ -95,7 +94,7 @@ export default function StompChat() {
 
   return (
     <div>
-      <div>{chatList}</div>
+      {chatList[0]}
       <form onSubmit={(event) => handleSubmit(event, chat)}>
         <input type="text" onChange={handleInputChange} value={chat} />
         <input type="submit" value={"전송"} />
