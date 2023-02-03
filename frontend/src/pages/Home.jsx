@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeBanner from "../components/Home/HomeBanner";
 import BottomNav from "../components/Nav/BottomNav";
 import TopNav from "../components/Nav/TopNav";
@@ -8,14 +8,33 @@ import styles from "./styles/Home.module.css";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import ProductItem from "../components/Product/ProductItem";
+import axios from "axios";
 
 export default function Home() {
+  const [products, setProducts] = useState();
+
+  // 판매 중인 전체 목록을 붑러옴
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <TopNav />
       <HomeBanner />
       <div className={styles.body}>
-        <Link to="/detail/:productId">
+        {products?.map((product) => {
+          return <ProductItem key={product.productId} product={product} />;
+        })}
+        {/* <Link to="/detail/:productId">
           <p className={styles.text}>판매 중</p>
           <img
             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
@@ -41,7 +60,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </Link>
+        </Link> */}
         <BottomNav />
       </div>
     </div>
