@@ -1,0 +1,21 @@
+.body {
+  background-color: #222222;
+  display: flex;
+  justify-content: space-between;
+  clear: both;
+  position: absolute;
+  width: 100%;
+  bottom : 0;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  color: white;
+}
+
+.liveicon {
+  width: 52px;
+  height: 52px;
+  margin-top: 20%;
+}

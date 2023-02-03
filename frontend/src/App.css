@@ -1,0 +1,11 @@
+#root {
+  --swiper-theme-color : white;
+}
+
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+app {
+  width : 100vw;
+}
