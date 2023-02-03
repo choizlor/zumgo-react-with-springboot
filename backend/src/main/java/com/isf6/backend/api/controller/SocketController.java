@@ -35,7 +35,7 @@ public class SocketController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/chat/{id}")
-    public void sendMessage(@DestinationVariable Integer id, @Payload MessageDto messageDto) {
+    public void sendMessage(@DestinationVariable String id, @Payload MessageDto messageDto) {
         log.info("id={}", id);
         log.info("messageDto={}", messageDto);
 //        this.simpMessagingTemplate.convertAndSend("/queue/addChatToClient/" + id, messageDto);
