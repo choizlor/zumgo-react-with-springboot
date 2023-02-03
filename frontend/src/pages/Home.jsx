@@ -27,13 +27,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div style={{backgroundColor:"black"}}>
       <TopNav />
       <HomeBanner />
       <div className={styles.body}>
-        {products?.map((product) => {
+        <ProductItem/>
+        {/* {products?.map((product) => {
           return <ProductItem key={product.productId} product={product} />;
-        })}
+        })} */}
         {/* <Link to="/detail/:productId">
           <p className={styles.text}>판매 중</p>
           <img

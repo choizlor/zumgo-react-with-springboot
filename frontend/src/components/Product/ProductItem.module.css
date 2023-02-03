@@ -1,3 +1,32 @@
 .body {
-    border : 2px solid red;
+    width : 90%;
+    border: solid red 2px;
+    display: flex;
+}
+
+.productimg {
+    width : 80px;
+    height : 80px;
+    border-radius: 15px;
+}
+
+.productimg img {
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.status {
+    color: white;
+    background-color: black;
 }
