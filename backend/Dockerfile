@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk
+FROM openjdk:8-jdk AS Builder
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
