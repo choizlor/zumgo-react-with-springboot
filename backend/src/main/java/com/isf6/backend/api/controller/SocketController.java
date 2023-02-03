@@ -50,14 +50,12 @@ public class SocketController {
 
     @PostMapping("/room")
     public String createRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
-        //body로 유저 코드 2개 넘겨준대 첫글자만 대문자로 Buyer, Seller 코드
         log.info("방 생성");
 
         Long buyerCode = chatRoomSaveReqDto.getBuyerCode();
         Long sellerCode = chatRoomSaveReqDto.getSellerCode();
         String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
 
-        //room_number만 리턴
         return chatRoomCode;
     }
 

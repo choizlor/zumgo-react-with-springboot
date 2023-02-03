@@ -1,6 +1,5 @@
 package com.isf6.backend.service;
 
-import com.isf6.backend.api.Response.ChatRoomResDto;
 import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
@@ -17,43 +17,43 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class SocketService {
 
-    @Autowired
-    ChatRoomRepository chatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    UserRepository userRepository;
-    private Map<String, ChatRoomResDto> chatRooms;
-
-    @PostConstruct
-    private void init() {
-        chatRooms = new LinkedHashMap<>();
-    }
+//    private Map<String, ChatRoomResDto> chatRooms;
+//
+//    @PostConstruct
+//    private void init() {
+//        chatRooms = new LinkedHashMap<>();
+//    }
 
     //방 생성해서 코드 저장해야됨
     public String createRoom(Long userCode1, Long userCode2) {
         //유저코드가 있으면 그 방의 코드 주고, 아니면 만들어서 주기
-        ChatRoom chatRoom = new ChatRoom();
-        try{
-            chatRoom = chatRoomRepository.findByBuyerIdANDSellerId(userCode1, userCode2); //유저 코드로 방 정보 찾기
-        } catch (Exception e) {
-            e.printStackTrace();
+        ChatRoom chatRoomInfo = new ChatRoom();
+        chatRoomInfo = chatRoomRepository.findByBuyerIdANDSellerId(userCode1, userCode2); //유저 코드로 방 정보 찾기
+
+        if(chatRoomInfo == null) {
             //방이 null이라면 방 만들기
+            chatRoomInfo = new ChatRoom();
             String randomId = UUID.randomUUID().toString();
-            chatRoom.setChatRoomCode(randomId);
+            chatRoomInfo.setChatRoomCode(randomId);
 
             User buyer = userRepository.findByUserCode(userCode1);
-            chatRoom.setBuyer(buyer);
+            chatRoomInfo.setBuyer(buyer);
 
             User seller = userRepository.findByUserCode(userCode2);
-            chatRoom.setSeller(seller);
+            chatRoomInfo.setSeller(seller);
 
-            chatRoomRepository.save(chatRoom); //저장
+            chatRoomRepository.save(chatRoomInfo); //저장
         }
 
-        String chatRoomCode = chatRoomRepository.findByChatRoomCode(chatRoom.getChatRoomCode()); //JPA 쿼리 물어보기,,,,
+        //log.info("chatRoom id : {}", chatRoomInfo.getId());
+        String chatRoomCode = chatRoomInfo.getChatRoomCode();
 
 //        ChatRoomResDto chatRoom = ChatRoomResDto.builder()
 //                .roomId(randomId)
