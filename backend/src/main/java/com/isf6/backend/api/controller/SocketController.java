@@ -7,14 +7,12 @@ import com.isf6.backend.service.SocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,14 +47,21 @@ public class SocketController {
     }
 
     @PostMapping("/room")
-    public String createRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
-        log.info("방 생성");
+    public String createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
+        //log.info("방 생성");
 
         Long buyerCode = chatRoomSaveReqDto.getBuyerCode();
         Long sellerCode = chatRoomSaveReqDto.getSellerCode();
         String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
 
         return chatRoomCode;
+    }
+
+    @DeleteMapping("/exit")
+    public ResponseEntity deleteChatRoom(@RequestBody String chatRoomCode) {
+        socketService.deleteRoom(chatRoomCode);
+
+        return ResponseEntity.status(200).body("방 삭제");
     }
 
 }

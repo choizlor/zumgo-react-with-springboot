@@ -62,4 +62,8 @@ public class SocketService {
         return chatRoomCode;
     }
 
+    public void deleteRoom(String chatRoomCode) {
+        chatRoomRepository.findByChatRoomCode(chatRoomCode);
+    }
+
 }
