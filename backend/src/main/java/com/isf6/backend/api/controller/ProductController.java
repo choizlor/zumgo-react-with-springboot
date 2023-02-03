@@ -67,6 +67,7 @@ public class ProductController {
     static class IndexProductsDto {
         private Long productId;
         private String title;
+        private int price;
         private ProductStatus status;
         private LocalDateTime createdDate;
         private int wishSize;
@@ -76,6 +77,7 @@ public class ProductController {
         public IndexProductsDto(Product product) {
             productId = product.getId();
             title = product.getTitle();
+            price = product.getPrice();
             status = product.getStatus();
             createdDate = product.getCreatedDate();
             wishSize = product.getWishes().size();
