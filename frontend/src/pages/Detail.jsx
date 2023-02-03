@@ -29,7 +29,17 @@ export default function Detail() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    // 상품 정보 불러오기
+    // 상품 정보를 가져오는 GET 요청
+    axios.get(`http://localhost:8080/product/detail/${params.productId}`)
+    .then((res) => {
+      console.log(res)
+      setProduct(res.data)
+    })
+    .catch((err) => { console.log(err) })
+  })
+
+
+  useEffect(() => {
     axios.get(`http://localhost:8080/product/${productId}`)
     .then((res) => { 
       setProduct(res.data)
