@@ -18,6 +18,8 @@ public class ChatRoom {
     @Column(name="chatRoom_id")
     private Long id;
 
+    private String chatRoomCode;
+
     @JsonIgnore
     // 구매자, 판매자 단반향 매핑?????
     @ManyToOne
