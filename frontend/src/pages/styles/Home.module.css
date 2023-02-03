@@ -1,5 +1,36 @@
+.background {
+  background-color: black;
+  width :100vw;
+  height: 100vh;
+}
+
 .body {
-  height: 70%;
+  border-radius: 50px 50px 0 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding : 7% 0;
+  width : 100%;
+  position: absolute;
+  bottom: 0px;
+  top : 32%;
+}
+
+.onsale {
+  font-size: 15px;
+  font-weight: 800;
+  text-align: left;
+  width : 80%;
+  margin: 1% auto 2% auto;
+}
+
+.scrollarea {
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .text {
@@ -28,13 +59,13 @@
 }
 
 .z {
-  width : 15px;
-  height : 18px;
+  width: 15px;
+  height: 18px;
 }
 
 .icons svg {
-  width : 20px;
-  height : 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .container {
