@@ -3,7 +3,7 @@ import styles from "./styles/UserInfo.module.css";
 import BottomNav from "../components/Nav/BottomNav";
 import Reviews from "../components/UserInfo/Reviews";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   ChevronLeftIcon,
@@ -11,12 +11,14 @@ import {
   ShoppingBagIcon,
   ListBulletIcon,
   CircleStackIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
 export default function UserInfo() {
   const [userInfo, setUserInfo] = useState({});
   // 마이 페이지 인지 확인하기
   const param = useParams();
+  const navigate = useNavigate();
   const userId = param.userId;
   const me = useSelector((state) => {
     return state.user;
@@ -61,7 +63,15 @@ export default function UserInfo() {
             alt=""
           />
         </div>
-        <div className={styles.username}>{userInfo.kakaoNickname}</div>
+        <div className={styles.userdiv}>
+          <div className={styles.username}>{userInfo.kakaoNickname}</div>
+          <PencilSquareIcon
+            className={styles.updateicon}
+            onClick={() => {
+              navigate(`/userinfo/${userId}/update`);
+            }}
+          />
+        </div>
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>

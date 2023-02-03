@@ -42,15 +42,13 @@
 }
 
 .userimg img {
-    border-radius: 100%;
+    border-radius: 100px;
     object-fit: cover;
 }
 
 .username {
-    margin : 12%;
     font-weight: 700;
     font-size: 20px;
-    text-align: center;
 }
 
 .menus {
@@ -82,3 +80,14 @@
     margin : 2%;
 }
 
+.updateicon {
+    width : 23px;
+    height : 23px;
+}
+
+.userdiv {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 5px;
+}
