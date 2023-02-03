@@ -118,7 +118,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/myreviewlist/${userId}`);
+                  navigate('/myreviewlist');
                 }}
               >
                 내가 쓴 리뷰
