@@ -24,6 +24,7 @@ import AddReview from './pages/AddReview';
 import MyReviewList from './pages/MyReviewList';
 import Report from './pages/Report';
 import StompChat from './pages/StompChat';
+import TestChat from './pages/TestChat';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       { path: '/detail/:productId', element: <Detail/>, },
       { path: '/update/:productId', element: <UpdateProduct/>, },
       { path: '/chatlist', element: <ChatList/>, },
-      { path: '/chatroom/:chatroomId', element: <StompChat/>, },
+      { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
       { path: '/addproduct', element: <AddProduct/>, },
       { path: '/review/:productId/create', element: <AddReview/>, },
       { path: '/userinfo/:userId', element: <UserInfo/>, },

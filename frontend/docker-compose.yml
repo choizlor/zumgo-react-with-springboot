@@ -37,7 +37,7 @@ services:
   #     - "3306:3306"
   #   environment:
   #     MYSQL_ROOT_PASSWORD: 0000
-  #     MYSQL_DATABASE: zumgo
+  #     MYSQL_DATABASE: zumgo	// database 이름
   #     MYSQL_USER: isf6
   #     MYSQL_PASSWORD: isf6
   #     TZ: Asia/Seoul
