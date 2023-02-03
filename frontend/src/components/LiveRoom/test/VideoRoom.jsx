@@ -5,6 +5,7 @@ import UserVideoComponent from "../UserVideoComponent";
 import Timer from "../../Auction/Timer";
 import ChattingForm from "../ChattingForm";
 import ChattingList from "../ChattingList";
+import { connect } from "react-redux";
 
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -280,14 +281,21 @@ class VideoRoom extends Component {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
 
+    const { storeUser } = this.props;
+
     return (
       <div className="container">
         {this.state.session === undefined ? (
           <div id="join">
             <div id="join-dialog" className="jumbotron vertical-center">
-              <h1>{myUserName} 님,</h1>
+              <h1>{storeUser} 님,</h1>
               <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
-              <button style={{border: '1px solid red'}} onClick={this.joinSession}>라이브 입장하기</button>
+              <button
+                style={{ border: "1px solid red" }}
+                onClick={this.joinSession}
+              >
+                라이브 입장하기
+              </button>
             </div>
           </div>
         ) : null}
@@ -449,4 +457,8 @@ class VideoRoom extends Component {
   // }
 }
 
-export default VideoRoom;
+const mapStateToProps = (state) => ({
+  storeUser: state.user.kakaoNickname,
+});
+
+export default connect(mapStateToProps)(VideoRoom);
