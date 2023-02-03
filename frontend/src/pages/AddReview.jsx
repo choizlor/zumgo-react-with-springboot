@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles/AddReview.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 export default function AddReview() {
+  const [seller,setseller] = useState("");
+  const [buyer,serbuyer] = useState("");
+  const [review, setreview] = useState("");
+
+  const setChange = (e) => {
+    setreview(e.target.value)
+
+  }
+  const param = useParams();
+  console.log(param);
+
+
+  const productId = param.productId;
+
+
+  const addreview = () => {
+    axios
+    .post(`http://localhost:8080/review/${productId}`,{
+      seller:2,
+      buyer:1,
+      review:"리뷰등록"
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {});
+  };
+
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
@@ -20,7 +50,7 @@ export default function AddReview() {
           //   onChange={handleChange}
         ></textarea>
       </div>
-      <div className={styles.submit}>작성완료</div>
+      <div className={styles.submit}  onClick={addreview}>작성완료</div>
     </div>
   );
 }
