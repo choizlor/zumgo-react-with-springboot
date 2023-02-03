@@ -1,22 +1,24 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 let user = createSlice({
-    name: 'user',
-    initialState: {
-        kakaoNickname: '',
+  name: "user",
+  initialState: {
+    kakaoNickname: "",
+    userCode: "",
+    kakaoId: "",
+  },
+  reducers: {
+    login(state, action) {
+      // console.log('action.payload : ', action.payload)
+      return action.payload;
     },
-    reducers : {
-        login(state, action) {
-            // console.log('action.payload : ', action.payload)
-            return action.payload
-        }
-    }
-})
+  },
+});
 
 export default configureStore({
-    reducer: {
-        user : user.reducer
-    }
-})
+  reducer: {
+    user: user.reducer,
+  },
+});
 
-export let { login } = user.actions
+export let { login } = user.actions;

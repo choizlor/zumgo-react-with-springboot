@@ -11,6 +11,7 @@ import VideoRoom from './components/LiveRoom/test/VideoRoom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import AddProduct from './pages/AddProduct';
+import UpdateProduct from './pages/UpdateProduct';
 import Login from './pages/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
@@ -23,7 +24,7 @@ import AddReview from './pages/AddReview';
 import MyReviewList from './pages/MyReviewList';
 import Report from './pages/Report';
 import StompChat from './pages/StompChat';
-// import VideoRoomTest from './components/LiveRoom/test/VideoRoomTest';
+import TestChat from './pages/TestChat';
 
 const router = createBrowserRouter([
   {
@@ -37,11 +38,12 @@ const router = createBrowserRouter([
       { path: '/live/:productId', element: <VideoRoom/>, },
       { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
+      { path: '/update/:productId', element: <UpdateProduct/>, },
       { path: '/chatlist', element: <ChatList/>, },
-      { path: '/chatroom/:chatroomId', element: <StompChat/>, },
+      { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
       { path: '/addproduct', element: <AddProduct/>, },
       { path: '/review/:productId/create', element: <AddReview/>, },
-      { path: '/userinfo', element: <UserInfo/>, },
+      { path: '/userinfo/:userId', element: <UserInfo/>, },
       { path: '/userinfo/:userId/update', element: <UpdateUserInfo/>, },
       { path: '/searchlist/:word', element: <SearchList/>, },
       { path: '/search', element: <Search/>, },
