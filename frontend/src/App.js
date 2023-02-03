@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
       { path: '/addproduct', element: <AddProduct/>, },
       { path: '/review/:productId/create', element: <AddReview/>, },
-      { path: '/userinfo', element: <UserInfo/>, },
+      { path: '/userinfo/:userId', element: <UserInfo/>, },
       { path: '/userinfo/:userId/update', element: <UpdateUserInfo/>, },
       { path: '/searchlist/:word', element: <SearchList/>, },
       { path: '/search', element: <Search/>, },
