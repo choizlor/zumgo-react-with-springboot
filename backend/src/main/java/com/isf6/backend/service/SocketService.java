@@ -64,6 +64,7 @@ public class SocketService {
 
     public String deleteRoom(String chatRoomCode) {
         log.info("code service : {}", chatRoomCode);
+        
         ChatRoom chatroom = chatRoomRepository.findByChatRoomCode(chatRoomCode);
         log.info("chatroom : {}", chatroom.getChatRoomCode());
         if(chatroom == null) {
