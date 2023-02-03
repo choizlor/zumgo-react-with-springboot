@@ -8,6 +8,11 @@
   margin: 0 5%;
 
 }
+.info {
+  height: 90px;
+  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
+}
 .text {
   font-weight: 800;
   font-size: 1.1em;
@@ -16,5 +21,42 @@
 .name {
   font-weight: 600;
 
+}
+.statusbox {
+  display: flex;
+  justify-content: space-between;
+}
+.status {
+  width: 80px;
+  height: 23px;
+  background-color: black;
+  color: white;
+  border-radius: 1.5rem;
+  text-align: center;
+
+}
+.icons {
+  display: flex;
+  margin: 1% 0;
+}
+
+.icons div {
+  display: flex;
+}
+
+.z {
+  width : 15px;
+  height : 18px;
+}
+
+.icons svg {
+  width : 20px;
+  height : 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 4%;
 }
 
