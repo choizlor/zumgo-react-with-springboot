@@ -62,8 +62,16 @@ public class SocketService {
         return chatRoomCode;
     }
 
-    public void deleteRoom(String chatRoomCode) {
-        chatRoomRepository.findByChatRoomCode(chatRoomCode);
+    public String deleteRoom(String chatRoomCode) {
+        log.info("code service : {}", chatRoomCode);
+        ChatRoom chatroom = chatRoomRepository.findByChatRoomCode(chatRoomCode);
+        log.info("chatroom : {}", chatroom.getChatRoomCode());
+        if(chatroom == null) {
+            return "null";
+        }
+
+        chatRoomRepository.delete(chatroom);
+        return "success";
     }
 
 }

@@ -59,8 +59,11 @@ public class SocketController {
 
     @DeleteMapping("/exit")
     public ResponseEntity deleteChatRoom(@RequestBody String chatRoomCode) {
-        socketService.deleteRoom(chatRoomCode);
-
+        log.info("chatRoomCode : {}", chatRoomCode);
+        String result = socketService.deleteRoom(chatRoomCode);
+        if(result.equals("null")) {
+            return ResponseEntity.status(200).body("방 삭제 실패");
+        }
         return ResponseEntity.status(200).body("방 삭제");
     }
 
