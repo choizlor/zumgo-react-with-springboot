@@ -17,7 +17,7 @@ export default function BottomNav() {
   return (
     <nav className={styles.body}>
         <HomeIcon className={styles.icon} onClick={() => { navigate('/') }} />
-        <ChatBubbleOvalLeftIcon className={styles.icon} onClick={() => { navigate('/chatlist') }}/>
+        <ChatBubbleOvalLeftIcon className={styles.icon} onClick={() => { navigate(`/chatlist/${userId}`) }}/>
         <div><img className={styles.liveicon} onClick={() => { navigate('/live') }} src={LiveIcon} alt="live" /></div>
         <PlusCircleIcon className={styles.icon} onClick={() => { navigate('/addproduct') }}/>
         <UserCircleIcon className={styles.icon} onClick={() => { navigate(`/userinfo/${userId}`) }}/>
