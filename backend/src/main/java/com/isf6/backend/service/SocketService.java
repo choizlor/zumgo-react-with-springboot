@@ -1,5 +1,6 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.domain.entity.Chat;
 import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -73,6 +72,13 @@ public class SocketService {
 
         chatRoomRepository.delete(chatroom);
         return "success";
+    }
+
+    public List<ChatRoom> getAllChatRoom(Long userCode) {
+        List<ChatRoom> myChatRoomList = new ArrayList<>();
+        myChatRoomList = chatRoomRepository.findByChatRoomList(userCode);
+
+        return myChatRoomList;
     }
 
 }
