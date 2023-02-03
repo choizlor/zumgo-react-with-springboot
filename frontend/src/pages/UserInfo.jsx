@@ -80,21 +80,49 @@ export default function UserInfo() {
         </div>
         <div className={styles.menu}>
           <CircleStackIcon className={styles.menuicon} />
-          <div className={styles.menutitle}>판매목록</div>
+          <div
+            className={styles.menutitle}
+            onClick={() => {
+              navigate(`/selllist/${userId}`);
+            }}
+          >
+            판매목록
+          </div>
         </div>
         {isMe ? (
           <>
             <div className={styles.menu}>
               <HeartIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>관심목록</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate(`/picklist/${userId}`);
+                }}
+              >
+                관심목록
+              </div>
             </div>
             <div className={styles.menu}>
               <ShoppingBagIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>구매목록</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate(`/buylist/${userId}`);
+                }}
+              >
+                구매목록
+              </div>
             </div>
             <div className={styles.menu}>
               <ListBulletIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>내가 쓴 리뷰</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate(`/myreviewlist/${userId}`);
+                }}
+              >
+                내가 쓴 리뷰
+              </div>
             </div>
           </>
         ) : null}
