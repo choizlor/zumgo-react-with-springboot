@@ -1,6 +1,7 @@
 package com.isf6.backend.api.controller;
 
 import com.isf6.backend.api.Request.ChatRoomSaveReqDto;
+import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.api.Response.ChatRoomResDto;
 import com.isf6.backend.api.Request.MessageDto;
 import com.isf6.backend.domain.entity.ChatRoom;
@@ -43,10 +44,8 @@ public class SocketController {
     }
 
     @MessageMapping("/join")
-    public void joinUser(@Payload Integer userId) {
+    public void joinUser(@Payload String userId) {
         log.info("userId={}", userId);
-        userList.add(userId);
-        userList.forEach(System.out::println);
     }
 
     @PostMapping("/room")
@@ -72,7 +71,7 @@ public class SocketController {
 
     @GetMapping("/{userCode}/all")
     public ResponseEntity getAllChatRoom(@PathVariable Long userCode) {
-        List<ChatRoom> ChatRoomList = new ArrayList<>();
+        List<ChatRoomInfoResDto> ChatRoomList = new ArrayList<>();
         ChatRoomList = socketService.getAllChatRoom(userCode);
 
 

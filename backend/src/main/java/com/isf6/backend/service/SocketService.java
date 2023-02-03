@@ -1,10 +1,13 @@
 package com.isf6.backend.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.domain.entity.Chat;
 import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
 import com.isf6.backend.domain.repository.UserRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -74,11 +79,14 @@ public class SocketService {
         return "success";
     }
 
-    public List<ChatRoom> getAllChatRoom(Long userCode) {
+    public List<ChatRoomInfoResDto> getAllChatRoom(Long userCode) {
         List<ChatRoom> myChatRoomList = new ArrayList<>();
         myChatRoomList = chatRoomRepository.findByChatRoomList(userCode);
 
-        return myChatRoomList;
+        List<ChatRoomInfoResDto> result = myChatRoomList.stream()
+                .map(room -> new ChatRoomInfoResDto(room))
+                .collect(Collectors.toList());
+        return result;
     }
 
 }
