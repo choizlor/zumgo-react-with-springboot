@@ -1,6 +1,7 @@
 package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.ReviewSaveReqDto;
+import com.isf6.backend.api.Response.ReviewInfoResDto;
 import com.isf6.backend.domain.entity.Bill;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
@@ -9,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -41,10 +44,15 @@ public class ReviewService {
         return bill;
     }
 
-    public List<Bill> getMyReviewAll(Long userCode) {
-        List<Bill> reviewList = billRepository.findByBuyerUserCode(userCode);
+    public List<ReviewInfoResDto> getMyReviewAll(Long userCode) {
+        List<Bill> reviewList = new ArrayList<>();
+        reviewList = billRepository.findByBuyerUserCode(userCode);
+        log.info("review cnt : {}", reviewList.size());
 
-        return reviewList;
+        List<ReviewInfoResDto> result = reviewList.stream()
+                .map(review -> new ReviewInfoResDto(review))
+                .collect(Collectors.toList());
+        return result;
     }
 
     public Bill getReviewByProductId(Long productId) {

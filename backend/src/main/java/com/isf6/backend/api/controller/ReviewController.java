@@ -1,6 +1,7 @@
 package com.isf6.backend.api.controller;
 
 import com.isf6.backend.api.Request.ReviewSaveReqDto;
+import com.isf6.backend.api.Response.ReviewInfoResDto;
 import com.isf6.backend.domain.entity.Bill;
 import com.isf6.backend.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +44,9 @@ public class ReviewController {
     //로그인한 유저가 쓴 리뷰 전체 목록
     @GetMapping("/{userCode}")
     public ResponseEntity getMyReviewAll(@PathVariable Long userCode) {
+        log.info("userCode : {}", userCode);
         Map<String, Object> response = new HashMap<>();
-        List<Bill> reviewList;
+        List<ReviewInfoResDto> reviewList;
 
         try {
             reviewList = reviewService.getMyReviewAll(userCode);
