@@ -8,28 +8,29 @@ export default function AddReview() {
   const [buyer,serbuyer] = useState("");
   const [review, setreview] = useState("");
 
-  const setChange = (e) => {
-    setreview(e.target.value)
 
+  const handleChange = (e) => {
+    setreview(e.target.value)
   }
+
   const param = useParams();
-  console.log(param);
 
 
   const productId = param.productId;
 
 
-  const addreview = () => {
+  const addReview = () => {
     axios
     .post(`http://i8c110.p.ssafy.io:8080/review/${productId}`,{
       seller:2,
       buyer:1,
-      review:"리뷰등록"
+      review,
     })
     .then((res) => {
       console.log(res)
+      setreview('')
     })
-    .catch((err) => {});
+    .catch((err) => {console.log(err)});
   };
 
   return (
@@ -39,18 +40,17 @@ export default function AddReview() {
         <div className={styles.title}>리뷰 작성</div>
       </div>
       <div className={styles.reviewform}>
-        <div className={styles.trade}>뇸뇸이 님과의 거래 어떠셨나요?</div>
+        <div className={styles.trade}>{} 님과의 거래 어떠셨나요?</div>
         <textarea
           className={styles.comments}
           cols="30"
           rows="10"
           placeholder="거래 후기를 최소 20자 이상 남겨주시면 다음 거래에 도움이 됩니다."
-          onChange={setChange}
-          
-          //   onChange={handleChange}
+          value={review}
+            onChange={handleChange}
         ></textarea>
       </div>
-      <div className={styles.submit}  onClick={addreview}>작성완료</div>
+      <div className={styles.submit}  onClick={addReview}>작성완료</div>
     </div>
   );
 }
