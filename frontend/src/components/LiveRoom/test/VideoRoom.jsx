@@ -331,7 +331,7 @@ class VideoRoom extends Component {
             ) : null}
             <ChattingList messageList={this.state.messageList}></ChattingList>
             <ChattingForm
-              myUserName={this.state.myUserName}
+              myUserName={storeUser}
               onMessage={this.sendMsg}
               currentSession={this.state.session}
             ></ChattingForm>
