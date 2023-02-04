@@ -1,8 +1,8 @@
 package com.isf6.backend.api.controller;
 
-import com.isf6.backend.service.LiveRequestService;
 import com.isf6.backend.service.ProductService;
 import com.isf6.backend.service.UserService;
+import com.isf6.backend.service.WishService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +17,20 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/liveRequest")
-public class LiveRequestController {
-
-    private final LiveRequestService liveRequestService;
+@RequestMapping("/wish")
+public class WishController {
+    private final WishService wishService;
     private final UserService userService;
     private final ProductService productService;
 
-    //라이브 요청 추가
-    @PostMapping()
-    public ResponseEntity productLiveRequest(@RequestParam("userCode") Long userCode, @RequestParam("productId") Long productId) {
+    @PostMapping
+    public ResponseEntity saveWish(@RequestParam("userCode") Long userCode, @RequestParam("productId") Long productId) {
         Map<String, Object> result = new HashMap<>();
-        //userCode와 productId로 디비에 라이브 요청 생성
-        liveRequestService.saveLiveRequest(userCode, productId);
+        wishService.saveWish(userCode, productId);
 
-        //라이브 요청 개수 리턴
-        long cnt = liveRequestService.getLiveRequestCnt(productId);
-        result.put("liveRequestCnt", cnt);
-        //라이브 요청 여부 개수 리턴
-        result.put("liveRequestCheck", true);
+        long cnt = wishService.getWishCnt(productId);
+        result.put("wishCnt", cnt);
+        result.put("wishCheck", true);
 
         return ResponseEntity.status(200).body(result);
     }
