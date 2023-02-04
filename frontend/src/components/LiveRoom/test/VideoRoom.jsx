@@ -283,6 +283,8 @@ class VideoRoom extends Component {
 
     const { storeUser } = this.props;
 
+    const { hello } = this.props;
+
     return (
       <div className="container">
         {this.state.session === undefined ? (
