@@ -28,12 +28,13 @@ export default function AddProduct() {
         description,
         reservation: "2010-10-14",
         photo: "아직이용",
+        status : 'ONSALE'
         // user: userInfo,
         // status: 'INPROGRESS' //INPROGRESS, SOLD
       })
       .then((res) => {
-        console.log(res.data);
-        navigate(`detail/${res.data}`)
+        console.log(res.data,'💜');
+        navigate(`/detail/${res.data}`)
       })
       .catch((err) => {
         console.log(err);
@@ -42,17 +43,14 @@ export default function AddProduct() {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
-    console.log(e.target.value);
   };
 
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleReservationChange = (e) => {
     setReservation(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {

@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 
 export default function BottomNav() {
   const userId = useSelector((state) => { return state.user.userCode})
-  console.log(userId)
 
   const navigate = useNavigate();
   return (

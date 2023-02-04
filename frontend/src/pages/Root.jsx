@@ -24,6 +24,7 @@ export default function Root() {
                     userCode: user.data.user.userCode,
                     kakaoId : user.data.user.kakaoId,
                     kakaoNickname: user.data.user.kakaoNickname,
+                    kakaoProfileImg : user.data.user.kakaoProfileImg,
                 }))
 
                 setUserInfo(user.data.user)
