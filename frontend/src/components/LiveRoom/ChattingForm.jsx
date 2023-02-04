@@ -36,10 +36,9 @@ const ChattingForm = (props) => {
         }}
       ></input>
       <button
-        variant="contained"
-        style={{ color: "white", background: "#019267" }}
+        style={{ color: "white", background: "black" }}
         onClick={sendMessage}
-      ></button>
+      >send</button>
     </form>
   );
 };

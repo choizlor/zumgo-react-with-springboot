@@ -1,21 +1,19 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component, useCallback, useEffect, useState } from "react";
-import UserVideoComponent from "../UserVideoComponent";
-import ChattingForm from "../ChattingForm";
-import ChattingList from "../ChattingList";
-import Timer from "../../Auction/Timer";
+import UserVideoComponent from "./UserVideoComponent";
+import ChattingForm from "./ChattingForm";
+import ChattingList from "./ChattingList";
+import Timer from "../Auction/Timer";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./VideoRoomTest.module.css";
+import styles from "./VideoRoom.module.css";
 
-import basicImg from "../../../assets/images/kim.png";
+import basicImg from "../../assets/images/kim.png";
 
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
-
-// const OPENVIDU_SERVER_URL = "http://localhost:5000/";
 
 const OPENVIDU_SERVER_URL = "http://localhost:4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -70,18 +68,23 @@ const VideoRoomTest = () => {
           console.log("CREATE SESSION", res);
           resolve(res.data.id);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((res) => {
+          var error = Object.assign({}, res);
+          if (error?.response?.status === 409) {
+            resolve(sessionId);
+          } else {
+
+            console.log(error)
+          }
         });
     });
   };
 
   // 토큰 생성
   const createToken = (sessionId) => {
-    // let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
     return new Promise((resolve, reject) => {
-      // const data = { role: myRole };
-      var data = {};
+      const data = { role: myRole };
       axios
         .post(
           OPENVIDU_SERVER_URL +
@@ -103,33 +106,6 @@ const VideoRoomTest = () => {
         .catch((error) => reject(error));
     });
   };
-
-  // const getToken = async() => {
-  //   const sessionId = await this.createSession(this.state.mySessionId);
-  //   return await this.createToken(sessionId);
-  // }
-
-  // const createSession = async (sessionId) {
-  //   const response = await axios.post(
-  //     OPENVIDU_SERVER_URL + "api/sessions",
-  //     { customSessionId: sessionId },
-  //     {
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   );
-  //   return response.data; // The sessionId
-  // }
-
-  // const createToken = async (sessionId) {
-  //   const response = await axios.post(
-  //     OPENVIDU_SERVER_URL + "api/sessions/" + sessionId + "/connections",
-  //     {},
-  //     {
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   );
-  //   return response.data; // The token
-  // }
 
   // 세션 아이디 설정
   useEffect(() => {
@@ -267,6 +243,11 @@ const VideoRoomTest = () => {
     // deleteRoomRequest(); // 방 삭제 요청
   };
 
+  const startAuction = () => {
+    const mySession = session;
+    
+  }
+
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
     (streamManager) => {
@@ -280,6 +261,7 @@ const VideoRoomTest = () => {
     [subscribers]
   );
 
+  // console.log(mainStreamManager, '😎')
   // user정보 가져오기
   // axios 요청? redux?
   // const getUserInfo = async () => {
@@ -294,27 +276,39 @@ const VideoRoomTest = () => {
   //   getUserInfo();
   // }, []);
 
+  // useEffect(() => {
+  //   const onbeforeunload = (event) => {
+  //     leaveSession();
+  //   };
+  //   window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
+  //   return () => {
+  //     window.removeEventListener("beforeunload", onbeforeunload);
+  //   };
+  // }, [leaveSession]);
+
   // 로딩 페이지를 통한 방 입장
-  const enterAuctionRoom = () => {
-    joinSession();
-  };
+  // const enterAuctionRoom = () => {
+  //   joinSession();
+  // };
 
   return (
     <div className={styles.container}>
       {session === undefined ? (
-          <div id="join">
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1>{myUserName} 님,</h1>
-              <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
-              <button
-                style={{ border: "1px solid red" }}
-                onClick={()=>{joinSession()}}
-              >
-                라이브 입장하기
-              </button>
-            </div>
+        <div id="join">
+          <div id="join-dialog" className="jumbotron vertical-center">
+            <h1>{myUserName} 님,</h1>
+            <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
+            <button
+              style={{ border: "1px solid red" }}
+              onClick={() => {
+                joinSession();
+              }}
+            >
+              라이브 입장하기
+            </button>
           </div>
-        ) : null}
+        </div>
+      ) : null}
       {/* {session === undefined && roomId !== null && (
         <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
       )} */}
@@ -322,35 +316,41 @@ const VideoRoomTest = () => {
         <div className={styles.container}>
           {mainStreamManager !== undefined ? (
             <div className={styles.mainvideo}>
+              {/* <UserVideoComponent streamManager={mainStreamManager} /> */}
               {isHost && <UserVideoComponent streamManager={publisher} />}
-              {!isHost && <UserVideoComponent streamManager={subscribers} />}
+              {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
           <div className={styles.sessionheader}>
-            <div className={styles.profile}>
+            {/* <div className={styles.profile}>
               <img src={profileImg} alt="/" />
-            </div>
+            </div> */}
             <div className={styles.hostname}>{hostName}</div>
           </div>
           <div className={styles.totaluser}>{totalUsers}</div>
           <div className={styles.livebtn}>LIVE</div>
           <button
             className={styles.leavebtn}
-            onClick={()=>{leaveSession()}}
-          >leaveSession</button>
+            onClick={() => {
+              leaveSession();
+            }}
+          >
+            leaveSession
+          </button>
           <div className={styles.timer}>
             <Timer />
           </div>
           {chatDisplay && (
             <div>
-              <ChattingForm messageList={messageList} />
-              {/* <ChattingList
+              <ChattingList messageList={messageList} />
+              <ChattingForm
                 myUserName={myUserName}
                 onMessage={sendMsg}
                 currentSession={session}
-              /> */}
+              />
             </div>
           )}
+          <button onClick={startAuction}>go?</button>
         </div>
       ) : null}
     </div>

@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 let user = createSlice({
   name: "user",
@@ -15,10 +15,6 @@ let user = createSlice({
   },
 });
 
-export default configureStore({
-  reducer: {
-    user: user.reducer,
-  },
-});
-
 export let { login } = user.actions;
+
+export default user.reducer;
