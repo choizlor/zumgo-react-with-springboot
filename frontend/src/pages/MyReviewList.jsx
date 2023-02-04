@@ -4,11 +4,15 @@ import {
   ChevronLeftIcon,
   ArrowRightIcon,
   EllipsisVerticalIcon,
+  PencilIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import testImg from "../assets/images/testImg.jpg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function MyReviewList() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
   const reviews = [
     {
       title: "문상훈 키보드 팝니다 팔아요",
@@ -28,6 +32,18 @@ export default function MyReviewList() {
     // 내가 쓴 리뷰 불러오는 api
   }, []);
 
+  const handleDeleteReview = () => {
+    // 리뷰 삭제 요청은 제품 아이디로 보내기
+    axios
+    .delete(`http://i8c110.p.ssafy.io:8080/review/2`)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {console.log(err)});
+  }
+
+
+
   return (
     <div className={styles.body}>
       {/* 상단 네비게이션 */}
@@ -44,6 +60,7 @@ export default function MyReviewList() {
         {reviews.map((review, idx) => {
           return (
             <div key={idx} className={styles.reviewbox}>
+              <div className={styles.ninety}>
               <div className={styles.review}>
                 <div className={styles.top}>
                   <div className={styles.topleft}>
@@ -59,16 +76,11 @@ export default function MyReviewList() {
                   <div className={styles.comment}>{review.comment}</div>
                 </div>
               </div>
-              <EllipsisVerticalIcon
-                className={styles.more}
-                onClick={() => {
-                  setModalOpen(true);
-                }}
-              />
-              { modalOpen ? <div className={styles.modal}>
-                <div>수정하기</div>
-                <div>삭제하기</div>
-              </div> : null}
+              <div className={styles.icons}>
+                <PencilIcon onClick={() => {navigate(`/review/9/update`)}}/>
+                <TrashIcon onClick={handleDeleteReview}/>
+              </div>
+            </div>
             </div>
           );
         })}
@@ -77,11 +89,4 @@ export default function MyReviewList() {
   );
 }
 
-function MiniModal() {
-  return (
-    <div className={styles.modal}>
-      <div>수정하기</div>
-      <div>삭제하기</div>
-    </div>
-  );
-}
+

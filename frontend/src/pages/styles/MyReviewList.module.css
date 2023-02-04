@@ -29,6 +29,13 @@
     width : 100%;
 }
 
+.ninety {
+    width : 92%;
+    display: flex;
+    margin: auto;
+    margin-right : 2%;
+}
+
 .reviewbox {
     position: relative;
     width : 100%;
@@ -89,11 +96,14 @@
     font-size: 11px;
 }
 
-.more {
-    width : 23px;
-    position : absolute;
-    top :4%;
-    right : 0;
+.icons {
+  display: flex;
+  align-items: flex-start;
+}
+
+.icons svg {
+    width : 17px;
+    margin : 2px;
 }
 
 /* 모달 */
