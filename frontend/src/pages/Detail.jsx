@@ -61,7 +61,7 @@ export default function Detail() {
 
     console.log(e.target.value)
 
-    axios.put(`http://localhost:8080/product/${product.id}`,{
+    axios.put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`,{
         ...product,
         status: e.target.value,
     })
@@ -72,7 +72,7 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/socket/room', {
+    axios.post('http://i8c110.p.ssafy.io:8080/socket/room', {
       buyerCode: userId,
       sellerCode:6, 
     }).then((res) => { navigate('/chatroom/' + res.data)})

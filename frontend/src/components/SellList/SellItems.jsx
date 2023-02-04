@@ -15,7 +15,7 @@ export default function SellItems({ filter }) {
   const filtered = getFilteredItems(products, filter);
   useEffect(() => {
     axios
-      .get("http://localhost:8080/products")
+      .get("http://i8c110.p.ssafy.io:8080/products")
       .then((res) => {
         setProducts(res.data);
         console.log('😪')

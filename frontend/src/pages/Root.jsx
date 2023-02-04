@@ -12,7 +12,7 @@ export default function Root() {
         //state는 기존 값
         const token = window.localStorage.getItem('token')
         try {
-            const res = axios.get('http://localhost:8080/api/me', {
+            const res = axios.get('http://i8c110.p.ssafy.io:8080/api/me', {
                 headers: {
                     Authorization: token,
                 }

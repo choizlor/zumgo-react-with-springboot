@@ -18,7 +18,7 @@ export default function Home() {
   // 판매 중인 전체 목록을 붑러옴
   useEffect(() => {
     axios
-      .get("http://localhost:8080/products")
+      .get("http://i8c110.p.ssafy.io:8080/products")
       .then((res) => {
         setProducts(res.data);
         console.log(res.data);

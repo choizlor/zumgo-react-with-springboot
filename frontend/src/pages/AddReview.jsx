@@ -21,7 +21,7 @@ export default function AddReview() {
 
   const addreview = () => {
     axios
-    .post(`http://localhost:8080/review/${productId}`,{
+    .post(`http://i8c110.p.ssafy.io:8080/review/${productId}`,{
       seller:2,
       buyer:1,
       review:"리뷰등록"

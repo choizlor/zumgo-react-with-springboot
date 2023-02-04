@@ -24,7 +24,7 @@ export default function AddProduct() {
   // 상품등록 axios
   const addProduct = () => {
     axios
-      .post("http://localhost:8080/product", {
+      .post("http://i8c110.p.ssafy.io:8080/product", {
         title,
         price,
         description,

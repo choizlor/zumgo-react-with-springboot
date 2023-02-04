@@ -28,7 +28,7 @@ export default function UserInfo() {
 
   // 로그아웃
   const REST_API_KEY = "b875d5c09e310962a4402f90c93aa19c";
-  const LOGOUT_REDIRECT_URI = "http://localhost:3000";
+  const LOGOUT_REDIRECT_URI = "http://i8c110.p.ssafy.io:80/ ";
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
