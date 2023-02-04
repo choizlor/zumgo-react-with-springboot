@@ -27,9 +27,9 @@ public class LiveRequestController {
         liveRequestService.saveLiveRequest(userCode, productId);
 
         //라이브 요청 개수 리턴
-        long cnt = liveRequestService.getLiveRequestCnt(productId);
+        //long cnt = liveRequestService.getLiveRequestCnt(productId);
 
-        return ResponseEntity.status(200).body(cnt);
+        return ResponseEntity.status(200).body("라이브 요청 성공");
     }
 
 
