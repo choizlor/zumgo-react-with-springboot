@@ -5,7 +5,7 @@ module.exports = (app) => {
   app.use(
     "ws",
     createProxyMiddleware({
-      target: "http://localhost:8080",
+      target: "http://i8c110.p.ssafy.io:8080",
       ws: true,  // 웹소켓을 사용하겠다!
     })
   );
