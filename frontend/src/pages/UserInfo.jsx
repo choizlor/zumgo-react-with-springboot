@@ -65,12 +65,14 @@ export default function UserInfo() {
         </div>
         <div className={styles.userdiv}>
           <div className={styles.username}>{userInfo.kakaoNickname}</div>
-          <PencilSquareIcon
-            className={styles.updateicon}
-            onClick={() => {
-              navigate(`/userinfo/${userId}/update`);
-            }}
-          />
+          {isMe ? (
+            <PencilSquareIcon
+              className={styles.updateicon}
+              onClick={() => {
+                navigate(`/userinfo/${userId}/update`);
+              }}
+            />
+          ) : null}
         </div>
       </div>
       {/* 목록 리스트 */}
@@ -118,7 +120,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/myreviewlist/${userId}`);
+                  navigate('/myreviewlist');
                 }}
               >
                 내가 쓴 리뷰

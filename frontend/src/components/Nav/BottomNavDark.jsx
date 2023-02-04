@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./BottomNavDark.module.css";
 import {
   HomeIcon,
@@ -8,25 +8,19 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import LiveIcon from "../../assets/images/LiveDarkIcon.png";
+import { useSelector } from "react-redux";
 
 export default function BottomNav() {
+  const userId = useSelector((state) => { return state.user.userCode })
+  const navigate = useNavigate();
+
   return (
     <nav className={styles.body}>
-      <Link to="/">
-        <HomeIcon className={styles.icon} />
-      </Link>
-      <Link to="/chatlist">
-        <ChatBubbleOvalLeftIcon className={styles.icon} />
-      </Link>
-      <Link to="/live">
-        <img className={styles.liveicon} src={LiveIcon} alt="live" />
-      </Link>
-      <Link to="/addproduct">
-        <PlusCircleIcon className={styles.icon} />
-      </Link>
-      <Link to="/userinfo">
-        <UserCircleIcon className={styles.icon} />
-      </Link>
+      <HomeIcon className={styles.icon} onClick={() => { navigate('/') }} />
+      <ChatBubbleOvalLeftIcon className={styles.icon} onClick={() => { navigate('/chatlist') }}/>
+      <div><img className={styles.liveicon} onClick={() => { navigate('/live') }} src={LiveIcon} alt="live" /></div>
+      <PlusCircleIcon className={styles.icon} onClick={() => { navigate('/addproduct') }}/>
+      <UserCircleIcon className={styles.icon} onClick={() => { navigate(`/userinfo/${userId}`) }}/>
     </nav>
   );
 }

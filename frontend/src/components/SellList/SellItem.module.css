@@ -3,10 +3,20 @@
   margin-top: 1.3rem;
 }
 .image {
-  width: 25%;
+  width: 30%;
   float: left;
   margin: 0 5%;
+  border-radius: 1.5rem;
+  
+}
 
+.image img {
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.product {
+  
 }
 .info {
   height: 90px;
@@ -19,7 +29,7 @@
   margin: 4%;
 }
 .name {
-  font-weight: 600;
+  font-weight: 800;
 
 }
 .statusbox {
@@ -60,3 +70,32 @@
   padding-right: 4%;
 }
 
+.price {
+  font-weight: 700;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.statusbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.status {
+  width: 50px;
+  height: 24px;
+  background-color: black;
+  border-radius: 1.2rem;
+  color:white;
+  
+}
+.icons {
+  display: flex;
+}
+.chatbox {
+  width: 10pxq;
+}
