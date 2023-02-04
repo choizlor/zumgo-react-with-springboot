@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/MyReviewList.module.css";
-import { ChevronLeftIcon, ArrowRightIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronLeftIcon,
+  ArrowRightIcon,
+  EllipsisVerticalIcon,
+} from "@heroicons/react/24/outline";
 import testImg from "../assets/images/testImg.jpg";
 
 export default function MyReviewList() {
-    const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const reviews = [
     {
       title: "문상훈 키보드 팝니다 팔아요",
@@ -24,11 +28,6 @@ export default function MyReviewList() {
     // 내가 쓴 리뷰 불러오는 api
   }, []);
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  }
-
-  
   return (
     <div className={styles.body}>
       {/* 상단 네비게이션 */}
@@ -38,7 +37,9 @@ export default function MyReviewList() {
         </div>
       </div>
       {/* 타이틀 */}
-      <div className={styles.bigtitle}>내가 쓴 리뷰 목록 ({reviews.length})</div>
+      <div className={styles.bigtitle}>
+        내가 쓴 리뷰 목록 ({reviews.length})
+      </div>
       <div className={styles.reviews}>
         {reviews.map((review, idx) => {
           return (
@@ -58,10 +59,16 @@ export default function MyReviewList() {
                   <div className={styles.comment}>{review.comment}</div>
                 </div>
               </div>
-              <EllipsisVerticalIcon className={styles.more} onClick={handleModalOpen}/>
-              {
-                modalOpen? <MiniModal/> : null
-              }
+              <EllipsisVerticalIcon
+                className={styles.more}
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+              />
+              { modalOpen ? <div className={styles.modal}>
+                <div>수정하기</div>
+                <div>삭제하기</div>
+              </div> : null}
             </div>
           );
         })}
@@ -71,10 +78,10 @@ export default function MyReviewList() {
 }
 
 function MiniModal() {
-    return (
-        <div className={styles.modal}>
-            <div>수정하기</div>
-            <div>삭제하기</div>
-        </div>
-    )
+  return (
+    <div className={styles.modal}>
+      <div>수정하기</div>
+      <div>삭제하기</div>
+    </div>
+  );
 }
