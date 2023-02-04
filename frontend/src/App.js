@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       { path: '/buylist/:userId', element: <BuyList/>, },
       { path: '/selllist/:userId', element: <SellList/>, },
       { path: '/picklist/:userId', element: <PickList/>, },
-      { path: '/myreviewlist/:userId', element: <MyReviewList/>, },
+      { path: '/myreviewlist', element: <MyReviewList/>, },
       { path: '/report/:userId', element: <Report/>, },
     ]
   },
