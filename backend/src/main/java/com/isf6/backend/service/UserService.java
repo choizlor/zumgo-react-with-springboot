@@ -12,6 +12,7 @@ import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
 import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.domain.entity.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserService {
 

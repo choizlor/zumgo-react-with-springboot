@@ -14,7 +14,7 @@ export default function Oauth() {
     (async () => {
       try {
         // 토큰 axios 요청
-        const res = await axios.get(`http://i8c110.p.ssafy.io:8080/api/oauth/token?code=${code}`)
+        const res = await axios.get(`api/oauth/token?code=${code}`)
         const token = res.headers.authorization;
         console.log(res)
 
