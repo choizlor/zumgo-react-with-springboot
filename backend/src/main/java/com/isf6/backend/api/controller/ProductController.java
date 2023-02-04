@@ -10,6 +10,7 @@ import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.service.ProductService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class ProductController {
@@ -55,6 +57,28 @@ public class ProductController {
     @GetMapping("/products")
     public List<IndexProductsDto> mainProducts() {
         List<Product> products = productRepository.findAll();
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @GetMapping("/products/sellList/{id}")
+    public List<IndexProductsDto> userSellList(@PathVariable Long id) {
+        List<Product> products = productRepository.findSellUserCode(id);
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @GetMapping("/products/buyList/{id}")
+    public List<IndexProductsDto> userBuyList(@PathVariable Long id) {
+        List<Product> products = productRepository.findBuyUserCode(id);
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
