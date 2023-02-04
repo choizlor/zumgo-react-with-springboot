@@ -1,34 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router";
 import styles from "./styles/SellList.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import SellItems from "../components/SellList/SellItems";
-import Status from "../components/SellList/Status";
+import ProductItem from "../components/Product/ProductItem";
 
 export default function SellList() {
-  const filters = ["onsale", "inprogress", "soldout"];
-  
-  
+  const filters = ["ONSALE", "BOOKING", "SOLDOUT"];
+  const filterText = ["판매 중", "예약 중", "판매완료"];
+  const navigate = useNavigate();
+  const userId = useParams().userId;
+
+  const [products, setProducts] = useState();
   const [filter, setFilter] = useState(filters[0]);
+  const [filtered, setFiltered] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((res) => {
+        setProducts(res.data);
+        // setFiltered(getFilteredItems("ONSALE"));
+        console.log("😪");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const clickProduct = (id) => {
+    navigate(`/detail/${id}`);
+  };
+
+  const handleChangeStatus = (filter) => {
+    setFilter(filter);
+    setFiltered(getFilteredItems(filter));
+  };
+
+  console.log(filter);
+
+  const getFilteredItems = (filter) => {
+    return products.filter((product) => product.status === filter);
+  };
+
   return (
     //전체 컨테이너
     <div className={styles.body}>
       {/**nav부분*/}
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon
+          className="w-6 h-6 text-black-100"
+          onClick={() => {
+            navigate(`/userinfo/${userId}`);
+          }}
+        />
         <div className={styles.title}>판매 목록</div>
       </div>
       {/*거래 상태 표시 */}
       <div className={styles.status}>
-        <Status
-          filters={filters}
-          filter={filter}
-          onFilterChange={(value) => {
-            setFilter(value);
-          }}
-        /> 
-        {/*해당 상태에 있는 아이템들만 setItems에 보내주기*/}
-        <SellItems filter={filter} />
+        {filters.map((filter, index) => {
+          return (
+            <li key={index} className={styles.block}>
+              <div
+                onClick={() => handleChangeStatus(filter)}
+                className={styles.btn}
+              >
+                {filterText[index]}
+              </div>
+            </li>
+          );
+        })}
+        <ul>
+          {filtered?.map((product) => (
+            <ProductItem
+              key={product.productId}
+              product={product}
+              clickProduct={clickProduct}
+            />
+          ))}
+        </ul>
       </div>
     </div>
-  ); 
+  );
 }

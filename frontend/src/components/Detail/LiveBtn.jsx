@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './LiveBtn.module.css';
 
-export default function LiveBtn() {
+export default function LiveBtn({requestChat}) {
   return (
     <div className={styles.body}>
-      <div className={styles.blackBtn}>
+      <div className={styles.blackBtn} onClick={requestChat}>
         <span>
           일반 채팅  
         </span>
