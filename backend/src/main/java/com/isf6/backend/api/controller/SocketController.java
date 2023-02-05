@@ -74,7 +74,6 @@ public class SocketController {
         List<ChatRoomInfoResDto> ChatRoomList = new ArrayList<>();
         ChatRoomList = socketService.getAllChatRoom(userCode);
 
-
         return ResponseEntity.status(200).body(ChatRoomList);
     }
 

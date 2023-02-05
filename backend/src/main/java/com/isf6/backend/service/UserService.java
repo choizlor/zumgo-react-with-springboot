@@ -12,6 +12,7 @@ import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
 import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.domain.entity.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
@@ -44,7 +46,7 @@ public class UserService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "b875d5c09e310962a4402f90c93aa19c"); //REST API KEY
-        params.add("redirect_uri", "http://localhost:3000/oauth"); //REDIRECT URI
+        params.add("redirect_uri", "http://i8c110.p.ssafy.io/oauth"); //REDIRECT URI
         params.add("code", code);
         params.add("client_secret", "QMJmsfyHMzlMcApqls4Txlhk7CrjE3LU"); // 생략 가능!
 

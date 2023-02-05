@@ -15,7 +15,7 @@ export default function Report() {
 
   const report = () => {
     axios
-      .post(`http://localhost:8080/api/user/report/${reported}`, {
+      .post(`http://i8c110.p.ssafy.io:8080/api/user/report/${reported}`, {
         reporter : 2,
         content:"신고해븐다,,,",
       })
