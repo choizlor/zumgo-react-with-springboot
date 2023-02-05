@@ -1,26 +1,28 @@
 package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.ReviewSaveReqDto;
+import com.isf6.backend.api.Response.ReviewInfoResDto;
 import com.isf6.backend.domain.entity.Bill;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.BillRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ReviewService {
 
-    @Autowired
-    BillRepository billRepository;
-    @Autowired
-    ProductService productService;
-    @Autowired
-    UserService userService;
+    private final BillRepository billRepository;
+    private final ProductService productService;
+    private final UserService userService;
 
     public Bill createReview(Long productId, ReviewSaveReqDto reviewSaveReqDto) {
         Bill bill = new Bill();
@@ -29,6 +31,7 @@ public class ReviewService {
         bill.setProduct(product);
 
         User seller = userService.findUser(reviewSaveReqDto.getSellerUserCode());
+        seller.setPoint(seller.getPoint()+3);
         bill.setSeller(seller);
 
         User buyer = userService.findUser(reviewSaveReqDto.getBuyerUserCode());
@@ -41,10 +44,15 @@ public class ReviewService {
         return bill;
     }
 
-    public List<Bill> getMyReviewAll(Long userCode) {
-        List<Bill> reviewList = billRepository.findByBuyerUserCode(userCode);
+    public List<ReviewInfoResDto> getMyReviewAll(Long userCode) {
+        List<Bill> reviewList = new ArrayList<>();
+        reviewList = billRepository.findByBuyerUserCode(userCode);
+        log.info("review cnt : {}", reviewList.size());
 
-        return reviewList;
+        List<ReviewInfoResDto> result = reviewList.stream()
+                .map(review -> new ReviewInfoResDto(review))
+                .collect(Collectors.toList());
+        return result;
     }
 
     public Bill getReviewByProductId(Long productId) {
@@ -74,6 +82,15 @@ public class ReviewService {
         if(bill != null) {
             billRepository.delete(bill);
         }
+    }
+
+    public boolean checkReview(Long productId) {
+        //리뷰가 존재하면 true, 리뷰가 없으면 false
+        Bill bill = getReviewByProductId(productId);
+        if(bill != null) {
+            return true;
+        }
+        return false;
     }
 
 }
