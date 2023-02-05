@@ -42,7 +42,8 @@ public class ProductController {
 
     @PostMapping("/product")
     public Long uploadProduct(@RequestPart("content") ProductSaveRequestDto requestDto,
-                           @RequestPart("imgUrl") List<MultipartFile> multipartFiles) {
+                              @RequestPart("imgUrl") List<MultipartFile> multipartFiles) {
+
 //        if (multipartFiles == null) {
 //            throw new PrivateException(Code.WRONG_INPUT_CONTENT);
 //        }

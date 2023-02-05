@@ -28,7 +28,6 @@ public class Product extends BaseTimeEntity {
     private String description;
 
     private String reservation;
-
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Img> imgList = new ArrayList<>();
