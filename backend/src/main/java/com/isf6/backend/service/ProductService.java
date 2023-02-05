@@ -4,14 +4,18 @@ import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
+import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
+import com.isf6.backend.domain.repository.ImgRepository;
 import com.isf6.backend.domain.repository.ProductRepository;
+import com.isf6.backend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +24,36 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+    private final ImgRepository imgRepository;
+    private final S3Service s3Service;
+
+//
+//    @Transactional
+//    public Long save(ProductSaveRequestDto requestDto)
+//    {
+//        return productRepository.save(requestDto.toEntity()).getId();
+//    }
 
     @Transactional
-    public Long save(ProductSaveRequestDto requestDto) {
-        return productRepository.save(requestDto.toEntity()).getId();
+    public Long uploadProduct(ProductSaveRequestDto requestDto, List<String> imgPaths) {
+        postBlankCheck(imgPaths);
+
+        Long id = productRepository.save(requestDto.toEntity()).getId();
+        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
+        List<String> imgList = new ArrayList<>();
+        for (String imgUrl : imgPaths) {
+            Img img = new Img(imgUrl, product);
+            imgRepository.save(img);
+            imgList.add(img.getImgUrl());
+        }
+        return id;
+    }
+
+    private void postBlankCheck(List<String> imgPaths) {
+        if(imgPaths == null || imgPaths.isEmpty()){ //.isEmpty()도 되는지 확인해보기
+//            throw new PrivateException(Code.WRONG_INPUT_IMAGE);
+        }
     }
 
     @Transactional
@@ -34,7 +64,7 @@ public class ProductService {
                 requestDto.getPrice(),
                 requestDto.getDescription(),
                 requestDto.getReservation(),
-                requestDto.getPhoto(),
+                requestDto.getImgList(),
                 requestDto.getStatus());
 
         return id;
@@ -66,4 +96,6 @@ public class ProductService {
 
         return product;
     }
+
+
 }
