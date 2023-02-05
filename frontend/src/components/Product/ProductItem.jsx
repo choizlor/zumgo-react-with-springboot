@@ -4,7 +4,10 @@ import testImg from "../../assets/images/testImg.jpg";
 import zImg from "../../assets/images/z.png";
 
 import { HeartIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+
 export default function ProductItem({ product, clickProduct }) {
+  const [status, setstatus] = useState(true);
   return (
     <div
       className={styles.body}
@@ -22,7 +25,8 @@ export default function ProductItem({ product, clickProduct }) {
           <div className={styles.status}>판매중</div>
           <div className={styles.icons}>
             <div className={styles.icon}>
-              <HeartIcon />
+              {status?<div className={styles.true}><HeartIcon /></div>:<div className={styles.false}><HeartIcon /></div>}
+              {/* <HeartIcon /> */}
               <div className={styles.count}>2</div>
             </div>
             <div className={styles.icon}>
