@@ -6,10 +6,7 @@ import com.isf6.backend.service.WishService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,5 +32,16 @@ public class WishController {
         return ResponseEntity.status(200).body(result);
     }
 
+    @DeleteMapping
+    public ResponseEntity deleteWish(@RequestParam("userCode") Long userCode, @RequestParam("productId") Long productId) {
+        Map<String, Object> result = new HashMap<>();
+        wishService.deleteWish(userCode, productId);
+
+        long cnt = wishService.getWishCnt(productId);
+        result.put("wishCnt", cnt);
+        result.put("wishCheck", false);
+
+        return ResponseEntity.status(200).body(result);
+    }
 
 }

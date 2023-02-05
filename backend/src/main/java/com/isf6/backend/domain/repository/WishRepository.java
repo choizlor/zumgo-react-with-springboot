@@ -9,4 +9,7 @@ public interface WishRepository extends JpaRepository<Wish, Object> {
 
     @Query("SELECT COUNT(*) FROM Wish w WHERE w.product.id = :productId")
     Long getWishCnt(@Param("productId") long productId);
+
+    @Query("SELECT w FROM Wish w WHERE w.product.id = :productId")
+    Wish findByProductId(@Param("productId") long productId);
 }

@@ -7,8 +7,10 @@ import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.domain.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class WishService {
@@ -35,6 +37,20 @@ public class WishService {
         cnt = wishRepository.getWishCnt(productId);
 
         return cnt;
+    }
+
+    public Wish getWish(Long productId) {
+        Wish wish = wishRepository.findByProductId(productId);
+
+        return wish;
+    }
+
+    public void deleteWish(Long userCode, Long productId) {
+        Wish wish = getWish(productId);
+        log.info("wish : {}", wish);
+        if(wish != null) {
+            wishRepository.delete(wish);
+        }
     }
 
 }
