@@ -4,7 +4,7 @@ import LiveBtn from "../components/Detail/LiveBtn";
 import z from "../assets/images/z.png";
 import DetailModal from "../components/Detail/DetailModal";
 import { useNavigate, useParams } from "react-router";
-
+import axios  from "axios";
 // heroicons
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import {
@@ -19,10 +19,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper";
-import axios from "axios";
+import {useSelector} from '@reduxjs/toolkit'
 
 export default function Detail() {
   const params = useParams();
+  const user = useSelector((state) => {return state.user})
   const productId = params.productId;
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,13 +48,21 @@ export default function Detail() {
     })
     .then((res) => { console.log(res.data)})
     .catch((err) => { console.log(err)})
-  }
+  };
 
   // 라이브 요청하기
   const requestLive = () => {
     // 2 포인트 빼기,,,
-    
-  }
+    // post 요청하기
+    axios
+    .post(`http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,{
+    })
+    .then((res) => {
+      console.log(res)                      
+    })
+    .catch((err) =>{
+      console.log(err)})
+  };
 
   return (
     <div className={styles.body}>
