@@ -73,8 +73,7 @@ const VideoRoomTest = () => {
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
-
-            console.log(error)
+            console.log(error);
           }
         });
     });
@@ -82,9 +81,10 @@ const VideoRoomTest = () => {
 
   // 토큰 생성
   const createToken = (sessionId) => {
-    let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    // let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
     return new Promise((resolve, reject) => {
-      const data = { role: myRole };
+      // const data = { role: myRole };
+      var data = {};
       axios
         .post(
           OPENVIDU_SERVER_URL +
@@ -121,6 +121,7 @@ const VideoRoomTest = () => {
     setSession(mySession);
 
     mySession.on("streamCreated", (event) => {
+      // 스트림이 생길 때마다
       const subscriber = mySession.subscribe(event.stream, "publisher");
       setSubscribers(subscriber);
     });
@@ -245,8 +246,7 @@ const VideoRoomTest = () => {
 
   const startAuction = () => {
     const mySession = session;
-    
-  }
+  };
 
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
@@ -316,8 +316,8 @@ const VideoRoomTest = () => {
         <div className={styles.container}>
           {mainStreamManager !== undefined ? (
             <div className={styles.mainvideo}>
-              {/* <UserVideoComponent streamManager={mainStreamManager} /> */}
-              {isHost && <UserVideoComponent streamManager={publisher} />}
+              <UserVideoComponent streamManager={mainStreamManager} />
+              {/* {isHost && <UserVideoComponent streamManager={publisher} />} */}
               {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
@@ -327,7 +327,7 @@ const VideoRoomTest = () => {
             </div> */}
             <div className={styles.hostname}>{hostName}</div>
           </div>
-          <div className={styles.totaluser}>{totalUsers}</div>
+          <div className={styles.totaluser}>라이브 입장 인원: {totalUsers}</div>
           <div className={styles.livebtn}>LIVE</div>
           <button
             className={styles.leavebtn}
