@@ -24,14 +24,17 @@ export default function AddProduct() {
   // 상품등록 axios
   const addProduct = () => {
     axios
-      .post("http://i8c110.p.ssafy.io:8080/product", {
-        title,
+      .post("http://localhost:8080/product", {
+        imgUrl : {},
+        content : {
+          title,
         price,
         description,
         reservation: "2010-10-14",
-        photo: "아직이용",
         status: "ONSALE",
         user: userId,
+        },
+        
       })
       .then((res) => {
         console.log(res.data, "💜");
@@ -62,6 +65,9 @@ export default function AddProduct() {
     e.preventDefault();
     // 이미지 업로드
 
+    console.log(e.target.value, '👴')
+    setImgBase64(e.target.value)
+
     console.log('파일 업로드 클릭!')
   };
 
@@ -75,16 +81,16 @@ export default function AddProduct() {
         <div className={styles.button}>
           <CameraIcon className={styles.camera} />
           <div className={styles.num}>0/5</div>
+        </div>
           <input
             className={styles.file}
             type="file"
             accept="image/*"
             capture="camera"
+            // style={{ visibility: "hidden" }}
             onChange={handleUploadImg}
-            style={{ display: "none" }}
             multiple
           />
-        </div>
         {/* <div className={styles.addbtn}> */}
         <input
           className={`${styles.input} ${styles.titleinput}`}
