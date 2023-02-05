@@ -17,10 +17,9 @@ export default function SellList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/products")
+      .get(`http://localhost:8080/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
-        // setFiltered(getFilteredItems("ONSALE"));
         console.log("😪");
       })
       .catch((err) => {
@@ -46,6 +45,7 @@ export default function SellList() {
   return (
     //전체 컨테이너
     <div className={styles.body}>
+      {JSON.stringify(products)}
       {/**nav부분*/}
       <div className={styles.nav}>
         <ChevronLeftIcon
