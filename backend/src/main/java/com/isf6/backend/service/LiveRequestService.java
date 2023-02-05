@@ -7,8 +7,13 @@ import com.isf6.backend.domain.repository.LiveRequestRepository;
 import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class LiveRequestService {
@@ -36,6 +41,25 @@ public class LiveRequestService {
         cnt = liveRequestRepository.getLiveRequestCnt(productId);
 
         return cnt;
+    }
+
+    //내가 라이브 요청한 상품들의 목록
+    public List<Product> getMyLiveRequestList(Long userCode) {
+        log.info("getMyLiveRequestList : true ");
+        List<Product> liveRequestList = new ArrayList<>();
+        liveRequestList = productRepository.getMyLiveRequestList(userCode);
+
+        return liveRequestList;
+    }
+
+    //내가 판매중인 상품 중에서 라이브요청의 개수가 1개 이상인 상품의 목록
+    public List<Product> getSellLiveRequestList(Long userCode) {
+        log.info("getSellLiveRequestList : true ");
+        List<Product> liveRequestList = new ArrayList<>();
+        liveRequestList = productRepository.getSellLiveRequestList(userCode);
+        log.info("size : {}", liveRequestList.size());
+
+        return liveRequestList;
     }
 
 }
