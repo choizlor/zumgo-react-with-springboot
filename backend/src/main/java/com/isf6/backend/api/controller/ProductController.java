@@ -5,17 +5,17 @@ import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
-import com.isf6.backend.domain.entity.Wish;
 import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.service.ProductService;
+import com.isf6.backend.service.S3Service;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +26,30 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final S3Service s3Service;
+
+//    @PostMapping("/product")
+//    public Long save(@RequestBody ProductSaveRequestDto requestDto) {
+//        return productService.save(requestDto);
+//    }
+//
+//    @PostMapping("/product/images")
+//    public Long uploadProduct(@RequestPart("imgUrl") List<MultipartFile> multipartFiles) {
+//        List<String> imgPaths = s3Service.upload(multipartFiles);
+//        System.out.println("IMG 경로들 : " + imgPaths);
+//        productService.uploadImages(imgPaths);
+//    }
 
     @PostMapping("/product")
-    public Long save(@RequestBody ProductSaveRequestDto requestDto) {
-        return productService.save(requestDto);
+    public Long uploadProduct(@RequestPart("content") ProductSaveRequestDto requestDto,
+                              @RequestPart("imgUrl") List<MultipartFile> multipartFiles) {
+//        if (multipartFiles == null) {
+//            throw new PrivateException(Code.WRONG_INPUT_CONTENT);
+//        }
+        List<String> imgPaths = s3Service.upload(multipartFiles);
+        System.out.println("IMG 경로들 : " + imgPaths);
+
+        return productService.uploadProduct(requestDto, imgPaths);
     }
 
     @PutMapping("/product/{id}")
