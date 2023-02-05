@@ -4,11 +4,13 @@ import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import testImg from "../assets/images/kim.png";
 import { useNavigate } from "react-router";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   // redux 사용하기
-  // const user = useSelector((state) => { return state.user});
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
   const token = window.localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -16,25 +18,24 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [reservation, setReservation] = useState("");
-  const [photo, setPhoto] = useState([]);
-  // const [userInfo, setUserInfo] = useState({});
+  const [imgBase64, setImgBase64] = useState(""); // 업로드 할 이미지를 담을 변수
+  const [photos, setPhotos] = useState([]); // 이미지 리스트 - 최대 5장으로 제한하기
 
   // 상품등록 axios
   const addProduct = () => {
     axios
-      .post("http://localhost:8080/product", {
+      .post("http://i8c110.p.ssafy.io:8080/product", {
         title,
         price,
         description,
         reservation: "2010-10-14",
         photo: "아직이용",
-        status : 'ONSALE'
-        // user: userInfo,
-        // status: 'INPROGRESS' //INPROGRESS, SOLD
+        status: "ONSALE",
+        user: userId,
       })
       .then((res) => {
-        console.log(res.data,'💜');
-        navigate(`/detail/${res.data}`)
+        console.log(res.data, "💜");
+        navigate(`/detail/${res.data}`);
       })
       .catch((err) => {
         console.log(err);
@@ -57,6 +58,12 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
+  const handleUploadImg = (e) => {
+    e.preventDefault();
+    // 이미지 업로드
+
+    console.log('파일 업로드 클릭!')
+  };
 
   return (
     <div className={styles.body}>
@@ -68,14 +75,16 @@ export default function AddProduct() {
         <div className={styles.button}>
           <CameraIcon className={styles.camera} />
           <div className={styles.num}>0/5</div>
+          <input
+            className={styles.file}
+            type="file"
+            accept="image/*"
+            capture="camera"
+            onChange={handleUploadImg}
+            style={{ display: "none" }}
+            multiple
+          />
         </div>
-        <input
-          className={styles.file}
-          type="file"
-          accept="image/*"
-          capture="camera"
-          multiple
-        />
         {/* <div className={styles.addbtn}> */}
         <input
           className={`${styles.input} ${styles.titleinput}`}
