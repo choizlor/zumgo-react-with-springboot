@@ -32,6 +32,7 @@ public class ReviewService {
         bill.setProduct(product);
 
         User seller = userService.findUser(reviewSaveReqDto.getSellerUserCode());
+        seller.setPoint(seller.getPoint()+3);
         bill.setSeller(seller);
 
         User buyer = userService.findUser(reviewSaveReqDto.getBuyerUserCode());
