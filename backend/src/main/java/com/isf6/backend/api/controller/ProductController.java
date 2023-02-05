@@ -108,6 +108,18 @@ public class ProductController {
         return result;
     }
 
+    @GetMapping("/products/wishList/{id}")
+    public List<IndexProductsDto> userWishList(@PathVariable Long id) {
+        log.info("wishList");
+        List<Product> products = productRepository.findWishUserCode(id);
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
     @Data
     static class IndexProductsDto {
         private Long productId;
