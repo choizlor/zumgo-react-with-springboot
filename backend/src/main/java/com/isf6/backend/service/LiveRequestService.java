@@ -3,6 +3,7 @@ package com.isf6.backend.service;
 import com.isf6.backend.domain.entity.LiveRequest;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
+import com.isf6.backend.domain.entity.Wish;
 import com.isf6.backend.domain.repository.LiveRequestRepository;
 import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.domain.repository.UserRepository;
@@ -36,6 +37,16 @@ public class LiveRequestService {
         cnt = liveRequestRepository.getLiveRequestCnt(productId);
 
         return cnt;
+    }
+
+    public boolean getUserLiveReqChk(Long productId, Long userCode) {
+        boolean chk = false;
+        LiveRequest liveRequest = liveRequestRepository.getLiveRequest(productId, userCode);
+        if(liveRequest != null) {
+            chk = true;
+        }
+
+        return chk;
     }
 
 }

@@ -59,8 +59,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductResponseDto findById (@PathVariable Long id) {
-        return productService.findById(id);
+    public ProductResponseDto findById (@PathVariable Long id, @RequestParam Long userCode) {
+        return productService.findById(id, userCode);
     }
 
     @DeleteMapping("product/{id}")
