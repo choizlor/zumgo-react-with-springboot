@@ -10,6 +10,7 @@ import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.Wish;
 import com.isf6.backend.domain.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductService {
@@ -102,6 +104,18 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 
         return product;
+    }
+
+    public boolean checkProductStatus(Long productId) {
+        //상품의 상태가 SOLDOUT이면 false, 아니라면 true
+        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
+
+        log.info("status : {}", product.getStatus());
+        if(product.getStatus().equals(ProductStatus.SOLDOUT)) {
+            return false;
+        }
+
+        return true;
     }
 
 
