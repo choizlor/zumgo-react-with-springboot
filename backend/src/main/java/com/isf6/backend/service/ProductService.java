@@ -7,9 +7,8 @@ import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
-import com.isf6.backend.domain.repository.ImgRepository;
-import com.isf6.backend.domain.repository.ProductRepository;
-import com.isf6.backend.domain.repository.UserRepository;
+import com.isf6.backend.domain.entity.Wish;
+import com.isf6.backend.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,8 @@ public class ProductService {
     private final UserRepository userRepository;
     private final ImgRepository imgRepository;
     private final S3Service s3Service;
+    private final WishService wishService;
+    private final LiveRequestService liveRequestService;
 
 //
 //    @Transactional
@@ -69,10 +70,16 @@ public class ProductService {
 
         return id;
     }
-    public ProductResponseDto findById (Long id) {
+    public ProductResponseDto findById (Long id, Long userCode) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 
-        return new ProductResponseDto(entity);
+        //라이브 요청 여부, 좋아요 여부 체크하여 포함해서 상세페이지로 전달
+        //지금 들어오는 유저가 이 상품에 좋아요를 눌렀는지...
+        boolean wishCheck = wishService.getUserWishChk(id, userCode);
+        //지금 들어오는 유저가 이 상품에 라이브 요청을 했는지...
+        boolean liveReqCheck = liveRequestService.getUserLiveReqChk(id, userCode);
+
+        return new ProductResponseDto(entity, wishCheck, liveReqCheck);
     }
 
     @Transactional

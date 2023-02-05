@@ -59,8 +59,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductResponseDto findById (@PathVariable Long id) {
-        return productService.findById(id);
+    public ProductResponseDto findById (@PathVariable Long id, @RequestParam Long userCode) {
+        return productService.findById(id, userCode);
     }
 
     @DeleteMapping("product/{id}")
@@ -100,6 +100,18 @@ public class ProductController {
     @GetMapping("/products/buyList/{id}")
     public List<IndexProductsDto> userBuyList(@PathVariable Long id) {
         List<Product> products = productRepository.findBuyUserCode(id);
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @GetMapping("/products/wishList/{id}")
+    public List<IndexProductsDto> userWishList(@PathVariable Long id) {
+        log.info("wishList");
+        List<Product> products = productRepository.findWishUserCode(id);
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
