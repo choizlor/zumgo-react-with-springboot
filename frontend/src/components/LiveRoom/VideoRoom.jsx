@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
 import basicImg from "../../assets/images/kim.png";
+import Price from "../Auction/Price";
 
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -42,6 +43,10 @@ const VideoRoomTest = () => {
   const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
   const [profileImg, setProFileImg] = useState(basicImg); // 프로필 이미지
   const [hostName, setHostName] = useState(undefined); // host 이름
+  const [timerOpen, setTimerOpen] = useState(false);
+  const [bidders, setBidders] = useState(0);
+  const [priceOpen, setPriceOpen] = useState(false);
+  const [bidPrice, setBidPrice] = useState(5000);
 
   let OV = undefined;
 
@@ -158,6 +163,14 @@ const VideoRoomTest = () => {
       setSeconds(event.data); // 시간 세팅
     });
 
+    mySession.on("signal:count", (event) => {
+      setBidders(Number(event.data));
+    });
+
+    mySession.on("signal:bid", (event) => {
+      setBidPrice(Number(event.data));
+    });
+
     // 유효한 토큰으로 세션에 접속하기
     getToken().then((token) => {
       mySession
@@ -220,6 +233,42 @@ const VideoRoomTest = () => {
       });
   };
 
+  // go! 버튼 눌렀을 때 count
+  const countBidder = () => {
+    // setBidders((bidders) => bidders + 1)
+    session
+      .signal({
+        data: Number(bidders) + 1,
+        type: "count",
+      })
+      .then(() => {
+        console.log("Success count");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // bidPrice가 갱신될 때마다 signal 보내서 동기화
+  const bidding = (price) => {
+    session
+      .signal({
+        data: Number(bidPrice) + price,
+        type: "bid",
+      })
+      .then(() => {
+        console.log("Success count");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // price가 변경될 때마다 bidding 실행
+  const handleBidPrice = (price) => {
+    bidding(price);
+  };
+
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
   const leaveSession = () => {
     const mySession = session;
@@ -245,8 +294,21 @@ const VideoRoomTest = () => {
   };
 
   const startAuction = () => {
-    const mySession = session;
+    // setTimerOpen(true);
+    setSeconds(2);
   };
+
+  const startBidding = () => {
+    // setTimerOpen(true);
+    setSeconds(10);
+  };
+
+  useEffect(() => {
+    if (bidPrice > 5000) {
+      // product 가격으로 바꿔야 함
+      startBidding();
+    }
+  }, [bidPrice]);
 
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
@@ -338,7 +400,16 @@ const VideoRoomTest = () => {
             leaveSession
           </button>
           <div className={styles.timer}>
-            <Timer />
+            {/* {timerOpen ? ( */}
+            <Timer
+              seconds={seconds}
+              setSeconds={setSeconds}
+              currentSession={session}
+              bidders={bidders}
+              setPriceOpen={setPriceOpen}
+              // setTimerOpen={setTimerOpen}
+            />
+            {/* ) : null} */}
           </div>
           {chatDisplay && (
             <div>
@@ -351,6 +422,10 @@ const VideoRoomTest = () => {
             </div>
           )}
           <button onClick={startAuction}>go?</button>
+          <button onClick={countBidder}>go!</button>
+          <div>{bidders}</div>
+          <div>{bidPrice}</div>
+          {priceOpen ? <Price handleBidPrice={handleBidPrice} /> : null}
         </div>
       ) : null}
     </div>
