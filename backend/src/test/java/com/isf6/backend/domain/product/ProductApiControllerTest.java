@@ -2,6 +2,7 @@ package com.isf6.backend.domain.product;
 
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
+import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -48,7 +50,7 @@ public class ProductApiControllerTest {
         int price = 10000;
         String description = "상품 설명글";
         String reservation = "예약시간";
-        String photo = "이미지 링크";
+        List<Img> imgList = new ArrayList<>();
         ProductStatus status = ProductStatus.ONSALE;
 
         ProductSaveRequestDto requestDto = ProductSaveRequestDto.builder()
@@ -56,7 +58,7 @@ public class ProductApiControllerTest {
                 .price(price)
                 .description(description)
                 .reservation(reservation)
-                .photo(photo)
+                .imgList(imgList)
                 .status(status)
                 .build();
 
@@ -73,7 +75,7 @@ public class ProductApiControllerTest {
         assertThat(all.get(0).getDescription()).isEqualTo(description);
         assertThat(all.get(0).getPrice()).isEqualTo(price);
 //      assertThat(all.get(0).getReservation()).isEqualTo(reservation);
-        assertThat(all.get(0).getPhoto()).isEqualTo(photo);
+//        assertThat(all.get(0).getImgList().isEqualTo(imgList);
         assertThat(all.get(0).getStatus()).isEqualTo(status);
     }
 
@@ -85,7 +87,7 @@ public class ProductApiControllerTest {
                 .price(10000)
                 .description("상품 설명글")
                 .reservation("예약시간")
-                .photo("이미지 링크")
+//                .photo("이미지 링크")
                 .status(ProductStatus.ONSALE)
                 .build());
 

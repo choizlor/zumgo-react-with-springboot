@@ -1,10 +1,12 @@
 package com.isf6.backend.api.Response;
 
+import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -15,7 +17,7 @@ public class ProductResponseDto {
     private int price;
     private String description;
     private String reservation;
-    private String photo;
+    private List<Img> imgList;
     private ProductStatus status;
 
     public ProductResponseDto(Product entity) {
@@ -24,7 +26,7 @@ public class ProductResponseDto {
         this.price = entity.getPrice();
         this.description = entity.getDescription();
         this.reservation = entity.getReservation();
-        this.photo = entity.getPhoto();
+        this.imgList = entity.getImgList();
         this.status = entity.getStatus();
     }
 }
