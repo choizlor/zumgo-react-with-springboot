@@ -122,6 +122,14 @@ img {
 }
 
 
+.true {
+  color: black;
+}
+
+.false {
+  color:white;
+}
+
 .icon {
   display: flex;
   align-items: center;

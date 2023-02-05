@@ -29,6 +29,7 @@ export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
+  const [status,setstatus] = useState(true);
 
   useEffect(() => {
     // 상품 정보를 가져오는 GET 요청
@@ -165,6 +166,8 @@ export default function Detail() {
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
             <div className={styles.icon}>
+            {status?<div className={styles.true}><HeartIcon /></div>:<div className={styles.false}><HeartIcon /></div>}
+              {/* <HeartIcon /> */}
               <HeartIcon />
               <div className={styles.count}>2</div>
             </div>
