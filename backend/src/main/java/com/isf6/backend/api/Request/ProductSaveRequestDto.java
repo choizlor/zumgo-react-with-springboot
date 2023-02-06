@@ -24,7 +24,7 @@ public class ProductSaveRequestDto {
     private int price;
     private String description;
     private String reservation;
-    private List<Img> imgList;
+//    private List<Img> imgList;
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
     private User user;
 
@@ -45,7 +45,7 @@ public class ProductSaveRequestDto {
                 .price(price)
                 .description(description)
                 .reservation(reservation)
-                .imgList(imgList)
+//                .imgList(imgList)
                 .status(status)
                 .user(user)
                 .build();

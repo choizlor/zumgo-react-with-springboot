@@ -18,16 +18,16 @@ public class ProductUpdateRequestDto {
     private int price;
     private String description;
     private String reservation;
-    private List<Img> imgList;
+//    private List<Img> imgList;
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
     @Builder
-    public ProductUpdateRequestDto(String title, int price, String description, String reservation, List<Img> imgList, ProductStatus status) {
+    public ProductUpdateRequestDto(String title, int price, String description, String reservation, ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.reservation = reservation;
-        this.imgList = imgList;
+//        this.imgList = imgList;
         this.status = status;
     }
 }
