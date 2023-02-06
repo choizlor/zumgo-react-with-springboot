@@ -3,6 +3,7 @@ package com.isf6.backend.api.controller;
 import com.isf6.backend.api.Request.ReviewSaveReqDto;
 import com.isf6.backend.api.Response.ReviewInfoResDto;
 import com.isf6.backend.domain.entity.Bill;
+import com.isf6.backend.service.ProductService;
 import com.isf6.backend.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ProductService productService;
 
     @PostMapping("/{productId}")
     public ResponseEntity saveReview(@PathVariable Long productId, @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
@@ -32,13 +34,11 @@ public class ReviewController {
             response.put("result", "FAIL");
             response.put("reason", "해당 상품의 리뷰가 존재");
             return ResponseEntity.status(200).body(response);
+        } else if (productService.checkProductStatus(productId)) {
+            response.put("result", "FAIL");
+            response.put("reason", "해당 상품 상태가 SOLDOUT이 아님");
+            return ResponseEntity.status(200).body(response);
         }
-        //product service에서 만들고 주석 풀기
-//        else if (productService.checkProductStatus(productId)) {
-//            response.put("result", "FAIL");
-//            response.put("reason", "해당 상품 상태가 SOLDOUT이 아님");
-//            return ResponseEntity.status(200).body(response);
-//        }
 
         try{
             bill = reviewService.createReview(productId, reviewSaveReqDto);

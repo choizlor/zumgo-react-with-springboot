@@ -1,5 +1,6 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
@@ -7,9 +8,13 @@ import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
-import com.isf6.backend.domain.entity.Wish;
 import com.isf6.backend.domain.repository.*;
+import com.isf6.backend.domain.repository.custom.ProductRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final ImgRepository imgRepository;
-    private final S3Service s3Service;
+
     private final WishService wishService;
     private final LiveRequestService liveRequestService;
+
+    private final ProductRepositoryCustomImpl productRepositoryCustomImpl;
 
 //
 //    @Transactional
@@ -64,8 +72,8 @@ public class ProductService {
                 requestDto.getTitle(),
                 requestDto.getPrice(),
                 requestDto.getDescription(),
-                requestDto.getReservation(),
-                requestDto.getImgList(),
+                requestDto.getAvailableTime(),
+                requestDto.getReserve(),
                 requestDto.getStatus());
 
         return id;
@@ -104,5 +112,40 @@ public class ProductService {
         return product;
     }
 
+    public boolean checkProductStatus(Long productId) {
+        //상품의 상태가 SOLDOUT이면 false, 아니라면 true
+        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
 
+        log.info("status : {}", product.getStatus());
+        if(product.getStatus().equals(ProductStatus.SOLDOUT)) {
+            return false;
+        }
+
+        return true;
+    }
+
+<<<<<<< HEAD
+//    public Page<IndexProductsResDto> getMainProducts(String sort, String category, int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        return productRepositoryCustomImpl.findAllByCategoryOrderBySort(sort, category, pageable);
+//    }
+
+    //no-offset 방식
+    public List<IndexProductsResDto> getMainProductsNo(Long productId, int pageSize) {
+        return productRepositoryCustomImpl.findAllNoOffset(productId, pageSize);
+    }
+
+    //offset 방식
+    public List<IndexProductsResDto> getMainProducts(int pageNo, int pageSize) {
+        return productRepositoryCustomImpl.findAllOffSet(pageNo, pageSize);
+    }
+
+
+=======
+    // 문자열 포함한 상품 목록 검색
+    public List<Product> findProducts(String productSearch) {
+        return productSearchRepository.findBySearch(productSearch);
+    }
+
+>>>>>>> eb419e5b5dd3a1b1539f370ee07ba96d365bcde1
 }

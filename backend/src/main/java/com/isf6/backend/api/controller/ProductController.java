@@ -1,16 +1,24 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Response.IndexProductsResDto;
+import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
+import com.isf6.backend.domain.repository.ProductSearchRepository;
 import com.isf6.backend.service.ProductService;
 import com.isf6.backend.service.S3Service;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +34,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final S3Service s3Service;
 
 //    @PostMapping("/product")
@@ -63,7 +72,7 @@ public class ProductController {
         return productService.findById(id, userCode);
     }
 
-    @DeleteMapping("product/{id}")
+    @DeleteMapping("/product/{id}")
     public Long delete(@PathVariable Long id) {
         productService.delete(id);
         return id;
@@ -77,7 +86,18 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<IndexProductsDto> mainProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllDesc();
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @PostMapping("/product/search")
+    public List<IndexProductsDto> searchProducts(@RequestBody String searchName) {
+        List<Product> products = productSearchRepository.findBySearch(searchName);
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
@@ -119,6 +139,25 @@ public class ProductController {
 
         return result;
     }
+
+    //페이지네이션...?
+//    @GetMapping("/products/main")
+//    public Page<IndexProductsResDto> getMainProduct(@RequestParam String sort, @RequestParam String category, @RequestParam int page, @RequestParam int size) {
+//        return productService.getMainProducts(sort, category, page, size);
+//    }
+
+    //무한 스크롤 no-offset 방식
+    @GetMapping("/products/main")
+    public List<IndexProductsResDto> getMainProduct(@RequestParam Long productId, @RequestParam int pageSize) {
+        return productService.getMainProductsNo(productId, pageSize);
+    }
+
+    //offset방식
+    @GetMapping("/products/main/offset")
+    public List<IndexProductsResDto> getMainProduct(@RequestParam int pageNo, @RequestParam int pageSize) {
+        return productService.getMainProducts(pageNo, pageSize);
+    }
+
 
     @Data
     static class IndexProductsDto {

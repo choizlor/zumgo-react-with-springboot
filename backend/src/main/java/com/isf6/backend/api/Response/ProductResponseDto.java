@@ -3,13 +3,17 @@ package com.isf6.backend.api.Response;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+@Data
 @Getter
+@AllArgsConstructor
 public class ProductResponseDto {
 
     private Long id;
