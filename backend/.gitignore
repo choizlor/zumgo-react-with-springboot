@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### aws s3 ignore ###
+src/main/resources/application-credentials.properties
