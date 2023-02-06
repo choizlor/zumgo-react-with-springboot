@@ -5,6 +5,7 @@ import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { XMarkIcon, ClockIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 export default function ReservationModal({ setModalOpen }) {
   const [selectDate, setSelectDate] = useState(new Date());
@@ -16,6 +17,15 @@ export default function ReservationModal({ setModalOpen }) {
 
   const handleSubmit = () => {
     setModalOpen(false);
+    axios
+    .put('http://localhost:8080/product/2', {
+      // title,
+      // price,
+      // description,
+      // reservation,
+      // photo: '아직이용',
+      
+    })
   };
 
   return (

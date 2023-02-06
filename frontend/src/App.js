@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Live from './pages/Live';
 import LiveRoom from './pages/LiveRoom';
-import VideoRoom from './components/LiveRoom/test/VideoRoom';
+import VideoRoom from './components/LiveRoom/VideoRoom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import AddProduct from './pages/AddProduct';
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home/>, },
       { path: '/oauth', element: <Oauth/>, },
       { path: '/live', element: <Live/>, },
-      { path: '/live/:productId', element: <VideoRoom/>, },
+      { path: '/live/:productId', element: <VideoRoom />, },
       { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
       { path: '/update/:productId', element: <UpdateProduct/>, },
