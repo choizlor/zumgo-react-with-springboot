@@ -20,7 +20,8 @@ public class ProductResponseDto {
     private String title;
     private int price;
     private String description;
-    private String reservation;
+    private String availableTime;
+    private Timestamp reserve;
     private List<Img> imgList;
     private ProductStatus status;
     private int wishSize;
@@ -33,7 +34,8 @@ public class ProductResponseDto {
         this.title = entity.getTitle();
         this.price = entity.getPrice();
         this.description = entity.getDescription();
-        this.reservation = entity.getReservation();
+        this.availableTime = entity.getAvailableTime();
+        this.reserve = entity.getReserve();
         this.imgList = entity.getImgList();
         this.status = entity.getStatus();
         this.wishSize = entity.getWishes().size();
