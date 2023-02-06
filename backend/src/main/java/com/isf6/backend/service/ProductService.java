@@ -1,5 +1,6 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Request.ProductSearchReqDto;
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
@@ -124,7 +125,6 @@ public class ProductService {
         return true;
     }
 
-
 //    public Page<IndexProductsResDto> getMainProducts(String sort, String category, int page, int size) {
 //        Pageable pageable = PageRequest.of(page, size);
 //        return productRepositoryCustomImpl.findAllByCategoryOrderBySort(sort, category, pageable);
@@ -141,9 +141,8 @@ public class ProductService {
     }
 
 
-
     // 문자열 포함한 상품 목록 검색
-    public List<Product> findProducts(String productSearch) {
+    public List<Product> findProducts(ProductSearchReqDto productSearch) {
         return productSearchRepository.findBySearch(productSearch);
     }
 }
