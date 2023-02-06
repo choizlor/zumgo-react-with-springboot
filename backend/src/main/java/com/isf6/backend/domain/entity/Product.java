@@ -78,5 +78,4 @@ public class Product extends BaseTimeEntity {
         this.reserve = reserve;
         this.status = status;
     }
-
 }
