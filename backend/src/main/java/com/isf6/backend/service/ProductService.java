@@ -1,6 +1,7 @@
 package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
+import com.isf6.backend.api.Request.ProductSearchReqDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
