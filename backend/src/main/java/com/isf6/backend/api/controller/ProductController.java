@@ -1,5 +1,6 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Request.ProductSearchReqDto;
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
@@ -96,8 +97,8 @@ public class ProductController {
     }
 
     @PostMapping("/product/search")
-    public List<IndexProductsDto> searchProducts(@RequestBody String searchName) {
-        List<Product> products = productSearchRepository.findBySearch(searchName);
+    public List<IndexProductsDto> searchProducts(@RequestBody ProductSearchReqDto requestDto) {
+        List<Product> products = productSearchRepository.findBySearch(requestDto);
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
