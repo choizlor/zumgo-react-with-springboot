@@ -3,16 +3,20 @@ import styles from "./styles/AddProduct.module.css";
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import testImg from "../assets/images/kim.png";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
   // redux 사용하기
   const userId = useSelector((state) => {
-    console.log("userId :", state.user.userCode);
     return state.user.userCode;
   });
+  
+  // const location = useLocation();
+  // const { userId } = location.state;
+  // console.log(location.state)
+  
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -34,7 +38,6 @@ export default function AddProduct() {
     e.preventDefault();
 
     let formData = new FormData();
-    const reader = new FileReader();
     let files = e.target.imgurls.files;
 
     for (let i = 0; i < files.length; i++) {
@@ -60,6 +63,8 @@ export default function AddProduct() {
         console.log(err);
       });
 
+
+    // formData에 저장된 값 확인 하기  
     for (var key of formData.keys()) {
       console.log(key, formData.get(key), "👩");
     }
