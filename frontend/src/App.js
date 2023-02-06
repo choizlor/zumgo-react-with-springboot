@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     path : '/',
     element: <Root />,
     errorElement: <NotFound/>, 
-    children : [
+    children : [  
       { index: true, element: <Home/>, },
       { path: '/oauth', element: <Oauth/>, },
       { path: '/live', element: <Live/>, },
