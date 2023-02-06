@@ -38,7 +38,8 @@ export default function ProductItem({ product, clickProduct }) {
           <div className={styles.status}>판매중</div>
           <div className={styles.icons}>
             <div className={styles.icon}>
-              <HeartIcon onClick={addwish} />
+              {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>}
+              {/* <HeartIcon /> */}
               <div className={styles.count}>2</div>
             </div>
             <div className={styles.icon}>

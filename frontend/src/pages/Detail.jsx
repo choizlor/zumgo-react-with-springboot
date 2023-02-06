@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/Detail.module.css";
 import LiveBtn from "../components/Detail/LiveBtn";
-import z from "../assets/images/z.png";
+import zImg from "../assets/images/z.png";
 import DetailModal from "../components/Detail/DetailModal";
 import { useNavigate, useParams } from "react-router";
 import axios  from "axios";
@@ -22,16 +22,28 @@ import { Navigation, Pagination } from "swiper";
 import {useSelector} from '@reduxjs/toolkit'
 
 export default function Detail() {
+  const userId = useSelector((state) => {return state.user.userCode})
   const params = useParams();
   const user = useSelector((state) => {return state.user})
   const productId = params.productId;
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
+  const [status,setstatus] = useState(true);
 
   useEffect(() => {
-    // 상품 정보 불러오기
-    axios.get(`http://localhost:8080/product/${productId}`)
+    // 상품 정보를 가져오는 GET 요청
+    axios.get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
+    .then((res) => {
+      console.log(res)
+      setProduct(res.data)
+    })
+    .catch((err) => { console.log(err) })
+  })
+
+
+  useEffect(() => {
+    axios.get(`http://i8c110.p.ssafy.io:8080/product/${productId}`)
     .then((res) => { 
       setProduct(res.data)
       console.log(res.data)
@@ -39,16 +51,33 @@ export default function Detail() {
     .catch((err) => { console.log(err)});
   }, [])
 
+  // 수정하기 api 요청
+  const changeStatus = (e) => {
+
+    if (e.target.value === "SOLDOUT") {
+      setModalOpen(true);
+    } else {
+      setModalOpen(false);
+    }
+
+    console.log(e.target.value)
+
+    axios.put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`,{
+        ...product,
+        status: e.target.value,
+    })
+    .then(() => { navigate(`/detail/${product.id}`)})
+    .catch((err) => { console.log(err)});
+  };
+
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/chat/room', {
-      userCode1 : 1,
-      userCode2 : 2,
-    })
-    .then((res) => { console.log(res.data)})
-    .catch((err) => { console.log(err)})
-  };
+    axios.post('http://i8c110.p.ssafy.io:8080/socket/room', {
+      buyerCode: userId,
+      sellerCode:6, 
+    }).then((res) => { navigate('/chatroom/' + res.data)})
+  }
 
   // 라이브 요청하기
   const requestLive = () => {
@@ -122,19 +151,11 @@ export default function Detail() {
         {/* 드롭다운 */}
         <select
           className={styles.dropdown}
-          onChange={(e) => {
-            if (e.target.value === "거래완료") {
-              setModalOpen(true);
-            } else {
-              setModalOpen(false);
-            }
-          }}
-          name=""
-          id=""
+          onChange={changeStatus}
         >
-          <option value="판매 중">판매 중</option>
-          <option value="예약 중">예약 중</option>
-          <option value="거래완료">거래완료</option>
+          <option value="ONSALE">판매 중</option>
+          <option value="BOOKING">예약 중</option>
+          <option value="SOLDOUT">거래완료</option>
         </select>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
         {true ? (
@@ -152,28 +173,26 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.zbox}>
-            <div className={styles.z}>
-              <img src={z} className={styles.zimg} alt="" />
+            <div className={styles.icon}>
+            {status?<div className={styles.true}><HeartIcon /></div>:<div className={styles.false}><HeartIcon /></div>}
+              {/* <HeartIcon /> */}
+              <HeartIcon />
+              <div className={styles.count}>2</div>
             </div>
-            <div className={styles.count}>2</div>
+            <div className={styles.icon}>
+              <div className={styles.zimg}>
+                <img src={zImg} alt="" />
+              </div>
+              <div className={styles.zcount}>2</div>
+            </div>
           </div>
-          <div className={styles.chatBox}>
-            <ChatBubbleLeftRightIcon />
-            <div className={styles.count}>2</div>
-          </div>
-          <div className={styles.heartBox}>
-            <HeartIcon />
-            <div className={styles.count}>5</div>
-          </div>
-        </div>
         <div className={styles.timeBox}>
           <span className={styles.timeTitle}>Live 가능 시간대 :</span>
           <div className={styles.timeContent}>
             <span>{product.reservation}</span>
           </div>
         </div>
-        <LiveBtn />
+        <LiveBtn requestChat={requestChat}/>
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>

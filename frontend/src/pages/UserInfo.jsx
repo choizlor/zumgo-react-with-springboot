@@ -28,7 +28,7 @@ export default function UserInfo() {
 
   // 로그아웃
   const REST_API_KEY = "b875d5c09e310962a4402f90c93aa19c";
-  const LOGOUT_REDIRECT_URI = "http://localhost:3000";
+  const LOGOUT_REDIRECT_URI = "http://i8c110.p.ssafy.io:80/ ";
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
@@ -37,7 +37,7 @@ export default function UserInfo() {
 
   //   사용자 정보를 불러오는 api
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/user/${userId}`).then((res) => {
+    axios.get(`http://i8c110.p.ssafy.io:8080/api/user/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
   }, []);
@@ -65,12 +65,14 @@ export default function UserInfo() {
         </div>
         <div className={styles.userdiv}>
           <div className={styles.username}>{userInfo.kakaoNickname}</div>
-          <PencilSquareIcon
-            className={styles.updateicon}
-            onClick={() => {
-              navigate(`/userinfo/${userId}/update`);
-            }}
-          />
+          {isMe ? (
+            <PencilSquareIcon
+              className={styles.updateicon}
+              onClick={() => {
+                navigate(`/userinfo/${userId}/update`);
+              }}
+            />
+          ) : null}
         </div>
       </div>
       {/* 목록 리스트 */}
@@ -80,21 +82,49 @@ export default function UserInfo() {
         </div>
         <div className={styles.menu}>
           <CircleStackIcon className={styles.menuicon} />
-          <div className={styles.menutitle}>판매목록</div>
+          <div
+            className={styles.menutitle}
+            onClick={() => {
+              navigate(`/selllist/${userId}`);
+            }}
+          >
+            판매목록
+          </div>
         </div>
         {isMe ? (
           <>
             <div className={styles.menu}>
               <HeartIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>관심목록</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate(`/picklist/${userId}`);
+                }}
+              >
+                관심목록
+              </div>
             </div>
             <div className={styles.menu}>
               <ShoppingBagIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>구매목록</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate(`/buylist/${userId}`);
+                }}
+              >
+                구매목록
+              </div>
             </div>
             <div className={styles.menu}>
               <ListBulletIcon className={styles.menuicon} />
-              <div className={styles.menutitle}>내가 쓴 리뷰</div>
+              <div
+                className={styles.menutitle}
+                onClick={() => {
+                  navigate('/myreviewlist');
+                }}
+              >
+                내가 쓴 리뷰
+              </div>
             </div>
           </>
         ) : null}

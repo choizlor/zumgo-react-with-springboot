@@ -52,5 +52,15 @@ public class WishService {
             wishRepository.delete(wish);
         }
     }
+    
+    public boolean getUserWishChk(Long productId, Long userCode) {
+        boolean chk = false;
+        Wish wish = wishRepository.getWish(productId, userCode);
+        if(wish != null) {
+            chk = true;
+        }
+
+        return chk;
+    }
 
 }

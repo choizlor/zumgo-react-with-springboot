@@ -1,19 +1,19 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
 import com.isf6.backend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -55,15 +55,43 @@ public class SocketService {
         //log.info("chatRoom id : {}", chatRoomInfo.getId());
         String chatRoomCode = chatRoomInfo.getChatRoomCode();
 
-//        ChatRoomResDto chatRoom = ChatRoomResDto.builder()
+//        ChatRoomRestDto chatRoom = ChatRoomResDto.builder()
 //                .roomId(randomId)
 //                .build();
 //        chatRooms.put(randomId, chatRoom);
         return chatRoomCode;
     }
 
-    public void deleteRoom(String chatRoomCode) {
-        chatRoomRepository.findByChatRoomCode(chatRoomCode);
+    public String deleteRoom(String chatRoomCode) {
+        log.info("code service : {}", chatRoomCode);
+        
+        ChatRoom chatroom = chatRoomRepository.findByChatRoomCode(chatRoomCode);
+        log.info("chatroom : {}", chatroom.getChatRoomCode());
+        if(chatroom == null) {
+            return "null";
+        }
+
+        chatRoomRepository.delete(chatroom);
+        return "success";
     }
 
+    public List<ChatRoomInfoResDto> getAllChatRoom(Long userCode) {
+        List<ChatRoom> myChatRoomList = new ArrayList<>();
+        myChatRoomList = chatRoomRepository.findByChatRoomList(userCode);
+
+        List<ChatRoomInfoResDto> result = myChatRoomList.stream()
+                .map(room -> new ChatRoomInfoResDto(room))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    // 채팅방에 메시지 발송
+//    public void sendMessage(MessageDto messageDto) {
+//
+//
+//        chatRoomRepository.saveMessage(chatMessageSave);
+//
+//
+//
+//    }
 }

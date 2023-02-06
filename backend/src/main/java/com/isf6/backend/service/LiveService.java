@@ -5,21 +5,22 @@ import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.domain.entity.LiveStatus;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.repository.LiveRoomRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class LiveService {
 
-    @Autowired
-    LiveRoomRepository liveRoomRepository;
+    private final LiveRoomRepository liveRoomRepository;
 
-    @Autowired
-    ProductService productService;
+    private final ProductService productService;
 
     public LiveRoom createLive(LiveRoomSaveReqDto liveRoomSaveReqDto) {
         //0. 예약이 삭제되야함,,,,

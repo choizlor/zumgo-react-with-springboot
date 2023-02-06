@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import testImg from "../assets/images/testImg.jpg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import * as StompJs from "@stomp/stompjs";
 
@@ -16,6 +16,9 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ChatRoom() {
   let navigate = useNavigate();
+  let state = useLocation();
+  const isReview = state.state;
+
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -60,7 +63,7 @@ export default function ChatRoom() {
     // 소켓 연결
     try {
       const clientdata = new StompJs.Client({
-        brokerURL: "ws://localhost:8080/chat",
+        brokerURL: "ws://i8c110.p.ssafy.io:8080/chat",
         connectHeaders: {
           login: "",
           passcode: "password",
@@ -105,17 +108,31 @@ export default function ChatRoom() {
     if (chat === "") {
       return;
     }
+    if (isReview) {
+      client.publish({
+        destination: "/pub/chat/" + chatroomId,
+        body: JSON.stringify({
+          type: "",
+          sender: userId,
+          channelId: chatroomId,
+          data: "거래 어떠셨나요? 메시지를 클릭해 리뷰를 남겨주세요!",
+        }),
+        headers: { priority: 9 },
+      });
+    } else {
+      client.publish({
+        destination: "/pub/chat/" + chatroomId,
+        body: JSON.stringify({
+          type: "",
+          sender: userId,
+          channelId: chatroomId,
+          data: chat,
+        }),
+        headers: { priority: 9 },
+      });
+    }
 
-    client.publish({
-      destination: "/pub/chat/" + chatroomId,
-      body: JSON.stringify({
-        type: "",
-        sender: userId,
-        channelId: "1",
-        data: chat,
-      }),
-      headers: { priority: 9 },
-    });
+   
 
     setChat("");
   };

@@ -17,7 +17,7 @@ function Chat() {
     }
     try {
       const clientdata = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/chat',
+        brokerURL: 'ws://i8c110.p.ssafy.io:8080/chat',
         connectHeaders: {
           login: id,
           passcode: 'password',

@@ -11,11 +11,11 @@ export default function Report() {
   const reported = param.userId;
   // 리포터는 store
   const [reporter, setreporter] = useState("");
-  const [contents, setContents] = useState("");
+  const [content, setContents] = useState("");
 
   const report = () => {
     axios
-      .post(`http://localhost:8080/api/user/report/${reported}`, {
+      .post(`http://i8c110.p.ssafy.io:8080/api/user/report/${reported}`, {
         reporter : 2,
         content:"신고해븐다,,,",
       })

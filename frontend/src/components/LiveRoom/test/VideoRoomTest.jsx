@@ -15,7 +15,10 @@ import basicImg from "../../../assets/images/kim.png";
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-const OPENVIDU_SERVER_URL = "http://localhost:5000/";
+// const OPENVIDU_SERVER_URL = "http://localhost:5000/";
+
+const OPENVIDU_SERVER_URL = "http://localhost:4443";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
@@ -45,11 +48,11 @@ const VideoRoomTest = () => {
   let OV = undefined;
 
   // 토큰 받아오기
-  const getToken = useCallback(() => {
+  const getToken = () => {
     return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
-  }, [mySessionId]);
+  };
 
   // 세션 생성
   const createSession = (sessionId) => {
@@ -58,8 +61,8 @@ const VideoRoomTest = () => {
       axios
         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
           headers: {
-            // Authorization:
-            //   "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+            Authorization:
+              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
             "Content-Type": "application/json",
           },
         })
@@ -68,16 +71,17 @@ const VideoRoomTest = () => {
           resolve(res.data.id);
         })
         .catch((err) => {
-          console.log;
+          console.log(err);
         });
     });
   };
 
   // 토큰 생성
   const createToken = (sessionId) => {
-    let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    // let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
     return new Promise((resolve, reject) => {
-      const data = { role: myRole };
+      // const data = { role: myRole };
+      var data = {};
       axios
         .post(
           OPENVIDU_SERVER_URL +
@@ -87,8 +91,8 @@ const VideoRoomTest = () => {
           data,
           {
             headers: {
-              // Authorization:
-              //   "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+              Authorization:
+                "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
           }
@@ -99,6 +103,33 @@ const VideoRoomTest = () => {
         .catch((error) => reject(error));
     });
   };
+
+  // const getToken = async() => {
+  //   const sessionId = await this.createSession(this.state.mySessionId);
+  //   return await this.createToken(sessionId);
+  // }
+
+  // const createSession = async (sessionId) {
+  //   const response = await axios.post(
+  //     OPENVIDU_SERVER_URL + "api/sessions",
+  //     { customSessionId: sessionId },
+  //     {
+  //       headers: { "Content-Type": "application/json" },
+  //     }
+  //   );
+  //   return response.data; // The sessionId
+  // }
+
+  // const createToken = async (sessionId) {
+  //   const response = await axios.post(
+  //     OPENVIDU_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+  //     {},
+  //     {
+  //       headers: { "Content-Type": "application/json" },
+  //     }
+  //   );
+  //   return response.data; // The token
+  // }
 
   // 세션 아이디 설정
   useEffect(() => {
@@ -270,10 +301,24 @@ const VideoRoomTest = () => {
 
   return (
     <div className={styles.container}>
-      {session === undefined && roomId !== null && (
-        <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
-      )}
       {session === undefined ? (
+          <div id="join">
+            <div id="join-dialog" className="jumbotron vertical-center">
+              <h1>{myUserName} 님,</h1>
+              <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
+              <button
+                style={{ border: "1px solid red" }}
+                onClick={()=>{joinSession()}}
+              >
+                라이브 입장하기
+              </button>
+            </div>
+          </div>
+        ) : null}
+      {/* {session === undefined && roomId !== null && (
+        <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
+      )} */}
+      {session !== undefined ? (
         <div className={styles.container}>
           {mainStreamManager !== undefined ? (
             <div className={styles.mainvideo}>
@@ -291,19 +336,19 @@ const VideoRoomTest = () => {
           <div className={styles.livebtn}>LIVE</div>
           <button
             className={styles.leavebtn}
-            leaveSession={leaveSession}
-          ></button>
+            onClick={()=>{leaveSession()}}
+          >leaveSession</button>
           <div className={styles.timer}>
             <Timer />
           </div>
           {chatDisplay && (
             <div>
               <ChattingForm messageList={messageList} />
-              <ChattingList
+              {/* <ChattingList
                 myUserName={myUserName}
                 onMessage={sendMsg}
                 currentSession={session}
-              />
+              /> */}
             </div>
           )}
         </div>

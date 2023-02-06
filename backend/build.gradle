@@ -1,7 +1,14 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.8'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //querydsl 추가
 }
 
 group = 'com.isf6'
@@ -60,8 +67,47 @@ dependencies {
     implementation "io.swagger:swagger-annotations:1.5.21"
     implementation "io.swagger:swagger-models:1.5.21"
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    //querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+//    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}" // querydsl 라이브러리
+//    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jpa" //  Querydsl 관련 코드 생성 기능 제공
+//    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+//    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//querydsl 추가 시작 (위에 plugin 추가 부분과 맞물림)
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+//compileQuerydsl.doFirst {
+//    if(file(querydslDir).exists() )
+//        delete(file(querydslDir))
+//}
+//querydsl 추가 끝

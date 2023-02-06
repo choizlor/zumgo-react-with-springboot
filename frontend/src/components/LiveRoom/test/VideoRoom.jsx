@@ -283,6 +283,8 @@ class VideoRoom extends Component {
 
     const { storeUser } = this.props;
 
+    const { hello } = this.props;
+
     return (
       <div className="container">
         {this.state.session === undefined ? (
@@ -331,7 +333,7 @@ class VideoRoom extends Component {
             ) : null}
             <ChattingList messageList={this.state.messageList}></ChattingList>
             <ChattingForm
-              myUserName={this.state.myUserName}
+              myUserName={storeUser}
               onMessage={this.sendMsg}
               currentSession={this.state.session}
             ></ChattingForm>
