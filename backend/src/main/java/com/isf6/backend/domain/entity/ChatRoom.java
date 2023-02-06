@@ -18,6 +18,7 @@ public class ChatRoom {
     @Column(name="chatRoom_id")
     private Long id;
 
+    @Column(name="chatRoom_code")
     private String chatRoomCode;
 
     @JsonIgnore
@@ -34,4 +35,14 @@ public class ChatRoom {
     @JsonIgnore
     @OneToMany(mappedBy = "chatRoom")
     private List<Chat> chats = new ArrayList<>();
+
+    public ChatRoom toChatRoom(String chatRoomCode, User buyer, User seller) {
+        ChatRoom chatRoom = new ChatRoom();
+
+        chatRoom.setChatRoomCode(chatRoomCode);
+        chatRoom.setBuyer(buyer);
+        chatRoom.setSeller(seller);
+        return chatRoom;
+    }
+
 }
