@@ -81,7 +81,7 @@ export default function Home() {
           })}
           <div ref={ref}>안녕</div>
         </div>
-        <BottomNav />
+        <BottomNav/>
       </div>
     </div>
   );
