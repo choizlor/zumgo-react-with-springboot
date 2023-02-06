@@ -138,7 +138,7 @@ public class ProductService {
     }
 
     // 문자열 포함한 상품 목록 검색
-    public List<Product> findProducts(String productSearch) {
+    public List<Product> findProducts(ProductSearchReqDto productSearch) {
         return productSearchRepository.findBySearch(productSearch);
     }
 }

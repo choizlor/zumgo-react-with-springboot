@@ -1,5 +1,6 @@
 package com.isf6.backend.domain.repository;
 
+import com.isf6.backend.api.Request.ProductSearchReqDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.QProduct;
@@ -19,16 +20,15 @@ public class ProductSearchRepository {
 
     private final EntityManager em;
 
-    public List<Product> findBySearch(String productSearch) {
+    public List<Product> findBySearch(ProductSearchReqDto productSearch) {
         JPAQueryFactory query = new JPAQueryFactory(em);
         QProduct product = QProduct.product;
         QUser user = QUser.user;
 
-        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         return query
                 .select(product)
                 .from(product)
-                .where(product.title.contains(productSearch).or(product.description.contains(productSearch)))
+                .where(product.title.contains(productSearch.getSearchName()).or(product.description.contains(productSearch.getSearchName())))
                 .limit(1000)
                 .orderBy(product.createdDate.desc())
                 .fetch();
