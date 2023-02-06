@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState} from "react";
 import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
 import kim from "../assets/images/kim.png";
 import testImg from "../assets/images/testImg.jpg";
-import { useState } from "react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export default function ChatList() {
-  const navigate = useNavigate();
-  const param = useParams();
-  const userId = param.userId
+  const userId = useSelector((state) => {return state.user.userCode})
   const [chats, setChats] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:8080/socket/${userId}/all`)

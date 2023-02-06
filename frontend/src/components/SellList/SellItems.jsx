@@ -1,36 +1,49 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import ProductItem from "../Product/ProductItem";
 import "./SellItem";
 import SellItem from "./SellItem";
 
 export default function SellItems({ filter }) {
   //총 상품 목록들
-  const [products, setProducts] = useState([
-    {
-      id: "123",
-      name: "버즈 프로 2 미개봉 새상품",
-      price: "8000원",
-      status: "onsale",
-      image: "이미지요~",
-    },
-    {
-      id: "124",
-      name: "아이패드 팔아요",
-      price: "500,000원",
-      status: "inprogress",
-      image: "이미지입니다~",
-    },
-  ]);
+  console.log(filter)
+
+  const [products, setProducts] = useState({});
+  const navigate = useNavigate();
+
   const filtered = getFilteredItems(products, filter);
+  useEffect(() => {
+    axios
+      .get("http://i8c110.p.ssafy.io:8080/products")
+      .then((res) => {
+        setProducts(res.data);
+        console.log('😪')
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const clickProduct = (id) => {
+    navigate(`/detail/${id}`);
+  };
+
+  const getFilteredItems = (products, filter) => {
+    console.log(products);
+    return products.filter((product) => product.status === filter);
+  };
+
+
   return (
     <ul>
-      {filtered.map((item) => (
-        <SellItem key={item.id} product={item} />
+      {filtered?.map((product) => (
+        <ProductItem
+          key={product.productId}
+          product={product}
+          clickProduct={clickProduct}
+        />
       ))}
     </ul>
   );
-}
-
-function getFilteredItems(products, filter) {
-  console.log(products);
-  return products.filter((product) => product.status === filter);
 }

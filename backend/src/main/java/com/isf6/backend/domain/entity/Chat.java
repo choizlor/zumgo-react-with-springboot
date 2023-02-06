@@ -1,8 +1,10 @@
 package com.isf6.backend.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.isf6.backend.api.Request.ChatMessageSaveReqDto;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,6 +18,7 @@ public class Chat {
     @Column(name="chat_id")
     private Long id;
 
+    @CreationTimestamp
     private Timestamp chat_date;
 
     private String chat_content;
@@ -26,4 +29,17 @@ public class Chat {
     @ManyToOne
     @JoinColumn(name="chatRoom_id")
     private ChatRoom chatRoom;
+
+    public static Chat toChat(ChatMessageSaveReqDto chatMessageSaveReqDto, ChatRoom chatRoom) {
+        Chat chat = new Chat();
+
+        chat.setChatRoom(chatRoom);
+        chat.setChatter(chatMessageSaveReqDto.getChatter());
+        chat.setChat_content(chatMessageSaveReqDto.getChat_content());
+
+        return chat;
+
+    }
+
+
 }

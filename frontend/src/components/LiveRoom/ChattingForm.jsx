@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ArrowUpCircleIcon } from '@heroicons/react/24/solid';
+import styles from './ChattingForm.module.css';
 
 const ChattingForm = (props) => {
   const [message, setMessage] = useState("");
@@ -21,25 +23,19 @@ const ChattingForm = (props) => {
   };
 
   return (
-    <form onSubmit={sendMessage}>
+    <form onSubmit={sendMessage} className={styles.chatform}>
       <input
         placeholder="메세지를 입력하세요"
         id="chat-input"
         value={message}
         onChange={inputChangeHandler}
-        style={{
-          width: "100%",
-          background: "rgba(255, 255, 255)",
-          border: "1px solid rgba(177, 177, 177)",
-          borderRadius: "5px",
-          padding: "5px",
-        }}
+        className={styles.input}
       ></input>
-      <button
-        variant="contained"
-        style={{ color: "white", background: "#019267" }}
-        onClick={sendMessage}
-      ></button>
+      <ArrowUpCircleIcon
+                  className={styles.submitbtn}
+                  onClick={sendMessage}
+                />
+     
     </form>
   );
 };

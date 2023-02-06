@@ -1,0 +1,17 @@
+div {
+    font-size: 12px;
+}
+
+.word{
+    display: flex;
+    flex: 1 1 40%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom : solid gray 0.7px;
+    margin:2.5%;
+    padding:1%;
+}
+
+.icon {
+    width : 15px;
+}

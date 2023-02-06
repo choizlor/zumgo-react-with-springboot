@@ -11,8 +11,11 @@ export default function Root() {
     useEffect(() => {
         //state는 기존 값
         const token = window.localStorage.getItem('token')
+
+        if(!token) return;
+
         try {
-            const res = axios.get('http://localhost:8080/api/me', {
+            const res = axios.get('http://i8c110.p.ssafy.io:8080/api/me', {
                 headers: {
                     Authorization: token,
                 }
@@ -22,7 +25,7 @@ export default function Root() {
                 console.log('로그인된 유저 : ', user.data.user)
                 dispatch(login({
                     userCode: user.data.user.userCode,
-                    kakaoId : user.data.user.kakaoId,
+                    potnt : user.data.user.point,
                     kakaoNickname: user.data.user.kakaoNickname,
                     kakaoProfileImg : user.data.user.kakaoProfileImg,
                 }))
