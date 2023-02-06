@@ -67,7 +67,6 @@ public class ProductService {
                 requestDto.getPrice(),
                 requestDto.getDescription(),
                 requestDto.getReservation(),
-                requestDto.getImgList(),
                 requestDto.getStatus());
 
         return id;
