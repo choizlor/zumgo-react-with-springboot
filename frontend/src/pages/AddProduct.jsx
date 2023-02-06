@@ -7,77 +7,62 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 export default function AddProduct() {
-  
+  const navigate = useNavigate();
   // redux 사용하기
   const userId = useSelector((state) => {
     console.log("userId :", state.user.userCode);
     return state.user.userCode;
   });
 
-
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [reservation, setReservation] = useState("");
+  const [availableTime, setAvailableTime] = useState("");
   const [imgUrls, setImgUrls] = useState([]); // 업로드 할 이미지를 담을 변수
-
 
   const content = {
     title,
     price,
     description,
-    reservation  :'2014-01-31',
+    availableTime,
     status: "ONSALE",
-    user: userId,
+    userId,
   };
-
 
   // 상품등록 axios
   const handleSubmit = async (e) => {
     e.preventDefault();
-    e.persist();
 
     let formData = new FormData();
-
+    const reader = new FileReader();
     let files = e.target.imgurls.files;
-    console.log(e.target.imgurls.files);
 
-    // formData.append('imgUrl', files)
     for (let i = 0; i < files.length; i++) {
-      formData.append("imgUrl", files[i], { type: "multipart/form-data" });
+      formData.append("imgUrl", files[i]);
     }
-    
-    console.log(title)
-
-    
 
     formData.append(
       "content",
       new Blob([JSON.stringify(content)], { type: "application/json" })
     );
 
-
-
     await axios
       .post("http://localhost:8080/product", formData, {
         headers: {
-          "Context-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // navigate(`/detail/${res.data}`)
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
 
-
-      for (var key of formData.keys()) {
-
-        console.log(key, formData.get(key),'👩');
-      
-      }
-
+    for (var key of formData.keys()) {
+      console.log(key, formData.get(key), "👩");
+    }
   };
 
   const handleTitleChange = (e) => {
@@ -88,8 +73,8 @@ export default function AddProduct() {
     setPrice(e.target.value);
   };
 
-  const handleReservationChange = (e) => {
-    setReservation(e.target.value);
+  const handleAvailableTimeChange = (e) => {
+    setAvailableTime(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
@@ -97,10 +82,10 @@ export default function AddProduct() {
   };
 
   const handleImgUrlsChange = (e) => {
-    setImgUrls([...imgUrls, e.target.file])
-    console.log(e.target.file)
-    console.log(imgUrls)
-  }
+    // setImgUrls([...imgUrls, e.target.file])
+    // console.log(e.target.file)
+    // console.log(imgUrls)
+  };
 
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
@@ -113,7 +98,7 @@ export default function AddProduct() {
           <CameraIcon className={styles.camera} />
           <div className={styles.num}>0/5</div>
         </div>
-       
+
         <input
           className={styles.file}
           type="file"
@@ -139,7 +124,7 @@ export default function AddProduct() {
         />
         <textarea
           className={styles.textarea}
-          onChange={handleReservationChange}
+          onChange={handleAvailableTimeChange}
           placeholder="라이브 가능 시간 &#13;(ex - 10:00~12:00, 18:00~19:00)"
         ></textarea>
         <textarea

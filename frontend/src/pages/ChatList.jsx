@@ -18,7 +18,7 @@ export default function ChatList() {
       setChats(res.data)
     })
     .catch((err) => { console.log(err)})
-  })
+  },)
 
 
   return (
