@@ -3,7 +3,7 @@ import styles from "./ProductItem.module.css";
 import testImg from "../../assets/images/testImg.jpg";
 import zImg from "../../assets/images/z.png";
 
-import { HeartIcon } from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function ProductItem({ product, clickProduct }) {
@@ -25,7 +25,7 @@ export default function ProductItem({ product, clickProduct }) {
           <div className={styles.status}>판매중</div>
           <div className={styles.icons}>
             <div className={styles.icon}>
-              {status?<div className={styles.true}><HeartIcon /></div>:<div className={styles.false}><HeartIcon /></div>}
+              {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>}
               {/* <HeartIcon /> */}
               <div className={styles.count}>2</div>
             </div>

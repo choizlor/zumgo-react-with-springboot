@@ -4,9 +4,12 @@
 
 .text {
     font-weight: 800;
+    margin-left: 3%;
 }
+
 .wordcontainer {
     display: flex;
     flex-wrap: wrap;
 
 } 
+

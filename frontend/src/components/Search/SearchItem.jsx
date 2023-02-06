@@ -7,9 +7,7 @@ export default function SearchItem({ word }) {
   return (
       <div className={styles.word}>
         <span>{content}</span>
-        <div className={styles.icon}>
-          <XMarkIcon />
-        </div>
+          <XMarkIcon className={styles.icon}/>
       </div>
   );
 }
