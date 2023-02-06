@@ -30,15 +30,11 @@ import java.util.Set;
 @RequestMapping("/socket")
 public class SocketController {
 
-    @Autowired
-    SocketService socketService;
-
+    private final SocketService socketService;
     private final ChatRoomRepository crr;
     private final ChatRepository cr;
     private static Set<Integer> userList = new HashSet<>();
-
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     // websocket "/pub/chat/{id}"로 들어오는 메시징을 처리 (메시지 발행)
     @MessageMapping("/chat/{id}")
