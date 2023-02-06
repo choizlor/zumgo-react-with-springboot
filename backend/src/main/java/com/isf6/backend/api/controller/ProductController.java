@@ -148,13 +148,13 @@ public class ProductController {
 //    }
 
     //무한 스크롤 no-offset 방식
-    @GetMapping("/products/main")
+    @GetMapping("/products/main/noOffset")
     public List<IndexProductsResDto> getMainProduct(@RequestParam Long productId, @RequestParam int pageSize) {
         return productService.getMainProductsNo(productId, pageSize);
     }
 
     //offset방식
-    @GetMapping("/products/main/offset")
+    @GetMapping("/products/main")
     public List<IndexProductsResDto> getMainProduct(@RequestParam int pageNo, @RequestParam int pageSize) {
         return productService.getMainProducts(pageNo, pageSize);
     }
