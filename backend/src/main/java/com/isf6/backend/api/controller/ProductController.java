@@ -83,7 +83,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<IndexProductsDto> mainProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllDesc();
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
