@@ -7,38 +7,46 @@ import axios from 'axios';
 
 export default function Search() {
   const [search, setSearch] = useState("");
+  const [products, setProducts] = useState([]);
 
 
-  const handleSearch = (e) => {
+  const handleSearchWord = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
+    console.log(search)
   };
 
-  const goSearch = (() => {
+  // const gogoSearch  = () => {
+  //   axios.post
+  // }
+
+  const goSearch = () => {
     axios
-    .post('http://localhost:8080/product/search',{
-      search
-    })
+    .post('http://localhost:8080/product/search', search)
     .then((res) => {
-      console.log(res)
-    })git 
-    .catch((err) =>{
+      console.log(res.data, '🚗')
+      setProducts(res.data)
+    })
+    .catch((err) => {
       console.log(err)
     })
-  })
+  }
+
   return (
     <div className={styles.body}>
+      {products}
       <div className={styles.nav}>
         <ChevronLeftIcon className="w-6 h-15 text-black-100" />
-        <form onSubmit={goSearch}>
+        {/* <form onSubmit={goSearch}> */}
           <input
             type="text"
             className={styles.input}
             placeholder="검색어를 입력해주세요."
-            onChange={handleSearch}
+            onInput={handleSearchWord}
             value={search}
           />
-        </form>
+        {/* </form> */}
+        <button onClick={goSearch}>검색</button>
       </div>
       <SearchItems />
     </div>
