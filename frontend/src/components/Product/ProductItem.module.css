@@ -73,6 +73,13 @@
     margin :  0 7%;
 }
 
+.true {
+    fill: rgb(17, 16, 16);
+}
+
+.false {
+    color:white;
+}
 .icon svg {
     width : 21px;
     padding: 0;

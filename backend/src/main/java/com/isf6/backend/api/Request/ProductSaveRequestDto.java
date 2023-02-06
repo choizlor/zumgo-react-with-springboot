@@ -1,5 +1,6 @@
 package com.isf6.backend.api.Request;
 
+import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.User;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,8 +23,7 @@ public class ProductSaveRequestDto {
     @NotEmpty
     private int price;
     private String description;
-    private String reservation;
-    private String photo;
+    private String availableTime;
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
     private User user;
 
@@ -42,8 +43,7 @@ public class ProductSaveRequestDto {
                 .title(title)
                 .price(price)
                 .description(description)
-                .reservation(reservation)
-                .photo(photo)
+                .availableTime(availableTime)
                 .status(status)
                 .user(user)
                 .build();
