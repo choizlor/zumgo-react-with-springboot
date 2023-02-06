@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,17 +18,17 @@ public class ProductUpdateRequestDto {
     private String title;
     private int price;
     private String description;
-    private String reservation;
-    private List<Img> imgList;
+    private String availableTime;
+    private Timestamp reserve;
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
     @Builder
-    public ProductUpdateRequestDto(String title, int price, String description, String reservation, List<Img> imgList, ProductStatus status) {
+    public ProductUpdateRequestDto(String title, int price, String description, String availableTime, Timestamp reserve, ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
-        this.reservation = reservation;
-        this.imgList = imgList;
+        this.availableTime = availableTime;
+        this.reserve = reserve;
         this.status = status;
     }
 }

@@ -49,16 +49,15 @@ public class ProductApiControllerTest {
         String title = "상품명";
         int price = 10000;
         String description = "상품 설명글";
-        String reservation = "예약시간";
-        List<Img> imgList = new ArrayList<>();
+        String availableTime = "가능시간";
         ProductStatus status = ProductStatus.ONSALE;
+        Long userId = 1L;
 
         ProductSaveRequestDto requestDto = ProductSaveRequestDto.builder()
                 .title(title)
                 .price(price)
                 .description(description)
-                .reservation(reservation)
-                .imgList(imgList)
+                .availableTime(availableTime)
                 .status(status)
                 .build();
 
