@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final ImgRepository imgRepository;
-    private final S3Service s3Service;
+
     private final WishService wishService;
     private final LiveRequestService liveRequestService;
 
@@ -114,6 +114,11 @@ public class ProductService {
         }
 
         return true;
+    }
+
+    // 문자열 포함한 상품 목록 검색
+    public List<Product> findProducts(String productSearch) {
+        return productSearchRepository.findBySearch(productSearch);
     }
 
 }

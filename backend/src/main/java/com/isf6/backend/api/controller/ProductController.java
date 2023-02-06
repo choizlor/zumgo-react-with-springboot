@@ -7,6 +7,7 @@ import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.repository.ProductRepository;
+import com.isf6.backend.domain.repository.ProductSearchRepository;
 import com.isf6.backend.service.ProductService;
 import com.isf6.backend.service.S3Service;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final S3Service s3Service;
 
 //    @PostMapping("/product")
@@ -67,7 +69,7 @@ public class ProductController {
         return productService.findById(id, userCode);
     }
 
-    @DeleteMapping("product/{id}")
+    @DeleteMapping("/product/{id}")
     public Long delete(@PathVariable Long id) {
         productService.delete(id);
         return id;
@@ -82,6 +84,17 @@ public class ProductController {
     @GetMapping("/products")
     public List<IndexProductsDto> mainProducts() {
         List<Product> products = productRepository.findAll();
+
+        List<IndexProductsDto> result = products.stream()
+                .map(p -> new IndexProductsDto(p))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @PostMapping("/product/search")
+    public List<IndexProductsDto> searchProducts(@RequestBody String searchName) {
+        List<Product> products = productSearchRepository.findBySearch(searchName);
 
         List<IndexProductsDto> result = products.stream()
                 .map(p -> new IndexProductsDto(p))
