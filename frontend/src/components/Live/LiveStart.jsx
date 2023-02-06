@@ -9,7 +9,7 @@ export default function LiveStart() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/product/1`)
+      .get(`http://i8c110.p.ssafy.io:8080/product/2`)
       .then((res) => {
         setProduct(res.data);
       })

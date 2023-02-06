@@ -7,10 +7,10 @@ export default function Timer({
   currentSession,
   bidders,
   setPriceOpen,
+  bidCount,
+  setCelebrity
   // setTimerOpen,
 }) {
-  // console.log(seconds)
-  // const [count, setCount] = useState(seconds);
   const sendCount = () => {
     currentSession
       .signal({
@@ -31,17 +31,21 @@ export default function Timer({
     }
     const id = setInterval(() => {
       if (seconds > 0) {
-        setSeconds((seconds) => seconds - 1);
+        setSeconds((seconds) => {
+          return seconds - 1;
+        });
+      }
+      // 0이 되면 카운트가 멈춤
+      if (seconds === 0) {
+        clearInterval(id);
+        if (bidders > 1) {
+          setPriceOpen(true);
+        }
+        if (bidCount > 0) {
+          setCelebrity(true)
+        }
       }
     }, 1000);
-    // 0이 되면 카운트가 멈춤
-    if (seconds === 0) {
-      if (bidders > 1) {
-        setPriceOpen(true);
-      }
-      // setTimerOpen(false); // 0초 이후에 timer가 사라짐
-      clearInterval(id);
-    }
     return () => clearInterval(id);
   }, [seconds]);
 

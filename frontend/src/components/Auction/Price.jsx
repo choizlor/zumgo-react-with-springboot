@@ -1,28 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-export default function Price({ handleBidPrice }) {
+export default function Price({
+  handleBidPrice,
+  setBidCount,
+  myUserName,
+  setBestBidder,
+}) {
   return (
     <div>
       <button
         onClick={() => {
-        //   setPrice(100);
-          handleBidPrice(100);
+          setBidCount(1);
+          handleBidPrice(100, myUserName);
+          // setBestBidder(myUserName);
         }}
       >
         +100
       </button>
       <button
         onClick={() => {
-        //   setPrice(500);
-          handleBidPrice(500);
+          setBidCount(1);
+          handleBidPrice(500, myUserName);
+          // setBestBidder(myUserName);
         }}
       >
         +500
       </button>
       <button
         onClick={() => {
-        //   setPrice(1000);
-          handleBidPrice(1000);
+          setBidCount(1);
+          handleBidPrice(1000, myUserName);
+          // setBestBidder(myUserName);
         }}
       >
         +1000
