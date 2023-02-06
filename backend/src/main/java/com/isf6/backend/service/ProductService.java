@@ -124,7 +124,6 @@ public class ProductService {
         return true;
     }
 
-<<<<<<< HEAD
 //    public Page<IndexProductsResDto> getMainProducts(String sort, String category, int page, int size) {
 //        Pageable pageable = PageRequest.of(page, size);
 //        return productRepositoryCustomImpl.findAllByCategoryOrderBySort(sort, category, pageable);
@@ -141,11 +140,9 @@ public class ProductService {
     }
 
 
-=======
     // 문자열 포함한 상품 목록 검색
     public List<Product> findProducts(String productSearch) {
         return productSearchRepository.findBySearch(productSearch);
     }
 
->>>>>>> eb419e5b5dd3a1b1539f370ee07ba96d365bcde1
 }
