@@ -8,21 +8,19 @@ import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
-  // redux 사용하기
-  const userId = useSelector((state) => {
-    return state.user.userCode;
-  });
-  
   // const location = useLocation();
   // const { userId } = location.state;
   // console.log(location.state)
   
-
+  // redux
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
+  
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [availableTime, setAvailableTime] = useState("");
-  const [imgUrls, setImgUrls] = useState([]); // 업로드 할 이미지를 담을 변수
 
   const content = {
     title,
@@ -86,11 +84,7 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
-  const handleImgUrlsChange = (e) => {
-    // setImgUrls([...imgUrls, e.target.file])
-    // console.log(e.target.file)
-    // console.log(imgUrls)
-  };
+  
 
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
@@ -106,15 +100,13 @@ export default function AddProduct() {
 
         <input
           className={styles.file}
-          type="file"
-          // accept="image/*"
-          capture="camera"
-          name="imgurls"
-          // style={{ visibility: "hidden" }}
-          onChange={handleImgUrlsChange}
-          multiple
+          type="file"          // 파일로 입력 받음
+          accept="image/*"     // 이미지 유형의 파일만 받기
+          capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
+          name="imgurls"       // 담긴 파일을 참조할 때 사용할 이름
+          multiple            // 다중 업로드
         />
-        {/* <div className={styles.addbtn}> */}
+
         <input
           className={`${styles.input} ${styles.titleinput}`}
           onChange={handleTitleChange}
