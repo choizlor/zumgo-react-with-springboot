@@ -7,7 +7,6 @@ import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
-import com.isf6.backend.domain.entity.Wish;
 import com.isf6.backend.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -117,6 +116,5 @@ public class ProductService {
 
         return true;
     }
-
 
 }
