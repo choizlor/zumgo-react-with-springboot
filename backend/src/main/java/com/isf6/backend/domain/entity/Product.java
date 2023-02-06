@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class Product extends BaseTimeEntity {
 
     private String description;
 
-    private String reservation;
+    private String availableTime;
+
+    private Timestamp reserve;
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Img> imgList = new ArrayList<>();
@@ -37,11 +40,12 @@ public class Product extends BaseTimeEntity {
     // 외래키는 어쩌지..?
     // Timestamp..?
     @Builder
-    public Product(String title, int price, String description, String reservation, List<Img> imgList, ProductStatus status) {
+    public Product(String title, int price, String description, String availableTime, Timestamp reserve, List<Img> imgList, ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
-        this.reservation = reservation;
+        this.availableTime = availableTime;
+        this.reserve = reserve;
         this.imgList = imgList;
         this.status = status;
     }
@@ -66,12 +70,12 @@ public class Product extends BaseTimeEntity {
     @OneToOne(mappedBy = "product")
     private Bill bill;
 
-    public void update(String title, int price, String description, String reservation, ProductStatus status) {
+    public void update(String title, int price, String description, String availableTime, Timestamp reserve,  ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
-        this.reservation = reservation;
-//        this.imgList = imgList;
+        this.availableTime = availableTime;
+        this.reserve = reserve;
         this.status = status;
     }
 

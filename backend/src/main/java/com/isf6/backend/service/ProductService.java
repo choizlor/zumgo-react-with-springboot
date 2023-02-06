@@ -65,7 +65,8 @@ public class ProductService {
                 requestDto.getTitle(),
                 requestDto.getPrice(),
                 requestDto.getDescription(),
-                requestDto.getReservation(),
+                requestDto.getAvailableTime(),
+                requestDto.getReserve(),
                 requestDto.getStatus());
 
         return id;
