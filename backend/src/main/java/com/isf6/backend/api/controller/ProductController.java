@@ -1,5 +1,6 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -122,6 +125,24 @@ public class ProductController {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    //페이지네이션...?
+//    @GetMapping("/products/main")
+//    public Page<IndexProductsResDto> getMainProduct(@RequestParam String sort, @RequestParam String category, @RequestParam int page, @RequestParam int size) {
+//        return productService.getMainProducts(sort, category, page, size);
+//    }
+
+    //무한 스크롤 no-offset 방식
+    @GetMapping("/products/main")
+    public List<IndexProductsResDto> getMainProduct(@RequestParam Long productId, @RequestParam int pageSize) {
+        return productService.getMainProductsNo(productId, pageSize);
+    }
+
+    //offset방식
+    @GetMapping("/products/main/offset")
+    public List<IndexProductsResDto> getMainProduct(@RequestParam int pageNo, @RequestParam int pageSize) {
+        return productService.getMainProducts(pageNo, pageSize);
     }
 
 
