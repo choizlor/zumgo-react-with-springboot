@@ -9,7 +9,7 @@ export default function SellItems({ filter }) {
   //총 상품 목록들
   console.log(filter)
 
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState({});
   const navigate = useNavigate();
 
   const filtered = getFilteredItems(products, filter);

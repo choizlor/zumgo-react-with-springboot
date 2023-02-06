@@ -1,22 +1,20 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Request.ProductSaveRequestDto;
+import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.api.Response.ProductListResponseDto;
 import com.isf6.backend.api.Response.ProductResponseDto;
-import com.isf6.backend.api.Request.ProductSaveRequestDto;
-import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
-import com.isf6.backend.domain.repository.*;
+import com.isf6.backend.domain.repository.ImgRepository;
+import com.isf6.backend.domain.repository.ProductRepository;
+import com.isf6.backend.domain.repository.ProductSearchRepository;
 import com.isf6.backend.domain.repository.custom.ProductRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -123,7 +121,7 @@ public class ProductService {
 
         return true;
     }
-
+    
 //    public Page<IndexProductsResDto> getMainProducts(String sort, String category, int page, int size) {
 //        Pageable pageable = PageRequest.of(page, size);
 //        return productRepositoryCustomImpl.findAllByCategoryOrderBySort(sort, category, pageable);
@@ -139,10 +137,8 @@ public class ProductService {
         return productRepositoryCustomImpl.findAllOffSet(pageNo, pageSize);
     }
 
-
     // 문자열 포함한 상품 목록 검색
-    public List<Product> findProducts(String productSearch) {
+    public List<Product> findProducts(ProductSearchReqDto productSearch) {
         return productSearchRepository.findBySearch(productSearch);
     }
-
 }
