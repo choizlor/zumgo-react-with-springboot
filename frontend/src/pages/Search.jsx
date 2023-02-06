@@ -9,7 +9,7 @@ export default function Search() {
   const [products, setProducts] = useState([]);
 
   const handleSearchWord = (e) => {
-    setSearch(e.target.value);
+    setSearch(e.target.value); 
     console.log(search);
   };
 
@@ -33,7 +33,7 @@ export default function Search() {
 
   return (
     <div className={styles.body}>
-      {products}
+      {JSON.stringify(products)}
       <div className={styles.nav}>
         <ChevronLeftIcon className="w-6 h-15 text-black-100" />
         {/* <form onSubmit={goSearch}> */}
