@@ -5,12 +5,14 @@ import UserVideoComponent from "./UserVideoComponent";
 import ChattingForm from "./ChattingForm";
 import ChattingList from "./ChattingList";
 import Timer from "../Auction/Timer";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
-import basicImg from "../../assets/images/kim.png";
+import userImg from "../../assets/images/kim.png";
 import Price from "../Auction/Price";
 
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
@@ -41,7 +43,7 @@ const VideoRoomTest = () => {
   const [seconds, setSeconds] = useState(0); //타이머 시작 시간
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
   const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
-  const [profileImg, setProFileImg] = useState(basicImg); // 프로필 이미지
+  const [profileImg, setProFileImg] = useState(userImg); // 프로필 이미지
   const [hostName, setHostName] = useState(undefined); // host 이름
   // const [timerOpen, setTimerOpen] = useState(false);
   const [bidders, setBidders] = useState(0);
@@ -359,9 +361,10 @@ const VideoRoomTest = () => {
   // };
 
   return (
+    // 입장 전 보이는 화면
     <div className={styles.container}>
       {session === undefined ? (
-        <div id="join">
+        <div id="join" className={styles.joinpage}>
           <div id="join-dialog" className="jumbotron vertical-center">
             <h1>{myUserName} 님,</h1>
             <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
@@ -376,9 +379,11 @@ const VideoRoomTest = () => {
           </div>
         </div>
       ) : null}
+
       {/* {session === undefined && roomId !== null && (
         <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
       )} */}
+      {/* 비디오 화면 뜨는 곳 */}
       {session !== undefined ? (
         <div className={styles.container}>
           {mainStreamManager !== undefined ? (
@@ -388,22 +393,51 @@ const VideoRoomTest = () => {
               {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
-          <div className={styles.sessionheader}>
-            {/* <div className={styles.profile}>
-              <img src={profileImg} alt="/" />
-            </div> */}
-            <div className={styles.hostname}>{hostName}</div>
+          <div className={styles.top}>
+            <div className={styles.toptop}>
+              <div className={styles.topleft}>
+                <div className={styles.host}>
+                  <div className={styles.sellerimg}>
+                    <img src={userImg} alt="" />
+                  </div>
+                  <div className={styles.sellername}>냠냠이 님</div>
+                </div>
+                <div className={styles.subtotal}>
+                  <EyeIcon className={styles.eyeicon} />
+                  {totalUsers}
+                </div>
+              </div>
+              <div className={styles.topright}>
+                <div className={styles.live}>LIVE</div>
+                <XMarkIcon
+                  className={styles.xicon}
+                  onClick={() => {
+                    leaveSession();
+                  }}
+                />
+              </div>
+            </div>
+            <div className={styles.topbottom}>음성변조 아이콘</div>
+            <div className={styles.bottom}>
+              <div className={styles.bottomtop}>
+                <ChattingList messageList={messageList} />
+              </div>
+              <div className={styles.bottombottom}>
+                <ChattingForm
+                  myUserName={myUserName}
+                  onMessage={sendMsg}
+                  currentSession={session}
+                />
+                <button onClick={startAuction} className={styles.gobtn}>
+                  go?
+                </button>
+                <button onClick={countBidder} className={styles.gobtn}>
+                  go!
+                </button>
+              </div>
+            </div>
           </div>
-          <div className={styles.totaluser}>라이브 입장 인원: {totalUsers}</div>
-          <div className={styles.livebtn}>LIVE</div>
-          <button
-            className={styles.leavebtn}
-            onClick={() => {
-              leaveSession();
-            }}
-          >
-            leaveSession
-          </button>
+
           <div className={styles.timer}>
             <Timer
               seconds={seconds}
@@ -418,34 +452,40 @@ const VideoRoomTest = () => {
               // setTimerOpen={setTimerOpen}
             />
           </div>
-          {chatDisplay && (
-            <div>
-              <ChattingList messageList={messageList} />
-              <ChattingForm
-                myUserName={myUserName}
-                onMessage={sendMsg}
-                currentSession={session}
-              />
-            </div>
-          )}
-          <button onClick={startAuction}>go?</button>
-          <button onClick={countBidder}>go!</button>
+          {/* <div>
+            <ChattingList messageList={messageList} />
+            <ChattingForm
+              myUserName={myUserName}
+              onMessage={sendMsg}
+              currentSession={session}
+            />
+          </div> */}
+
           <div>{bidders}</div>
           <div>{bidPrice}</div>
           <div>
-            {priceOpen ? (
+            {true ? (
               <Price
                 handleBidPrice={handleBidPrice}
                 setBidCount={setBidCount}
                 myUserName={myUserName}
                 setBestBidder={setBestBidder}
+                className={styles.price}
               />
             ) : null}
           </div>
           <div>
-            {celebrity ? (
-              <div>
-                축하합니다! {bestBidder}님 {bidPrice}원으로 낙찰
+            {true ? (
+              <div className={styles.modal}>
+                <div>
+
+                축하합니다! 
+                </div>
+                <div className={styles.modalimg}>
+                  <img src="" alt="" />
+                </div>
+                <div className={styles.modalbiddername}>딸기우유 서녕 님이,</div>
+                <div className={styles.modalbidprice}>50300원에 낙찰!</div>
               </div>
             ) : null}
           </div>

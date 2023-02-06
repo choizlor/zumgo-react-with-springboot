@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './Price.module.css';
 
 export default function Price({
   handleBidPrice,
@@ -7,7 +8,7 @@ export default function Price({
   setBestBidder,
 }) {
   return (
-    <div>
+    <div className={styles.prices}>
       <button
         onClick={() => {
           setBidCount(1);
