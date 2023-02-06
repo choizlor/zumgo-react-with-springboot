@@ -3,35 +3,23 @@ import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
 import kim from "../assets/images/kim.png";
 import testImg from "../assets/images/testImg.jpg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function ChatList() {
-  const [chats, setChats] = useState([
-    {
-      roomId: 1,
-      otherImg: kim,
-      otherName: "냠냠이",
-      lastMsg: "거래하고 싶어용!",
-      lastTime: "오후 8:45",
-      notyet: 3,
-    },
-    {
-        roomId: 1,
-        otherImg: kim,
-        otherName: "냠냠이",
-        lastMsg: "거래하고 싶어용!",
-        lastTime: "오후 8:45",
-        notyet: 3,
-      },
-      {
-        roomId: 1,
-        otherImg: kim,
-        otherName: "냠냠이",
-        lastMsg: "거래하고 싶어용!",
-        lastTime: "오후 8:45",
-        notyet: 3,
-      },
-  ]);
+  const userId = useSelector((state) => {return state.user.userCode})
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/socket/${userId}/all`)
+    .then((res) => {
+      console.log(res.data)
+      setChats(res.data)
+    })
+    .catch((err) => { console.log(err)})
+  })
+
 
   return (
     <div>
