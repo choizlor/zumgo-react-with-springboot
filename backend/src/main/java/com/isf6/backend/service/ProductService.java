@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final ImgRepository imgRepository;
-    private final S3Service s3Service;
+
     private final WishService wishService;
     private final LiveRequestService liveRequestService;
 
@@ -72,7 +72,8 @@ public class ProductService {
                 requestDto.getTitle(),
                 requestDto.getPrice(),
                 requestDto.getDescription(),
-                requestDto.getReservation(),
+                requestDto.getAvailableTime(),
+                requestDto.getReserve(),
                 requestDto.getStatus());
 
         return id;
@@ -123,6 +124,7 @@ public class ProductService {
         return true;
     }
 
+<<<<<<< HEAD
 //    public Page<IndexProductsResDto> getMainProducts(String sort, String category, int page, int size) {
 //        Pageable pageable = PageRequest.of(page, size);
 //        return productRepositoryCustomImpl.findAllByCategoryOrderBySort(sort, category, pageable);
@@ -139,4 +141,11 @@ public class ProductService {
     }
 
 
+=======
+    // 문자열 포함한 상품 목록 검색
+    public List<Product> findProducts(String productSearch) {
+        return productSearchRepository.findBySearch(productSearch);
+    }
+
+>>>>>>> eb419e5b5dd3a1b1539f370ee07ba96d365bcde1
 }
