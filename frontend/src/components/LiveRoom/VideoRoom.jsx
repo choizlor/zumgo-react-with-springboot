@@ -56,11 +56,11 @@ const VideoRoomTest = () => {
   let OV = undefined;
 
   // 토큰 받아오기
-  const getToken = () => {
+  const getToken = useCallback(() => {
     return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
-  };
+  }, [mySessionId]);
 
   // 세션 생성
   const createSession = (sessionId) => {
@@ -214,7 +214,7 @@ const VideoRoomTest = () => {
   const deleteRoomRequest = () => {
     if (true) { // 내가 host이면,
       axios
-        .delete(`http://i8c110.p.ssafy.io:8080/live/${roomId}`, {
+        .delete(`https://i8c110.p.ssafy.io:8080/live/${roomId}`, {
           headers: {
             // Authorization: token,
             "Content-Type": "application/json",
