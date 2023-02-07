@@ -292,6 +292,11 @@ psd
 thumb
 sketch
 
+
+### aws s3 ignore ###
+backend/src/main/resources/application-credentials.properties
+
+
 ### Redis ###
 # Ignore redis binary dump (dump.rdb) files
 
