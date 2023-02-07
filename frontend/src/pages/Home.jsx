@@ -19,19 +19,6 @@ export default function Home() {
   const [page, setPage] = useState(1); // 현재 페이지 번호 (페이지네이션)
   const [ref, inView] = useInView();
 
-  // // 판매 중인 전체 목록을 붑러옴
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8080/products")
-  //     .then((res) => {
-  //       setProducts(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   // 무한 스크롤
   // 지정한 타겟 div가 화면에 보일 때 마다 서버에 요청을 보냄
   const productFetch = () => {
@@ -51,6 +38,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // inView가 true 일때만 실행한다.
     if (inView) {
       console.log(inView, '무한 스크롤 요청 🎃')
 
