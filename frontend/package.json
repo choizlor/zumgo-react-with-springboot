@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@heroicons/react": "^2.0.14",
     "@reduxjs/toolkit": "^1.9.2",
