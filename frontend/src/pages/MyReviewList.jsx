@@ -17,7 +17,7 @@ export default function MyReviewList() {
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    axios.get(`https://i8c110.p.ssafy.io:8080/review/3`)
+    axios.get(`http://i8c110.p.ssafy.io:8080/review/3`)
     .then((res) => {
       console.log(res.data)
       setReviews(res.data)
@@ -27,7 +27,7 @@ export default function MyReviewList() {
   const handleDeleteReview = (productId) => {
     // 리뷰 삭제 요청은 제품 아이디로 보내기
     axios
-      .delete(`https://i8c110.p.ssafy.io:8080/review/${productId}`)
+      .delete(`http://i8c110.p.ssafy.io:8080/review/${productId}`)
       .then((res) => {
         console.log(res);
       })

@@ -18,7 +18,7 @@ export default function UpdateUserInfo() {
 
   const handleUpdate = () => {
     axios
-      .patch(`https://i8c110.p.ssafy.io:8080/api/user/${userId}`, {
+      .patch(`http://i8c110.p.ssafy.io:8080/api/user/${userId}`, {
         profileImg: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
         nickname,
       })
