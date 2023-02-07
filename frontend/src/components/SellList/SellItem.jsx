@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SellItem.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function SellItem({ product }) {
   // const image = JSON.stringify(product.image).replace (/"/g,'');
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ export default function SellItem({ product }) {
         <div className={styles.name}>{name}</div>
         <div className={styles.price}>{price}</div>
         <div className={styles.status}>{status}</div>
-      </Link>
     </div>
   );
 }

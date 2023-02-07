@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Root  from './pages/Root';
 import Oauth from './components/Login/Oauth';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/NotFound/NotFound';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Live from './pages/Live';
