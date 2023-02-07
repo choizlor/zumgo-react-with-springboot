@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import styles from "./styles/BuyList.module.css";
 import { useNavigate, useParams } from "react-router";
+
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import styles from "./styles/WishList.module.css";
+import axios from "axios";
 import ProductItem from "../components/Product/ProductItem";
 
-export default function BuyList() {
+export default function WishList() {
   const navigate = useNavigate();
   const userId = useParams().userId;
   const [products, setProducts] = useState();
@@ -16,7 +17,7 @@ export default function BuyList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/products/buyList/${userId}`)
+      .get(`http://i8c110.p.ssafy.io:8080/products/wishList/${userId}`)
       .then((res) => {
         setProducts(res.data);
       })
@@ -32,7 +33,7 @@ export default function BuyList() {
             navigate(-1);
           }}
         />
-        <div className={styles.title}>구매 목록</div>
+        <div className={styles.title}>관심 목록</div>
       </div>
       <div className={styles.scrollarea}>
         {products?.map((product) => {

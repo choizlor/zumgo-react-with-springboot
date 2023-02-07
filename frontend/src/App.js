@@ -15,7 +15,7 @@ import UpdateProduct from './pages/UpdateProduct';
 import Login from './pages/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
-import PickList from './pages/PickList';
+import WishList from './pages/WishList';
 import Search from './pages/Search';
 import SearchList from './pages/SearchList';
 import UpdateUserInfo from './pages/UpdateUserInfo';
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       { path: '/login', element: <Login/>, },
       { path: '/buylist/:userId', element: <BuyList/>, },
       { path: '/selllist/:userId', element: <SellList/>, },
-      { path: '/picklist/:userId', element: <PickList/>, },
+      { path: '/wishlist/:userId', element: <WishList/>, },
       { path: '/myreviewlist', element: <MyReviewList/>, },
       { path: '/report/:userId', element: <Report/>, },
       { path: '/report/:userId', element: <Report/>, },
