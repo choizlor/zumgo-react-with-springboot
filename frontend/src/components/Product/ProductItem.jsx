@@ -41,13 +41,13 @@ export default function ProductItem({ product, clickProduct }) {
             <div className={styles.icon}>
               {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>}
               {/* <HeartIcon /> */}
-              <div className={styles.count}>2</div>
+              <div className={styles.count}>{product.wishSize}</div>
             </div>
             <div className={styles.icon}>
               <div className={styles.zimg}>
                 <img src={zImg} alt="" />
               </div>
-              <div className={styles.zcount}>2</div>
+              <div className={styles.zcount}>{product.liveReqSize}</div>
             </div>
           </div>
         </div>
