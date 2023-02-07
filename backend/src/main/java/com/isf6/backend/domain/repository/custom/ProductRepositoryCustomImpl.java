@@ -76,8 +76,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                 ))
                 .from(product)
                 .orderBy(product.id.desc())
-                .offset(pageNo * pageSize)
                 .limit(pageSize)
+                .offset(pageNo * pageSize)
                 .fetch();
     }
 
