@@ -10,6 +10,7 @@ import com.isf6.backend.service.UserService;
 import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
 import com.isf6.backend.domain.entity.User;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ApiResponses({
+        @ApiResponse(code = 200, message = "Success"),
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+})
+@Api(value = "/api", description = "user 정보를 처리 하는 Controller")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -36,8 +43,9 @@ public class UserController {
     private final UserRepository userRepository;
 
     // 프론트에서 인가코드 받아오는 url
+    @ApiOperation(value = "인가코드으로 로그인", notes = "카카오를 통해 발급받은 인가코드로 로그인하고, 받아온 정보로 DB 저장")
     @GetMapping("/oauth/token")
-    public ResponseEntity getLogin(@RequestParam("code") String code) {
+    public ResponseEntity getLogin(@ApiParam(value = "카카오 인가코드", required = true) @RequestParam("code") String code) {
         //log.info("code : {} ", code);
 
         // 1. 넘어온 인가 코드를 통해 access_token 발급
@@ -57,8 +65,9 @@ public class UserController {
     }
 
     //유저 정보 조회
+    @ApiOperation(value = "유저 정보 조회", notes = "로그인한 유저의 정보를 DB에서 조회")
     @GetMapping("/me")
-    public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) {
+    public ResponseEntity<Object> getCurrentUser(@ApiParam(value = "HttpServletRequest", required = true) HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
         // 1. token 정보를 포함한 request로 로그인한 유저 정보 가져오기
@@ -80,8 +89,9 @@ public class UserController {
     }
 
     //다른 유저 정보 조회
+    @ApiOperation(value = "다른 유저 정보 조회", notes = "다른 유저의 정보를 DB에서 조회")
     @GetMapping("/user/{userCode}")
-    public ResponseEntity getUser(@PathVariable Long userCode) {
+    public ResponseEntity getUser(@ApiParam(value = "userCode", required = true) @PathVariable Long userCode) {
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
         User user = userService.findUser(userCode);
@@ -101,10 +111,11 @@ public class UserController {
     }
 
     //유저 정보 수정
+    @ApiOperation(value = "유저 정보 수정", notes = "로그인한 유저의 정보를 DB에서 수정")
     @PatchMapping("/user/{userCode}")
-    public ResponseEntity updateUser(@PathVariable Long userCode,
-                                     @RequestPart(value="content") UserUpdateReqDto userUpdateReqDto,
-                                     @RequestPart(value="imgUrl", required = false) List<MultipartFile>  multipartFile) {
+    public ResponseEntity updateUser(@ApiParam(value = "userCode", required = true) @PathVariable Long userCode,
+                                     @ApiParam(value = "유저 정보", required = true) @RequestPart(value="content") UserUpdateReqDto userUpdateReqDto,
+                                     @ApiParam(value = "이미지 파일", required = true) @RequestPart(value="imgUrl", required = false) List<MultipartFile>  multipartFile) {
 
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
@@ -136,8 +147,10 @@ public class UserController {
     }
 
     //유저 신고 등록
+    @ApiOperation(value = "유저 신고 등록", notes = "유저가 작성한 신고를 DB에 저장")
     @PostMapping("/user/report/{reportedUserCode}")
-    public ResponseEntity report(@PathVariable Long reportedUserCode, @RequestBody ReportSaveReqDto reportSaveReqDto) {
+    public ResponseEntity report(@ApiParam(value = "신고 당하는 유저", required = true) @PathVariable Long reportedUserCode,
+                                 @ApiParam(value = "신고 정보", required = true) @RequestBody ReportSaveReqDto reportSaveReqDto) {
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
         // 1. 신고 당하는 유저의 code와 신고 객체를 넘겨서 DB에 신고 등록

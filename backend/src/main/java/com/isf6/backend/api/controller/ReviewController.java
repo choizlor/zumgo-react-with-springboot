@@ -5,6 +5,8 @@ import com.isf6.backend.api.Response.ReviewInfoResDto;
 import com.isf6.backend.domain.entity.Bill;
 import com.isf6.backend.service.ProductService;
 import com.isf6.backend.service.ReviewService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,10 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final ProductService productService;
 
+    @ApiOperation(value = "리뷰 저장", notes = "작성된 리뷰를 저장")
     @PostMapping("/{productId}")
-    public ResponseEntity saveReview(@PathVariable Long productId, @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
+    public ResponseEntity saveReview(@ApiParam(value = "거래한 상품의 ID", required = true) @PathVariable Long productId,
+                                     @ApiParam(value = "리뷰 정보", required = true) @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
         Map<String, Object> response = new HashMap<>();
         Bill bill;
 
@@ -56,8 +60,9 @@ public class ReviewController {
     }
 
     //로그인한 유저가 쓴 리뷰 전체 목록
+    @ApiOperation(value = "리뷰 조회", notes = "로그인한 유저가 작성한 리뷰 전체 목록 조회")
     @GetMapping("/{userCode}")
-    public ResponseEntity getMyReviewAll(@PathVariable Long userCode) {
+    public ResponseEntity getMyReviewAll(@ApiParam(value = "유저 정보", required = true) @PathVariable Long userCode) {
         log.info("userCode : {}", userCode);
         Map<String, Object> response = new HashMap<>();
         List<ReviewInfoResDto> reviewList;
@@ -76,8 +81,10 @@ public class ReviewController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "리뷰 수정", notes = "거래된 상품의 ID로 작성된 리뷰를 조회하여 수정")
     @PatchMapping("/{productId}")
-    public ResponseEntity updateReview(@PathVariable Long productId, @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
+    public ResponseEntity updateReview(@ApiParam(value = "거래한 상품의 ID", required = true) @PathVariable Long productId,
+                                       @ApiParam(value = "리뷰 정보", required = true) @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
         Map<String, Object> response = new HashMap<>();
         Bill bill = reviewService.getReviewByProductId(productId);
 
@@ -96,8 +103,9 @@ public class ReviewController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @ApiOperation(value = "리뷰 삭제", notes = "거래된 상품의 ID로 작성된 리뷰 조회하여 삭제")
     @DeleteMapping("/{productId}")
-    public ResponseEntity deleteReview(@PathVariable Long productId) {
+    public ResponseEntity deleteReview(@ApiParam(value = "거래한 상품의 ID", required = true) @PathVariable Long productId) {
         Map<String, Object> response = new HashMap<>();
 
         try {
