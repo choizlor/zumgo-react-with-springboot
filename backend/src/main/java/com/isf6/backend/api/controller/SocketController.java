@@ -105,6 +105,7 @@ public class SocketController {
 
     @GetMapping("/{userCode}/all")
     public ResponseEntity getAllChatRoom(@PathVariable Long userCode) {
+        //각 채팅방의 마지막 채팅 정보도 함께 넘겨주기
         List<ChatRoomInfoResDto> ChatRoomList = new ArrayList<>();
         ChatRoomList = socketService.getAllChatRoom(userCode);
 
