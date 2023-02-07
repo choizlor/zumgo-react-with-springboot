@@ -85,7 +85,7 @@ public class ProductApiControllerTest {
                 .title("상품명")
                 .price(10000)
                 .description("상품 설명글")
-                .reservation("예약시간")
+                .availableTime("예약시간")
 //                .photo("이미지 링크")
                 .status(ProductStatus.ONSALE)
                 .build());
