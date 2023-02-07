@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { XMarkIcon, ClockIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
-export default function ReservationModal({ setModalOpen }) {
+export default function ReservationModal({ setModalOpen, productId }) {
   const [reserve, setReserve] = useState(new Date());
   const [product, setProduct] = useState({});
 
@@ -19,9 +19,10 @@ export default function ReservationModal({ setModalOpen }) {
   // 상품정보 불러오기
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io:8080/product/10`)
+      .get(`http://localhost:8080/product/${productId}?userCode=1`)
       .then((res) => {
         setProduct(res.data);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -32,13 +33,17 @@ export default function ReservationModal({ setModalOpen }) {
     setModalOpen(false);
 
     axios
-      .put("https://i8c110.p.ssafy.io:8080/product/10", {
-        title: product.title,
-        price: product.price,
+      .put(`http://localhost:8080/product/${productId}?userCode=1`, {
+        availableTime: product.availableTime,
         description: product.description,
-        photo: product.photo,
-        status: product.status,
+        liveReqCheck: product.liveReqCheck,
+        liveReqSize: product.liveReqSize,
+        price: product.price,
         reserve,
+        status: product.status,
+        title: product.title,
+        wishCheck: product.wishCheck,
+        wishSize: product.wishSize,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));

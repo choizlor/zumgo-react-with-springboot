@@ -18,7 +18,6 @@ export default function Live() {
     axios
       .get(`http://localhost:8080/live/main?userCode=1`)
       .then((res) => {
-        console.log(res.data, '😉')
         setSellLiveRequestList(res.data.sellLiveRequestList);
       })
       .catch((err) => {
