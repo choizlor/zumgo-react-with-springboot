@@ -22,7 +22,7 @@ export default function Search() {
 
   const goSearch = () => {
     axios
-      .post("http://localhost:8080/product/search", {
+      .post("http://i8c110.p.ssafy.io:8080/product/search", {
         searchName: search,
       })
       .then((res) => {

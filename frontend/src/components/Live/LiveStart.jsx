@@ -24,7 +24,7 @@ export default function LiveStart() {
 
   const createSession = () => {
     axios
-      .post("http://localhost:8080/live/room", {
+      .post("http://i8c110.p.ssafy.io:8080/live/room", {
         headers: {
           // Authorization: token,
           "Content-Type": "application/json",
