@@ -211,18 +211,23 @@ const VideoRoomTest = () => {
   };
 
   // 방 삭제 요청 api
-  // const deleteRoomRequest = async () => {
-  //   if (isHost) {
-  //     // dispatch(changeStatus(false));
-  //     // setIsHost(false) // isHost를 false로 설정함
-  //     const reqeustResponse = await deleteRoom(roomId);
-  //     if (reqeustResponse) {
-  //       console.log("Room Deleted Successfully!");
-  //     } else {
-  //       console.log("Room Deleted Failed!");
-  //     }
-  //   }
-  // };
+  const deleteRoomRequest = () => {
+    if (true) { // 내가 host이면,
+      axios
+        .delete(`http://i8c110.p.ssafy.io:8080/live/${roomId}`, {
+          headers: {
+            // Authorization: token,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   // 메세지 보내기(Sender of the message (after 'session.connect'))
   const sendMsg = (msg, currentSession) => {
@@ -297,7 +302,7 @@ const VideoRoomTest = () => {
       return 0;
     });
     setSeconds(0);
-    // deleteRoomRequest(); // 방 삭제 요청
+    deleteRoomRequest(); // 방 삭제 요청
   };
 
   const startAuction = () => {
@@ -345,15 +350,15 @@ const VideoRoomTest = () => {
   //   getUserInfo();
   // }, []);
 
-  // useEffect(() => {
-  //   const onbeforeunload = (event) => {
-  //     leaveSession();
-  //   };
-  //   window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
-  //   return () => {
-  //     window.removeEventListener("beforeunload", onbeforeunload);
-  //   };
-  // }, [leaveSession]);
+  useEffect(() => {
+    const onbeforeunload = (event) => {
+      leaveSession();
+    };
+    window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
+  }, [leaveSession]);
 
   // 로딩 페이지를 통한 방 입장
   // const enterAuctionRoom = () => {
@@ -477,14 +482,13 @@ const VideoRoomTest = () => {
           <div>
             {true ? (
               <div className={styles.modal}>
-                <div>
-
-                축하합니다! 
-                </div>
+                <div>축하합니다!</div>
                 <div className={styles.modalimg}>
                   <img src="" alt="" />
                 </div>
-                <div className={styles.modalbiddername}>딸기우유 서녕 님이,</div>
+                <div className={styles.modalbiddername}>
+                  딸기우유 서녕 님이,
+                </div>
                 <div className={styles.modalbidprice}>50300원에 낙찰!</div>
               </div>
             ) : null}
