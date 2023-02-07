@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import SearchItems from "../components/Search/SearchItems";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "./styles/Search.module.css";
 import axios from "axios";
 import SearchList from "./SearchList";
+import { useInView } from "react-intersection-observer";
 
 export default function Search() {
-  const [search, setSearch] = useState("");
+  const [searchName, setSearchName] = useState("");
   const [products, setProducts] = useState([]);
-  // const productItems = JSON.stringify(products)
-  
-  
+  const [page, setPage] = useState(0);
+  const [ref, inView] = useInView();
+
   const handleSearchWord = (e) => {
-    setSearch(e.target.value); 
-    console.log(search);
+    setSearchName(e.target.value);
   };
 
-  // const gogoSearch  = () => {
-  //   axios.post
-  // }
-
   const goSearch = () => {
+
+    // 로컬 스토리지에 최근 검색어 저장하기
+    
     axios
-      .post("https://i8c110.p.ssafy.io:8080/product/search", {
-        searchName: search,
+      .post("http://localhost:8080/product/search", {
+        searchName: searchName,
+        pageNo: 0,
+        pageSize: 6,
       })
       .then((res) => {
         console.log(res.data, "🚗");
@@ -36,26 +38,21 @@ export default function Search() {
 
   return (
     <div className={styles.body}>
-      {/* {JSON.stringify(products)} */}
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-15 text-black-100" />
-        {/* <form onSubmit={goSearch}> */}
-        <input
-          type="text"
-          className={styles.input}
-          placeholder="검색어를 입력해주세요."
-          onInput={handleSearchWord}
-          value={search}
-        />
-        {/* </form> */}
-        <button onClick={goSearch}>검색</button>
+        <ChevronLeftIcon />
+        <div className={styles.input}>
+          <input
+            type="text"
+            placeholder="검색어를 입력해주세요."
+            onInput={handleSearchWord}
+            value={searchName}
+          />
+        <MagnifyingGlassIcon onClick={goSearch} />
+        </div>
       </div>
+      {/* 최근 검색어 */}
       <SearchItems />
-      <SearchList
-      products={products}/>
+      <SearchList products={products} />
     </div>
-    // <div>
-    //     <span>검색페이지</span>
-    // </div>
   );
 }

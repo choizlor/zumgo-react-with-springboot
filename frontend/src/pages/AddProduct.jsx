@@ -48,7 +48,7 @@ export default function AddProduct() {
     );
 
     await axios
-      .post("https://i8c110.p.ssafy.io:8080/product", formData, {
+      .post("http://i8c110.p.ssafy.io:8080/product", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
