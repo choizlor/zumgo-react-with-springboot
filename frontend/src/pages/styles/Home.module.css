@@ -2,7 +2,7 @@
   background-color: black;
   width :100vw;
   height: 100vh;
-}
+} 
 
 .body {
   border-radius: 50px 50px 0 0;
@@ -16,6 +16,7 @@
   position: absolute;
   bottom: 0px;
 }
+
 
 .onsale {
   font-size: 15px;
