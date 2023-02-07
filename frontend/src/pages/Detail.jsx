@@ -34,7 +34,7 @@ export default function Detail() {
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
-  const [wishSize, setwishSize] = useState(product.wishSize);
+  const [wishCnt, setwishCnt] = useState(product.wishSize);
 
   // useEffect(() => {
   //   // 상품 정보를 가져오는 GET 요청
@@ -118,8 +118,11 @@ export default function Detail() {
     axios
     .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
     .then((res) => {
+      console.log(res,'🎉')
       console.log(res.data.wishCheck,'🎈')
       setwishcheck(res.data.wishCheck);
+      console.log(res.data.wishCnt,'🎆')
+      setwishCnt(res.data.wishCnt);
     })
     .catch((err) => {
       console.log(err);
@@ -210,7 +213,7 @@ export default function Detail() {
           <div className={styles.icon} onClick={addwish}>
              {wishCheck ? <HeartIcon class="fill-black" />:<HeartIcon />}
                 {/* <HeartIcon onClick={addwish}/> */}
-            <div className={styles.count}>{product.wishSize}</div>
+            <div className={styles.count}>{wishCnt}</div>
           </div>
           <div className={styles.icon}>
             <div className={styles.zimg}>
