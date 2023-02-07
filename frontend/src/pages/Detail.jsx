@@ -35,7 +35,7 @@ export default function Detail() {
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
   const [wishCnt, setwishCnt] = useState(product.wishSize);
-
+  const [liveReqSize,setliveReqSize] = useState(product.liveReqSize);
   // useEffect(() => {
   //   // 상품 정보를 가져오는 GET 요청
   //   axios
@@ -57,6 +57,7 @@ export default function Detail() {
         setProduct(res.data);
         setwishCnt(res.data.wishSize)
         setwishcheck(res.data.wishCheck)
+        setliveReqSize(res.data.liveReqSize)
         console.log(res.data , '🎇');
       })
       .catch((err) => {
@@ -152,7 +153,21 @@ export default function Detail() {
    
     }
     };
-  
+    //라이브 요청
+    const handleAddRequest = () => {
+      alert('2 point가 차감되었습니다.')
+
+      axios
+      .post('http://localhost:8080/liveRequest?userCode=6&productId=10')
+      .then((res) => {
+        console.log(res,'🧨')
+        // console.log(res.data.liveRequestCnt)
+        setliveReqSize(res.data.liveRequestCnt);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -228,7 +243,7 @@ export default function Detail() {
             <div className={styles.zimg}>
               <img src={zImg} alt="" />
             </div>
-            <div className={styles.zcount}>{product.liveReqSize}</div>
+            <div className={styles.zcount}>{liveReqSize}</div>
           </div>
         </div>
         <div className={styles.timeBox}>
@@ -237,7 +252,7 @@ export default function Detail() {
             <span>{product.reservation}</span>
           </div>
         </div>
-        <LiveBtn requestChat={requestChat} requestLive={requestLive}/>
+        <LiveBtn handleAddRequest={handleAddRequest}/>
         {/* <LiveBtn requestChat={requestChat} /> */}
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
