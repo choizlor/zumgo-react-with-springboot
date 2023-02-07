@@ -54,18 +54,20 @@ public class SocketController {
 
     @MessageMapping("/join")
     public void joinUser(@Payload String userId) {
+        log.info("입장??");
         log.info("userId={}", userId);
     }
 
     @PostMapping("/room")
-    public String createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
+    public long createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
         //log.info("방 생성");
 
         Long buyerCode = chatRoomSaveReqDto.getBuyerCode();
         Long sellerCode = chatRoomSaveReqDto.getSellerCode();
-        String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
+        //String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
+        long chatRoomId = socketService.createRoom(buyerCode, sellerCode);
 
-        return chatRoomCode;
+        return chatRoomId;
     }
 
     @DeleteMapping("/exit")

@@ -3,33 +3,14 @@ import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
 import kim from "../assets/images/kim.png";
 import testImg from "../assets/images/testImg.jpg";
-<<<<<<< HEAD
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-=======
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
->>>>>>> 30ef5f0c6114ed269a2ac91544e27c0422dcb61a
 
 export default function ChatList() {
   const navigate = useNavigate();
  
   const [chats, setChats] = useState([]);
-<<<<<<< HEAD
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    axios.get(`http://localhost:8080/socket/${userId}/all`)
-    .then((res) => { 
-      console.log(res.data)
-      setChats(res.data)
-    })
-    .catch((err) => {console.log(err)})
-  }, [])
-=======
   const userId = 3;
 
   useEffect(() => {
@@ -43,24 +24,12 @@ export default function ChatList() {
         console.log(err);
       });
   }, []);
->>>>>>> 30ef5f0c6114ed269a2ac91544e27c0422dcb61a
 
   return (
     <div>
       <div className={styles.title}>채팅</div>
       <div className={styles.chatlistbox}>
         {/* 채팅 - map으로 돌려야함,,,나중에 */}
-<<<<<<< HEAD
-        {chats?.map((chat, idx) => (
-          <div key={idx} className={styles.chat} onClick={() => {navigate(`/chatroom/${chat.chatRoomCode}`)}}>
-            <div className={styles.leftbox}>
-              <div className={styles.otherimg}>
-                <img src={ chat.seller.userCode == userId ? chat.buyer.kakaoProfileImg : chat.seller.kakaoProfileImg } alt="" />
-              </div>
-              <div className={styles.chatinfo}>
-                <div className={styles.chatinfotop}>
-                  <div className={styles.othername}>{ chat.seller.userCode == userId ? chat.buyer.kakaoNickname : chat.seller.kakaoNickname }</div>
-=======
         { chats?.map((chat, idx) => (
           <div key={idx} className={styles.chat} onClick={() => {navigate(`/chatroom/${chat.chatRoomCode}`)}}>
             <div className={styles.leftbox}>
@@ -70,7 +39,6 @@ export default function ChatList() {
               <div className={styles.chatinfo}>
                 <div className={styles.chatinfotop}>
                   <div className={styles.othername}>{chat.seller.userCode === userId ? chat.buyer.kakaoNickname : chat.seller.kakaoNickname}</div>
->>>>>>> 30ef5f0c6114ed269a2ac91544e27c0422dcb61a
                   <div className={styles.time}>{chat.time}</div>
                 </div>
                 <div className={styles.chatinfobottom}>

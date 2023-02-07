@@ -38,7 +38,7 @@ export default function Detail() {
   useEffect(() => {
     // 상품 정보를 가져오는 GET 요청
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
+      .get(`http://localhost:8080/product/detail/${params.productId}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);
@@ -50,7 +50,7 @@ export default function Detail() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/product/${productId}`)
+      .get(`http://localhost:8080/product/${productId}`)
       .then((res) => {
         setProduct(res.data);
         console.log(res.data);
@@ -89,7 +89,9 @@ export default function Detail() {
     axios.post('http://localhost:8080/socket/room', {
       buyerCode: userId,
       sellerCode:6, 
-    }).then((res) => { navigate(`/chatroom/${res.data}`)})
+    }).then((res) => { 
+      console.log(res.data)
+      navigate(`/chatroom/${res.data}`)})
   }
 
   // 라이브 요청하기

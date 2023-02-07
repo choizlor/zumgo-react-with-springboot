@@ -32,7 +32,7 @@ public class SocketService {
 //    }
 
     //방 생성해서 코드 저장해야됨
-    public String createRoom(Long userCode1, Long userCode2) {
+    public long createRoom(Long userCode1, Long userCode2) {
         //유저코드가 있으면 그 방의 코드 주고, 아니면 만들어서 주기
         ChatRoom chatRoomInfo = new ChatRoom();
         chatRoomInfo = chatRoomRepository.findByBuyerIdANDSellerId(userCode1, userCode2); //유저 코드로 방 정보 찾기
@@ -53,13 +53,15 @@ public class SocketService {
         }
 
         //log.info("chatRoom id : {}", chatRoomInfo.getId());
-        String chatRoomCode = chatRoomInfo.getChatRoomCode();
+        //String chatRoomCode = chatRoomInfo.getChatRoomCode(); //id로 변경해서 사용
+        chatRoomInfo = chatRoomRepository.findByChatRoomCode(chatRoomInfo.getChatRoomCode());
+        long chatRoomId = chatRoomInfo.getId();
 
 //        ChatRoomRestDto chatRoom = ChatRoomResDto.builder()
 //                .roomId(randomId)
 //                .build();
 //        chatRooms.put(randomId, chatRoom);
-        return chatRoomCode;
+        return chatRoomId;
     }
 
     public String deleteRoom(String chatRoomCode) {
