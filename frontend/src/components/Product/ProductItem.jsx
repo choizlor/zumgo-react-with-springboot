@@ -6,6 +6,7 @@ import axios from 'axios';
 import { HeartIcon } from "@heroicons/react/24/solid";
 // import { useState } from "react";
 import {useSelector} from 'react-redux'
+
 export default function ProductItem({ product, clickProduct }) {
   // 현재 로그인 된 사용자 정보를 가져오는 방법
   const user = useSelector((state) => {return state.user})

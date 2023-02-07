@@ -8,20 +8,24 @@ export default function HomeBanner() {
 
   return (
     <div className={styles.body}>
-      <div className={styles.leftbox}>
-        <div className={styles.font}>중고 거래,</div>
-        <div className={styles.font}>줌고로 생생하게!</div>
-        <button
+      <div className={styles.top}>
+        <div className={styles.topleft}>
+          <div className={styles.font}>중고 거래,</div>
+          <div className={styles.font}>줌고로 생생하게!</div>
+        </div>
+        <div className={styles.topright}></div>
+      </div>
+      <div className={styles.bottom}>
+        <div
           className={styles.loginbtn}
           onClick={() => {
             navigate("/login");
           }}
           style={token ? { visibility: "hidden" } : { visibility: "visible" }}
         >
-          로그인하기
-        </button>
+          <div>로그인하기</div>
+        </div>
       </div>
-      <div className={styles.rightbox}></div>
     </div>
   );
 }
