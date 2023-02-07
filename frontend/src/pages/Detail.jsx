@@ -87,7 +87,7 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios.post('http://localhost:8080/socket/room', {
-      buyerCode: userId,
+      buyerCode: 3,
       sellerCode:6, 
     }).then((res) => { 
       console.log(res.data)
