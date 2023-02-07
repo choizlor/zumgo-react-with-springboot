@@ -14,10 +14,11 @@ export default function UpdateReview() {
   };
 
   const updateReview = () => {
+    // productId로 수정하기
     axios
-      .patch(`http://localhost:8080/review/11`, {
-        seller: 1,
-        buyer: 6,
+      .patch(`http://localhost:8080/review/13`, {
+        seller: 3,
+        buyer: 1,
         review,
       })
       .then((res) => {

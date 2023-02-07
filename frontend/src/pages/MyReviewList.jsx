@@ -16,20 +16,23 @@ export default function MyReviewList() {
   const [reviews, setReviews] = useState([]);
   const location = useLocation();
   console.log(location.state)
-  const userId = location.state.userId;
+  // const userId = location.state.userId;
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    axios.get(`http://localhost:8080/review/${userId}`)
+    // axios.get(`http://localhost:8080/review/${userId}`)
+    axios.get(`http://localhost:8080/review/1`)
     .then((res) => {
       setReviews(res.data.MyReview)
+      console.log(res.data.MyReview)
     })
   }, []);
 
   const handleDeleteReview = (productId) => {
     // 리뷰 삭제 요청은 제품 아이디로 보내기
     axios
-      .delete(`http://i8c110.p.ssafy.io:8080/review/${productId}`)
+      // .delete(`http://localhost:8080/review/${productId}`)
+      .delete(`http://localhost:8080/review/${productId}`)
       .then((res) => {
         console.log(res);
       })
@@ -73,7 +76,7 @@ export default function MyReviewList() {
                 <div className={styles.icons}>
                   <PencilIcon
                     onClick={() => {
-                      navigate(`/review/${review.product.id}/update`);
+                      navigate(`/review/${1}/update`);
                     }}
                   />
                   <TrashIcon onClick={handleDeleteReview(review.product.id)} />
