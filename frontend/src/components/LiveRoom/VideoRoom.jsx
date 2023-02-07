@@ -125,9 +125,9 @@ const VideoRoomTest = () => {
   // 세션에 참여하기
   const joinSession = () => {
     OV = new OpenVidu();
-
+    OV.enableProdMode();
+    
     let mySession = OV.initSession();
-
     setSession(mySession);
 
     mySession.on("streamCreated", (event) => {
