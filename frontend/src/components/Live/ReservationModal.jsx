@@ -36,7 +36,6 @@ export default function ReservationModal({ setModalOpen }) {
         title: product.title,
         price: product.price,
         description: product.description,
-        reservation: product.reservation,
         photo: product.photo,
         status: product.status,
         reserve,
