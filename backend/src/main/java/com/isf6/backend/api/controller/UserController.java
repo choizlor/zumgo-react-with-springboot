@@ -3,30 +3,37 @@ package com.isf6.backend.api.controller;
 import com.isf6.backend.api.Request.ReportSaveReqDto;
 import com.isf6.backend.api.Request.UserUpdateReqDto;
 import com.isf6.backend.api.Response.UserResDto;
+import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.service.ReportService;
+import com.isf6.backend.service.S3Service;
 import com.isf6.backend.service.UserService;
 import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
 import com.isf6.backend.domain.entity.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ReportService reportService;
+    private final UserService userService;
+    private final ReportService reportService;
+    private final S3Service s3Service;
+    private final UserRepository userRepository;
 
     // 프론트에서 인가코드 받아오는 url
     @GetMapping("/oauth/token")
@@ -95,11 +102,23 @@ public class UserController {
 
     //유저 정보 수정
     @PatchMapping("/user/{userCode}")
-    public ResponseEntity updateUser(@PathVariable Long userCode, @RequestBody UserUpdateReqDto userUpdateReqDto) {
+    public ResponseEntity updateUser(@PathVariable Long userCode,
+                                     @RequestPart(value="content") UserUpdateReqDto userUpdateReqDto,
+                                     @RequestPart(value="imgUrl", required = false) List<MultipartFile>  multipartFile) {
+
         Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
+        List<String> imgPath = new ArrayList<>();
+
+        if (multipartFile!=null) {
+            imgPath = s3Service.upload(multipartFile);
+        } else {
+            // 파일을 받지 않았으면 기본값
+            imgPath.add(userRepository.findById(userCode).get().getKakaoProfileImg());
+        }
+
         //1. userCode와 수정 정보 객체를 넘겨서 DB에서 user 정보 수정
-        User user = userService.updateUser(userCode, userUpdateReqDto);
+        User user = userService.updateUser(userCode, userUpdateReqDto, imgPath);
 
         //2. user가 null이 아니라면 반환유저객체 만들고 그 정보를 담아서 return
         if(user != null) {
@@ -127,5 +146,4 @@ public class UserController {
 
         return ResponseEntity.status(200).body(response);
     }
-
 }

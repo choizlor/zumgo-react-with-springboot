@@ -41,7 +41,7 @@ public class ProductRepositoryTest {
                 .title(title)
                 .price(price)
                 .description(description)
-                .reservation(reservation)
+                .availableTime(reservation)
                 .build());
 
         //when
@@ -64,7 +64,7 @@ public class ProductRepositoryTest {
                 .title("상품명")
                 .price(10000)
                 .description("상품 설명글")
-                .reservation("예약시간")
+                .availableTime("예약시간")
                 .status(ProductStatus.ONSALE)
                 .build());
 

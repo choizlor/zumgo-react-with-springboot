@@ -49,11 +49,11 @@ public class ProductService {
 
         Long id = productRepository.save(requestDto.toEntity()).getId();
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
-        List<String> imgList = new ArrayList<>();
+//        List<String> imgList = new ArrayList<>();
         for (String imgUrl : imgPaths) {
             Img img = new Img(imgUrl, product);
             imgRepository.save(img);
-            imgList.add(img.getImgUrl());
+//            imgList.add(img.getImgUrl());
         }
         return id;
     }
@@ -86,7 +86,13 @@ public class ProductService {
         //지금 들어오는 유저가 이 상품에 라이브 요청을 했는지...
         boolean liveReqCheck = liveRequestService.getUserLiveReqChk(id, userCode);
 
-        return new ProductResponseDto(entity, wishCheck, liveReqCheck);
+        // 이미지 URL 문자열만 뽑아줌...
+        List<Img> imgList = entity.getImgList();
+        List<String> imgUrlList = new ArrayList<>();
+        for (Img img: imgList) {
+            imgUrlList.add(img.getImgUrl());
+        }
+        return new ProductResponseDto(entity, wishCheck, liveReqCheck, imgUrlList);
     }
 
     @Transactional

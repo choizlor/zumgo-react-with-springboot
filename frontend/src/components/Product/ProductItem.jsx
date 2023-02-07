@@ -6,6 +6,7 @@ import axios from 'axios';
 import { HeartIcon } from "@heroicons/react/24/solid";
 // import { useState } from "react";
 import {useSelector} from 'react-redux'
+
 export default function ProductItem({ product, clickProduct }) {
   // 현재 로그인 된 사용자 정보를 가져오는 방법
   const user = useSelector((state) => {return state.user})
@@ -40,13 +41,13 @@ export default function ProductItem({ product, clickProduct }) {
             <div className={styles.icon}>
               {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>}
               {/* <HeartIcon /> */}
-              <div className={styles.count}>2</div>
+              <div className={styles.count}>{product.wishSize}</div>
             </div>
             <div className={styles.icon}>
               <div className={styles.zimg}>
                 <img src={zImg} alt="" />
               </div>
-              <div className={styles.zcount}>2</div>
+              <div className={styles.zcount}>{product.liveReqSize}</div>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ export default function UpdateReview() {
 
   const updateReview = () => {
     axios
-    .patch(`http://i8c110.p.ssafy.io:8080/review/10`, {
+    .patch(`https://i8c110.p.ssafy.io:8080/review/10`, {
       seller:2,
       buyer:1,
       review,

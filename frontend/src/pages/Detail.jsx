@@ -33,45 +33,32 @@ export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
-  const [status, setstatus] = useState(true);
+  const [wishCheck, setwishcheck] = useState(product.wishCheck);
+  const [wishSize, setwishSize] = useState(product.wishSize);
 
-  useEffect(() => {
-    // 상품 정보를 가져오는 GET 요청
-    axios
-      .get(`http://localhost:8080/product/detail/${params.productId}`)
-      .then((res) => {
-        console.log(res);
-        setProduct(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
 
-  useEffect(() => {
+  useEffect(() => {     // 상품 정보 axios
     axios
-      .get(`http://localhost:8080/product/${productId}`)
+      .get(`https://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data);
+        console.log(res.data, "🎇");
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // 수정하기 api 요청
-  const changeStatus = (e) => {
+ 
+  const changeStatus = (e) => {      // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
       setModalOpen(true);
     } else {
       setModalOpen(false);
     }
 
-    console.log(e.target.value);
-
     axios
-      .put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`, {
+      .put(`https://i8c110.p.ssafy.io:8080/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -86,37 +73,52 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/socket/room', {
-      buyerCode: 3,
-      sellerCode:6, 
-    }).then((res) => { 
-      console.log(res.data)
-      navigate(`/chatroom/${res.data}`)})
-  }
+    axios
+      .post("https://i8c110.p.ssafy.io:8080/socket/room", {
+        buyerCode: 3,
+        sellerCode: 6,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/chatroom/${res.data}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // 라이브 요청하기
   const requestLive = () => {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/socket/room', {
-      buyerCode: userId,
-      sellerCode:6, 
-    }).then((res) => { navigate(`/chatroom/${res.data}`, {state: 'live'})})
-    
-  }
-    // post 요청하기
     axios
-      .post(
-        `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
-        {}
-      )
+      .post("https://i8c110.p.ssafy.io:8080/socket/room", {
+        buyerCode: userId,
+        sellerCode: 6,
+      })
       .then((res) => {
-        console.log(res);
+        navigate(`/chatroom/${res.data}`, { state: "live" });
       })
       .catch((err) => {
         console.log(err);
       });
-  
+  };
+
+  // 찜 추가하기
+  const addwish = () => {
+    axios
+      .post(
+        `https://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`
+      )
+      .then((res) => {
+        console.log(res.data.wishCheck, "🎈");
+        setwishcheck(res.data.wishCheck);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   return (
     <div className={styles.body}>
@@ -199,25 +201,16 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.icon}>
-            {status ? (
-              <div className={styles.true}>
-                <HeartIcon />
-              </div>
-            ) : (
-              <div className={styles.false}>
-                <HeartIcon />
-              </div>
-            )}
-            {/* <HeartIcon /> */}
-            <HeartIcon />
-            <div className={styles.count}>2</div>
+          <div className={styles.icon} onClick={addwish}>
+            {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}
+            {/* <HeartIcon onClick={addwish}/> */}
+            <div className={styles.count}>{product.wishSize}</div>
           </div>
           <div className={styles.icon}>
             <div className={styles.zimg}>
               <img src={zImg} alt="" />
             </div>
-            <div className={styles.zcount}>2</div>
+            <div className={styles.zcount}>{product.liveReqSize}</div>
           </div>
         </div>
         <div className={styles.timeBox}>
@@ -226,7 +219,7 @@ export default function Detail() {
             <span>{product.reservation}</span>
           </div>
         </div>
-        <LiveBtn requestChat={requestChat} requestLive={requestLive}/>
+        <LiveBtn requestChat={requestChat} requestLive={requestLive} />
         <LiveBtn requestChat={requestChat} />
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}

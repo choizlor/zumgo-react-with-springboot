@@ -3,81 +3,69 @@ import styles from "./styles/AddProduct.module.css";
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import testImg from "../assets/images/kim.png";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function AddProduct() {
+  const navigate = useNavigate();
+  // const location = useLocation();
+  // const { userId } = location.state;
+  // console.log(location.state)
   
-  // redux 사용하기
+  // redux
   const userId = useSelector((state) => {
-    console.log("userId :", state.user.userCode);
     return state.user.userCode;
   });
-
-
+  
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [reservation, setReservation] = useState("");
-  const [imgUrls, setImgUrls] = useState([]); // 업로드 할 이미지를 담을 변수
-
+  const [availableTime, setAvailableTime] = useState("");
 
   const content = {
     title,
     price,
     description,
-    reservation  :'2014-01-31',
+    availableTime,
     status: "ONSALE",
-    user: userId,
+    userId,
   };
-
 
   // 상품등록 axios
   const handleSubmit = async (e) => {
     e.preventDefault();
-    e.persist();
 
     let formData = new FormData();
-
     let files = e.target.imgurls.files;
-    console.log(e.target.imgurls.files);
 
-    // formData.append('imgUrl', files)
     for (let i = 0; i < files.length; i++) {
-      formData.append("imgUrl", files[i], { type: "multipart/form-data" });
+      formData.append("imgUrl", files[i]);
     }
-    
-    console.log(title)
-
-    
 
     formData.append(
       "content",
       new Blob([JSON.stringify(content)], { type: "application/json" })
     );
 
-
-
     await axios
-      .post("http://localhost:8080/product", formData, {
+      .post("https://i8c110.p.ssafy.io:8080/product", formData, {
         headers: {
-          "Context-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // navigate(`/detail/${res.data}`)
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
 
 
-      for (var key of formData.keys()) {
-
-        console.log(key, formData.get(key),'👩');
-      
-      }
-
+    // formData에 저장된 값 확인 하기  
+    for (var key of formData.keys()) {
+      console.log(key, formData.get(key), "👩");
+    }
   };
 
   const handleTitleChange = (e) => {
@@ -88,24 +76,20 @@ export default function AddProduct() {
     setPrice(e.target.value);
   };
 
-  const handleReservationChange = (e) => {
-    setReservation(e.target.value);
+  const handleAvailableTimeChange = (e) => {
+    setAvailableTime(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
 
-  const handleImgUrlsChange = (e) => {
-    setImgUrls([...imgUrls, e.target.file])
-    console.log(e.target.file)
-    console.log(imgUrls)
-  }
+  
 
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
         <div className={styles.title}>상품 등록하기</div>
       </div>
       <div className={styles.container}>
@@ -113,18 +97,16 @@ export default function AddProduct() {
           <CameraIcon className={styles.camera} />
           <div className={styles.num}>0/5</div>
         </div>
-       
+
         <input
           className={styles.file}
-          type="file"
-          // accept="image/*"
-          capture="camera"
-          name="imgurls"
-          // style={{ visibility: "hidden" }}
-          onChange={handleImgUrlsChange}
-          multiple
+          type="file"          // 파일로 입력 받음
+          accept="image/*"     // 이미지 유형의 파일만 받기
+          capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
+          name="imgurls"       // 담긴 파일을 참조할 때 사용할 이름
+          multiple            // 다중 업로드
         />
-        {/* <div className={styles.addbtn}> */}
+
         <input
           className={`${styles.input} ${styles.titleinput}`}
           onChange={handleTitleChange}
@@ -139,7 +121,7 @@ export default function AddProduct() {
         />
         <textarea
           className={styles.textarea}
-          onChange={handleReservationChange}
+          onChange={handleAvailableTimeChange}
           placeholder="라이브 가능 시간 &#13;(ex - 10:00~12:00, 18:00~19:00)"
         ></textarea>
         <textarea

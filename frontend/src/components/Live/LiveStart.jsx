@@ -7,18 +7,32 @@ import { useSelector } from "react-redux";
 export default function LiveStart() {
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
-  const userId = useSelector((state) => { return state.user.userCode })
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://i8c110.p.ssafy.io:8080/live/main?userCode=${userId}`)
+  //     .then((res) => {
+  //       setProduct(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  const createSession = () => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/live/main?userCode=${userId}`)
-      .then((res) => {
-        setProduct(res.data);
+      .post("http://i8c110.p.ssafy.io:8080/live/room", {
+        headers: {
+          // Authorization: token,
+          "Content-Type": "application/json",
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
