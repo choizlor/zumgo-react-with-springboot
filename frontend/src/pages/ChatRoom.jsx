@@ -164,7 +164,7 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
-              navigate("/chatlist ");
+              navigate(-1);
             }}
           />
           <span>상대방 이름</span>
