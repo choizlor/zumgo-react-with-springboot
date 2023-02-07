@@ -89,7 +89,7 @@ export default function AddProduct() {
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
         <div className={styles.title}>상품 등록하기</div>
       </div>
       <div className={styles.container}>

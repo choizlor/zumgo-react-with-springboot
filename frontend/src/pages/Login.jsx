@@ -18,7 +18,7 @@ export default function Login() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-gray-100" onClick={() => {navigate('/')}} />
+        <ChevronLeftIcon className="w-6 h-6 text-gray-100" onClick={() => {navigate(-1)}} />
         <div className={styles.title}>로그인 하기</div>
       </div>
       <div className={styles.logo}>zum:go</div>
