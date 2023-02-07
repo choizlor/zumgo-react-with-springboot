@@ -56,11 +56,11 @@ const VideoRoomTest = () => {
   let OV = undefined;
 
   // 토큰 받아오기
-  const getToken = useCallback(() => {
+  const getToken = () => {
     return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
-  }, [mySessionId]);
+  };
 
   // 세션 생성
   const createSession = (sessionId) => {
