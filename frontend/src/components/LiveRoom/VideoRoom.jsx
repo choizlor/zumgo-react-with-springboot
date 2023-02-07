@@ -1,21 +1,22 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component, useCallback, useEffect, useState } from "react";
-import UserVideoComponent from "../UserVideoComponent";
-import ChattingForm from "../ChattingForm";
-import ChattingList from "../ChattingList";
-import Timer from "../../Auction/Timer";
+import UserVideoComponent from "./UserVideoComponent";
+import ChattingForm from "./ChattingForm";
+import ChattingList from "./ChattingList";
+import Timer from "../Auction/Timer";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./VideoRoomTest.module.css";
+import styles from "./VideoRoom.module.css";
 
-import basicImg from "../../../assets/images/kim.png";
+import userImg from "../../assets/images/kim.png";
+import Price from "../Auction/Price";
 
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
-
-// const OPENVIDU_SERVER_URL = "http://localhost:5000/";
 
 const OPENVIDU_SERVER_URL = "http://localhost:4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -42,8 +43,15 @@ const VideoRoomTest = () => {
   const [seconds, setSeconds] = useState(0); //타이머 시작 시간
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
   const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
-  const [profileImg, setProFileImg] = useState(basicImg); // 프로필 이미지
+  const [profileImg, setProFileImg] = useState(userImg); // 프로필 이미지
   const [hostName, setHostName] = useState(undefined); // host 이름
+  // const [timerOpen, setTimerOpen] = useState(false);
+  const [bidders, setBidders] = useState(0);
+  const [priceOpen, setPriceOpen] = useState(false);
+  const [bidPrice, setBidPrice] = useState(5000);
+  const [bidCount, setBidCount] = useState(0);
+  const [bestBidder, setBestBidder] = useState("");
+  const [celebrity, setCelebrity] = useState(false);
 
   let OV = undefined;
 
@@ -70,8 +78,13 @@ const VideoRoomTest = () => {
           console.log("CREATE SESSION", res);
           resolve(res.data.id);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((res) => {
+          var error = Object.assign({}, res);
+          if (error?.response?.status === 409) {
+            resolve(sessionId);
+          } else {
+            console.log(error);
+          }
         });
     });
   };
@@ -104,33 +117,6 @@ const VideoRoomTest = () => {
     });
   };
 
-  // const getToken = async() => {
-  //   const sessionId = await this.createSession(this.state.mySessionId);
-  //   return await this.createToken(sessionId);
-  // }
-
-  // const createSession = async (sessionId) {
-  //   const response = await axios.post(
-  //     OPENVIDU_SERVER_URL + "api/sessions",
-  //     { customSessionId: sessionId },
-  //     {
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   );
-  //   return response.data; // The sessionId
-  // }
-
-  // const createToken = async (sessionId) {
-  //   const response = await axios.post(
-  //     OPENVIDU_SERVER_URL + "api/sessions/" + sessionId + "/connections",
-  //     {},
-  //     {
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   );
-  //   return response.data; // The token
-  // }
-
   // 세션 아이디 설정
   useEffect(() => {
     setMySessionId(`Session${roomId}`);
@@ -139,12 +125,13 @@ const VideoRoomTest = () => {
   // 세션에 참여하기
   const joinSession = () => {
     OV = new OpenVidu();
-
+    OV.enableProdMode();
+    
     let mySession = OV.initSession();
-
     setSession(mySession);
 
     mySession.on("streamCreated", (event) => {
+      // 스트림이 생길 때마다
       const subscriber = mySession.subscribe(event.stream, "publisher");
       setSubscribers(subscriber);
     });
@@ -181,6 +168,16 @@ const VideoRoomTest = () => {
       setSeconds(event.data); // 시간 세팅
     });
 
+    mySession.on("signal:count", (event) => {
+      setBidders(Number(event.data));
+    });
+
+    mySession.on("signal:bid", (event) => {
+      const tmp = event.data.split(" : ");
+      setBidPrice(tmp[0]);
+      setBestBidder(tmp[1]);
+    });
+
     // 유효한 토큰으로 세션에 접속하기
     getToken().then((token) => {
       mySession
@@ -214,18 +211,23 @@ const VideoRoomTest = () => {
   };
 
   // 방 삭제 요청 api
-  // const deleteRoomRequest = async () => {
-  //   if (isHost) {
-  //     // dispatch(changeStatus(false));
-  //     // setIsHost(false) // isHost를 false로 설정함
-  //     const reqeustResponse = await deleteRoom(roomId);
-  //     if (reqeustResponse) {
-  //       console.log("Room Deleted Successfully!");
-  //     } else {
-  //       console.log("Room Deleted Failed!");
-  //     }
-  //   }
-  // };
+  const deleteRoomRequest = () => {
+    if (true) { // 내가 host이면,
+      axios
+        .delete(`http://i8c110.p.ssafy.io:8080/live/${roomId}`, {
+          headers: {
+            // Authorization: token,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   // 메세지 보내기(Sender of the message (after 'session.connect'))
   const sendMsg = (msg, currentSession) => {
@@ -241,6 +243,42 @@ const VideoRoomTest = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  // go! 버튼 눌렀을 때 count
+  const countBidder = () => {
+    // setBidders((bidders) => bidders + 1)
+    session
+      .signal({
+        data: Number(bidders) + 1,
+        type: "count",
+      })
+      .then(() => {
+        console.log("Success count");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // bidPrice가 갱신될 때마다 signal 보내서 동기화
+  const bidding = (price, bidder) => {
+    session
+      .signal({
+        data: `${Number(bidPrice) + price} : ${bidder}`,
+        type: "bid",
+      })
+      .then(() => {
+        console.log("Success count");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // price가 변경될 때마다 bidding 실행
+  const handleBidPrice = (price, bidder) => {
+    bidding(price, bidder);
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
@@ -264,8 +302,25 @@ const VideoRoomTest = () => {
       return 0;
     });
     setSeconds(0);
-    // deleteRoomRequest(); // 방 삭제 요청
+    deleteRoomRequest(); // 방 삭제 요청
   };
+
+  const startAuction = () => {
+    // setTimerOpen(true);
+    setSeconds(2);
+  };
+
+  const startBidding = () => {
+    // setTimerOpen(true);
+    setSeconds(3);
+  };
+
+  useEffect(() => {
+    if (bidPrice > 5000) {
+      // product 가격으로 바꿔야 함
+      startBidding();
+    }
+  }, [bidPrice]);
 
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
@@ -280,6 +335,7 @@ const VideoRoomTest = () => {
     [subscribers]
   );
 
+  // console.log(mainStreamManager, '😎')
   // user정보 가져오기
   // axios 요청? redux?
   // const getUserInfo = async () => {
@@ -294,63 +350,161 @@ const VideoRoomTest = () => {
   //   getUserInfo();
   // }, []);
 
+  useEffect(() => {
+    const onbeforeunload = (event) => {
+      leaveSession();
+    };
+    window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
+  }, [leaveSession]);
+
   // 로딩 페이지를 통한 방 입장
-  const enterAuctionRoom = () => {
-    joinSession();
-  };
+  // const enterAuctionRoom = () => {
+  //   joinSession();
+  // };
 
   return (
+    // 입장 전 보이는 화면
     <div className={styles.container}>
       {session === undefined ? (
-          <div id="join">
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1>{myUserName} 님,</h1>
-              <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
-              <button
-                style={{ border: "1px solid red" }}
-                onClick={()=>{joinSession()}}
-              >
-                라이브 입장하기
-              </button>
-            </div>
+        <div id="join" className={styles.joinpage}>
+          <div id="join-dialog" className="jumbotron vertical-center">
+            <h1>{myUserName} 님,</h1>
+            <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
+            <button
+              style={{ border: "1px solid red" }}
+              onClick={() => {
+                joinSession();
+              }}
+            >
+              라이브 입장하기
+            </button>
           </div>
-        ) : null}
+        </div>
+      ) : null}
+
       {/* {session === undefined && roomId !== null && (
         <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
       )} */}
+      {/* 비디오 화면 뜨는 곳 */}
       {session !== undefined ? (
         <div className={styles.container}>
           {mainStreamManager !== undefined ? (
             <div className={styles.mainvideo}>
-              {isHost && <UserVideoComponent streamManager={publisher} />}
-              {!isHost && <UserVideoComponent streamManager={subscribers} />}
+              <UserVideoComponent streamManager={mainStreamManager} />
+              {/* {isHost && <UserVideoComponent streamManager={publisher} />} */}
+              {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
-          <div className={styles.sessionheader}>
-            <div className={styles.profile}>
-              <img src={profileImg} alt="/" />
-            </div>
-            <div className={styles.hostname}>{hostName}</div>
+          
+
+          {/* 배경 그라데이션 */}
+          <div className={styles.background}>
+            <div className={styles.bgtop}></div>
+            <div className={styles.bgbottom}></div>
           </div>
-          <div className={styles.totaluser}>{totalUsers}</div>
-          <div className={styles.livebtn}>LIVE</div>
-          <button
-            className={styles.leavebtn}
-            onClick={()=>{leaveSession()}}
-          >leaveSession</button>
+
+          {/* 라이브 화면 */}
+          <div className={styles.top}>
+            <div className={styles.toptop}>
+              <div className={styles.topleft}>
+                <div className={styles.host}>
+                  <div className={styles.sellerimg}>
+                    <img src={userImg} alt="" />
+                  </div>
+                  <div className={styles.sellername}>냠냠이 님</div>
+                </div>
+                <div className={styles.subtotal}>
+                  <EyeIcon className={styles.eyeicon} />
+                  {totalUsers}
+                </div>
+              </div>
+              <div className={styles.topright}>
+                <div className={styles.live}>LIVE</div>
+                <XMarkIcon
+                  className={styles.xicon}
+                  onClick={() => {
+                    leaveSession();
+                  }}
+                />
+              </div>
+            </div>
+            <div className={styles.topbottom}>음성변조 아이콘</div>
+            <div className={styles.bottom}>
+              <div className={styles.bottomtop}>
+                <ChattingList messageList={messageList} />
+              </div>
+              <div className={styles.bottombottom}>
+                <ChattingForm
+                  myUserName={myUserName}
+                  onMessage={sendMsg}
+                  currentSession={session}
+                />
+                <button onClick={startAuction} className={styles.gobtn}>
+                  go?
+                </button>
+                <button onClick={countBidder} className={styles.gobtn}>
+                  go!
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className={styles.timer}>
-            <Timer />
+            <Timer
+              seconds={seconds}
+              setSeconds={setSeconds}
+              currentSession={session}
+              bidders={bidders}
+              setPriceOpen={setPriceOpen}
+              bidCount={bidCount}
+              bidPrice={bidPrice}
+              bestBidder={bestBidder}
+              setCelebrity={setCelebrity}
+              // setTimerOpen={setTimerOpen}
+            />
           </div>
-          {chatDisplay && (
-            <div>
-              <ChattingForm messageList={messageList} />
-              {/* <ChattingList
+          {/* <div>
+            <ChattingList messageList={messageList} />
+            <ChattingForm
+              myUserName={myUserName}
+              onMessage={sendMsg}
+              currentSession={session}
+            />
+          </div> */}
+
+          <div>{bidders}</div>
+          <div>{bidPrice}</div>
+          <div>
+            {true ? (
+              <Price
+                handleBidPrice={handleBidPrice}
+                setBidCount={setBidCount}
                 myUserName={myUserName}
-                onMessage={sendMsg}
-                currentSession={session}
-              /> */}
-            </div>
-          )}
+                setBestBidder={setBestBidder}
+                className={styles.price}
+              />
+            ) : null}
+          </div>
+          <div>
+            {celebrity ? (
+              <div className={styles.modal}>
+                <div className={styles.modaltitle}>
+
+                축하합니다! 
+                </div>
+                <div className={styles.modalimg}>
+                  <img src={userImg} alt="" />
+                </div>
+                <div className={styles.modalbiddername}>
+                  딸기우유 서녕 님이,
+                </div>
+                <div className={styles.modalbidprice}>50300원에 낙찰!</div>
+              </div>
+            ) : null}
+          </div>
         </div>
       ) : null}
     </div>

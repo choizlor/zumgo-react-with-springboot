@@ -46,7 +46,7 @@ export default function UserInfo() {
     <div className={styles.body}>
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={()=> {navigate(-1)}}/>
           <div className={styles.title}>프로필</div>
         </div>
         <div className={styles.navright} onClick={handleLogout}>

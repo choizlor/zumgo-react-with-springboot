@@ -2,13 +2,26 @@ import React from "react";
 import styles from "./ProductItem.module.css";
 import testImg from "../../assets/images/testImg.jpg";
 import zImg from "../../assets/images/z.png";
-
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import axios from 'axios';
+import { HeartIcon } from "@heroicons/react/24/solid";
+// import { useState } from "react";
+import {useSelector} from 'react-redux'
 
 export default function ProductItem({ product, clickProduct }) {
-  const [status, setstatus] = useState(true);
-  console.log(product)
+  // 현재 로그인 된 사용자 정보를 가져오는 방법
+  const user = useSelector((state) => {return state.user})
+
+  const addwish = ()=> {
+    axios
+    .post(`http://i8c110.p.ssafy.io:8080/wish?userCode=${user.userCode}&productId=${product.productId}`,{
+    })
+    .then((res) =>{
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  };
   return (
     <div
       className={styles.body}

@@ -3,6 +3,7 @@ package com.isf6.backend.api.controller;
 import com.isf6.backend.api.Request.ChatMessageSaveReqDto;
 import com.isf6.backend.api.Request.ChatRoomSaveReqDto;
 import com.isf6.backend.api.Request.MessageDto;
+import com.isf6.backend.api.Response.ChatInfoResDto;
 import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.domain.entity.Chat;
 import com.isf6.backend.domain.entity.ChatRoom;
@@ -30,15 +31,11 @@ import java.util.Set;
 @RequestMapping("/socket")
 public class SocketController {
 
-    @Autowired
-    SocketService socketService;
-
-    private final ChatRoomRepository crr;
-    private final ChatRepository cr;
+    private final SocketService socketService;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRepository chatRepository;
     private static Set<Integer> userList = new HashSet<>();
-
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     // websocket "/pub/chat/{id}"로 들어오는 메시징을 처리 (메시지 발행)
     @MessageMapping("/chat/{id}")
@@ -50,9 +47,9 @@ public class SocketController {
         // 메시지에 정의된 channelId로 메시지 보냄
         this.simpMessagingTemplate.convertAndSend("/sub/channels/" + id, messageDto);
         // db 저장
-        ChatRoom chatRoom = crr.findByChatRoomId(messageDto.getChannelId());
+        ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(messageDto.getChannelId());
         ChatMessageSaveReqDto chatMessageSaveReqDto = new ChatMessageSaveReqDto(messageDto.getChannelId(), messageDto.getSender(), messageDto.getData());
-        cr.save(Chat.toChat(chatMessageSaveReqDto, chatRoom));
+        chatRepository.save(Chat.toChat(chatMessageSaveReqDto, chatRoom));
         System.out.println(chatRoom);
     }
 
@@ -62,14 +59,38 @@ public class SocketController {
     }
 
     @PostMapping("/room")
-    public String createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
-        //log.info("방 생성");
+    public ChatInfoResDto createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
+        log.info("방 생성 & 방 입장");
+
+        ChatInfoResDto chatInfo = new ChatInfoResDto();
 
         Long buyerCode = chatRoomSaveReqDto.getBuyerCode();
         Long sellerCode = chatRoomSaveReqDto.getSellerCode();
-        String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
 
-        return chatRoomCode;
+        //채팅방이 존재하면 채팅 내역 불러오기
+        ChatRoom chatRoomInfo = new ChatRoom();
+        chatRoomInfo = chatRoomRepository.findByBuyerIdANDSellerId(buyerCode, sellerCode); //유저 코드로 방 정보 찾기
+
+        long chatRoomId = 0L;
+        List<Chat> chatList = new ArrayList<>();
+
+        //채팅방이 null이면 채팅방 만들어주고 아니면 채팅 내역 함께 넘겨주기
+        if(chatRoomInfo == null) {
+            //String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
+            chatRoomId = socketService.createRoom(buyerCode, sellerCode);
+            chatInfo.setChatRoomId(chatRoomId);
+            chatInfo.setChatList(new ArrayList<>());
+        } else {
+            //채팅 내역 가져오기
+            log.info("채팅방 존재");
+            chatList = chatRepository.getChatList(chatRoomInfo.getId());
+            chatInfo.setChatList(chatList);
+
+            chatRoomId = chatRoomInfo.getId();
+            chatInfo.setChatRoomId(chatRoomId);
+        }
+
+        return chatInfo;
     }
 
     @DeleteMapping("/exit")
