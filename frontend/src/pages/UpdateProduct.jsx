@@ -51,7 +51,7 @@ export default function UpdateProduct() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon onClick= {()=> navigate(-1)}className="w-6 h-6 text-black-100" />
         <div className={styles.title}>상품 정보 수정하기</div>
       </div>
       <div className={styles.container}>
