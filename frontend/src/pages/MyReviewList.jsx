@@ -17,7 +17,7 @@ export default function MyReviewList() {
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    axios.get(`http://localhost:8080/review/3`)
+    axios.get(`http://i8c110.p.ssafy.io:8080/review/3`)
     .then((res) => {
       console.log(res.data)
       setReviews(res.data)

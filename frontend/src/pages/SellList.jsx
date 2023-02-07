@@ -17,7 +17,7 @@ export default function SellList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/products/sellList/${userId}`)
+      .get(`http://i8c110.p.ssafy.io:8080/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
         console.log("😪");

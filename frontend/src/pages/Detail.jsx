@@ -52,7 +52,7 @@ export default function Detail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/product/${productId}?userCode=2`)
+      .get(`http://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
         console.log(res.data , '🎇');
@@ -88,7 +88,7 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/socket/room', {
+    axios.post('http://i8c110.p.ssafy.io:8080/socket/room', {
       buyerCode: 3,
       sellerCode:6, 
     }).then((res) => { 
@@ -100,28 +100,17 @@ export default function Detail() {
   const requestLive = () => {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('http://localhost:8080/socket/room', {
+    axios.post('http://i8c110.p.ssafy.io:8080/socket/room', {
       buyerCode: userId,
       sellerCode:6, 
     }).then((res) => { navigate(`/chatroom/${res.data}`, {state: 'live'})})
     
   }
-    // post 요청하기
-    axios
-      .post(
-        `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  
   // 찜 추가하기 
   const addwish = () => {
     axios
-    .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+    .post(`http://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`)
     .then((res) => {
       console.log(res.data.wishCheck,'🎈')
       setwishcheck(res.data.wishCheck);
@@ -129,7 +118,7 @@ export default function Detail() {
     .catch((err) => {
       console.log(err);
     })
-  }
+    }
 
   return (
     <div className={styles.body}>
