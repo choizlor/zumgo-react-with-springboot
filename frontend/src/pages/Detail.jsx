@@ -33,27 +33,29 @@ export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
-  const [status, setstatus] = useState(true);
+  const [wishCheck, setwishcheck] = useState(product.wishCheck);
+  const [wishSize, setwishSize] = useState(product.wishSize);
+
+  // useEffect(() => {
+  //   // 상품 정보를 가져오는 GET 요청
+  //   axios
+  //     .get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProduct(res.data);
+  //       setwishcheck(res.data.wishCheck)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    // 상품 정보를 가져오는 GET 요청
     axios
-      .get(`http://localhost:8080/product/detail/${params.productId}`)
-      .then((res) => {
-        console.log(res);
-        setProduct(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/product/${productId}`)
+      .get(`http://localhost:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data);
+        console.log(res.data , '🎇');
       })
       .catch((err) => {
         console.log(err);
@@ -108,7 +110,6 @@ export default function Detail() {
     axios
       .post(
         `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
-        {}
       )
       .then((res) => {
         console.log(res);
@@ -116,7 +117,19 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
-  
+  };
+  // 찜 추가하기 
+  const addwish = () => {
+    axios
+    .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+    .then((res) => {
+      console.log(res.data.wishCheck,'🎈')
+      setwishcheck(res.data.wishCheck);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   return (
     <div className={styles.body}>
@@ -199,25 +212,16 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.icon}>
-            {status ? (
-              <div className={styles.true}>
-                <HeartIcon />
-              </div>
-            ) : (
-              <div className={styles.false}>
-                <HeartIcon />
-              </div>
-            )}
-            {/* <HeartIcon /> */}
-            <HeartIcon />
-            <div className={styles.count}>2</div>
+          <div className={styles.icon} onClick={addwish}>
+             {wishCheck ? <HeartIcon class="fill-black" />:<HeartIcon />}
+                {/* <HeartIcon onClick={addwish}/> */}
+            <div className={styles.count}>{product.wishSize}</div>
           </div>
           <div className={styles.icon}>
             <div className={styles.zimg}>
               <img src={zImg} alt="" />
             </div>
-            <div className={styles.zcount}>2</div>
+            <div className={styles.zcount}>{product.liveReqSize}</div>
           </div>
         </div>
         <div className={styles.timeBox}>
