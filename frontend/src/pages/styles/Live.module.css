@@ -23,7 +23,7 @@
 }
 
 .togglediv {
-  margin-top: 5%;
+  margin-top: 8%;
   text-align: center;
 }
 
@@ -72,8 +72,8 @@
 .button {
   position: relative;
   top: 50%;
-  width: 100px;
-  height: 36px;
+  width: 150px;
+  height: 30px;
   margin: -20px auto 0 auto;
   overflow: hidden;
 }
@@ -104,30 +104,30 @@
 .knobs:before {
   content: "SELL";
   position: absolute;
-  top: 7px;
+  top: 6.5px;
   left: 4px;
-  width: 50px;
-  height: 25px;
+  width: 75px;
+  height: 20px;
   color: black;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   text-align: center;
   line-height: 1;
-  padding: 9px 4px;
-  background-color: #BCFF5E;
+  padding: 4px 4px;
+  background-color: white;
   border-radius: 100px;
   transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
 }
 
 .checkbox:checked + .knobs:before {
   content: "BUY";
-  left: 42px;
-  color: white;
-  background-color: black;
+  left: 70px;
+  color: black;
+  background-color: white;
 }
 
 .checkbox:checked ~ .layer {
-  background-color: #BCFF5E;
+  background-color: black;
 }
 
 .knobs,

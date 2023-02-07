@@ -18,9 +18,7 @@ export default function Live() {
     <div className={styles.body}>
       <div className={styles.logo}>LIVE</div>
       {toggle ? <SellLive /> : <BuyLive />}
-      {/* <div className={styles.livebtn} onClick={toggleMode}>
-        <div />
-      </div> */}
+      
       <div className={styles.togglediv}>
         <div className={styles.togglebtn}>
           <div className={cn(styles.button, styles.cover, styles.toggle)}>
