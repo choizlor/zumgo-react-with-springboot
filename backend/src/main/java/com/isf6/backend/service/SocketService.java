@@ -32,34 +32,29 @@ public class SocketService {
 //    }
 
     //방 생성해서 코드 저장해야됨
-    public String createRoom(Long userCode1, Long userCode2) {
-        //유저코드가 있으면 그 방의 코드 주고, 아니면 만들어서 주기
+    public long createRoom(Long userCode1, Long userCode2) {
+        //방이 null이라면 방 만들기
         ChatRoom chatRoomInfo = new ChatRoom();
-        chatRoomInfo = chatRoomRepository.findByBuyerIdANDSellerId(userCode1, userCode2); //유저 코드로 방 정보 찾기
+        String randomId = UUID.randomUUID().toString();
+        chatRoomInfo.setChatRoomCode(randomId);
 
-        if(chatRoomInfo == null) {
-            //방이 null이라면 방 만들기
-            chatRoomInfo = new ChatRoom();
-            String randomId = UUID.randomUUID().toString();
-            chatRoomInfo.setChatRoomCode(randomId);
+        User buyer = userRepository.findByUserCode(userCode1);
+        chatRoomInfo.setBuyer(buyer);
 
-            User buyer = userRepository.findByUserCode(userCode1);
-            chatRoomInfo.setBuyer(buyer);
+        User seller = userRepository.findByUserCode(userCode2);
+        chatRoomInfo.setSeller(seller);
 
-            User seller = userRepository.findByUserCode(userCode2);
-            chatRoomInfo.setSeller(seller);
-
-            chatRoomRepository.save(chatRoomInfo); //저장
-        }
+        chatRoomRepository.save(chatRoomInfo); //저장
 
         //log.info("chatRoom id : {}", chatRoomInfo.getId());
-        String chatRoomCode = chatRoomInfo.getChatRoomCode();
+        //String chatRoomCode = chatRoomInfo.getChatRoomCode(); //id로 변경해서 사용
+        long chatRoomId = chatRoomInfo.getId();
 
 //        ChatRoomRestDto chatRoom = ChatRoomResDto.builder()
 //                .roomId(randomId)
 //                .build();
 //        chatRooms.put(randomId, chatRoom);
-        return chatRoomCode;
+        return chatRoomId;
     }
 
     public String deleteRoom(String chatRoomCode) {

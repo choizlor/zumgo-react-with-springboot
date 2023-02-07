@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: '/liveroom', element: <LiveRoom/>, },
       { path: '/detail/:productId', element: <Detail/>, },
       { path: '/update/:productId', element: <UpdateProduct/>, },
-      { path: '/chatlist', element: <ChatList/>, },
+      { path: '/chatlist/:userId', element: <ChatList/>, },
       { path: '/chatroom/:chatroomId', element: <ChatRoom/>, },
       { path: '/addproduct', element: <AddProduct/>, },
       { path: '/review/:productId/create', element: <AddReview/>, },
