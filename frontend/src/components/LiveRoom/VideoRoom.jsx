@@ -398,6 +398,15 @@ const VideoRoomTest = () => {
               {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
+          
+
+          {/* 배경 그라데이션 */}
+          <div className={styles.background}>
+            <div className={styles.bgtop}></div>
+            <div className={styles.bgbottom}></div>
+          </div>
+
+          {/* 라이브 화면 */}
           <div className={styles.top}>
             <div className={styles.toptop}>
               <div className={styles.topleft}>
@@ -480,11 +489,14 @@ const VideoRoomTest = () => {
             ) : null}
           </div>
           <div>
-            {true ? (
+            {celebrity ? (
               <div className={styles.modal}>
-                <div>축하합니다!</div>
+                <div className={styles.modaltitle}>
+
+                축하합니다! 
+                </div>
                 <div className={styles.modalimg}>
-                  <img src="" alt="" />
+                  <img src={userImg} alt="" />
                 </div>
                 <div className={styles.modalbiddername}>
                   딸기우유 서녕 님이,
