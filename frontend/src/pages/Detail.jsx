@@ -55,6 +55,8 @@ export default function Detail() {
       .get(`http://localhost:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
+        setwishCnt(res.data.wishSize)
+        setwishcheck(res.data.wishCheck)
         console.log(res.data , '🎇');
       })
       .catch((err) => {
@@ -94,7 +96,7 @@ export default function Detail() {
     }).then((res) => { 
       console.log(res.data)
       navigate(`/chatroom/${res.data}`)})
-  }
+  };
 
   // 라이브 요청하기
   const requestLive = () => {
@@ -105,35 +107,52 @@ export default function Detail() {
       sellerCode:6, 
     }).then((res) => { navigate(`/chatroom/${res.data}`, {state: 'live'})})
     
-  }
+  };
     // post 요청하기
-    axios
-      .post(
-        `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
-      )
+  //   axios
+  //     .post(
+  //       `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // 찜 추가하기 
+  const addwish = () => {
+    //wishcheck가 true라면 post 요청
+    if(wishCheck===false) {
+      axios
+      .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
       .then((res) => {
-        console.log(res);
+        console.log(res,'🎉')
+        console.log(res.data.wishCheck,'🎈')
+        setwishcheck(res.data.wishCheck);
+        console.log(res.data.wishCnt,'🎆')
+        setwishCnt(res.data.wishCnt);
       })
       .catch((err) => {
         console.log(err);
-      });
-  };
-  // 찜 추가하기 
-  const addwish = () => {
-    axios
-    .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
-    .then((res) => {
-      console.log(res,'🎉')
-      console.log(res.data.wishCheck,'🎈')
-      setwishcheck(res.data.wishCheck);
-      console.log(res.data.wishCnt,'🎆')
-      setwishCnt(res.data.wishCnt);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
+      })
+    }
+    //wishcheck가 true라면 delete요청
+    else {
+      axios
+      .delete (`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+      .then((res) => {
+        console.log(res,'🎃')
+        setwishcheck(res.data.wishCheck);
+        setwishCnt(res.data.wishCnt);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+   
+    }
+    };
+  
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -152,24 +171,7 @@ export default function Detail() {
               alt=""
             />
           </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
+          
         </Swiper>
 
         {/* 라이브 예약 알림 */}
@@ -215,10 +217,12 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.icon} onClick={addwish}>
+
+          <div className={styles.icon}
+          onClick={addwish}>
              {wishCheck ? <HeartIcon class="fill-black" />:<HeartIcon />}
                 {/* <HeartIcon onClick={addwish}/> */}
-            <div className={styles.count}>{wishCnt}</div>
+            <div className={styles.count}>{String(wishCnt)}</div>
           </div>
           <div className={styles.icon}>
             <div className={styles.zimg}>
@@ -234,7 +238,7 @@ export default function Detail() {
           </div>
         </div>
         <LiveBtn requestChat={requestChat} requestLive={requestLive}/>
-        <LiveBtn requestChat={requestChat} />
+        {/* <LiveBtn requestChat={requestChat} /> */}
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>
