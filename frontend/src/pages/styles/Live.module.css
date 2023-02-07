@@ -102,7 +102,8 @@
 
 /* Button 1 */
 .knobs:before {
-  content: "SELL";
+  font-family: "Poppins", sans-serif;
+  content: "S E L L";
   position: absolute;
   top: 6.5px;
   left: 4px;
@@ -120,7 +121,7 @@
 }
 
 .checkbox:checked + .knobs:before {
-  content: "BUY";
+  content: "B U Y";
   left: 70px;
   color: black;
   background-color: white;
