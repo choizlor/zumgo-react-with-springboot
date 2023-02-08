@@ -19,7 +19,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
   // 상품정보 불러오기
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io/product/${productId}?userCode=1`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=1`)
       .then((res) => {
         setProduct(res.data);
         console.log(res.data)
@@ -33,7 +33,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
     setModalOpen(false);
 
     axios
-      .put(`http://i8c110.p.ssafy.io/product/${productId}?userCode=1`, {
+      .put(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=1`, {
         ...product,
         reserve,
       })

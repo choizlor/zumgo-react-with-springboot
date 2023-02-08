@@ -16,7 +16,7 @@ export default function AddReview() {
 
   const addReview = () => {
     axios
-      .post(`http://i8c110.p.ssafy.io/review/${productId}`, {
+      .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
         seller: 2,
         buyer: 1,
         review,
