@@ -18,7 +18,7 @@ import Price from "../Auction/Price";
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io";
+const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
 
 const VideoRoomTest = () => {
