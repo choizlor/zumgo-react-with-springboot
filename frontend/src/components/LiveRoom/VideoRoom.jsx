@@ -200,8 +200,8 @@ const VideoRoomTest = () => {
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
               videoSource: videoTrack,
-              publishAudio: false,
-              publishVideo: false,
+              publishAudio: true,
+              publishVideo: true,
               insertMode: "APPEND",
               mirror: true,
             });
