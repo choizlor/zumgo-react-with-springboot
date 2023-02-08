@@ -20,7 +20,7 @@ export default function MyReviewList() {
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
     // axios.get(`http://localhost:8080/review/${userId}`)
-    axios.get(`http://localhost:8080/review/7`).then((res) => {
+    axios.get(`http://i8c110.p.ssafy.io:8080/review/7`).then((res) => {
       setReviews(res.data.MyReview);
       console.log(res.data.MyReview);
     });
@@ -30,7 +30,7 @@ export default function MyReviewList() {
     // 리뷰 삭제 요청은 제품 아이디로 보내기
     axios
       // .delete(`http://localhost:8080/review/${productId}`)
-      .delete(`http://localhost:8080/review/${productId}`)
+      .delete(`http://i8c110.p.ssafy.io:8080/review/${productId}`)
       .then((res) => {
         console.log(res);
       })
