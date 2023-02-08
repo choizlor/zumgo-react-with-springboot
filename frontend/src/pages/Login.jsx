@@ -11,7 +11,7 @@ export default function Login() {
   const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c';
   // console.log(REST_API_KEY)
 
-  const REDIRECT_URI = "http://i8c110.p.ssafy.io/oauth";
+  const REDIRECT_URI = "http://localhost:3000/oauth";
 
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
