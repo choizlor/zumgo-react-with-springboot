@@ -1,30 +1,34 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styles from "./styles/UpdateReview.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 // import { useParams } from 'react-router';
 import axios from "axios";
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function UpdateReview() {
-  const [review, setReview] = useState('');
-
+  const [review, setReview] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setReview(e.target.value)
-    console.log(review)
-  }
+    setReview(e.target.value);
+  };
 
   const updateReview = () => {
+    // productId로 수정하기
     axios
-    .patch(`http://i8c110.p.ssafy.io:8080/review/10`, {
-      seller:2,
-      buyer:1,
-      review,
-    })
-    .then((res) => { console.log(res.data)})
-    .catch((err) => { console.log(err)});
-}
+      .patch(`http://localhost:8080/review/13`, {
+        seller: 3,
+        buyer: 1,
+        review,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={styles.body}>
@@ -39,11 +43,12 @@ export default function UpdateReview() {
           cols="30"
           rows="10"
           placeholder="거래 후기를 최소 20자 이상 남겨주시면 다음 거래에 도움이 됩니다."
-
-            onChange={handleChange}
+          onChange={handleChange}
         ></textarea>
       </div>
-      <div className={styles.submit} onClick={updateReview} value={review}>작성완료</div>
+      <div className={styles.submit} onClick={updateReview} value={review}>
+        작성완료
+      </div>
     </div>
   );
 }
