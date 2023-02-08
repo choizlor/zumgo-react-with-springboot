@@ -194,7 +194,7 @@ const VideoRoomTest = () => {
             videoSource: undefined,
             resolution: "1280x720",
             frameRate: 30,
-            facingMode: "environment",
+            facingMode: { exact: "environment" },
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
 
