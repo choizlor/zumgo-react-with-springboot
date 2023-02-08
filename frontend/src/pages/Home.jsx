@@ -23,7 +23,7 @@ export default function Home() {
   // 지정한 타겟 div가 화면에 보일 때 마다 서버에 요청을 보냄
   const productFetch = () => {
     axios
-    .get(`http://localhost:8080/products/main?pageNo=${page}&pageSize=5`)
+    .get(`http://i8c110.p.ssafy.io:8080/products/main?pageNo=${page}&pageSize=5`)
     .then((res) => {
       console.log(res.data);
       // 리스트 뒤로 붙여주기

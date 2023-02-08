@@ -22,21 +22,21 @@ public class ProductResponseDto {
     private String description;
     private String availableTime;
     private Timestamp reserve;
-    private List<Img> imgList;
+    private List<String> imgUrlList;
     private ProductStatus status;
     private int wishSize;
     private int liveReqSize;
     private boolean wishCheck;
     private boolean liveReqCheck;
 
-    public ProductResponseDto(Product entity, boolean wishCheck, boolean liveReqCheck) {
+    public ProductResponseDto(Product entity, boolean wishCheck, boolean liveReqCheck, List<String> imgUrlList) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.price = entity.getPrice();
         this.description = entity.getDescription();
         this.availableTime = entity.getAvailableTime();
         this.reserve = entity.getReserve();
-        this.imgList = entity.getImgList();
+        this.imgUrlList = imgUrlList;
         this.status = entity.getStatus();
         this.wishSize = entity.getWishes().size();
         this.liveReqSize = entity.getLiveRequests().size();

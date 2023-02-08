@@ -51,9 +51,9 @@ export default function Detail() {
   //     });
   // }, []);
 
-  useEffect(() => {
+  useEffect(() => {     // 상품 정보 axios
     axios
-      .get(`http://localhost:8080/product/${productId}?userCode=2`)
+      .get(`http://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
@@ -67,15 +67,13 @@ export default function Detail() {
       });
   }, []);
 
-  // 수정하기 api 요청
-  const changeStatus = (e) => {
+ 
+  const changeStatus = (e) => {      // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
       setModalOpen(true);
     } else {
       setModalOpen(false);
     }
-
-    console.log(e.target.value);
 
     axios
       .put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`, {
@@ -94,13 +92,16 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://localhost:8080/socket/room", {
+      .post("http://i8c110.p.ssafy.io:8080/socket/room", {
         buyerCode: 3,
         sellerCode: 6,
       })
       .then((res) => {
         console.log(res.data);
         navigate(`/chatroom/${res.data}`);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

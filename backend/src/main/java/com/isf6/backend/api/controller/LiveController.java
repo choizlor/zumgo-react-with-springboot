@@ -34,7 +34,7 @@ public class LiveController {
     private final LiveService liveService;
     private final LiveRequestService liveRequestService;
 
-    @ApiOperation(value = "라이브 방 생생", notes = "라이브 방을 생성하여 DB에 저장하고 정보를 반환")
+    @ApiOperation(value = "라이브 방 생성", notes = "라이브 방을 생성하여 DB에 저장하고 정보를 반환")
     @PostMapping("/room")
     public ResponseEntity createLiveRoom(@ApiParam(value = "라이브 방 생성에 필요한 정보", required = true) @RequestBody LiveRoomSaveReqDto liveRoomSaveReqDto) {
         //log.info("liveRoomCreateReq.getProductId : {}", liveRoomSaveReqDto.getProductId());

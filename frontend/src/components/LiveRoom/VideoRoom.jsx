@@ -18,7 +18,7 @@ import Price from "../Auction/Price";
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-const OPENVIDU_SERVER_URL = "http://localhost:4443";
+const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:7080";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const VideoRoomTest = () => {
@@ -125,9 +125,9 @@ const VideoRoomTest = () => {
   // 세션에 참여하기
   const joinSession = () => {
     OV = new OpenVidu();
-
+    OV.enableProdMode();
+    
     let mySession = OV.initSession();
-
     setSession(mySession);
 
     mySession.on("streamCreated", (event) => {
@@ -211,18 +211,23 @@ const VideoRoomTest = () => {
   };
 
   // 방 삭제 요청 api
-  // const deleteRoomRequest = async () => {
-  //   if (isHost) {
-  //     // dispatch(changeStatus(false));
-  //     // setIsHost(false) // isHost를 false로 설정함
-  //     const reqeustResponse = await deleteRoom(roomId);
-  //     if (reqeustResponse) {
-  //       console.log("Room Deleted Successfully!");
-  //     } else {
-  //       console.log("Room Deleted Failed!");
-  //     }
-  //   }
-  // };
+  const deleteRoomRequest = () => {
+    if (true) { // 내가 host이면,
+      axios
+        .delete(`https://i8c110.p.ssafy.io:8080/live/${roomId}`, {
+          headers: {
+            // Authorization: token,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   // 메세지 보내기(Sender of the message (after 'session.connect'))
   const sendMsg = (msg, currentSession) => {
@@ -297,7 +302,7 @@ const VideoRoomTest = () => {
       return 0;
     });
     setSeconds(0);
-    // deleteRoomRequest(); // 방 삭제 요청
+    deleteRoomRequest(); // 방 삭제 요청
   };
 
   const startAuction = () => {
@@ -345,15 +350,15 @@ const VideoRoomTest = () => {
   //   getUserInfo();
   // }, []);
 
-  // useEffect(() => {
-  //   const onbeforeunload = (event) => {
-  //     leaveSession();
-  //   };
-  //   window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
-  //   return () => {
-  //     window.removeEventListener("beforeunload", onbeforeunload);
-  //   };
-  // }, [leaveSession]);
+  useEffect(() => {
+    const onbeforeunload = (event) => {
+      leaveSession();
+    };
+    window.addEventListener("beforeunload", onbeforeunload); // componentDidMount
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
+  }, [leaveSession]);
 
   // 로딩 페이지를 통한 방 입장
   // const enterAuctionRoom = () => {
@@ -393,6 +398,15 @@ const VideoRoomTest = () => {
               {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
+          
+
+          {/* 배경 그라데이션 */}
+          <div className={styles.background}>
+            <div className={styles.bgtop}></div>
+            <div className={styles.bgbottom}></div>
+          </div>
+
+          {/* 라이브 화면 */}
           <div className={styles.top}>
             <div className={styles.toptop}>
               <div className={styles.topleft}>
@@ -475,16 +489,18 @@ const VideoRoomTest = () => {
             ) : null}
           </div>
           <div>
-            {true ? (
+            {celebrity ? (
               <div className={styles.modal}>
-                <div>
+                <div className={styles.modaltitle}>
 
                 축하합니다! 
                 </div>
                 <div className={styles.modalimg}>
-                  <img src="" alt="" />
+                  <img src={userImg} alt="" />
                 </div>
-                <div className={styles.modalbiddername}>딸기우유 서녕 님이,</div>
+                <div className={styles.modalbiddername}>
+                  딸기우유 서녕 님이,
+                </div>
                 <div className={styles.modalbidprice}>50300원에 낙찰!</div>
               </div>
             ) : null}

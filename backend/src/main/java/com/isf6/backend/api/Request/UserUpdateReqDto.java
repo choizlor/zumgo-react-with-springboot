@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserUpdateReqDto {
 
-    private String profileImg;
     private String nickname;
 
 }
