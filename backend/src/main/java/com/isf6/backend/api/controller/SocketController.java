@@ -10,6 +10,7 @@ import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.repository.ChatRepository;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
 import com.isf6.backend.service.SocketService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@ApiResponses({
+        @ApiResponse(code = 200, message = "Success"),
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+})
+@Api(value = "/socket", description = "chat(socket) 정보를 처리 하는 Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -38,8 +45,10 @@ public class SocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     // websocket "/pub/chat/{id}"로 들어오는 메시징을 처리 (메시지 발행)
+    @ApiOperation(value = "채팅 전송", notes = "\"/pub/chat/{id}\"로 들어오는 메시징을 처리하고 DB에 저장")
     @MessageMapping("/chat/{id}")
-    public void sendMessage(@DestinationVariable String id, @Payload MessageDto messageDto) {
+    public void sendMessage(@ApiParam(value = "채팅방 Id", required = true) @DestinationVariable String id,
+                            @ApiParam(value = "채팅 정보", required = true) @Payload MessageDto messageDto) {
         log.info("id={}", id);
         log.info("messageDto={}", messageDto);
 //        this.simpMessagingTemplate.convertAndSend("/queue/addChatToClient/" + id, messageDto);
@@ -50,16 +59,18 @@ public class SocketController {
         ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(messageDto.getChannelId());
         ChatMessageSaveReqDto chatMessageSaveReqDto = new ChatMessageSaveReqDto(messageDto.getChannelId(), messageDto.getSender(), messageDto.getData());
         chatRepository.save(Chat.toChat(chatMessageSaveReqDto, chatRoom));
-        System.out.println(chatRoom);
+        //System.out.println(chatRoom);
     }
 
+    @ApiOperation(value = "채팅방 입장", notes = "채팅방에 입장")
     @MessageMapping("/join")
-    public void joinUser(@Payload String userId) {
+    public void joinUser(@ApiParam(value = "userCode", required = true) @Payload String userId) {
         log.info("userId={}", userId);
     }
 
+    @ApiOperation(value = "채팅방 생성 및 입장", notes = "userCode로 채팅방을 조회하여 존재하면 방 Id와 채팅 내역 불러와서 리턴, 없으면 채팅 생성하여 방 Id 리턴")
     @PostMapping("/room")
-    public ChatInfoResDto createChatRoom(@RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
+    public ChatInfoResDto createChatRoom(@ApiParam(value = "채팅방을 생성할때 필요한 userCode 정보", required = true) @RequestBody ChatRoomSaveReqDto chatRoomSaveReqDto) {
         log.info("방 생성 & 방 입장");
 
         ChatInfoResDto chatInfo = new ChatInfoResDto();
@@ -93,8 +104,9 @@ public class SocketController {
         return chatInfo;
     }
 
+    @ApiOperation(value = "채팅방 나가기(삭제)", notes = "채팅방 Id로 채팅방 삭제")
     @DeleteMapping("/exit")
-    public ResponseEntity deleteChatRoom(@RequestBody String chatRoomCode) {
+    public ResponseEntity deleteChatRoom(@ApiParam(value = "채팅방 Id", required = true) @RequestBody String chatRoomCode) {
         log.info("chatRoomCode : {}", chatRoomCode);
         String result = socketService.deleteRoom(chatRoomCode);
         if(result.equals("null")) {
@@ -103,8 +115,10 @@ public class SocketController {
         return ResponseEntity.status(200).body("방 삭제");
     }
 
+    @ApiOperation(value = "유저의 모든 채팅방 조회", notes = "userCode로 유저가 참여하고 있는 채팅방 전체 목록 조회")
     @GetMapping("/{userCode}/all")
-    public ResponseEntity getAllChatRoom(@PathVariable Long userCode) {
+    public ResponseEntity getAllChatRoom(@ApiParam(value = "유저 Code", required = true) @PathVariable Long userCode) {
+        //각 채팅방의 마지막 채팅 정보도 함께 넘겨주기
         List<ChatRoomInfoResDto> ChatRoomList = new ArrayList<>();
         ChatRoomList = socketService.getAllChatRoom(userCode);
 

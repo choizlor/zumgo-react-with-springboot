@@ -1,12 +1,16 @@
 package com.isf6.backend.api.Response;
 
+import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class IndexProductsResDto {
 
     private Long productId;
@@ -16,10 +20,8 @@ public class IndexProductsResDto {
     private LocalDateTime createdDate;
     private int wishSize;
     private int liveReqSize;
+    private String thumbnail;
 
-    public IndexProductsResDto() {
-
-    }
 
     public IndexProductsResDto(Product product) {
         productId = product.getId();
@@ -29,6 +31,7 @@ public class IndexProductsResDto {
         createdDate = product.getCreatedDate();
         wishSize = product.getWishes().size();
         liveReqSize = product.getLiveRequests().size();
+        thumbnail = product.getImgList().get(0).getImgUrl();
     }
 
 }

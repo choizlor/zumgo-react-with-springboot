@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -178,11 +179,11 @@ public class UserService {
     }
 
     //유저 정보 수정
-    public User updateUser(Long userCode, UserUpdateReqDto userUpdateReqDto) {
+    public User updateUser(Long userCode, UserUpdateReqDto userUpdateReqDto, List<String> imgPath) {
         User user = userRepository.findByUserCode(userCode);
 
-        user.setKakaoProfileImg(userUpdateReqDto.getProfileImg());
         user.setKakaoNickname(userUpdateReqDto.getNickname());
+        user.setKakaoProfileImg(imgPath.get(0));
 
         userRepository.save(user);
 
