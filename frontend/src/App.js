@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Root  from './pages/Root';
-import Oauth from './components/Login/Oauth';
+import Oauth from './pages/Login/Oauth';
 import NotFound from './pages/NotFound/NotFound';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
@@ -12,7 +12,7 @@ import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import AddProduct from './pages/AddProduct';
 import UpdateProduct from './pages/UpdateProduct';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
 import WishList from './pages/WishList';
