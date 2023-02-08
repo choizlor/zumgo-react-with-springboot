@@ -23,6 +23,7 @@ export default function UserInfo() {
   const me = useSelector((state) => {
     return state.user;
   });
+
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
 
@@ -37,34 +38,45 @@ export default function UserInfo() {
 
   //   사용자 정보를 불러오는 api
   useEffect(() => {
-    axios.get(`https://i8c110.p.ssafy.io:8080/api/user/${userId}`).then((res) => {
-      setUserInfo(res.data.user);
-    });
+    axios
+      .get(`https://i8c110.p.ssafy.io:8080/api/user/${userId}`)
+      .then((res) => {
+        setUserInfo(res.data.user);
+      });
   }, []);
 
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={()=> {navigate(-1)}}/>
+          <ChevronLeftIcon
+            className="w-6 h-6 text-black-100"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
           <div className={styles.title}>프로필</div>
         </div>
-        <div className={styles.navright} onClick={handleLogout}>
-          <a href={KAKAO_AUTH_URI} className={styles.logout}>
-            로그아웃
-          </a>
-        </div>
+        {isMe ? (
+          <div className={styles.navright} onClick={handleLogout}>
+            <a href={KAKAO_AUTH_URI} className={styles.logout}>
+              로그아웃
+            </a>
+          </div>
+        ) : null}
       </div>
 
       <div className={styles.userinfo}>
         <div className={styles.userimg}>
           <img
-            src={true ? me.kakaoProfileImg : userInfo.kakaoProfileImg}
+            src={isMe ? me.kakaoProfileImg : userInfo.kakaoProfileImg}
             alt=""
           />
         </div>
         <div className={styles.userdiv}>
-          <div className={styles.username}>{userInfo.kakaoNickname}</div>
+          <div className={styles.username}>
+            {isMe ? me.kakaoNickname : userInfo.kakaoNickname}
+          </div>
           {isMe ? (
             <PencilSquareIcon
               className={styles.updateicon}
@@ -78,7 +90,7 @@ export default function UserInfo() {
       {/* 목록 리스트 */}
       <div className={styles.menus}>
         <div className={styles.menustitle}>
-          {userInfo.kakaoNickname}님의 거래
+          거래 내역
         </div>
         <div className={styles.menu}>
           <CircleStackIcon className={styles.menuicon} />
@@ -120,9 +132,11 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate('/myreviewlist', {state : {
-                    userId,
-                  }});
+                  navigate("/myreviewlist", {
+                    state: {
+                      userId,
+                    },
+                  });
                 }}
               >
                 내가 쓴 리뷰
