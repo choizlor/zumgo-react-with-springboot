@@ -59,8 +59,8 @@ export default function Detail() {
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
-        console.log(res.data.imgUrlList, "🎇");
-        // setproductImgs(res.data.imgUrlList, "🎗");
+        console.log(res.data, "🎇");
+        setproductImgs(res.data.imgUrlList);
       })
       .catch((err) => {
         console.log(err);
@@ -188,11 +188,11 @@ export default function Detail() {
           loop={true}
           modules={[Navigation, Pagination]}
         >
-          {productImgs?.map((productImg) => {
+          {productImgs?.map((productImg, idx) => {
             console.log(productImg,'🎞')
             return (
-              <SwiperSlide key={productImg.id}>
-                <img src={productImg.imgUrl} alt="productimg" />
+              <SwiperSlide key={idx}>
+                <img src={productImg} alt="productimg" />
               </SwiperSlide>
             );
           })}
