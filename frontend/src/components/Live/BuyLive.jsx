@@ -1,18 +1,22 @@
-import React from 'react';
-import LiveReservation from "./LiveReservation";
-import LiveStart from "./LiveStart";
-import BottomNavDark from "../Nav/BottomNavDark";
+import React from "react";
 import styles from "./BuyLive.module.css";
+import LiveCard from "./LiveCard";
+import RequestLive from "./RequestLive";
 
+export default function BuyLive({ myLiveRequestList }) {
 
-export default function BuyLive() {
-    return (
-      <div>
+  const requestList = myLiveRequestList?.filter((product) => {
+    return product.reserve !== null;
+  });
+
+  return (
+    <div>
       <div className={styles.text}>방송 중</div>
-      <LiveReservation />
+      <LiveCard />
       <div className={styles.text}>라이브 예정</div>
-      <LiveStart />
+      {requestList?.map((product) => (
+        <RequestLive key={product.id} product={product} />
+      ))}
     </div>
-    );
+  );
 }
-

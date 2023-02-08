@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wish")
+@RequestMapping("/api/v1/wish")
 public class WishController {
     private final WishService wishService;
     private final UserService userService;

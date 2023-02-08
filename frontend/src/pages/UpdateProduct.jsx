@@ -37,7 +37,7 @@ export default function UpdateProduct() {
 
   // 수정하기 api 요청
   const handleUpdate = () => {
-    axios.put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`,{
+    axios.put(`http://i8c110.p.ssafy.io/product/${product.id}`,{
         title,
         price,
         description,

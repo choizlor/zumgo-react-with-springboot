@@ -28,7 +28,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/live")
+@RequestMapping("/api/v1/live")
 public class LiveController {
 
     private final LiveService liveService;
