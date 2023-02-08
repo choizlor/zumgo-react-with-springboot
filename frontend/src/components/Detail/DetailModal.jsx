@@ -5,16 +5,18 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function DetailModal({setModalOpen}) {
+export default function DetailModal({ setModalOpen }) {
   const navigate = useNavigate();
-  const userId = useSelector((state) => { return state.user.userCode})
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
   const isReview = true;
 
   const closeModal = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
-  // 리뷰 메시지 보내기 
+  // 리뷰 메시지 보내기
   const sendReviewMsg = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios.post('https://i8c110.p.ssafy.io:8080/socket/room', {
@@ -25,7 +27,9 @@ export default function DetailModal({setModalOpen}) {
   
   return (
     <div className={styles.body}>
-      <XMarkIcon onClick={closeModal}/>
+      <div className={styles.icon}>
+        <XMarkIcon className={styles.xicon} onClick={closeModal} />
+      </div>
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
         <div className={styles.userbox} onClick={sendReviewMsg}>
