@@ -27,7 +27,7 @@ export default function Search() {
   // 무한 스크롤 요청
   const searchProducts = (searchWord) => {
     axios
-      .post("http://i8c110.p.ssafy.io/product/search", {
+      .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
         searchName: searchWord,
       })
       .then((res) => {

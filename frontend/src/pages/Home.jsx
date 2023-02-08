@@ -14,7 +14,7 @@ import { useRef } from "react";
 import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
-  const SERVER = process.env.REACT_APP_SERVER;
+  // const SERVER = process.env.REACT_APP_SERVER;
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0); // 현재 페이지 번호 (페이지네이션)
@@ -24,8 +24,7 @@ export default function Home() {
   // 지정한 타겟 div가 화면에 보일 때 마다 서버에 요청을 보냄
   const productFetch = () => {
     axios
-    .get(`http://i8c110.p.ssafy.io/products/main?pageNo=${page}&pageSize=5`)
-    .get(`${SERVER}/products/main?pageNo=${page}&pageSize=5`)
+    .get(`https://i8c110.p.ssafy.io/api/v1/products/main?pageNo=${page}&pageSize=5`)
     .then((res) => {
       console.log(res.data);
       // 리스트 뒤로 붙여주기
