@@ -22,7 +22,7 @@ public class Img {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private Product product;
 
     public Img(String imgUrl, Product product) {
