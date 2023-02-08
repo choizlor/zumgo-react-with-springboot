@@ -20,20 +20,12 @@ export default function Search() {
     : window.localStorage.setItem("recents", JSON.stringify([]));
   const [recents, setRecents] = useState(loadedRecents);
 
-  useEffect(() => {
-    // 문자형으로 빈 배열 저장하기
-  }, []);
-
   const handleSearchWord = (e) => {
-    if (e.target.value) {
-      setRecentOpen(true);
-    }
     setSearchName(e.target.value);
   };
 
   // 무한 스크롤 요청
-  const productFetch = (searchWord) => {
-    console.log(products);
+  const searchProducts = (searchWord) => {
     axios
       .post("http://localhost:8080/product/search", {
         searchName: searchWord,
@@ -47,7 +39,6 @@ export default function Search() {
           setPage(() => page + 1);
           setRecentOpen(false);
         }
-
       })
       .catch((err) => {
         console.log(err);
@@ -55,15 +46,16 @@ export default function Search() {
   };
 
   // 검색하기 함수
-  const goSearch = (e) => {
+  const handleSubmitSearch = (e) => {
     e.preventDefault();
 
     if (!searchName) {
-      alert('검색어를 입력해주세요!')
-      setRecentOpen(true)
+      alert("검색어를 입력해주세요!");
+      setRecentOpen(true);
       return;
     }
-    productFetch(searchName);
+
+    searchProducts(searchName);
 
     // 배열로 다시 바꿔서 recents에 저장하기
     setRecents(JSON.parse(window.localStorage.getItem("recents")));
@@ -87,19 +79,20 @@ export default function Search() {
             navigate(-1);
           }}
         />
-        <form className={styles.input} onSubmit={goSearch}>
+        <form className={styles.input} onSubmit={handleSubmitSearch}>
           <input
             type="text"
             placeholder="검색어를 입력해주세요."
             onInput={handleSearchWord}
+            onFocus={() => setRecentOpen(true)}
             value={searchName}
           />
-          <MagnifyingGlassIcon onClick={goSearch} />
+          <MagnifyingGlassIcon onClick={handleSubmitSearch} />
         </form>
       </div>
       {/* 최근 검색어 & 검색된 내용 리스트*/}
       {recentOpen ? (
-        <SearchItems recents={recents} />
+        <SearchItems recents={recents} searchProducts={searchProducts}/>
       ) : (
         <div className={styles.searchlist}>
           {products.length > 0 ? (
