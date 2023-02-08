@@ -8,7 +8,7 @@ import Timer from "../Auction/Timer";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
@@ -23,13 +23,25 @@ const OPENVIDU_SERVER_SECRET = "isf6";
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const roomId = useParams().productId;
+  const [product, setProduct] = useState({});
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
+
+  useEffect(() => {
+    axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${userId}`)
+      .then((res) => setProduct(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  // const dispatch = useDispatch();
+  // const location = useLocation();
   // const roomId = location.state !== null ? location.state.id : null;
   // const roomTitle = location.state !== null ? location.state.title : null;
-  const roomId = 1;
+  // const roomId = 1;
   // const roomTitle = 'hi';
-  const isHost = true; // useSelector?
 
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
@@ -48,10 +60,12 @@ const VideoRoomTest = () => {
   // const [timerOpen, setTimerOpen] = useState(false);
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
-  const [bidPrice, setBidPrice] = useState(5000);
+  const [bidPrice, setBidPrice] = useState(product.price);
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
+  
+  const isHost = (product.userCode === userId ? true : false)
 
   let OV = undefined;
 
@@ -91,10 +105,9 @@ const VideoRoomTest = () => {
 
   // 토큰 생성
   const createToken = (sessionId) => {
-    // let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
     return new Promise((resolve, reject) => {
-      // const data = { role: myRole };
-      var data = {};
+      const data = { role: myRole };
       axios
         .post(
           OPENVIDU_SERVER_URL +
@@ -182,48 +195,48 @@ const VideoRoomTest = () => {
     getToken().then((token) => {
       mySession
         .connect(token, { clientData: myUserName })
+        // .then(async () => {
+        //   let devices = await OV.getDevices();
+        //   let videoDevices = devices.filter(
+        //     (device) => device.kind === "videoinput"
+        //   );
+
         .then(async () => {
-          let devices = await OV.getDevices();
-          let videoDevices = devices.filter(
-            (device) => device.kind === "videoinput"
-          );
+          OV.getUserMedia({
+            audioSource: false,
+            videoSource: undefined,
+            resolution: "1280x720",
+            frameRate: 30,
+            video: { facingMode: { exact: "environment" } },
+          }).then((mediaStream) => {
+            var videoTrack = mediaStream.getVideoTracks()[0];
 
-          // .then(async () => {
-          //   OV.getUserMedia({
-          //     audioSource: false,
-          //     videoSource: undefined,
-          //     resolution: "1280x720",
-          //     frameRate: 30,
-          //     video: { facingMode: { exact: "environment" } },
-          //   }).then((mediaStream) => {
-          //     var videoTrack = mediaStream.getVideoTracks()[0];
-
-          //     var publisher = OV.initPublisher(undefined, {
-          //       audioSource: undefined,
-          //       videoSource: videoTrack,
-          //       publishAudio: true,
-          //       publishVideo: true,
-          //       insertMode: "APPEND",
-          //       mirror: true,
-          //     });
-          //     mySession.publish(publisher); // 자신의 화면을 송출
-          //     setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-          //     setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
-          //   });
-          // Get your own camera stream ---(퍼블리셔)
-          let publisher = OV.initPublisher(undefined, {
-            audioSource: undefined, // The source of audio. If undefined default microphone
-            videoSource: videoDevices[2].deviceId, // The source of video. If undefined default webcam
-            publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-            publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1280x720", // The resolution of your video
-            frameRate: 30, // The frame rate of your video
-            insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: false, // Whether to mirror your local video or not
+            var publisher = OV.initPublisher(undefined, {
+              audioSource: undefined,
+              videoSource: videoTrack,
+              publishAudio: true,
+              publishVideo: true,
+              insertMode: "APPEND",
+              mirror: true,
+            });
+            mySession.publish(publisher); // 자신의 화면을 송출
+            setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+            setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
           });
-          mySession.publish(publisher); // 자신의 화면을 송출
-          setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-          setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
+          // Get your own camera stream ---(퍼블리셔)
+          // let publisher = OV.initPublisher(undefined, {
+          //   audioSource: undefined, // The source of audio. If undefined default microphone
+          //   videoSource: videoDevices[2].deviceId, // The source of video. If undefined default webcam
+          //   publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+          //   publishVideo: true, // Whether you want to start publishing with your video enabled or not
+          //   resolution: "1280x720", // The resolution of your video
+          //   frameRate: 30, // The frame rate of your video
+          //   insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+          //   mirror: false, // Whether to mirror your local video or not
+          // });
+          // mySession.publish(publisher); // 자신의 화면을 송출
+          // setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+          // setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
         })
         .catch((err) => {
           console.log(err);
