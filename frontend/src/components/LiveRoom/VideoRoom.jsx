@@ -219,7 +219,7 @@ const VideoRoomTest = () => {
             resolution: "1280x720", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: true, // Whether to mirror your local video or not
+            mirror: false, // Whether to mirror your local video or not
           });
           mySession.publish(publisher); // 자신의 화면을 송출
           setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
