@@ -53,7 +53,7 @@ export default function Detail() {
 
   useEffect(() => {     // 상품 정보 axios
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
+      .get(`http://i8c110.p.ssafy.io/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
@@ -76,7 +76,7 @@ export default function Detail() {
     }
 
     axios
-      .put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`, {
+      .put(`http://i8c110.p.ssafy.io/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -92,7 +92,7 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://i8c110.p.ssafy.io:8080/socket/room", {
+      .post("http://i8c110.p.ssafy.io/socket/room", {
         buyerCode: 3,
         sellerCode: 6,
       })
@@ -110,7 +110,7 @@ export default function Detail() {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://i8c110.p.ssafy.io:8080/socket/room", {
+      .post("http://i8c110.p.ssafy.io/socket/room", {
         buyerCode: userId,
         sellerCode: 6,
       })
@@ -135,7 +135,7 @@ export default function Detail() {
     //wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
-        .post(`http://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`)
+        .post(`http://i8c110.p.ssafy.io/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎉");
           console.log(res.data.wishCheck, "🎈");
@@ -150,7 +150,7 @@ export default function Detail() {
     //wishcheck가 true라면 delete요청
     else {
       axios
-        .delete(`http://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`)
+        .delete(`http://i8c110.p.ssafy.io/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎃");
           setwishcheck(res.data.wishCheck);
@@ -166,7 +166,7 @@ export default function Detail() {
     alert("2 point가 차감되었습니다.");
 
     axios
-      .post("http://i8c110.p.ssafy.io:8080/liveRequest?userCode=6&productId=10")
+      .post("http://i8c110.p.ssafy.io/liveRequest?userCode=6&productId=10")
       .then((res) => {
         console.log(res, "🧨");
         // console.log(res.data.liveRequestCnt)

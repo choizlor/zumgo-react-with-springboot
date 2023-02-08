@@ -15,7 +15,7 @@ export default function ChatList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/socket/${userId}/all`)
+      .get(`http://i8c110.p.ssafy.io/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
       })
