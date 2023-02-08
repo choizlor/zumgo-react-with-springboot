@@ -65,7 +65,7 @@ const VideoRoomTest = () => {
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
   
-  const isHost = (product.userCode === userId ? true : false)
+  const isHost = Number(product.userCode) === userId ? true : false
   console.log(isHost)
   
   let OV = undefined;
