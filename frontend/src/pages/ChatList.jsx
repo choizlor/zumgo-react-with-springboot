@@ -7,9 +7,11 @@ import axios from "axios";
 
 export default function ChatList() {
   const navigate = useNavigate();
+  
   const userId = useSelector((state) => {
-    return state.user.userCode;
+    return state.user.userCode
   });
+
 
   const [chats, setChats] = useState([]);
 
@@ -33,6 +35,7 @@ export default function ChatList() {
           return (
             <div
               key={idx}
+
               className={styles.chat}
               onClick={() => {
                 navigate(`/chatroom/${chat.roomId}`, { state: {} });
