@@ -15,7 +15,7 @@ export default function Root() {
         if(!token) return;
 
         try {
-            const res = axios.get('http://i8c110.p.ssafy.io:8080/api/me', {
+            const res = axios.get('https://i8c110.p.ssafy.io/api/me', {
                 headers: {
                     Authorization: token,
                 }
