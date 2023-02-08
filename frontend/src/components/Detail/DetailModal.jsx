@@ -19,7 +19,7 @@ export default function DetailModal({ setModalOpen }) {
   // 리뷰 메시지 보내기
   const sendReviewMsg = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    axios.post('https://i8c110.p.ssafy.io/socket/room', {
+    axios.post('https://i8c110.p.ssafy.io/api/v1/socket/room', {
       buyerCode: 1,
       sellerCode: userId, 
     }).then((res) => { navigate(`/chatroom/${res.data}`, {state : isReview })})

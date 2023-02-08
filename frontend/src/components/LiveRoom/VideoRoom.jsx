@@ -232,7 +232,7 @@ const VideoRoomTest = () => {
     if (true) {
       // 내가 host이면,
       axios
-        .delete(`https://i8c110.p.ssafy.io:8080/live/${roomId}`, {
+        .delete(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, {
           headers: {
             // Authorization: token,
             "Content-Type": "application/json",

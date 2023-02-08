@@ -13,7 +13,7 @@ export default function ProductItem({ product, clickProduct }) {
 
   const addwish = ()=> {
     axios
-    .post(`http://i8c110.p.ssafy.io/wish?userCode=${user.userCode}&productId=${product.productId}`,{
+    .post(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user.userCode}&productId=${product.productId}`,{
     })
     .then((res) =>{
       console.log(res)

@@ -17,7 +17,7 @@ export default function Live() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io/live/main?userCode=2`)
+      .get(`https://i8c110.p.ssafy.io/api/v1live/main?userCode=2`)
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
         setMyLiveRequestList(res.data.MyLiveRequestList);
