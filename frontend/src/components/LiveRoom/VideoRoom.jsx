@@ -18,8 +18,8 @@ import Price from "../Auction/Price";
 // const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:3306";
 // const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io";
-const OPENVIDU_SERVER_SECRET = "isf6";
+const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:7080";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
