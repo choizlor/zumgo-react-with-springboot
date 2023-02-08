@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
-import kim from "../assets/images/kim.png";
-import testImg from "../assets/images/testImg.jpg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function ChatList() {
   const navigate = useNavigate();
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
 
   const [chats, setChats] = useState([]);
-  const userId = 3;
 
   useEffect(() => {
     axios
@@ -28,9 +28,7 @@ export default function ChatList() {
     <div>
       <div className={styles.title}>채팅</div>
       <div className={styles.chatlistbox}>
-        {/* 채팅 - map으로 돌려야함,,,나중에 */}
         {chats?.map((chat, idx) => {
-          // const other = { chat.seller.userCode === userId? chat.buyer: chat.seller};
           
           return (
             <div

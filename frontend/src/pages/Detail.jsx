@@ -37,19 +37,7 @@ export default function Detail() {
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
-  // useEffect(() => {
-  //   // 상품 정보를 가져오는 GET 요청
-  //   axios
-  //     .get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setProduct(res.data);
-  //       setwishcheck(res.data.wishCheck)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+ 
 
   useEffect(() => {     // 상품 정보 axios
     axios
@@ -59,7 +47,6 @@ export default function Detail() {
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
-        console.log(res.data, "🎇");
         setproductImgs(res.data.imgUrlList);
       })
       .catch((err) => {
@@ -215,7 +202,7 @@ export default function Detail() {
           <div className={styles.sellerName}>딸기우유 서녕</div>
         </div>
         {/* 드롭다운 */}
-        <select className={styles.dropdown} onChange={changeStatus}>
+        <select className={styles.dropdown} onChange={changeStatus} value={product.status}>
           <option value="ONSALE">판매 중</option>
           <option value="BOOKING">예약 중</option>
           <option value="SOLDOUT">거래완료</option>
