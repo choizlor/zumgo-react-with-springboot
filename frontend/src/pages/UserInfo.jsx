@@ -39,7 +39,7 @@ export default function UserInfo() {
   //   사용자 정보를 불러오는 api
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io:8080/api/user/${userId}`)
+      .get(`https://i8c110.p.ssafy.io/api/user/${userId}`)
       .then((res) => {
         setUserInfo(res.data.user);
       });
