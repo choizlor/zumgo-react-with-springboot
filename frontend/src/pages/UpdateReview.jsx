@@ -16,7 +16,7 @@ export default function UpdateReview() {
   const updateReview = () => {
     // productId로 수정하기
     axios
-      .patch(`http://i8c110.p.ssafy.io:8080/review/13`, {
+      .patch(`http://i8c110.p.ssafy.io/review/13`, {
         seller: 3,
         buyer: 1,
         review,
