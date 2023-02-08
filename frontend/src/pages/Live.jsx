@@ -10,15 +10,18 @@ import BuyLive from "../components/Live/BuyLive.jsx";
 
 export default function Live() {
   const [sellLiveRequestList, setSellLiveRequestList] = useState();
+  const [myLiveRequestList, setMyLiveRequestList] = useState();
   const userId = useSelector((state) => {
     return state.user.userCode;
   });
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/live/main?userCode=1`)
+      .get(`http://localhost:8080/live/main?userCode=2`)
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
+        setMyLiveRequestList(res.data.MyLiveRequestList);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -39,22 +42,20 @@ export default function Live() {
       {toggle ? (
         <SellLive sellLiveRequestList={sellLiveRequestList} />
       ) : (
-        <BuyLive />
+        <BuyLive myLiveRequestList={myLiveRequestList} />
       )}
 
-      <div className={styles.togglediv}>
-        <div className={styles.togglebtn}>
-          <div className={cn(styles.button, styles.cover, styles.toggle)}>
-            <div className={cn(styles.button, styles.cover)}>
-              <div className={cn(styles.button, styles.r)}>
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  onClick={toggleMode}
-                />
-                <div className={styles.knobs}></div>
-                <div className={styles.layer}></div>
-              </div>
+      <div className={styles.togglebtn}>
+        <div className={cn(styles.button, styles.cover, styles.toggle)}>
+          <div className={cn(styles.button, styles.cover)}>
+            <div className={cn(styles.button, styles.r)}>
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                onClick={toggleMode}
+              />
+              <div className={styles.knobs}></div>
+              <div className={styles.layer}></div>
             </div>
           </div>
         </div>

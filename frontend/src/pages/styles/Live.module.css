@@ -4,8 +4,8 @@
   height: 100vh;
 }
 
-.logo{
-  color: #BCFF5E;
+.logo {
+  color: #bcff5e;
   font-weight: 1000;
   font-size: 30px;
   display: flex;
@@ -13,22 +13,13 @@
 }
 
 .logo span {
-  margin: 3% ;
-}
-
-.livebtn {
-  width: 30px;
-  height: 40px;
-  background-color: red;
-}
-
-.togglediv {
-  margin-top: 8%;
-  text-align: center;
+  margin: 3%;
 }
 
 .togglebtn {
-  display: inline-block;
+  position: fixed;
+  bottom: 120px;
+  left: 105px;
 }
 
 /* 토글 버튼 */

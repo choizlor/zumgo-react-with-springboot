@@ -16,7 +16,7 @@ export default function LiveStart({ product, clickLive }) {
         <button
           className={styles.btn}
           onClick={() => {
-            clickLive(product.productId);
+            clickLive(product.id);
           }}
         >
           라이브 시작하기
