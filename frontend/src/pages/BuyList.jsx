@@ -16,7 +16,7 @@ export default function BuyList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/products/buyList/${userId}`)
+      .get(`http://i8c110.p.ssafy.io/products/buyList/${userId}`)
       .then((res) => {
         setProducts(res.data);
       })
