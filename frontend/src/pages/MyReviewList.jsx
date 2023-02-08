@@ -13,19 +13,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState();
   const location = useLocation();
-  console.log(location.state)
   // const userId = location.state.userId;
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
     // axios.get(`http://localhost:8080/review/${userId}`)
-    axios.get(`http://localhost:8080/review/1`)
-    .then((res) => {
-      setReviews(res.data.MyReview)
-      console.log(res.data.MyReview)
-    })
+    axios.get(`http://localhost:8080/review/7`).then((res) => {
+      setReviews(res.data.MyReview);
+      console.log(res.data.MyReview);
+    });
   }, []);
 
   const handleDeleteReview = (productId) => {
@@ -51,10 +49,10 @@ export default function MyReviewList() {
       </div>
       {/* 타이틀 */}
       <div className={styles.bigtitle}>
-        내가 쓴 리뷰 목록 ({reviews.length})
+        내가 쓴 리뷰 목록 ({reviews?.length})
       </div>
       <div className={styles.reviews}>
-        { reviews?.map((review, idx) => {
+        {reviews?.map((review, idx) => {
           return (
             <div key={idx} className={styles.reviewbox}>
               <div className={styles.ninety}>
@@ -65,7 +63,9 @@ export default function MyReviewList() {
                     </div>
                     <div className={styles.topright}>
                       <div className={styles.title}>{review.product.title}</div>
-                      <div className={styles.price}>{review.product.price}원</div>
+                      <div className={styles.price}>
+                        {review.product.price}원
+                      </div>
                     </div>
                   </div>
                   <div className={styles.bottom}>
