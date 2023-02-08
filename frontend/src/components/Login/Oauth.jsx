@@ -6,7 +6,7 @@ export default function Oauth() {
 
   // params로 받은 인가 코드를 code 변수에 저장
   const code = new URL(window.location.href).searchParams.get('code');
-  // console.log(code)
+  console.log(code, '🎄')
 
   const navigate = useNavigate();
 
