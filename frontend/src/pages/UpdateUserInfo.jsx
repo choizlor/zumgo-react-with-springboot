@@ -16,14 +16,35 @@ export default function UpdateUserInfo() {
 
   const [nickname, setNickname] = useState(me.kakaoNickname);
 
-  const handleUpdate = () => {
-    axios
-      .patch(`http://i8c110.p.ssafy.io/api/user/${userId}`, {
-        profileImg: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        nickname,
+  const content = {
+    nickname,
+  };
+
+  // 상품등록 axios
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+    let files = e.target.imgurl.files;
+
+    if(files.length) {
+      formData.append("imgUrl", files[0]);
+    } 
+
+    formData.append(
+      "content",
+      new Blob([JSON.stringify(content)], { type: "application/json" })
+    );
+
+    await axios
+      .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
-        navigate(`/userinfo/${userId}`);
+        // navigate(`/detail/${res.data}`)
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -58,13 +79,15 @@ export default function UpdateUserInfo() {
             alt=""
             style={{ borderRadius: "100px" }}
           />
-          {/* <input
+
+          <input
             className={styles.file}
-            type="file"
-            accept="image/*"
-            capture="camera"
-            multiple
-          /> */}
+            type="file" // 파일로 입력 받음
+            accept="image/*" // 이미지 유형의 파일만 받기
+            capture="camera" // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
+            name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
+            multiple // 다중 업로드
+          />
         </div>
 
         <div className={styles.udtnickname}>
