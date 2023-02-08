@@ -21,7 +21,7 @@ export default function SellList() {
       .get(`http://i8c110.p.ssafy.io/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
-        console.log("😪");
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -46,7 +46,6 @@ export default function SellList() {
   return (
     //전체 컨테이너
     <div className={styles.body}>
-      {JSON.stringify(products)}
       {/**nav부분*/}
       <div className={styles.nav}>
         <ChevronLeftIcon
@@ -58,7 +57,7 @@ export default function SellList() {
         <div className={styles.title}>판매 목록</div>
       </div>
       {/*거래 상태 표시 */}
-      <div className={styles.status}>
+        <div className={styles.statusnav}>
         {filters.map((filter, index) => {
           return (
             <li key={index} className={styles.block}>
@@ -71,6 +70,8 @@ export default function SellList() {
             </li>
           );
         })}
+        </div>
+        <div className={styles.status}>
         <ul>
           {/**filtered된 product리스트 productitem에 보여주기 */}
           {filtered?.map((product) => (
