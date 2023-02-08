@@ -36,7 +36,7 @@ export default function Detail() {
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
-  const [productImgS, setproductImg] = useState([]);
+  const [productImgs, setproductImgs] = useState([]);
   // useEffect(() => {
   //   // 상품 정보를 가져오는 GET 요청
   //   axios
@@ -60,7 +60,7 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         console.log(res.data, "🎇");
-        setproductImg(res.data.imgList, "🎗");
+        setproductImgs(res.data.imgUrlList);
       })
       .catch((err) => {
         console.log(err);
@@ -187,11 +187,10 @@ export default function Detail() {
           loop={true}
           modules={[Navigation, Pagination]}
         >
-          {productImgS?.map((productImg) => {
-            console.log(productImg,'🎞')
+          {productImgs?.map((productImg,idx) => {
             return (
-              <SwiperSlide key={productImg.id}>
-                <img src={productImg.imgUrl} alt="productimg" />
+              <SwiperSlide key={idx} className={styles.swiperimg}>
+                <img src={productImg} alt="productimg" />
               </SwiperSlide>
             );
           })}
