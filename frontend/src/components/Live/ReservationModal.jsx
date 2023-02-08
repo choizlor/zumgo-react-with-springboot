@@ -34,16 +34,8 @@ export default function ReservationModal({ setModalOpen, productId }) {
 
     axios
       .put(`http://localhost:8080/product/${productId}?userCode=1`, {
-        availableTime: product.availableTime,
-        description: product.description,
-        liveReqCheck: product.liveReqCheck,
-        liveReqSize: product.liveReqSize,
-        price: product.price,
+        ...product,
         reserve,
-        status: product.status,
-        title: product.title,
-        wishCheck: product.wishCheck,
-        wishSize: product.wishSize,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
