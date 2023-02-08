@@ -6,11 +6,12 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import ProductItem from "../components/Product/ProductItem";
 
 export default function SellList() {
+  //status 상태
   const filters = ["ONSALE", "BOOKING", "SOLDOUT"];
+  // filterText 변경
   const filterText = ["판매 중", "예약 중", "판매완료"];
   const navigate = useNavigate();
   const userId = useParams().userId;
-
   const [products, setProducts] = useState();
   const [filter, setFilter] = useState(filters[0]);
   const [filtered, setFiltered] = useState();
@@ -30,7 +31,7 @@ export default function SellList() {
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
   };
-
+  // filter
   const handleChangeStatus = (filter) => {
     setFilter(filter);
     setFiltered(getFilteredItems(filter));
@@ -71,6 +72,7 @@ export default function SellList() {
           );
         })}
         <ul>
+          {/**filtered된 product리스트 productitem에 보여주기 */}
           {filtered?.map((product) => (
             <ProductItem
               key={product.productId}
