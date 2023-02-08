@@ -2,7 +2,6 @@
   background-color: white;
   width: 100vw;
   height: 100vh;
-  border: solid red 2px;
 }
 
 .nav {
@@ -11,13 +10,18 @@
   display: flex;
   align-items: center;
 }
+.title {
+  font-weight: 600;
+  font-size: 1rem;
+}
 
 
 .statusnav{
   display: flex;
   justify-content: space-around;
-
+  font-weight: 600;
 }
+
 .status {
 
 
@@ -30,6 +34,9 @@
   justify-content: space-between;
 }
 
+.btn {
+  font-size: 0.9rem;
+}
 .btn:hover {
   border-bottom: 2px solid black;
   font-weight: 700;
