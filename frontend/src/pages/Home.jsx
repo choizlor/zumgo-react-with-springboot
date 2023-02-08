@@ -17,7 +17,7 @@ export default function Home() {
   const SERVER = process.env.REACT_APP_SERVER;
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1); // 현재 페이지 번호 (페이지네이션)
+  const [page, setPage] = useState(0); // 현재 페이지 번호 (페이지네이션)
   const [ref, inView] = useInView();
 
   // 무한 스크롤
