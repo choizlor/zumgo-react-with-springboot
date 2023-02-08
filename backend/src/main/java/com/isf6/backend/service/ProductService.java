@@ -9,6 +9,7 @@ import com.isf6.backend.api.Response.ProductResponseDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
+import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ImgRepository;
 import com.isf6.backend.domain.repository.ProductRepository;
 import com.isf6.backend.domain.repository.ProductSearchRepository;
@@ -33,6 +34,7 @@ public class ProductService {
 
     private final WishService wishService;
     private final LiveRequestService liveRequestService;
+    private final UserService userService;
 
     private final ProductRepositoryCustomImpl productRepositoryCustomImpl;
 
@@ -92,7 +94,11 @@ public class ProductService {
         for (Img img: imgList) {
             imgUrlList.add(img.getImgUrl());
         }
-        return new ProductResponseDto(entity, wishCheck, liveReqCheck, imgUrlList);
+
+        //판매자 userCode, nickname, profileImg 필요함...
+        User user = userService.findUser(entity.getUser().getUserCode());
+
+        return new ProductResponseDto(entity, wishCheck, liveReqCheck, imgUrlList, user);
     }
 
     @Transactional

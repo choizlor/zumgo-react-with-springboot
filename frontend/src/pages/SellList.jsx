@@ -18,7 +18,7 @@ export default function SellList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/products/sellList/${userId}`)
+      .get(`http://localhost:8080/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
         console.log("😪");
@@ -52,7 +52,7 @@ export default function SellList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(`/userinfo/${userId}`);
+            navigate(-1);
           }}
         />
         <div className={styles.title}>판매 목록</div>
