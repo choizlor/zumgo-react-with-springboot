@@ -15,53 +15,64 @@ export default function Search() {
   const [page, setPage] = useState(0);
   const [recentOpen, setRecentOpen] = useState(true);
   const [ref, inView] = useInView();
-  const [storeRecent, setStoreRecent] = useState(false);
+  const loadedRecents = localStorage.getItem("recents")
+    ? JSON.parse(window.localStorage.getItem("recents"))
+    : window.localStorage.setItem("recents", JSON.stringify([]));
+  const [recents, setRecents] = useState(loadedRecents);
 
   useEffect(() => {
-    if (inView) {
-      productFetch();
-    }
-  }, [inView]);
-
+    // 문자형으로 빈 배열 저장하기
+  }, []);
 
   const handleSearchWord = (e) => {
-    setSearchName(e.target.value);
-    if (e.target.value === "") {
+    if (e.target.value) {
       setRecentOpen(true);
     }
-    
+    setSearchName(e.target.value);
   };
 
-  const productFetch = () => {
+  // 무한 스크롤 요청
+  const productFetch = (searchWord) => {
+    console.log(products);
     axios
       .post("http://localhost:8080/product/search", {
-        searchName: searchName,
-        pageNo: page,
-        pageSize: 6,
+        searchName: searchWord,
       })
       .then((res) => {
-        setProducts([...products, ...res.data]);
-        setRecentOpen(false);
-        setPage(() => page + 1);
+        console.log(res.data);
+        setProducts([...res.data]);
+
+        // 현재 불러온 데이터가 존재하면 다음 페이지로 이동
+        if (res.data) {
+          setPage(() => page + 1);
+          setRecentOpen(false);
+        }
+
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  // 검색하기 함수
   const goSearch = (e) => {
     e.preventDefault();
 
-    // 검색어를 입력하지 않으면 리턴
-    if (searchName === "") {
-      alert("검색어를 입력하세요.");
+    if (!searchName) {
+      alert('검색어를 입력해주세요!')
+      setRecentOpen(true)
       return;
     }
+    productFetch(searchName);
 
-    productFetch();
+    // 배열로 다시 바꿔서 recents에 저장하기
+    setRecents(JSON.parse(window.localStorage.getItem("recents")));
+    setRecents([searchName, ...recents]);
 
-    setStoreRecent(!storeRecent)
-    console.log(storeRecent)
+    // 문자열로 다시 바꿔서 recents에 저장하기
+    window.localStorage.setItem("recents", JSON.stringify(recents));
+
+    setSearchName("");
   };
 
   const handleClickProduct = (id) => {
@@ -88,7 +99,7 @@ export default function Search() {
       </div>
       {/* 최근 검색어 & 검색된 내용 리스트*/}
       {recentOpen ? (
-        <SearchItems />
+        <SearchItems recents={recents} />
       ) : (
         <div className={styles.searchlist}>
           {products.length > 0 ? (
