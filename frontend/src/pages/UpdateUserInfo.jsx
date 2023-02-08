@@ -16,18 +16,40 @@ export default function UpdateUserInfo() {
 
   const [nickname, setNickname] = useState(me.kakaoNickname);
 
-  const handleUpdate = () => {
-    axios
-      .patch(`http://i8c110.p.ssafy.io:8080/api/user/${userId}`, {
-        profileImg: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        nickname,
-      })
-      .then((res) => {
-        navigate(`/userinfo/${userId}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const content = {
+    nickname,
+  };
+
+  // 상품등록 axios
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+    let file = e.target.imgurl;
+    console.log(e.target.imgurl)
+
+    // if(file.length) {
+    //   formData.append("imgUrl", file[0]);
+    // } 
+
+    // formData.append(
+    //   "content",
+    //   new Blob([JSON.stringify(content)], { type: "application/json" })
+    // );
+
+    // await axios
+    //   .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     // navigate(`/detail/${res.data}`)
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const handleNicknameChange = (e) => {
@@ -36,7 +58,7 @@ export default function UpdateUserInfo() {
 
   return (
     <>
-      <div className={styles.body}>
+      <form className={styles.body} onSubmit={handleUpdate}>
         <div className={styles.nav}>
           <div className={styles.navleft}>
             <ChevronLeftIcon
@@ -47,9 +69,9 @@ export default function UpdateUserInfo() {
             />
             <div className={styles.title}>프로필 수정</div>
           </div>
-          <div className={styles.navright} onClick={handleUpdate}>
+          <button type="submit" className={styles.navright} onClick={handleUpdate}>
             <p className={styles.save}>저장</p>
-          </div>
+          </button>
         </div>
 
         <div className={styles.userimg}>
@@ -58,13 +80,15 @@ export default function UpdateUserInfo() {
             alt=""
             style={{ borderRadius: "100px" }}
           />
-          {/* <input
+
+          <input
             className={styles.file}
-            type="file"
-            accept="image/*"
-            capture="camera"
-            multiple
-          /> */}
+            type="file" // 파일로 입력 받음
+            accept="image/*" // 이미지 유형의 파일만 받기
+            capture="camera" // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
+            name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
+          />
+          
         </div>
 
         <div className={styles.udtnickname}>
@@ -78,7 +102,7 @@ export default function UpdateUserInfo() {
             onChange={handleNicknameChange}
           ></textarea>
         </div>
-      </div>
+      </form>
     </>
   );
 }

@@ -19,16 +19,14 @@ export default function ProductItem({ product, clickProduct }) {
 
   const addwish = () => {
     axios
-      .post(
-        `http://localhost:8080/wish?userCode=${user.userCode}&productId=${product.productId}`,
-        {}
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .post(`http://i8c110.p.ssafy.io/wish?userCode=${user.userCode}&productId=${product.productId}`,{
+    })
+    .then((res) =>{
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   };
   return (
     <div

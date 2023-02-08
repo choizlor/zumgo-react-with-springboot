@@ -17,7 +17,7 @@ export default function WishList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/products/wishList/${userId}`)
+      .get(`http://i8c110.p.ssafy.io/products/wishList/${userId}`)
       .then((res) => {
         setProducts(res.data);
       })
