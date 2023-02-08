@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function ProductItem({ product, clickProduct }) {
 
-  console.log({ product });
-  const kor_status = {ONSALE:'판매중', BOOKING:'예약중' , SOLDOUT:'거래완료'}
   // 현재 로그인 된 사용자 정보를 가져오는 방법
   const user = useSelector((state) => {
     return state.user;
@@ -22,12 +20,13 @@ export default function ProductItem({ product, clickProduct }) {
     .post(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user.userCode}&productId=${product.productId}`,{
     })
     .then((res) =>{
-      console.log(res)
+      console.log(res ,'🎈')
     })
     .catch((err) => {
       console.log(err)
     })
   };
+  
   return (
     <div
       className={styles.body}
