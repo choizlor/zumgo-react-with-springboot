@@ -19,7 +19,7 @@ export default function StompChat() {
   const connect = () => {   // 소켓 연결
     try {
       const clientdata = new StompJs.Client({
-        brokerURL: "ws://i8c110.p.ssafy.io:8080/chat",
+        brokerURL: "ws://i8c110.p.ssafy.io/chat",
         connectHeaders: {
           login: "",
           passcode: "password",
