@@ -25,30 +25,31 @@ export default function UpdateUserInfo() {
     e.preventDefault();
 
     let formData = new FormData();
-    let files = e.target.imgurl.files;
+    let file = e.target.imgurl;
+    console.log(e.target.imgurl)
 
-    if(files.length) {
-      formData.append("imgUrl", files[0]);
-    } 
+    // if(file.length) {
+    //   formData.append("imgUrl", file[0]);
+    // } 
 
-    formData.append(
-      "content",
-      new Blob([JSON.stringify(content)], { type: "application/json" })
-    );
+    // formData.append(
+    //   "content",
+    //   new Blob([JSON.stringify(content)], { type: "application/json" })
+    // );
 
-    await axios
-      .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        // navigate(`/detail/${res.data}`)
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // await axios
+    //   .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     // navigate(`/detail/${res.data}`)
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const handleNicknameChange = (e) => {
@@ -57,7 +58,7 @@ export default function UpdateUserInfo() {
 
   return (
     <>
-      <div className={styles.body}>
+      <form className={styles.body} onSubmit={handleUpdate}>
         <div className={styles.nav}>
           <div className={styles.navleft}>
             <ChevronLeftIcon
@@ -68,9 +69,9 @@ export default function UpdateUserInfo() {
             />
             <div className={styles.title}>프로필 수정</div>
           </div>
-          <div className={styles.navright} onClick={handleUpdate}>
+          <button type="submit" className={styles.navright} onClick={handleUpdate}>
             <p className={styles.save}>저장</p>
-          </div>
+          </button>
         </div>
 
         <div className={styles.userimg}>
@@ -86,8 +87,8 @@ export default function UpdateUserInfo() {
             accept="image/*" // 이미지 유형의 파일만 받기
             capture="camera" // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
             name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
-            multiple // 다중 업로드
           />
+          
         </div>
 
         <div className={styles.udtnickname}>
@@ -101,7 +102,7 @@ export default function UpdateUserInfo() {
             onChange={handleNicknameChange}
           ></textarea>
         </div>
-      </div>
+      </form>
     </>
   );
 }
