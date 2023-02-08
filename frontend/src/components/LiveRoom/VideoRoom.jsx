@@ -192,8 +192,9 @@ const VideoRoomTest = () => {
           OV.getUserMedia({
             audioSource: false,
             videoSource: undefined,
-            resolution: "360x740",
+            resolution: "1280x720",
             frameRate: 30,
+            facingMode: "environment",
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
 
