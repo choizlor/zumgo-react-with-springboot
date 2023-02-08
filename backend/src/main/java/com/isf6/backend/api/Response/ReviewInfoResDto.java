@@ -9,17 +9,15 @@ import lombok.Getter;
 public class ReviewInfoResDto {
     private Long reviewId;
     private String review;
-    private Product product;
     private User buyer;
     private User seller;
+    private String thumbnail;
 
     public ReviewInfoResDto(Bill bill) {
         reviewId = bill.getId();
         review = bill.getReview();
-        product = bill.getProduct();
         buyer = bill.getBuyer();
         seller = bill.getSeller();
+        thumbnail = bill.getProduct().getImgList().get(0).getImgUrl();
     }
-
-
 }
