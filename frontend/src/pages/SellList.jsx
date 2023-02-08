@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router";
 import styles from "./styles/SellList.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import ProductItem from "../components/Product/ProductItem";
+import BottomNav from "../components/Nav/BottomNav"
+
+
 
 export default function SellList() {
   //status 상태
@@ -18,7 +21,7 @@ export default function SellList() {
 
   useEffect(() => {
     axios
-      .get(`http://i8c110.p.ssafy.io/products/sellList/${userId}`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
         console.log(res.data);
@@ -83,6 +86,7 @@ export default function SellList() {
           ))}
         </ul>
       </div>
+      <BottomNav />   
     </div>
   );
 }
