@@ -12,9 +12,16 @@
   align-items: center;
 }
 
-.status {
+
+.statusnav{
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
+
+}
+.status {
+
+
+
 }
 
 .block {
