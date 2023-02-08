@@ -35,7 +35,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/socket")
+@RequestMapping("/api/v1/socket")
 public class SocketController {
 
     private final SocketService socketService;

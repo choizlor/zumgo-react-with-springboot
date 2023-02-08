@@ -126,6 +126,7 @@ img {
 
 .icons {
   display: flex;
+  justify-content: left;
   margin : 0;
   padding: 0;
   width: 24%;
@@ -144,7 +145,7 @@ img {
   display: flex;
   align-items: center;
   position: relative;
-  margin :  0 7%;
+  margin :  1% 7% 2% 7%;
 }
 
 .icon svg {
@@ -174,8 +175,9 @@ img {
   bottom : 0;
   font-size: 8px;
 }
+
 .timeBox {
-  margin : 1% 0 5% 0;
+  margin : 3% 0 5% 0;
 }
 
 

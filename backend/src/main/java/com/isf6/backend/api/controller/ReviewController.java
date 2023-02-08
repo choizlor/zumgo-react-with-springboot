@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/api/v1/review")
 public class ReviewController {
 
     private final ReviewService reviewService;

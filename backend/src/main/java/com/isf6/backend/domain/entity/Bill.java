@@ -20,6 +20,7 @@ public class Bill {
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "product_id")
+    @Column(unique = true)
     private Product product;
 
     @JsonIgnore

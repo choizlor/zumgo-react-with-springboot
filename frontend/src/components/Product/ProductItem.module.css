@@ -58,6 +58,7 @@
 
 
 
+
 .icons {
     display: flex;
     margin : 0;
@@ -108,7 +109,7 @@
     font-size: 8px;
 }
 
-.status {
+.onsale {
     color: white;
     background-color: black;
 }

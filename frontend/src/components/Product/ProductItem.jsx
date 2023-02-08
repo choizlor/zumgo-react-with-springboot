@@ -2,18 +2,24 @@ import React from "react";
 import styles from "./ProductItem.module.css";
 import testImg from "../../assets/images/testImg.jpg";
 import zImg from "../../assets/images/z.png";
-import axios from 'axios';
+import axios from "axios";
 import { HeartIcon } from "@heroicons/react/24/solid";
 // import { useState } from "react";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductItem({ product, clickProduct }) {
-  // 현재 로그인 된 사용자 정보를 가져오는 방법
-  const user = useSelector((state) => {return state.user})
 
-  const addwish = ()=> {
+  console.log({ product });
+  const kor_status = {ONSALE:'판매중', BOOKING:'예약중' , SOLDOUT:'거래완료'}
+  // 현재 로그인 된 사용자 정보를 가져오는 방법
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
+  const addwish = () => {
     axios
-    .post(`http://i8c110.p.ssafy.io/wish?userCode=${user.userCode}&productId=${product.productId}`,{
+    .post(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user.userCode}&productId=${product.productId}`,{
     })
     .then((res) =>{
       console.log(res)
@@ -36,10 +42,26 @@ export default function ProductItem({ product, clickProduct }) {
         <div className={styles.title}>{product.title}</div>
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.bottom}>
-          <div className={styles.status}>판매중</div>
+          <div
+            className={styles.status}
+            style={
+              product.status === "ONSALE"
+                ? { backgroundColor: "black", color: "white" }
+                : { backgroundColor: "#d9d9d9" }
+            }
+          >
+            {product.status === 'ONSALE' && '판매중'}
+            {product.status === 'BOOKING' && '예약중'}
+            {product.status === 'SOLDOUT' && '거래완료'}
+          </div>
           <div className={styles.icons}>
             <div className={styles.icon}>
-              {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>}
+              {product.wishCheck ? (
+                <HeartIcon class="fill-black" />
+              ) : (
+                <HeartIcon />
+              )}
+              {/* {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>} */}
               {/* <HeartIcon /> */}
               <div className={styles.count}>{product.wishSize}</div>
             </div>
