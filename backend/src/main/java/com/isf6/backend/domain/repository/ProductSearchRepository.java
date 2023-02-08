@@ -29,7 +29,6 @@ public class ProductSearchRepository {
                 .select(product)
                 .from(product)
                 .where(product.title.contains(productSearch.getSearchName()).or(product.description.contains(productSearch.getSearchName())))
-                .limit(1000)
                 .orderBy(product.createdDate.desc())
                 .fetch();
     }

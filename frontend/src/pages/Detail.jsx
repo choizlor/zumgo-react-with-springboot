@@ -34,15 +34,33 @@ export default function Detail() {
   const [modalOpen, setModalOpen] = useState(false);
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
-  const [wishSize, setwishSize] = useState(product.wishSize);
-
+  const [wishCnt, setwishCnt] = useState(product.wishSize);
+  const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
+  const [productImgs, setproductImgs] = useState();
+  // useEffect(() => {
+  //   // 상품 정보를 가져오는 GET 요청
+  //   axios
+  //     .get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProduct(res.data);
+  //       setwishcheck(res.data.wishCheck)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   useEffect(() => {     // 상품 정보 axios
     axios
-      .get(`https://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
+      .get(`http://localhost:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
+        setwishCnt(res.data.wishSize);
+        setwishcheck(res.data.wishCheck);
+        setliveReqSize(res.data.liveReqSize);
         console.log(res.data, "🎇");
+        setproductImgs(res.data.imgUrlList);
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +76,7 @@ export default function Detail() {
     }
 
     axios
-      .put(`https://i8c110.p.ssafy.io:8080/product/${product.id}`, {
+      .put(`http://localhost:8080/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -74,7 +92,7 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("https://i8c110.p.ssafy.io:8080/socket/room", {
+      .post("http://localhost:8080/socket/room", {
         buyerCode: 3,
         sellerCode: 6,
       })
@@ -92,34 +110,72 @@ export default function Detail() {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("https://i8c110.p.ssafy.io:8080/socket/room", {
+      .post("http://localhost:8080/socket/room", {
         buyerCode: userId,
         sellerCode: 6,
       })
       .then((res) => {
         navigate(`/chatroom/${res.data}`, { state: "live" });
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
-
+  // post 요청하기
+  //   axios
+  //     .post(
+  //       `http://i8c110.p.ssafy.io:8080/liveRequest?userCode=${user.userCode}&productId=${productId}`,
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   // 찜 추가하기
   const addwish = () => {
+    //wishcheck가 true라면 post 요청
+    if (wishCheck === false) {
+      axios
+        .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+        .then((res) => {
+          console.log(res, "🎉");
+          console.log(res.data.wishCheck, "🎈");
+          setwishcheck(res.data.wishCheck);
+          console.log(res.data.wishCnt, "🎆");
+          setwishCnt(res.data.wishCnt);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    //wishcheck가 true라면 delete요청
+    else {
+      axios
+        .delete(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+        .then((res) => {
+          console.log(res, "🎃");
+          setwishcheck(res.data.wishCheck);
+          setwishCnt(res.data.wishCnt);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  //라이브 요청
+  const handleAddRequest = () => {
+    alert("2 point가 차감되었습니다.");
+
     axios
-      .post(
-        `https://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`
-      )
+      .post("http://localhost:8080/liveRequest?userCode=6&productId=10")
       .then((res) => {
-        console.log(res.data.wishCheck, "🎈");
-        setwishcheck(res.data.wishCheck);
+        console.log(res, "🧨");
+        // console.log(res.data.liveRequestCnt)
+        setliveReqSize(res.data.liveRequestCnt);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -132,30 +188,14 @@ export default function Detail() {
           loop={true}
           modules={[Navigation, Pagination]}
         >
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340"
-              alt=""
-            />
-          </SwiperSlide>
+          {productImgs?.map((productImg, idx) => {
+            console.log(productImg,'🎞')
+            return (
+              <SwiperSlide key={idx}>
+                <img src={productImg} alt="productimg" />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
 
         {/* 라이브 예약 알림 */}
@@ -204,13 +244,13 @@ export default function Detail() {
           <div className={styles.icon} onClick={addwish}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}
             {/* <HeartIcon onClick={addwish}/> */}
-            <div className={styles.count}>{product.wishSize}</div>
+            <div className={styles.count}>{String(wishCnt)}</div>
           </div>
           <div className={styles.icon}>
             <div className={styles.zimg}>
               <img src={zImg} alt="" />
             </div>
-            <div className={styles.zcount}>{product.liveReqSize}</div>
+            <div className={styles.zcount}>{liveReqSize}</div>
           </div>
         </div>
         <div className={styles.timeBox}>
@@ -219,8 +259,8 @@ export default function Detail() {
             <span>{product.reservation}</span>
           </div>
         </div>
-        <LiveBtn requestChat={requestChat} requestLive={requestLive} />
-        <LiveBtn requestChat={requestChat} />
+        <LiveBtn handleAddRequest={handleAddRequest} />
+        {/* <LiveBtn requestChat={requestChat} /> */}
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>

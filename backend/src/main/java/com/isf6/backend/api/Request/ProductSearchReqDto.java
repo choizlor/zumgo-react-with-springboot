@@ -8,4 +8,5 @@ import lombok.Setter;
 public class ProductSearchReqDto {
 
     private String searchName;
+
 }
