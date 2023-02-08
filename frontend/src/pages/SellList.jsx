@@ -52,7 +52,7 @@ export default function SellList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(`/userinfo/${userId}`);
+            navigate(-1);
           }}
         />
         <div className={styles.title}>판매 목록</div>

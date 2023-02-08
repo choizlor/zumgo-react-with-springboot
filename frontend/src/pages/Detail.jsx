@@ -36,7 +36,7 @@ export default function Detail() {
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
-  const [productImgS, setproductImg] = useState([]);
+  const [productImgs, setproductImgs] = useState([]);
   // useEffect(() => {
   //   // 상품 정보를 가져오는 GET 요청
   //   axios
@@ -60,7 +60,7 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         console.log(res.data, "🎇");
-        setproductImg(res.data.imgList, "🎗");
+        setproductImgs(res.data.imgUrlList);
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +110,7 @@ export default function Detail() {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://localhost:8080/socket/room", {
+      .post("http://i8c110.p.ssafy.io:8080/socket/room", {
         buyerCode: userId,
         sellerCode: 6,
       })
@@ -135,7 +135,7 @@ export default function Detail() {
     //wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
-        .post(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+        .post(`http://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎉");
           console.log(res.data.wishCheck, "🎈");
@@ -150,7 +150,7 @@ export default function Detail() {
     //wishcheck가 true라면 delete요청
     else {
       axios
-        .delete(`http://localhost:8080/wish?userCode=2&productId=${productId}`)
+        .delete(`http://i8c110.p.ssafy.io:8080/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎃");
           setwishcheck(res.data.wishCheck);
@@ -166,7 +166,7 @@ export default function Detail() {
     alert("2 point가 차감되었습니다.");
 
     axios
-      .post("http://localhost:8080/liveRequest?userCode=6&productId=10")
+      .post("http://i8c110.p.ssafy.io:8080/liveRequest?userCode=6&productId=10")
       .then((res) => {
         console.log(res, "🧨");
         // console.log(res.data.liveRequestCnt)
@@ -188,11 +188,10 @@ export default function Detail() {
           loop={true}
           modules={[Navigation, Pagination]}
         >
-          {productImgS?.map((productImg) => {
-            console.log(productImg,'🎞')
+          {productImgs?.map((productImg,idx) => {
             return (
-              <SwiperSlide key={productImg.id}>
-                <img src={productImg.imgUrl} alt="productimg" />
+              <SwiperSlide key={idx} className={styles.swiperimg}>
+                <img src={productImg} alt="productimg" />
               </SwiperSlide>
             );
           })}

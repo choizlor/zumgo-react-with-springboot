@@ -27,7 +27,7 @@ public class LiveRequestService {
         LiveRequest liveRequest = new LiveRequest();
 
         User user = userRepository.findByUserCode(userCode);
-        user.setPoint(user.getPoint()-3);
+        user.setPoint(user.getPoint()-2);
         liveRequest.setUser(user);
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));

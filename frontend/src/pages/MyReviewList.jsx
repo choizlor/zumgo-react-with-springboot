@@ -9,24 +9,27 @@ import {
 } from "@heroicons/react/24/outline";
 import testImg from "../assets/images/testImg.jpg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState();
+  const location = useLocation();
+  // const userId = location.state.userId;
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    axios.get(`http://i8c110.p.ssafy.io:8080/review/3`)
-    .then((res) => {
-      console.log(res.data)
-      setReviews(res.data)
-    })
+    // axios.get(`http://localhost:8080/review/${userId}`)
+    axios.get(`http://i8c110.p.ssafy.io:8080/review/7`).then((res) => {
+      setReviews(res.data.MyReview);
+      console.log(res.data.MyReview);
+    });
   }, []);
 
   const handleDeleteReview = (productId) => {
     // 리뷰 삭제 요청은 제품 아이디로 보내기
     axios
+      // .delete(`http://localhost:8080/review/${productId}`)
       .delete(`http://i8c110.p.ssafy.io:8080/review/${productId}`)
       .then((res) => {
         console.log(res);
@@ -46,7 +49,7 @@ export default function MyReviewList() {
       </div>
       {/* 타이틀 */}
       <div className={styles.bigtitle}>
-        내가 쓴 리뷰 목록 ({reviews.length})
+        내가 쓴 리뷰 목록 ({reviews?.length})
       </div>
       <div className={styles.reviews}>
         {reviews?.map((review, idx) => {
@@ -56,25 +59,27 @@ export default function MyReviewList() {
                 <div className={styles.review}>
                   <div className={styles.top}>
                     <div className={styles.topleft}>
-                      <img src={review.img} alt="" />
+                      <img src="" alt="" />
                     </div>
                     <div className={styles.topright}>
-                      <div className={styles.title}>{review.title}</div>
-                      <div className={styles.price}>{review.price}원</div>
+                      <div className={styles.title}>{review.product.title}</div>
+                      <div className={styles.price}>
+                        {review.product.price}원
+                      </div>
                     </div>
                   </div>
                   <div className={styles.bottom}>
                     <ArrowRightIcon />
-                    <div className={styles.comment}>{review.comment}</div>
+                    <div className={styles.comment}>{review.review}</div>
                   </div>
                 </div>
                 <div className={styles.icons}>
                   <PencilIcon
                     onClick={() => {
-                      navigate(`/review/9/update`);
+                      navigate(`/review/${1}/update`);
                     }}
                   />
-                  <TrashIcon onClick={handleDeleteReview(1)} />
+                  <TrashIcon onClick={handleDeleteReview(review.product.id)} />
                 </div>
               </div>
             </div>
