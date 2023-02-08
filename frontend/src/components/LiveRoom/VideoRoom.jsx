@@ -126,7 +126,7 @@ const VideoRoomTest = () => {
   const joinSession = () => {
     OV = new OpenVidu();
     OV.enableProdMode();
-    
+
     let mySession = OV.initSession();
     setSession(mySession);
 
@@ -182,27 +182,44 @@ const VideoRoomTest = () => {
     getToken().then((token) => {
       mySession
         .connect(token, { clientData: myUserName })
+        // .then(async () => {
+        //   let devices = await OV.getDevices();
+        //   let videoDevices = devices.filter(
+        //     (device) => device.kind === "videoinput"
+        //   );
+
         .then(async () => {
-          let devices = await OV.getDevices();
-          let videoDevices = devices.filter(
-            (device) => device.kind === "videoinput"
-          );
+          OV.getUserMedia({
+            audioSource: false,
+            videoSource: undefined,
+            resolution: "360x740",
+            frameRate: 30,
+          }).then((mediaStream) => {
+            var videoTrack = mediaStream.getVideoTracks()[0];
 
-          // Get your own camera stream ---(퍼블리셔)
-          let publisher = OV.initPublisher(undefined, {
-            audioSource: undefined, // The source of audio. If undefined default microphone
-            videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
-            publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-            publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "360x740", // The resolution of your video
-            frameRate: 30, // The frame rate of your video
-            insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: true, // Whether to mirror your local video or not
+            var publisher = OV.initPublisher(undefined, {
+              audioSource: undefined,
+              videoSource: videoTrack,
+              publishAudio: isAudioOn,
+              publishVideo: isVideoOn,
+              insertMode: "APPEND",
+              mirror: true,
+            });
+            mySession.publish(publisher); // 자신의 화면을 송출
+            setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+            setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
           });
-
-          mySession.publish(publisher); // 자신의 화면을 송출
-          setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-          setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
+          // Get your own camera stream ---(퍼블리셔)
+          // let publisher = OV.initPublisher(undefined, {
+          //   audioSource: undefined, // The source of audio. If undefined default microphone
+          //   videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
+          //   publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+          //   publishVideo: true, // Whether you want to start publishing with your video enabled or not
+          //   resolution: "360x740", // The resolution of your video
+          //   frameRate: 30, // The frame rate of your video
+          //   insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+          //   mirror: true, // Whether to mirror your local video or not
+          // });
         })
         .catch((err) => {
           console.log(err);
@@ -212,7 +229,8 @@ const VideoRoomTest = () => {
 
   // 방 삭제 요청 api
   const deleteRoomRequest = () => {
-    if (true) { // 내가 host이면,
+    if (true) {
+      // 내가 host이면,
       axios
         .delete(`https://i8c110.p.ssafy.io:8080/live/${roomId}`, {
           headers: {
@@ -398,7 +416,6 @@ const VideoRoomTest = () => {
               {/* {!isHost && <UserVideoComponent streamManager={subscribers} />} */}
             </div>
           ) : null}
-          
 
           {/* 배경 그라데이션 */}
           <div className={styles.background}>
@@ -491,10 +508,7 @@ const VideoRoomTest = () => {
           <div>
             {celebrity ? (
               <div className={styles.modal}>
-                <div className={styles.modaltitle}>
-
-                축하합니다! 
-                </div>
+                <div className={styles.modaltitle}>축하합니다!</div>
                 <div className={styles.modalimg}>
                   <img src={userImg} alt="" />
                 </div>
