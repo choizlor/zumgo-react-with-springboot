@@ -53,7 +53,7 @@ export default function Detail() {
 
   useEffect(() => {     // 상품 정보 axios
     axios
-      .get(`http://i8c110.p.ssafy.io:8080/product/${productId}?userCode=2`)
+      .get(`http://localhost:8080/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
@@ -76,7 +76,7 @@ export default function Detail() {
     }
 
     axios
-      .put(`http://i8c110.p.ssafy.io:8080/product/${product.id}`, {
+      .put(`http://localhost:8080/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -92,7 +92,7 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://i8c110.p.ssafy.io:8080/socket/room", {
+      .post("http://localhost:8080/socket/room", {
         buyerCode: 3,
         sellerCode: 6,
       })
