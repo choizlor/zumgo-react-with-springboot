@@ -12,7 +12,6 @@ export default function ChatList() {
     return state.user.userCode
   });
 
-
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -20,12 +19,12 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
-        console.log(chats)
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [chats]);
 
   return (
     <div>
