@@ -170,7 +170,6 @@ export default function Detail() {
         `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${userId}&productId=${productId}`
       )
       .then((res) => {
-        console.log(res, "🧨");
         setliveReqSize(res.data.liveRequestCnt);
       })
       .catch((err) => {
@@ -182,7 +181,6 @@ export default function Detail() {
 
   const deleteproduct = () => {
     axios
-
       .delete(
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
