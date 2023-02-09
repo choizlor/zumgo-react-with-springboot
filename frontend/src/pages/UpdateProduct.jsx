@@ -49,11 +49,11 @@ export default function UpdateProduct() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <ChevronLeftIcon onClick= {()=> navigate(-1)}className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon onClick= {()=> navigate(-1)} className="w-6 h-6 text-black-100" />
         <div className={styles.title}>상품 정보 수정하기</div>
       </div>
       <div className={styles.container}>
-        <div className={styles.button}>
+        {/* <div className={styles.button}>
           <CameraIcon className={styles.camera} />
           <div className={styles.num}>0/5</div>
         </div>
@@ -63,8 +63,7 @@ export default function UpdateProduct() {
           accept="image/*"
           capture="camera"
           multiple
-        />
-        {/* <div className={styles.addbtn}> */}
+        /> */}
         <input
           className={`${styles.input} ${styles.titleinput}`}
           onChange={handleTitleChange}
