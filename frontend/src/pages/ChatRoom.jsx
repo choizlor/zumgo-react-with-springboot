@@ -17,13 +17,9 @@ import axios from "axios";
 
 export default function ChatRoom() {
   let navigate = useNavigate();
-  let state = useLocation();
-  // const requestType = state.state;
-  // console.log("requestType:", requestType)
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
-  const token = JSON.stringify(window.localStorage.getItem("token")); // 현재 로그인 된 사용자의 토큰
 
   let [client, changeClient] = useState(null);
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
@@ -114,18 +110,7 @@ export default function ChatRoom() {
     if (chat === "") {
       return;
     }
-    // if (requestType === "live") {
-    //   client.publish({
-    //     destination: "/pub/chat/" + chatroomId,
-    //     body: JSON.stringify({
-    //       type: "",
-    //       sender: user.userCode,
-    //       channelId: chatroomId,
-    //       data: user.kakaoNickname + "님 께서 라이브를 요청했어요!",
-    //     }),
-    //     headers: { priority: 9 },
-    //   });
-    // } else {
+  
     client.publish({
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
@@ -136,7 +121,6 @@ export default function ChatRoom() {
       }),
       headers: { priority: 9 },
     });
-    // }
 
     setChat("");
   };
@@ -161,7 +145,7 @@ export default function ChatRoom() {
 
     alert('대화정보가 함께 삭제됩니다!.')
     axios
-      .delete("https://i8c110.p.ssafy.io/api/v1/socket", {
+      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", {
         chatRoomCode: chatroomId,
       })
       .then((res) => {

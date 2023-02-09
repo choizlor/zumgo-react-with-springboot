@@ -15,17 +15,6 @@ export default function ProductItem({ product, clickProduct }) {
     return state.user;
   });
 
-  const addwish = () => {
-    axios
-    .post(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user.userCode}&productId=${product.productId}`,{
-    })
-    .then((res) =>{
-      console.log(res ,'🎈')
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  };
   
   return (
     <div
@@ -60,8 +49,6 @@ export default function ProductItem({ product, clickProduct }) {
               ) : (
                 <HeartIcon />
               )}
-              {/* {false ? <div><HeartIcon class="fill-black" /></div>:<div><HeartIcon /></div>} */}
-              {/* <HeartIcon /> */}
               <div className={styles.count}>{product.wishSize}</div>
             </div>
             <div className={styles.icon}>
