@@ -49,6 +49,7 @@ export default function Detail() {
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
+        console.log(res.data)
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
