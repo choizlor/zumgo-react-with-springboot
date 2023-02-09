@@ -24,6 +24,8 @@ export default function UserInfo() {
     return state.user;
   });
 
+  console.log(me)
+
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
 
@@ -39,7 +41,7 @@ export default function UserInfo() {
   //   사용자 정보를 불러오는 api
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io:8080/api/user/${userId}`)
+      .get(`https://i8c110.p.ssafy.io/api/user/${userId}`)
       .then((res) => {
         setUserInfo(res.data.user);
       });
@@ -146,7 +148,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews />
+      <Reviews userInfo={userInfo}/>
 
       {/* <UserInfoDetail/> */}
       <BottomNav />

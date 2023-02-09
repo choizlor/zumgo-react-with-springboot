@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./styles/Login.module.css";
-import kakaoBtn from "../assets/images/kakao_login_medium_wide.png";
+import styles from "./Login.module.css";
+import kakaoBtn from "../../assets/images/kakao_login_medium_wide.png";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 

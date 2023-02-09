@@ -37,30 +37,28 @@ export default function Detail() {
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
-  // useEffect(() => {
-  //   // 상품 정보를 가져오는 GET 요청
-  //   axios
-  //     .get(`http://i8c110.p.ssafy.io:8080/product/detail/${params.productId}`)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setProduct(res.data);
-  //       setwishcheck(res.data.wishCheck)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  const [chatters, setChatters] = useState([]);
+ 
 
-  useEffect(() => {     // 상품 정보 axios
+  useEffect(() => {     // 상품 정보 axios, 로그인된 사용자와 채팅중인 사용자 목록 정보
     axios
-      .get(`http://i8c110.p.ssafy.io/product/${productId}?userCode=2`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=2`)
       .then((res) => {
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
-        console.log(res.data, "🎇");
         setproductImgs(res.data.imgUrlList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+      axios   // 채팅목록 불러오기
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user.userCode}/all`)
+      .then((res) => {
+        setChatters(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -76,7 +74,7 @@ export default function Detail() {
     }
 
     axios
-      .put(`http://i8c110.p.ssafy.io/product/${product.id}`, {
+      .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -86,13 +84,15 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+
+
   };
 
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://i8c110.p.ssafy.io/socket/room", {
+      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: 3,
         sellerCode: 6,
       })
@@ -110,7 +110,7 @@ export default function Detail() {
     // 2 포인트 빼기,,,
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("http://i8c110.p.ssafy.io/socket/room", {
+      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
         sellerCode: 6,
       })
@@ -135,7 +135,7 @@ export default function Detail() {
     //wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
-        .post(`http://i8c110.p.ssafy.io/wish?userCode=2&productId=${productId}`)
+        .post(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎉");
           console.log(res.data.wishCheck, "🎈");
@@ -150,7 +150,7 @@ export default function Detail() {
     //wishcheck가 true라면 delete요청
     else {
       axios
-        .delete(`http://i8c110.p.ssafy.io/wish?userCode=2&productId=${productId}`)
+        .delete(`https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`)
         .then((res) => {
           console.log(res, "🎃");
           setwishcheck(res.data.wishCheck);
@@ -166,7 +166,7 @@ export default function Detail() {
     alert("2 point가 차감되었습니다.");
 
     axios
-      .post("http://i8c110.p.ssafy.io/liveRequest?userCode=6&productId=10")
+      .post("https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=6&productId=10")
       .then((res) => {
         console.log(res, "🧨");
         // console.log(res.data.liveRequestCnt)
@@ -215,7 +215,7 @@ export default function Detail() {
           <div className={styles.sellerName}>딸기우유 서녕</div>
         </div>
         {/* 드롭다운 */}
-        <select className={styles.dropdown} onChange={changeStatus}>
+        <select className={styles.dropdown} onChange={changeStatus} value={product.status}>
           <option value="ONSALE">판매 중</option>
           <option value="BOOKING">예약 중</option>
           <option value="SOLDOUT">거래완료</option>
