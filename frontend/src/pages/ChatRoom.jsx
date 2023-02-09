@@ -15,7 +15,8 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  console.log(location, "🎀🎀");
+  const otherId = location.state.other.userCode
+  const otherNickname = location.state.other.kakaoNickname
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -155,10 +156,11 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
+              client.deactivate();
               navigate(-1);
             }}
           />
-          <span>상대방 이름</span>
+          <span>{otherNickname}</span>
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
@@ -169,7 +171,7 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/1`)} />
+          <MegaphoneIcon onClick={() => navigate(`/report/${otherId}`)} />
           <div className={styles.inputbar}>
             <div>
               <input
@@ -179,11 +181,6 @@ export default function ChatRoom() {
                 placeholder="메시지 보내기"
                 className={styles.input}
                 onChange={onChangeChat}
-                onKeyDown={(ev) => {
-                  if (ev.keyCode === 13) {
-                    sendChat();
-                  }
-                }}
               />
             </div>
             <ArrowUpCircleIcon
