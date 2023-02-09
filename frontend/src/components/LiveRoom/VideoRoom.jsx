@@ -39,13 +39,6 @@ const VideoRoomTest = () => {
       .catch((err) => console.log(err));
   }, [user]);
 
-  // const dispatch = useDispatch();
-  // const location = useLocation();
-  // const roomId = location.state !== null ? location.state.id : null;
-  // const roomTitle = location.state !== null ? location.state.title : null;
-  // const roomId = 1;
-  // const roomTitle = 'hi';
-
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
     "Participant" + Math.floor(Math.random() * 100)
@@ -69,14 +62,9 @@ const VideoRoomTest = () => {
   const [celebrity, setCelebrity] = useState(false);
 
   const isHost = Number(product.userCode) === user.userCode ? true : false;
-  console.log(
-    product.userCode,
-    typeof product.userCode,
-    user.userCode,
-    typeof user.userCode,
-    "😎"
-  );
-  console.log(isHost);
+  const token = window.localStorage.getItem("token");
+  console.log(isHost, '😎');
+  console.log(token, '🤔')
 
   let OV = undefined;
 
@@ -105,11 +93,6 @@ const VideoRoomTest = () => {
         })
         .catch((res) => {
           var error = Object.assign({}, res);
-          console.log(
-            error.response.status,
-            typeof error.response.status,
-            "😋에러남"
-          );
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
@@ -227,7 +210,8 @@ const VideoRoomTest = () => {
             video: { facingMode: { exact: "environment" } },
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
-
+            console.log(videoTrack, '😉비디오트랙')
+            
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
               videoSource: videoTrack,
@@ -263,7 +247,7 @@ const VideoRoomTest = () => {
 
   // 방 삭제 요청 api
   const deleteRoomRequest = () => {
-    if (true) {
+    if (isHost) {
       // 내가 host이면,
       axios
         .delete(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, {
