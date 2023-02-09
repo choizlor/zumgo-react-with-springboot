@@ -170,6 +170,7 @@ export default function Detail() {
         "https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=6&productId=10"
       )
       .then((res) => {
+        console.log(res,'🧨')
         setliveReqSize(res.data.liveRequestCnt);
       })
       .catch((err) => {
