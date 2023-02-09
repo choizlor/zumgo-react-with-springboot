@@ -119,7 +119,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/picklist/${userId}`);
+                  navigate(`/wishlist/${userId}`);
                 }}
               >
                 관심목록
