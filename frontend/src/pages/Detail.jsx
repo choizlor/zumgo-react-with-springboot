@@ -243,7 +243,7 @@ export default function Detail() {
             className={styles.dropdown}
             onChange={changeStatus}
             value={product.status}
-            disabled={isMine ? "false" : "true"}
+            disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
             <option value="BOOKING">예약 중</option>
