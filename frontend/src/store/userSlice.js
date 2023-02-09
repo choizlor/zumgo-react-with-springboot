@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let user = createSlice({
   name: "user",
   initialState: {
-    userCode: "",
+    userCode: 0,
     point: "",
     kakaoNickname: "",
     kakaoProfileImg: "",
