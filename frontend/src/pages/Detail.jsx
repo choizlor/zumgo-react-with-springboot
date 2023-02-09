@@ -38,17 +38,28 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [chatters, setChatters] = useState([]);
+  // 
+  const [isMine, setIsMine] = useState(false);
  
 
   useEffect(() => {     // 상품 정보 axios, 로그인된 사용자와 채팅중인 사용자 목록 정보
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=2`)
       .then((res) => {
+        console.log(res.data)
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
+        // 같으면 판매자, 다르면 구매자
+        if (user.userCode === product.userCode) {
+          setIsMine(true)
+          // console.log(isMine)
+        }
+        else {
+          setIsMine(false)
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -258,7 +269,8 @@ export default function Detail() {
             <span>{product.reservation}</span>
           </div>
         </div>
-        <LiveBtn handleAddRequest={handleAddRequest} />
+        {isMine && <LiveBtn handleAddRequest={handleAddRequest} /> }
+        {/* {<LiveBtn handleAddRequest={handleAddRequest} /> } */}
         {/* <LiveBtn requestChat={requestChat} /> */}
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
