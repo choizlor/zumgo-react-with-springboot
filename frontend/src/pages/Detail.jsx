@@ -76,7 +76,7 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   const changeStatus = (e) => {
     // 수정하기 api 요청
