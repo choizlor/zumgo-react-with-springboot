@@ -210,8 +210,8 @@ const VideoRoomTest = () => {
             video: { facingMode: { exact: "environment" } },
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
-            console.log(videoTrack, '😉비디오트랙')
-            
+            console.log(mediaStream, '😉비디오트랙')
+
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
               videoSource: videoTrack,
