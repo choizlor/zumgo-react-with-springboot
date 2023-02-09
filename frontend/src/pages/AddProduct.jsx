@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles/AddProduct.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // heroicons
@@ -9,11 +9,12 @@ import axios from "axios";
 
 export default function AddProduct() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  
+
   // redux
-  const userId = useSelector((state) => {return state.user.userCode;});
-  
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
+
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -32,10 +33,26 @@ export default function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if ( !userId ) {
-      alert('로그인이 필요한 서비스 입니다.')
-      navigate('/login')
+    if (title === "") {
+      alert("제목을 입력하세요.")
       return
+    }
+    if (price === "") {
+      alert("가격을 입력하세요.")
+      return
+    }
+    if (description === "") {
+      alert("상품 설명을 입력하세요.")
+      return
+    }
+    if (availableTime === "") {
+      alert("라이브 가능한 시간대를 입력하세요.")
+      return
+    }
+    if (!userId) {
+      alert("로그인이 필요한 서비스 입니다.");
+      navigate("/login");
+      return;
     }
 
     let formData = new FormData();
@@ -58,13 +75,11 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
-        
-        navigate(`/detail/${res.data}`)
+        navigate(`/detail/${res.data}`);
       })
       .catch((err) => {
         console.log(err);
       });
-
   };
 
   const handleTitleChange = (e) => {
@@ -83,12 +98,15 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
-  
-
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
+        <ChevronLeftIcon
+          className="w-6 h-6 text-black-100"
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
         <div className={styles.title}>상품 등록하기</div>
       </div>
       <div className={styles.container}>
@@ -99,11 +117,11 @@ export default function AddProduct() {
 
         <input
           className={styles.file}
-          type="file"          // 파일로 입력 받음
-          accept="image/*"     // 이미지 유형의 파일만 받기
+          type="file" // 파일로 입력 받음
+          accept="image/*" // 이미지 유형의 파일만 받기
           // capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
-          name="imgurls"       // 담긴 파일을 참조할 때 사용할 이름
-          multiple            // 다중 업로드
+          name="imgurls" // 담긴 파일을 참조할 때 사용할 이름
+          multiple // 다중 업로드
         />
 
         <input
