@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ReservationModal.module.css";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
