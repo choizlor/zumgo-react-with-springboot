@@ -12,5 +12,8 @@ public interface BillRepository extends JpaRepository<Bill, Object> {
     @Query("select b from Bill b where b.buyer.userCode = :userCode")
     List<Bill> findByBuyerUserCode(@Param("userCode") Long userCode);
 
+    @Query("select b from Bill b where b.seller.userCode = :userCode")
+    List<Bill> findBySellerUserCode(@Param("userCode") Long userCode);
+
     public Bill findByProductId(long productId);
 }
