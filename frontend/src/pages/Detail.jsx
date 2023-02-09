@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  
 
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
@@ -41,6 +42,11 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chatters, setChatters] = useState([]);
+  const date = new Date(product.reserve);
+  var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+  var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+  var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
   useEffect(() => {
     // 상품 정보 axios
@@ -182,9 +188,9 @@ export default function Detail() {
   const deleteproduct = () => {
     axios
       .delete(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}`
       )
-      .then((res) => {
+      .then((res) => { 
         console.log(res);
       })
       .catch((err) => {
@@ -221,14 +227,17 @@ export default function Detail() {
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
         {product.reserve !==null ? (
           <div className={styles.livealert}>
-            <span>1/24 16시</span>
-            <span>LIVE 예정</span>
+            <span>{month}/{day}</span>
+            <span>{hour}:{minute} LIVE 예정</span>
           </div>
         ):null }
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div className={styles.seller}>
+        <div className={styles.seller} onClick={() => {
+          navigate(`/userinfo/${product.userCode}`)
+
+        }}>
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>

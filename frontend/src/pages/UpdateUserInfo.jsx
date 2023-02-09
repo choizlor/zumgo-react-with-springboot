@@ -20,36 +20,33 @@ export default function UpdateUserInfo() {
     nickname,
   };
 
-  // 상품등록 axios
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     let formData = new FormData();
-    let file = e.target.imgurl;
-    console.log(e.target.imgurl)
+    let files = e.target.imgurl.files;
 
-    // if(file.length) {
-    //   formData.append("imgUrl", file[0]);
-    // } 
+    if (files[0]) {
+      formData.append("imgUrl", files[0]);
+    }
 
-    // formData.append(
-    //   "content",
-    //   new Blob([JSON.stringify(content)], { type: "application/json" })
-    // );
+    formData.append(
+      "content",
+      new Blob([JSON.stringify(content)], { type: "application/json" })
+    );
 
-    // await axios
-    //   .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     // navigate(`/detail/${res.data}`)
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    await axios
+      .patch(`http://i8c110.p.ssafy.io/api/user/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        navigate(`/userinfo/${userId}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleNicknameChange = (e) => {
@@ -69,7 +66,7 @@ export default function UpdateUserInfo() {
             />
             <div className={styles.title}>프로필 수정</div>
           </div>
-          <button type="submit" className={styles.navright} onClick={handleUpdate}>
+          <button type="submit" className={styles.navright}>
             <p className={styles.save}>저장</p>
           </button>
         </div>
@@ -85,10 +82,8 @@ export default function UpdateUserInfo() {
             className={styles.file}
             type="file" // 파일로 입력 받음
             accept="image/*" // 이미지 유형의 파일만 받기
-            capture="camera" // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
             name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
           />
-          
         </div>
 
         <div className={styles.udtnickname}>

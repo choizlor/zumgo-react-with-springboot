@@ -9,12 +9,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductItem({ product, clickProduct }) {
-
-  // 현재 로그인 된 사용자 정보를 가져오는 방법
-  const user = useSelector((state) => {
-    return state.user;
-  });
-
   
   return (
     <div
@@ -24,7 +18,7 @@ export default function ProductItem({ product, clickProduct }) {
       }}
     >
       <div className={styles.productimg}>
-        <img src={testImg} alt="" />
+        <img src={product.thumbnail} alt="" />
       </div>
       <div className={styles.product}>
         <div className={styles.title}>{product.title}</div>
