@@ -48,7 +48,6 @@ public class ProductService {
     @Transactional
     public Long uploadProduct(ProductSaveRequestDto requestDto, List<String> imgPaths) {
         postBlankCheck(imgPaths);
-
         Long id = productRepository.save(requestDto.toEntity()).getId();
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 //        List<String> imgList = new ArrayList<>();

@@ -15,7 +15,10 @@ let user = createSlice({
       return action.payload;
     },
     logout(action) {
+      // 토큰 삭제 해주기
       window.localStorage.removeItem('token')
+      // 최근 검색어 삭제
+      window.localStorage.removeItem('recents')
       return action.payload;
     },
   },
