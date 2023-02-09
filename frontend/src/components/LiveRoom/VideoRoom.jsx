@@ -49,7 +49,7 @@ const VideoRoomTest = () => {
       } catch (e) {
         console.error(e);
       }
-    })();
+    });
   }, [user]);
 
   const [mySessionId, setMySessionId] = useState("SessionA");
@@ -501,10 +501,10 @@ const VideoRoomTest = () => {
             />
           </div> */}
 
-          <div>{bidders}</div>
-          <div>{bidPrice}</div>
+          <div>경매 참가자 수: {bidders}</div>
+          <div>최고 입찰가: {bidPrice}</div>
           <div>
-            {true ? (
+            {priceOpen ? (
               <Price
                 handleBidPrice={handleBidPrice}
                 setBidCount={setBidCount}
