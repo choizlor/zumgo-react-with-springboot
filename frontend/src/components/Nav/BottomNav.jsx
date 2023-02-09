@@ -18,63 +18,68 @@ export default function BottomNav() {
   const navigate = useNavigate();
   return (
     <div className={styles.navbody}>
-
-    <nav className={styles.body}>
-      <HomeIcon
-        className={styles.icon}
-        onClick={() => {
-          navigate("/");
-        }}
+      <nav className={styles.body}>
+        <HomeIcon
+          className={styles.icon}
+          onClick={() => {
+            navigate("/");
+          }}
         />
-      <ChatBubbleOvalLeftIcon
-        className={styles.icon}
-        onClick={() => {
-          if (!userCode) {
-            alert("로그인이 필요한 서비스 입니다!");
-            navigate("/login");
-          } else {
-            navigate("/chatlist");
-          }
-        }}
-        />
-      <div>
-        <img
-          className={styles.liveicon}
+        <ChatBubbleOvalLeftIcon
+          className={styles.icon}
           onClick={() => {
             if (!userCode) {
               alert("로그인이 필요한 서비스 입니다!");
               navigate("/login");
             } else {
-              navigate("/live");
+              navigate("/chatlist");
             }
           }}
-          src={LiveIcon}
-          alt="live"
-          />
-      </div>
-      <PlusCircleIcon
-        className={styles.icon}
-        onClick={() => {
-          navigate("/addproduct", {
-            state: {
-              userId: 3,
-            },
-          });
-        }}
         />
-      <UserCircleIcon
-        className={styles.icon}
-        onClick={() => {
-          // if (!userCode) {
+        <div>
+          <img
+            className={styles.liveicon}
+            onClick={() => {
+              if (!userCode) {
+                alert("로그인이 필요한 서비스 입니다!");
+                navigate("/login");
+              } else {
+                navigate("/live");
+              }
+            }}
+            src={LiveIcon}
+            alt="live"
+          />
+        </div>
+        <PlusCircleIcon
+          className={styles.icon}
+          onClick={() => {
+            navigate("/addproduct", {
+              state: {
+                userId: 3,
+              },
+            });
+          }}
+        />
+        <UserCircleIcon
+          className={styles.icon}
+          onClick={() => {
+            // if (!userCode) {
             //   alert("로그인이 필요한 서비스 입니다!");
             //   navigate("/login");
             // } else {
-              navigate(`/userinfo/${userCode}`);
-              // }
-            }}
-            />
-       줌고(zumgo) 나혜승 김유나 김정효 박시형 최지우 한선영 | 사업자 등록번호 : 344-47-01049
-    </nav>
-            </div>
+            navigate(`/userinfo/${userCode}`);
+            // }
+          }}
+        />
+      </nav>
+      <div className={styles.company}>
+        <p>줌고(zumgo)</p>
+        <p>
+          나혜승 김유나 김정효 박시형 최지우 한선영 | 사업자 등록번호 :
+          344-47-01049
+        </p>
+      </div>
+    </div>
   );
 }

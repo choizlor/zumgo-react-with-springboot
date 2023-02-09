@@ -11,57 +11,72 @@ import LiveIcon from "../../assets/images/LiveDarkIcon.png";
 import { useSelector } from "react-redux";
 
 export default function BottomNav() {
-  const userId = useSelector((state) => {
+  const userCode = useSelector((state) => {
     return state.user.userCode;
   });
   const navigate = useNavigate();
 
   return (
-    <nav className={styles.body}>
-      <HomeIcon
-        className={styles.icon}
-        onClick={() => {
-          navigate("/");
-        }}
-      />
-      <ChatBubbleOvalLeftIcon
-        className={styles.icon}
-        onClick={() => {
-          if (!userId) {
-            alert("로그인이 필요한 서비스입니다");
-            navigate("/login");
-          } else {
-            navigate("/chatlist");
-          }
-        }}
-      />
-      <div>
-        <img
-          className={styles.liveicon}
+    <div className={styles.navbody}>
+      <nav className={styles.body}>
+        <HomeIcon
+          className={styles.icon}
           onClick={() => {
-            if (!userId) {
+            navigate("/");
+          }}
+        />
+        <ChatBubbleOvalLeftIcon
+          className={styles.icon}
+          onClick={() => {
+            if (!userCode) {
               alert("로그인이 필요한 서비스 입니다!");
               navigate("/login");
             } else {
-              navigate("/live");
+              navigate("/chatlist");
             }
           }}
-          src={LiveIcon}
-          alt="live"
         />
+        <div>
+          <img
+            className={styles.liveicon}
+            onClick={() => {
+              if (!userCode) {
+                alert("로그인이 필요한 서비스 입니다!");
+                navigate("/login");
+              } else {
+                navigate("/live");
+              }
+            }}
+            src={LiveIcon}
+            alt="live"
+          />
+        </div>
+        <PlusCircleIcon
+          className={styles.icon}
+          onClick={() => {
+            navigate("/addproduct", {
+              state: {
+                userId: 3,
+              },
+            });
+          }}
+        />
+        <UserCircleIcon
+          className={styles.icon}
+          onClick={() => {
+            // if (!userCode) {
+            //   alert("로그인이 필요한 서비스 입니다!");
+            //   navigate("/login");
+            // } else {
+            navigate(`/userinfo/${userCode}`);
+            // }
+          }}
+        />
+      </nav>
+      <div className={styles.company}>
+        줌고(zumgo) &#13;
+        나혜승 김유나 김정효 박시형 최지우 한선영 | 사업자 등록번호 : 344-47-01049
       </div>
-      <PlusCircleIcon
-        className={styles.icon}
-        onClick={() => {
-          navigate("/addproduct");
-        }}
-      />
-      <UserCircleIcon
-        className={styles.icon}
-        onClick={() => {
-          navigate(`/userinfo/${userId}`);
-        }}
-      />
-    </nav>
+    </div>
   );
 }

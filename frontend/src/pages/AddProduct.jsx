@@ -98,7 +98,7 @@ export default function AddProduct() {
           className={styles.file}
           type="file"          // 파일로 입력 받음
           accept="image/*"     // 이미지 유형의 파일만 받기
-          capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
+          // capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
           name="imgurls"       // 담긴 파일을 참조할 때 사용할 이름
           multiple            // 다중 업로드
         />
