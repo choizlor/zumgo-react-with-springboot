@@ -176,6 +176,19 @@ export default function Detail() {
         console.log(err);
       });
   };
+
+  const deleteproduct = () => {
+  axios
+  .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`)
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+  
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -225,12 +238,14 @@ export default function Detail() {
             className={styles.dropdown}
             onChange={changeStatus}
             value={product.status}
+            disabled={isMine ? 'false' : 'true'}
           >
             <option value="ONSALE">판매 중</option>
             <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
-          </select>
-          {isMine && <div className={styles.delete}>삭제하기</div>}
+          </select> 
+          
+          {isMine && <div className={styles.delete} onClick={deleteproduct}>삭제하기</div>}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
         {isMine ? (
