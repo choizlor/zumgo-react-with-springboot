@@ -24,12 +24,12 @@ export default function UpdateUserInfo() {
     e.preventDefault();
 
     let formData = new FormData();
-    let file = e.target.imgurl.files
+    let files = e.target.imgurl.files
     console.log(e.target.imgurl.files,'🎈')
 
 
-    if(file.length()) {
-      formData.append("imgUrl", file[0]);
+    if(files[0]) {
+      formData.append("imgUrl", files[0]);
     } 
 
     formData.append(
@@ -44,7 +44,7 @@ export default function UpdateUserInfo() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, '🎄');
         navigate(-1)
       })
       .catch((err) => {
