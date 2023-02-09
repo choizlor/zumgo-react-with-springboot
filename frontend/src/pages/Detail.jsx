@@ -219,12 +219,12 @@ export default function Detail() {
         </Swiper>
 
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
-        {product.reserve !== null && (
+        {product.reserve !==null ? (
           <div className={styles.livealert}>
             <span>1/24 16시</span>
             <span>LIVE 예정</span>
           </div>
-        )}
+        ):null }
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
