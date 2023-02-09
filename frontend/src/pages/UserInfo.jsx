@@ -60,6 +60,7 @@ export default function UserInfo() {
       console.log(res.data, '🎈🎈')
       setMyReviews(res.data)
     })
+    .catch((err) => {console.log(err)})
   }, []);
 
   return (
