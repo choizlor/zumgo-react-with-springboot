@@ -80,6 +80,19 @@ img {
   font-size: 12px;
 }
 
+
+.selectbox {
+  width : 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete {
+  color : rgb(231, 65, 65);
+  font-size: 11px;
+  text-decoration: underline;
+}
+
 /* 드롭다운 */
 .dropdown {
   width: 70px;

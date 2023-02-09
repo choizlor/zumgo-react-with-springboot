@@ -4,23 +4,30 @@ import { createSlice } from "@reduxjs/toolkit";
 let user = createSlice({
   name: "user",
   initialState: {
-    kakaoNickname: "",
     userCode: "",
-    kakaoId: "",
+    point: "",
+    kakaoNickname: "",
+    kakaoProfileImg: "",
   },
   reducers: {
     login(state, action) {
       // console.log('action.payload : ', action.payload)
       return action.payload;
     },
+    logout(action) {
+      // 토큰 삭제 해주기
+      window.localStorage.removeItem('token')
+      // 최근 검색어 삭제
+      window.localStorage.removeItem('recents')
+      return action.payload;
+    },
   },
 });
 
-
 export default configureStore({
-    reducer: {
-      user: user.reducer,
-    },
-  });
+  reducer: {
+    user: user.reducer,
+  },
+});
 
-export let { login } = user.actions;
+export let { login, logout } = user.actions;

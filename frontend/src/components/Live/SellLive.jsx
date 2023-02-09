@@ -8,8 +8,8 @@ import LiveStart from "../../components/Live/LiveStart.jsx";
 export default function SellLive({ sellLiveRequestList }) {
   const navigate = useNavigate();
 
-  const clickLive = (id) => {
-    navigate(`/live/${id}`);
+  const clickLive = (productId) => {
+    navigate(`/live/${productId}`);
   };
 
   const reserveList = sellLiveRequestList?.filter((product) => {
