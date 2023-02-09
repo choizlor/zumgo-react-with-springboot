@@ -53,9 +53,9 @@ export default function ReservationModal({ setModalOpen, productId }) {
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, {
         headers: {
           Authorization: token,
-          "Content-Type" : "application/json",
+          "Content-Type": "application/json",
         },
-        data: {
+        body: {
           productId: productId,
           liveStartTime: reserve,
           liveStatus: "WAIT",
