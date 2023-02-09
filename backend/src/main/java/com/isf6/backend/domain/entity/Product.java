@@ -50,9 +50,15 @@ public class Product extends BaseTimeEntity {
 //    }
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+    public Product(Long userId) {
+        this.userId = userId;
+    }
 
     @JsonIgnore
     @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
