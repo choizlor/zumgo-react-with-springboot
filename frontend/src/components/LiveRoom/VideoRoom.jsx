@@ -27,6 +27,8 @@ const VideoRoomTest = () => {
   });
 
   useEffect(() => {
+    setMyUserName(user.kakaoNickname)
+
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`)
       .then((res) => {
@@ -120,6 +122,7 @@ const VideoRoomTest = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    console.log(myRole, '🙄내역할')
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -147,7 +150,6 @@ const VideoRoomTest = () => {
   // 세션 아이디 설정
   useEffect(() => {
     setMySessionId(`Session${roomId}`);
-    setMyUserName(user.kakaoNickname);
   }, []);
 
   // 세션에 참여하기
@@ -160,7 +162,7 @@ const VideoRoomTest = () => {
 
     mySession.on("streamCreated", (event) => {
       // 스트림이 생길 때마다
-      const subscriber = mySession.subscribe(event.stream, "publisher");
+      const subscriber = mySession.subscribe(event.stream, "subscriber");
       setSubscribers(subscriber);
     });
 
@@ -445,7 +447,7 @@ const VideoRoomTest = () => {
             <div className={styles.mainvideo}>
               {/* <UserVideoComponent streamManager={mainStreamManager} /> */}
               {isHost && <UserVideoComponent streamManager={publisher} />}
-              {!isHost && <UserVideoComponent streamManager={publisher} />}
+              {!isHost && <UserVideoComponent streamManager={subscribers} />}
             </div>
           ) : null}
 
