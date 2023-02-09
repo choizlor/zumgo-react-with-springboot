@@ -234,7 +234,8 @@ export default function Detail() {
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
-          <div className={styles.sellerName}></div>
+          <div className={styles.sellerName}>{product.kakaoNickname
+}</div>
         </div>
         <div className={styles.selectbox}>
           {/* 드롭다운 */}
