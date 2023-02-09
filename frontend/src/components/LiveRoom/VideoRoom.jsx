@@ -31,8 +31,13 @@ const VideoRoomTest = () => {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${userId}`)
-      .then((res) => setProduct(res.data))
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=2`
+      )
+      .then((res) => {
+        setProduct(res.data);
+        console.log(res.data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -64,11 +69,17 @@ const VideoRoomTest = () => {
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
-  
-  const isHost = Number(product.userCode) === userId ? true : false
-  console.log(product.userCode, typeof(product.userCode), userId, typeof(userId), '😎')
-  // console.log(isHost)
-  
+
+  const isHost = Number(product.userCode) === userId ? true : false;
+  console.log(
+    product.userCode,
+    typeof product.userCode,
+    userId,
+    typeof userId,
+    "😎"
+  );
+  console.log(isHost)
+
   let OV = undefined;
 
   // 토큰 받아오기
@@ -203,15 +214,15 @@ const VideoRoomTest = () => {
             (device) => device.kind === "videoinput"
           );
 
-        // .then(async () => {
-        //   OV.getUserMedia({
-        //     audioSource: false,
-        //     videoSource: undefined,
-        //     resolution: "1280x720",
-        //     frameRate: 30,
-        //     video: { facingMode: { exact: "environment" } },
-        //   }).then((mediaStream) => {
-        //     var videoTrack = mediaStream.getVideoTracks()[0];
+          // .then(async () => {
+          //   OV.getUserMedia({
+          //     audioSource: false,
+          //     videoSource: undefined,
+          //     resolution: "1280x720",
+          //     frameRate: 30,
+          //     video: { facingMode: { exact: "environment" } },
+          //   }).then((mediaStream) => {
+          //     var videoTrack = mediaStream.getVideoTracks()[0];
 
           //   var publisher = OV.initPublisher(undefined, {
           //     audioSource: undefined,
