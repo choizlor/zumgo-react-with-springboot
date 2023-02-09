@@ -24,9 +24,10 @@ import { useSelector } from "react-redux";
 export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
+    console.log("로그인된 사용자: ", userId);
     return state.user.userCode;
   });
 
@@ -39,11 +40,11 @@ export default function Detail() {
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
-  const [isMine, setIsMine] = useState(false);
+  const [isMine, setIsMine] = useState(true);
   const [chatters, setChatters] = useState([]);
- 
 
-  useEffect(() => {     // 상품 정보 axios
+  useEffect(() => {
+    // 상품 정보 axios
     axios
       .get(
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
@@ -54,30 +55,27 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
-         // 같으면 판매자, 다르면 구매자
-         if (userId === product.userCode) {
-          setIsMine(true)
-          // console.log(isMine)
-        }
-        else {
-          setIsMine(false)
+        // 같으면 판매자, 다르면 구매자
+        console.log(res.data);
+        console.log("로그인된 사용자: ", userId);
+
+        if (userId !== res.data.userCode) {
+          setIsMine(false);
         }
       })
       .catch((err) => {
         console.log(err);
       });
 
-
-      axios   // 채팅목록 불러오기
+    axios // 채팅목록 불러오기
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChatters(res.data);
-        console.log(res.data, 'detail 모달 채팅 리스트 🎄')
+        console.log(res.data, "detail 모달 채팅 리스트 🎄");
       })
       .catch((err) => {
         console.log(err);
       });
-      
   }, []);
 
   const changeStatus = (e) => {
@@ -99,8 +97,6 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
-
-
   };
 
   // 일반채팅하기
@@ -184,7 +180,12 @@ export default function Detail() {
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
       <div className={styles.swiperbox}>
-        <ChevronLeftIcon className="w-6 h-6 text-gray-100" onClick={()=>{navigate(-1)}}/>
+        <ChevronLeftIcon
+          className="w-6 h-6 text-gray-100"
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
         <Swiper
           className={styles.swiper}
           navigation={true}
@@ -216,20 +217,23 @@ export default function Detail() {
               className={styles.sellerImg}
             />
           </div>
-          <div className={styles.sellerName}>딸기우유 서녕</div>
+          <div className={styles.sellerName}></div>
         </div>
-        {/* 드롭다운 */}
-        <select
-          className={styles.dropdown}
-          onChange={changeStatus}
-          value={product.status}
-        >
-          <option value="ONSALE">판매 중</option>
-          <option value="BOOKING">예약 중</option>
-          <option value="SOLDOUT">거래완료</option>
-        </select>
+        <div className={styles.selectbox}>
+          {/* 드롭다운 */}
+          <select
+            className={styles.dropdown}
+            onChange={changeStatus}
+            value={product.status}
+          >
+            <option value="ONSALE">판매 중</option>
+            <option value="BOOKING">예약 중</option>
+            <option value="SOLDOUT">거래완료</option>
+          </select>
+          {isMine && <div className={styles.delete}>삭제하기</div>}
+        </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {true ? (
+        {isMine ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
             <PencilSquareIcon
@@ -265,7 +269,12 @@ export default function Detail() {
             <span>{product.reservation}</span>
           </div>
         </div>
-        {isMine && <LiveBtn handleAddRequest={handleAddRequest} requestChat={requestChat}/> }
+        {!isMine && (
+          <LiveBtn
+            handleAddRequest={handleAddRequest}
+            requestChat={requestChat}
+          />
+        )}
       </div>
       {modalOpen ? <DetailModal setModalOpen={setModalOpen} /> : null}
     </div>
