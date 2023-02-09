@@ -17,7 +17,7 @@ export default function BottomNav() {
 
   const navigate = useNavigate();
   return (
-    <div>
+    <div className={styles.navbody}>
 
     <nav className={styles.body}>
       <HomeIcon
