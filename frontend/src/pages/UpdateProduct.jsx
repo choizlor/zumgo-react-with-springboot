@@ -16,8 +16,7 @@ export default function UpdateProduct() {
   const [title, setTitle] = useState(product.title);
   const [price, setPrice] = useState(product.price);
   const [description, setDescription] = useState(product.description);
-  const [reservation, setReservation] = useState(product.reservation);
-  const [photo, setPhoto] = useState([]);
+  const [availableTime, setAvailableTime] = useState(product.availableTime);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -27,8 +26,8 @@ export default function UpdateProduct() {
     setPrice(e.target.value);
   };
 
-  const handleReservationChange = (e) => {
-    setReservation(e.target.value);
+  const handleAvailableTimeChange = (e) => {
+    setAvailableTime(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
@@ -41,8 +40,7 @@ export default function UpdateProduct() {
         title,
         price,
         description,
-        reservation : '2010-10-14',
-        photo : '아직이용',
+        availableTime,
     })
     .then((res) => { navigate(`/detail/${product.id}`)})
     .catch((err) => { console.log(err)});
@@ -83,9 +81,9 @@ export default function UpdateProduct() {
         />
         <textarea
           className={styles.textarea}
-          onChange={handleReservationChange}
+          onChange={handleAvailableTimeChange}
           placeholder="라이브 가능 시간 &#13;(ex - 10:00~12:00, 18:00~19:00)"
-          value={reservation}
+          value={availableTime}
         >
         </textarea>
         <textarea
