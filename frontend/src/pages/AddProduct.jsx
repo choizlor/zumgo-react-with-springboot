@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styles from "./styles/AddProduct.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 // heroicons
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   // redux
   const userId = useSelector((state) => {return state.user.userCode;});
@@ -56,6 +58,7 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
+        
         navigate(`/detail/${res.data}`)
       })
       .catch((err) => {
