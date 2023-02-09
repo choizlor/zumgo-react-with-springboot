@@ -182,7 +182,7 @@ export default function Detail() {
   const deleteproduct = () => {
     axios
       .delete(
-        `https://i8c110.p.ssafy.io/api/v1/product/productId=${productId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
         console.log(res);
@@ -228,7 +228,10 @@ export default function Detail() {
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div className={styles.seller}>
+        <div className={styles.seller} onClick={() => {
+          navigate(`/userinfo/${product.userCode}`)
+
+        }}>
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
