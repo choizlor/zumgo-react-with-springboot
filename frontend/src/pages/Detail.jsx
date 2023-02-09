@@ -177,8 +177,11 @@ export default function Detail() {
       });
   };
 
+  //  상품 삭제하기
+
   const deleteproduct = () => {
   axios
+
   .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`)
   .then((res) => {
     console.log(res)
@@ -215,11 +218,14 @@ export default function Detail() {
           })}
         </Swiper>
 
-        {/* 라이브 예약 알림 */}
-        <div className={styles.livealert}>
+        {/* 라이브 요청 수가 0 이상일 때 라이브 예약 알림  */}
+        if (liveReqSize !== 0 ) {
+          <div className={styles.livealert}>
           <span>1/24 16시</span>
           <span>LIVE 예정</span>
         </div>
+        }
+        
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
