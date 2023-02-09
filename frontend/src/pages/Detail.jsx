@@ -219,7 +219,7 @@ export default function Detail() {
         </Swiper>
 
         {/* 라이브 요청 수가 0 이상일 때 라이브 예약 알림  */}
-        if (liveReqSize !== 0 ) {
+         { liveReqSize &&
           <div className={styles.livealert}>
           <span>1/24 16시</span>
           <span>LIVE 예정</span>
