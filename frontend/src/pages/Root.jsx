@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../store/userSlice.js";
+import axios from "axios";
 
 export default function Root() {
   const token = window.localStorage.getItem("token");
@@ -30,7 +30,6 @@ export default function Root() {
 
   return (
     <div>
-      {/* {JSON.stringify(userInfo)} */}
       <Outlet />
     </div>
   );

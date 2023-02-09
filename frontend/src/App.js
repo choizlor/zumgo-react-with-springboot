@@ -22,7 +22,6 @@ import UserInfo from './pages/UserInfo';
 import AddReview from './pages/AddReview';
 import MyReviewList from './pages/MyReviewList';
 import Report from './pages/Report';
-import StompChat from './pages/StompChat';
 import UpdateReview from './pages/UpdateReview';
 
 const router = createBrowserRouter([

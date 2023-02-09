@@ -63,12 +63,12 @@ export default function BottomNav() {
       <UserCircleIcon
         className={styles.icon}
         onClick={() => {
-          if (!userCode) {
-            alert("로그인이 필요한 서비스 입니다!");
-            navigate("/login");
-          } else {
+          // if (!userCode) {
+          //   alert("로그인이 필요한 서비스 입니다!");
+          //   navigate("/login");
+          // } else {
             navigate(`/userinfo/${userCode}`);
-          }
+          // }
         }}
       />
     </nav>
