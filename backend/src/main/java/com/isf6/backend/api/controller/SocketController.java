@@ -56,7 +56,7 @@ public class SocketController {
         // 메시지에 정의된 channelId로 메시지 보냄
         this.simpMessagingTemplate.convertAndSend("/sub/channels/" + id, messageDto);
         // db 저장
-        ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(messageDto.getChannelId());
+        ChatRoom chatRoom = chatRoomRepository.findByChatRoomCode(messageDto.getChannelId());
         ChatMessageSaveReqDto chatMessageSaveReqDto = new ChatMessageSaveReqDto(messageDto.getChannelId(), messageDto.getSender(), messageDto.getData());
         chatRepository.save(Chat.toChat(chatMessageSaveReqDto, chatRoom));
         //System.out.println(chatRoom);

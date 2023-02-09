@@ -27,6 +27,8 @@ const VideoRoomTest = () => {
   });
 
   useEffect(() => {
+    setMyUserName(user.kakaoNickname)
+
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`)
       .then((res) => {
@@ -36,13 +38,6 @@ const VideoRoomTest = () => {
       })
       .catch((err) => console.log(err));
   }, [user]);
-
-  // const dispatch = useDispatch();
-  // const location = useLocation();
-  // const roomId = location.state !== null ? location.state.id : null;
-  // const roomTitle = location.state !== null ? location.state.title : null;
-  // const roomId = 1;
-  // const roomTitle = 'hi';
 
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
@@ -67,14 +62,9 @@ const VideoRoomTest = () => {
   const [celebrity, setCelebrity] = useState(false);
 
   const isHost = Number(product.userCode) === user.userCode ? true : false;
-  console.log(
-    product.userCode,
-    typeof product.userCode,
-    user.userCode,
-    typeof user.userCode,
-    "😎"
-  );
-  console.log(isHost);
+  const token = window.localStorage.getItem("token");
+  console.log(isHost, '😎');
+  console.log(token, '🤔')
 
   let OV = undefined;
 
@@ -103,11 +93,6 @@ const VideoRoomTest = () => {
         })
         .catch((res) => {
           var error = Object.assign({}, res);
-          console.log(
-            error.response.status,
-            typeof error.response.status,
-            "😋에러남"
-          );
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
@@ -120,6 +105,7 @@ const VideoRoomTest = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    console.log(myRole, '🙄내역할')
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -147,7 +133,6 @@ const VideoRoomTest = () => {
   // 세션 아이디 설정
   useEffect(() => {
     setMySessionId(`Session${roomId}`);
-    setMyUserName(user.kakaoNickname);
   }, []);
 
   // 세션에 참여하기
@@ -160,7 +145,7 @@ const VideoRoomTest = () => {
 
     mySession.on("streamCreated", (event) => {
       // 스트림이 생길 때마다
-      const subscriber = mySession.subscribe(event.stream, "publisher");
+      const subscriber = mySession.subscribe(event.stream, "subscriber");
       setSubscribers(subscriber);
     });
 
@@ -225,7 +210,8 @@ const VideoRoomTest = () => {
             video: { facingMode: { exact: "environment" } },
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
-
+            console.log(videoTrack, '😉비디오트랙')
+            
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
               videoSource: videoTrack,
@@ -261,7 +247,7 @@ const VideoRoomTest = () => {
 
   // 방 삭제 요청 api
   const deleteRoomRequest = () => {
-    if (true) {
+    if (isHost) {
       // 내가 host이면,
       axios
         .delete(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, {
@@ -445,7 +431,7 @@ const VideoRoomTest = () => {
             <div className={styles.mainvideo}>
               {/* <UserVideoComponent streamManager={mainStreamManager} /> */}
               {isHost && <UserVideoComponent streamManager={publisher} />}
-              {!isHost && <UserVideoComponent streamManager={publisher} />}
+              {!isHost && <UserVideoComponent streamManager={subscribers} />}
             </div>
           ) : null}
 
