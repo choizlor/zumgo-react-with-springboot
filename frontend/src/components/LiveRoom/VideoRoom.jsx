@@ -25,6 +25,8 @@ const VideoRoomTest = () => {
   const user = useSelector((state) => {
     return state.user;
   });
+  const isHost = Number(product.userCode) === user.userCode ? true : false;
+  const token = window.localStorage.getItem("token");
 
   useEffect(() => {
     setMyUserName(user.kakaoNickname)
@@ -61,10 +63,8 @@ const VideoRoomTest = () => {
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
 
-  const isHost = Number(product.userCode) === user.userCode ? true : false;
-  const token = window.localStorage.getItem("token");
+  
   console.log(isHost, '😎');
-  console.log(token, '🤔')
 
   let OV = undefined;
 
@@ -210,7 +210,6 @@ const VideoRoomTest = () => {
             video: { facingMode: { exact: "environment" } },
           }).then((mediaStream) => {
             var videoTrack = mediaStream.getVideoTracks()[0];
-            console.log(mediaStream, '😉비디오트랙')
 
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
@@ -252,7 +251,7 @@ const VideoRoomTest = () => {
       axios
         .delete(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, {
           headers: {
-            // Authorization: token,
+            Authorization: token,
             "Content-Type": "application/json",
           },
         })

@@ -3,6 +3,12 @@ import styles from "./LiveStart.module.css";
 import axios from "axios";
 
 export default function LiveStart({ product, clickLive }) {
+  
+  // const createAuction = () => {
+  //   axios
+  //   .post(`http://localhost:8080/live/room`)
+  // }
+
   return (
     <div>
       <div
