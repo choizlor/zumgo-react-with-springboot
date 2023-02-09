@@ -3,32 +3,30 @@ import styles from "./styles/Report.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
 
 export default function Report() {
-
-  const param = useParams();
-  console.log(param);
-  const reported = param.userId;
-  // 리포터는 store
-  const [reporter, setreporter] = useState("");
+  const location = useLocation();
+  // 신고 당하는 사람
+  const reported = location.state.other;
+  // 신고하는 사람
+  const reporter = useSelector((state) => {return state.user.userCode;});
   const [content, setContents] = useState("");
 
-  const report = () => {
+  const handleReport = () => {
     axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/user/report/${reported}`, {
-        reporter : 2,
-        content:"신고해븐다,,,",
+      .post(`https://i8c110.p.ssafy.io/api/user/report/${reported.userCode}`, {
+        reporter,
+        content,
       })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {});
+      .then((res) => {console.log(res)})
+      .catch((err) => {console.log(err)});
   };
 
   const handleChange = (e) => {
-    setContents(e.target.value)
-
-  }
+    setContents(e.target.value);
+  };
 
   return (
     <div className={styles.body}>
@@ -38,7 +36,7 @@ export default function Report() {
       </div>
       <div className={styles.reportform}>
         <div className={styles.title}>
-          뇸뇸이 님을 신고하는 이유를 작성해주세요.
+          {reported.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
         </div>
         <textarea
           className={styles.contents}
@@ -48,7 +46,7 @@ export default function Report() {
           onChange={handleChange}
         ></textarea>
       </div>
-      <div className={styles.button} onClick={report}>
+      <div className={styles.button} onClick={handleReport}>
         작성완료
       </div>
     </div>

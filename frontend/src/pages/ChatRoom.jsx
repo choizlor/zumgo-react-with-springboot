@@ -15,8 +15,7 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  const otherId = location.state.other.userCode
-  const otherNickname = location.state.other.kakaoNickname
+  const other = location.state.other
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -160,7 +159,7 @@ export default function ChatRoom() {
               navigate(-1);
             }}
           />
-          <span>{otherNickname}</span>
+          <span>{other.kakaoNickname}</span>
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
@@ -171,7 +170,11 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/${otherId}`)} />
+          <MegaphoneIcon onClick={() => navigate(`/report/${other.userCode}`, {
+            state : {
+              other,
+            }
+          })} />
           <div className={styles.inputbar}>
             <div>
               <input
