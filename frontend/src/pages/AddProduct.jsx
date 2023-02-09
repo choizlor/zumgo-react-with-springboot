@@ -56,7 +56,7 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
-        console.log(res.data)
+        navigate(`/detail/${res.data}`)
       })
       .catch((err) => {
         console.log(err);
