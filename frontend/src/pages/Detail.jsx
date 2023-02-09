@@ -182,7 +182,7 @@ export default function Detail() {
   const deleteproduct = () => {
     axios
       .delete(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/productId=${productId}?userCode=${userId}`
       )
       .then((res) => {
         console.log(res);
