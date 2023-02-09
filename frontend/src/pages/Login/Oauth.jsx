@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { login } from "../../store/userSlice";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 export default function Oauth() {
   // params로 받은 인가 코드를 code 변수에 저장
   const code = new URL(window.location.href).searchParams.get("code");
-  console.log(code, "🎄");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +28,6 @@ export default function Oauth() {
               },
             })
             .then((res) => {
-              console.log(res.data, "🎃");
               dispatch(
                 login({
                   userCode: res.data.user.userCode,

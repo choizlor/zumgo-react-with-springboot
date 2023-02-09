@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./styles/AddProduct.module.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// heroicons
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import testImg from "../assets/images/kim.png";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -43,6 +43,7 @@ export default function AddProduct() {
       formData.append("imgUrl", files[i]);
     }
 
+    // content를 문자열로 변환
     formData.append(
       "content",
       new Blob([JSON.stringify(content)], { type: "application/json" })
@@ -55,7 +56,6 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
-        // navigate(`/detail/${res.data}`)
         console.log(res.data)
       })
       .catch((err) => {
