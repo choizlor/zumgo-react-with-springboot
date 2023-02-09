@@ -66,7 +66,8 @@ const VideoRoomTest = () => {
   const [celebrity, setCelebrity] = useState(false);
   
   const isHost = Number(product.userCode) === userId ? true : false
-  console.log(isHost)
+  console.log(product.userCode, typeof(product.userCode), userId, typeof(userId), '😎')
+  // console.log(isHost)
   
   let OV = undefined;
 
