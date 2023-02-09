@@ -25,7 +25,9 @@ const VideoRoomTest = () => {
   const user = useSelector((state) => {
     return state.user;
   });
-  const [seller, setSeller] = useState("")
+  const [seller, setSeller] = useState("");
+  const [bidCount, setBidCount] = useState(0);
+  const [bidPrice, setBidPrice] = useState(0);
   const isHost = Number(product.userCode) === user.userCode ? true : false;
   const token = window.localStorage.getItem("token");
 
@@ -42,12 +44,12 @@ const VideoRoomTest = () => {
             setProduct(res.data);
             setBidPrice(res.data.price);
 
-            // axios
-            //   .get(`https://i8c110.p.ssafy.io/api/user/${res.data.userCode}`)
-            //   .then((res) => {
-            //     console.log(res.data)
-            //     setSeller(res.data.user.kakaoNickname);
-            //   });
+            axios
+              .get(`https://i8c110.p.ssafy.io/api/user/${res.data.userCode}`)
+              .then((res) => {
+                console.log(res.data)
+                setSeller(res.data.user.kakaoNickname);
+              });
           });
       } catch (e) {
         console.error(e);
@@ -72,7 +74,6 @@ const VideoRoomTest = () => {
   // const [timerOpen, setTimerOpen] = useState(false);
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
-  const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
 
