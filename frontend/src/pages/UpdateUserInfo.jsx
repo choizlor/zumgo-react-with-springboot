@@ -38,7 +38,7 @@ export default function UpdateUserInfo() {
     );
 
     await axios
-      .patch(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
+      .patch(`http://i8c110.p.ssafy.io/api/user/${userId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
