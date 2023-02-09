@@ -115,7 +115,7 @@ public class UserService {
         //2. 유저 정보가 없다면
         if(user == null) {
             // 2-1. 유저 닉네임 중복 검사
-            Long userCnt = userRepository.countByKakaoNickname(profile.getKakao_account().getProfile().getNickname());
+            Long userCnt = userRepository.countByKakaoNicknameStartingWith(profile.getKakao_account().getProfile().getNickname());
             if (userCnt++ > 0) {
                 profile.getKakao_account().getProfile().setNickname(profile.getKakao_account().getProfile().getNickname() + userCnt);
             };
