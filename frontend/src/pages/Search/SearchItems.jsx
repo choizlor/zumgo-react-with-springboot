@@ -3,7 +3,6 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import styles from "./SearchItems.module.css";
 
 export default function SearchItems({ recents, searchProducts }) {
-
    
   return (
     <div className={styles.body}>
