@@ -228,7 +228,10 @@ export default function Detail() {
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div className={styles.seller}>
+        <div className={styles.seller} onClick={() => {
+          navigate(`/userinfo/${product.userCode}`)
+
+        }}>
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
