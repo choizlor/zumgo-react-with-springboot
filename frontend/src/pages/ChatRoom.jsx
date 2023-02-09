@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import testImg from "../assets/images/testImg.jpg";
@@ -7,16 +7,14 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import * as StompJs from "@stomp/stompjs";
 
 // heroicons
-import {
-  CameraIcon,
-  ChevronLeftIcon,
-  MegaphoneIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function ChatRoom() {
   let navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state, '🎀🎀')
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -28,8 +26,6 @@ export default function ChatRoom() {
   const user = useSelector((state) => {
     return state.user;
   });
-
-  //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
   const msgBox = chatList.map((item, idx) => {
     if (Number(item.sender) !== user.userCode) {
@@ -76,11 +72,6 @@ export default function ChatRoom() {
       // 구독
       clientdata.onConnect = function () {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback);
-
-        // if (requestType === 'live' || requestType === 'review') {
-        //   console.log('라이브 요청 또는 리뷰요청')
-        //   sendChat();
-        // }
       };
 
       clientdata.activate(); // 클라이언트 활성화
@@ -106,11 +97,12 @@ export default function ChatRoom() {
     }
   };
 
+  // 메시지 보내기
   const sendChat = () => {
     if (chat === "") {
       return;
     }
-  
+
     client.publish({
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
@@ -125,25 +117,9 @@ export default function ChatRoom() {
     setChat("");
   };
 
-  useEffect(() => {
-    // 최초 렌더링 시 , 웹소켓에 연결
-    connect();
-
-    return () => disConnect();
-  }, []);
-
-  const onChangeChat = (e) => {
-    setChat(e.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   // 채팅방 삭제하기
   const exitChatRoom = () => {
-
-    alert('대화정보가 함께 삭제됩니다!.')
+    alert("대화정보가 함께 삭제됩니다!.");
     axios
       .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", {
         chatRoomCode: chatroomId,
@@ -155,6 +131,21 @@ export default function ChatRoom() {
         console.log(err);
       });
   };
+
+  const onChangeChat = (e) => {
+    setChat(e.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  useEffect(() => {
+    // 최초 렌더링 시 , 웹소켓에 연결
+    connect();
+
+    return () => disConnect();
+  }, []);
 
   return (
     <>

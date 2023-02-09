@@ -20,6 +20,7 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
+        console.log(chats)
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +39,11 @@ export default function ChatList() {
 
               className={styles.chat}
               onClick={() => {
-                navigate(`/chatroom/${chat.roomId}`, { state: {} });
+                navigate(`/chatroom/${chat.roomId}`, { state: {
+                  other : chat.seller.userCode === userId
+                  ? chat.buyer.kakaoNickname
+                  : chat.seller.kakaoNickName
+                } });
               }}
             >
               <div className={styles.leftbox}>
