@@ -7,9 +7,9 @@ import axios from "axios";
 
 export default function ChatList() {
   const navigate = useNavigate();
-  
+
   const userId = useSelector((state) => {
-    return state.user.userCode
+    return state.user.userCode;
   });
 
   const [chats, setChats] = useState([]);
@@ -19,7 +19,7 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,18 +31,19 @@ export default function ChatList() {
       <div className={styles.title}>채팅</div>
       <div className={styles.chatlistbox}>
         {chats?.map((chat, idx) => {
-          
           return (
             <div
               key={idx}
-
               className={styles.chat}
               onClick={() => {
-                navigate(`/chatroom/${chat.roomId}`, { state: {
-                  other : chat.seller.userCode === userId
-                  ? chat.buyer.kakaoNickname
-                  : chat.seller.kakaoNickName
-                } });
+                navigate(`/chatroom/${chat.roomId}`, {
+                  state: {
+                    other:
+                      chat.seller.userCode === userId
+                        ? chat.buyer
+                        : chat.seller
+                  },
+                });
               }}
             >
               <div className={styles.leftbox}>
@@ -73,7 +74,6 @@ export default function ChatList() {
                   </div>
                 </div>
               </div>
-            
             </div>
           );
         })}
