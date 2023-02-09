@@ -32,7 +32,7 @@ public class Product extends BaseTimeEntity {
     private Timestamp reserve;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Img> imgList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -61,19 +61,19 @@ public class Product extends BaseTimeEntity {
     }
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private LiveRoom liveroom;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<LiveRequest> liveRequests = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Wish> wishes = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Bill bill;
 
     public void update(String title, int price, String description, String availableTime, Timestamp reserve,  ProductStatus status) {
