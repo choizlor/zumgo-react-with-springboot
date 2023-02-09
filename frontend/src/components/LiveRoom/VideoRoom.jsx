@@ -36,7 +36,7 @@ const VideoRoomTest = () => {
       )
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data);
+        console.log(res.data, '😊라이브 눌렀을때 상품정보');
       })
       .catch((err) => console.log(err));
   }, []);
@@ -107,6 +107,7 @@ const VideoRoomTest = () => {
         })
         .catch((res) => {
           var error = Object.assign({}, res);
+          console.log(error, '😋에러남')
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
