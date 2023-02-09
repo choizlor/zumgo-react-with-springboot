@@ -25,7 +25,7 @@ public class ProductSaveRequestDto {
     private String description;
     private String availableTime;
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
-    private User user;
+    private Long userId;
 
     //    @Builder
 //    public ProductSaveRequestDto(String title, int price, String description, String reservation, String photo, ProductStatus status, User user) {
@@ -45,7 +45,7 @@ public class ProductSaveRequestDto {
                 .description(description)
                 .availableTime(availableTime)
                 .status(status)
-                .user(user)
+                .userId(userId)
                 .build();
     }
 }
