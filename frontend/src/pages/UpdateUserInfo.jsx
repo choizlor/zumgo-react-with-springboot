@@ -20,7 +20,6 @@ export default function UpdateUserInfo() {
     nickname,
   };
 
-  // 상품등록 axios
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -28,28 +27,28 @@ export default function UpdateUserInfo() {
     let file = e.target.imgurl;
     console.log(e.target.imgurl)
 
-    // if(file.length) {
-    //   formData.append("imgUrl", file[0]);
-    // } 
+    if(file.length) {
+      formData.append("imgUrl", file[0]);
+    } 
 
-    // formData.append(
-    //   "content",
-    //   new Blob([JSON.stringify(content)], { type: "application/json" })
-    // );
+    formData.append(
+      "content",
+      new Blob([JSON.stringify(content)], { type: "application/json" })
+    );
 
-    // await axios
-    //   .post(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     // navigate(`/detail/${res.data}`)
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    await axios
+      .patch(`http://i8c110.p.ssafy.io/user/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(-1)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleNicknameChange = (e) => {
