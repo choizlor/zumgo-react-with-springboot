@@ -21,6 +21,8 @@ export default function ReservationModal({ setModalOpen, productId }) {
     setModalOpen(false);
   };
 
+  console.log(typeof(productId), '🥱product type')
+
   // 상품정보 불러오기
   useEffect(() => {
     axios
