@@ -20,7 +20,7 @@ export default function AddReview() {
     // 상품 정보 axios
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${sellerId}`
       )
       .then((res) => {
         setSellerId(res.data.userCode);
