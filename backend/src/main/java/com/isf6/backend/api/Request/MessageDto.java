@@ -13,7 +13,7 @@ public class MessageDto {
 
     private String type;
     private String sender;
-    private Long channelId;
+    private String channelId;
     private String data;
 
 }
