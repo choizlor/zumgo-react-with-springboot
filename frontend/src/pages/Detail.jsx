@@ -72,6 +72,7 @@ export default function Detail() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user.userCode}/all`)
       .then((res) => {
         setChatters(res.data);
+        console.log(res.data, 'detail 모달 채팅 리스트 🎄')
       })
       .catch((err) => {
         console.log(err);
