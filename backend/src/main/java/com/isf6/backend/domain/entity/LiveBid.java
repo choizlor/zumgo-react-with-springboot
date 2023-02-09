@@ -24,7 +24,7 @@ public class LiveBid {
     private Timestamp bid_time;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "liveRoom_id")
     private LiveRoom liveRoom;
 }
