@@ -177,6 +177,9 @@ export default function Detail() {
         console.log(err);
       });
   };
+
+
+  
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
