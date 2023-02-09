@@ -27,7 +27,6 @@ export default function Detail() {
 
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
-    console.log("로그인된 사용자: ", userId);
     return state.user.userCode;
   });
 
@@ -181,7 +180,7 @@ export default function Detail() {
       {/* 상품 이미지 배너 */}
       <div className={styles.swiperbox}>
         <ChevronLeftIcon
-          className="w-6 h-6 text-gray-100"
+          className={styles.goback}
           onClick={() => {
             navigate(-1);
           }}

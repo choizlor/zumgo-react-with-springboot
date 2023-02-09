@@ -3,9 +3,18 @@
   height : 100vh;
 }
 
+.goback {
+  width: 30px;
+  color : white;
+  position: absolute;;
+  top : 5%;
+  left : 2%;
+}
+
 .swiperbox {
   height: 240px;
   position : relative;
+  background-color: black;
 }
 
 .swiper {
@@ -82,9 +91,10 @@ img {
 
 
 .selectbox {
-  width : 90%;
+  width : 98%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .delete {
@@ -101,7 +111,7 @@ img {
   border-radius: 5px;
   font-size: 10px;
   text-align: center;
-  margin: 3% 0 0 0;
+  margin: 2.5% 0;
 }
 
 .dropdown option {
