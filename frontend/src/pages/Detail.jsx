@@ -167,7 +167,7 @@ export default function Detail() {
 
     axios
       .post(
-        `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${userCode}&productId=${productId}`
+        `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${userId}&productId=${productId}`
       )
       .then((res) => {
         console.log(res, "🧨");
