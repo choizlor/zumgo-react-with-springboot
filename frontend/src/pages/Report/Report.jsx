@@ -1,22 +1,29 @@
-import React, { useState } from "react";
-import styles from "./styles/Report.module.css";
+import React, { useEffect, useState } from "react";
+import styles from "./Report.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 export default function Report() {
-  const location = useLocation();
-  // 신고 당하는 사람
-  const reported = location.state.other;
+  const params = useParams();
+  const navigate = useNavigate();
   // 신고하는 사람
   const reporter = useSelector((state) => {return state.user.userCode;});
+  const [reported, setReported] = useState();
   const [content, setContents] = useState("");
+
+  useEffect(() => {
+    // 신고 당하는 사람
+    axios.get(`https://i8c110.p.ssafy.io/api/user/${params.userId}`)
+    .then((res) => {setReported(res.data)})
+    .catch((err) => {console.log(err)})
+  }, [])
 
   const handleReport = () => {
     axios
-      .post(`https://i8c110.p.ssafy.io/api/user/report/${reported.userCode}`, {
+      .post(`https://i8c110.p.ssafy.io/api/user/report/${params.userCode}`, {
         reporter,
         content,
       })
@@ -31,12 +38,12 @@ export default function Report() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={()=>{navigate(-1)}}/>
         <div className={styles.title}>신고하기</div>
       </div>
       <div className={styles.reportform}>
         <div className={styles.title}>
-          {reported.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
+          {reported?.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
         </div>
         <textarea
           className={styles.contents}
