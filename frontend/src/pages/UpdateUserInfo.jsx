@@ -24,13 +24,11 @@ export default function UpdateUserInfo() {
     e.preventDefault();
 
     let formData = new FormData();
-    let files = e.target.imgurl.files
-    console.log(e.target.imgurl.files,'🎈')
+    let files = e.target.imgurl.files;
 
-
-    if(files[0]) {
+    if (files[0]) {
       formData.append("imgUrl", files[0]);
-    } 
+    }
 
     formData.append(
       "content",
@@ -44,8 +42,7 @@ export default function UpdateUserInfo() {
         },
       })
       .then((res) => {
-        console.log(res.data, '🎄');
-        navigate(-1)
+        navigate(`/userinfo/${userId}`);
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +84,6 @@ export default function UpdateUserInfo() {
             accept="image/*" // 이미지 유형의 파일만 받기
             name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
           />
-          
         </div>
 
         <div className={styles.udtnickname}>
