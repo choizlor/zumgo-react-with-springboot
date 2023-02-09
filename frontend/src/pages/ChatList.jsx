@@ -36,6 +36,7 @@ export default function ChatList() {
               key={idx}
               className={styles.chat}
               onClick={() => {
+                // if (cha)
                 navigate(`/chatroom/${chat.roomId}`, {
                   state: {
                     other:

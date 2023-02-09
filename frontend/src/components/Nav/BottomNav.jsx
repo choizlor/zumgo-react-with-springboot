@@ -17,13 +17,15 @@ export default function BottomNav() {
 
   const navigate = useNavigate();
   return (
+    <div>
+
     <nav className={styles.body}>
       <HomeIcon
         className={styles.icon}
         onClick={() => {
           navigate("/");
         }}
-      />
+        />
       <ChatBubbleOvalLeftIcon
         className={styles.icon}
         onClick={() => {
@@ -31,10 +33,10 @@ export default function BottomNav() {
             alert("로그인이 필요한 서비스 입니다!");
             navigate("/login");
           } else {
-          navigate("/chatlist");
+            navigate("/chatlist");
           }
         }}
-      />
+        />
       <div>
         <img
           className={styles.liveicon}
@@ -48,7 +50,7 @@ export default function BottomNav() {
           }}
           src={LiveIcon}
           alt="live"
-        />
+          />
       </div>
       <PlusCircleIcon
         className={styles.icon}
@@ -59,18 +61,20 @@ export default function BottomNav() {
             },
           });
         }}
-      />
+        />
       <UserCircleIcon
         className={styles.icon}
         onClick={() => {
           // if (!userCode) {
-          //   alert("로그인이 필요한 서비스 입니다!");
-          //   navigate("/login");
-          // } else {
-            navigate(`/userinfo/${userCode}`);
-          // }
-        }}
-      />
+            //   alert("로그인이 필요한 서비스 입니다!");
+            //   navigate("/login");
+            // } else {
+              navigate(`/userinfo/${userCode}`);
+              // }
+            }}
+            />
+       줌고(zumgo) 나혜승 김유나 김정효 박시형 최지우 한선영 | 사업자 등록번호 : 344-47-01049
     </nav>
+            </div>
   );
 }
