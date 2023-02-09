@@ -142,7 +142,7 @@ export default function Detail() {
     if (wishCheck === false) {
       axios
         .post(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -156,7 +156,7 @@ export default function Detail() {
     else {
       axios
         .delete(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
