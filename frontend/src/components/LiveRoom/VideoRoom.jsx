@@ -29,11 +29,11 @@ const VideoRoomTest = () => {
   useEffect(() => {
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=2`
       )
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data, '😊라이브 눌렀을때 상품정보');
+        console.log(res.data, "😊라이브 눌렀을때 상품정보");
       })
       .catch((err) => console.log(err));
   }, []);
@@ -75,7 +75,7 @@ const VideoRoomTest = () => {
     typeof userId,
     "😎"
   );
-  console.log(isHost)
+  console.log(isHost);
 
   let OV = undefined;
 
@@ -104,7 +104,11 @@ const VideoRoomTest = () => {
         })
         .catch((res) => {
           var error = Object.assign({}, res);
-          console.log(error.response.status, typeof(error.response.status), '😋에러남')
+          console.log(
+            error.response.status,
+            typeof error.response.status,
+            "😋에러남"
+          );
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
@@ -212,15 +216,15 @@ const VideoRoomTest = () => {
         //     (device) => device.kind === "videoinput"
         //   );
 
-          .then(async () => {
-            OV.getUserMedia({
-              audioSource: false,
-              videoSource: undefined,
-              resolution: "1280x720",
-              frameRate: 30,
-              video: { facingMode: { exact: "environment" } },
-            }).then((mediaStream) => {
-              var videoTrack = mediaStream.getVideoTracks()[0];
+        .then(async () => {
+          OV.getUserMedia({
+            audioSource: false,
+            videoSource: undefined,
+            resolution: "1280x720",
+            frameRate: 30,
+            video: { facingMode: { exact: "environment" } },
+          }).then((mediaStream) => {
+            var videoTrack = mediaStream.getVideoTracks()[0];
 
             var publisher = OV.initPublisher(undefined, {
               audioSource: undefined,
@@ -235,19 +239,19 @@ const VideoRoomTest = () => {
             setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
           });
           // Get your own camera stream ---(퍼블리셔)
-        //   let publisher = OV.initPublisher(undefined, {
-        //     audioSource: undefined, // The source of audio. If undefined default microphone
-        //     videoSource: videoDevices[2].deviceId, // The source of video. If undefined default webcam
-        //     publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-        //     publishVideo: true, // Whether you want to start publishing with your video enabled or not
-        //     resolution: "1280x720", // The resolution of your video
-        //     frameRate: 30, // The frame rate of your video
-        //     insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-        //     mirror: false, // Whether to mirror your local video or not
-        //   });
-        //   mySession.publish(publisher); // 자신의 화면을 송출
-        //   setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-        //   setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
+          //   let publisher = OV.initPublisher(undefined, {
+          //     audioSource: undefined, // The source of audio. If undefined default microphone
+          //     videoSource: videoDevices[2].deviceId, // The source of video. If undefined default webcam
+          //     publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+          //     publishVideo: true, // Whether you want to start publishing with your video enabled or not
+          //     resolution: "1280x720", // The resolution of your video
+          //     frameRate: 30, // The frame rate of your video
+          //     insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+          //     mirror: false, // Whether to mirror your local video or not
+          //   });
+          //   mySession.publish(publisher); // 자신의 화면을 송출
+          //   setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+          //   setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
         })
         .catch((err) => {
           console.log(err);
