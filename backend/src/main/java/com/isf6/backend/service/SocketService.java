@@ -57,11 +57,11 @@ public class SocketService {
         return chatRoomId;
     }
 
-    public String deleteRoom(String chatRoomCode) {
-        log.info("code service : {}", chatRoomCode);
+    public String deleteRoom(long id) {
+        log.info("code service : {}", id);
         
-        ChatRoom chatroom = chatRoomRepository.findByChatRoomCode(chatRoomCode);
-        log.info("chatroom : {}", chatroom.getChatRoomCode());
+        ChatRoom chatroom = chatRoomRepository.findByChatRoomId(id);
+        log.info("chatroom : {}", chatroom.getId());
         if(chatroom == null) {
             return "null";
         }
