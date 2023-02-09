@@ -24,10 +24,9 @@ export default function UpdateUserInfo() {
     e.preventDefault();
 
     let formData = new FormData();
-    let file = e.target.imgurl;
-    console.log(e.target.imgurl)
+    let file = e.target.imgurl.files;
 
-    if(file.length) {
+    if(file.length()) {
       formData.append("imgUrl", file[0]);
     } 
 
@@ -84,7 +83,6 @@ export default function UpdateUserInfo() {
             className={styles.file}
             type="file" // 파일로 입력 받음
             accept="image/*" // 이미지 유형의 파일만 받기
-            capture="camera" // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
             name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
           />
           
