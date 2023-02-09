@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import testImg from "../assets/images/testImg.jpg";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import * as StompJs from "@stomp/stompjs";
 
@@ -14,7 +15,7 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state, '🎀🎀')
+  console.log(location, "🎀🎀");
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
