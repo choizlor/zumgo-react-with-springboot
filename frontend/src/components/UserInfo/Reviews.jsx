@@ -2,13 +2,17 @@ import React from "react";
 import styles from "./Reviews.module.css";
 import ReviewItem from "./ReviewItem";
 
-export default function Reviews({userInfo}) {
+export default function Reviews({userInfo, myReivews}) {
   return (
     <div className={styles.body}>
       <span className={styles.title}>{userInfo.kakaoNickname}님께 달린 리뷰</span>
       <div className={styles.reviewcontainer}>
-        <ReviewItem />
-        <ReviewItem />
+        {
+          myReivews.map((review) => {
+
+            <ReviewItem key={review.id} review={review}/>
+          })
+        }
       </div>
     </div>
   );
