@@ -69,7 +69,7 @@ export default function Detail() {
 
 
       axios   // 채팅목록 불러오기
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user.userCode}/all`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChatters(res.data);
         console.log(res.data, 'detail 모달 채팅 리스트 🎄')
