@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/AddReview.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function AddReview() {
-  const [seller, setseller] = useState("");
-  const [buyer, serbuyer] = useState("");
+  const navigate = useNavigate();
+  const buyerId = useSelector((state) => {
+    return state.user.userCode;
+  });
+
   const [review, setreview] = useState("");
+  const [sellerId, setSellerId] = useState("");
+
   const param = useParams();
   const productId = param.productId;
 
+  useEffect(() => {
+    // 상품 정보 axios
+    axios
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+      )
+      .then((res) => {
+        setSellerId(res.data.userCode);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   const handleChange = (e) => {
     setreview(e.target.value);
   };
@@ -17,12 +36,13 @@ export default function AddReview() {
   const addReview = () => {
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
-        seller: 2,
-        buyer: 1,
+        seller: sellerId,
+        buyer: buyerId,
         review,
       })
       .then((res) => {
         console.log(res);
+        navigate(-1);
         // setreview("");
       })
       .catch((err) => {
