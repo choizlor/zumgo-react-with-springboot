@@ -30,6 +30,7 @@ public class Product extends BaseTimeEntity {
     private String availableTime;
 
     private Timestamp reserve;
+
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Img> imgList = new ArrayList<>();
@@ -37,26 +38,30 @@ public class Product extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
-    // 외래키는 어쩌지..?
-    // Timestamp..?
-    @Builder
-    public Product(String title, int price, String description, String availableTime, Timestamp reserve, List<Img> imgList, ProductStatus status) {
-        this.title = title;
-        this.price = price;
-        this.description = description;
-        this.availableTime = availableTime;
-        this.reserve = reserve;
-        this.imgList = imgList;
-        this.status = status;
-    }
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-//    @Column(nullable = false)
-    private User user;
+//    @Builder
+//    public Product(String title, int price, String description, String availableTime, Timestamp reserve, List<Img> imgList, ProductStatus status) {
+//        this.title = title;
+//        this.price = price;
+//        this.description = description;
+//        this.availableTime = availableTime;
+//        this.reserve = reserve;
+//        this.imgList = imgList;
+//        this.status = status;
+//    }
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+    public Product(Long userId) {
+        this.userId = userId;
+    }
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
     private LiveRoom liveroom;
 
     @JsonIgnore
@@ -68,7 +73,7 @@ public class Product extends BaseTimeEntity {
     private List<Wish> wishes = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
     private Bill bill;
 
     public void update(String title, int price, String description, String availableTime, Timestamp reserve,  ProductStatus status) {

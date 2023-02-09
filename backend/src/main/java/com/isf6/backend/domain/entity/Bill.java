@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Bill {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="bill_id")
@@ -18,9 +19,8 @@ public class Bill {
     private String review;
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "product_id")
-//    @Column(unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", unique = true)
     private Product product;
 
     @JsonIgnore
@@ -29,7 +29,7 @@ public class Bill {
     private User buyer;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     private User seller;
 }

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class Chat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="chat_id")
@@ -26,8 +27,8 @@ public class Chat {
     private String chatter;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="chatRoom_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="chatRoom_id", nullable = false)
     private ChatRoom chatRoom;
 
     public static Chat toChat(ChatMessageSaveReqDto chatMessageSaveReqDto, ChatRoom chatRoom) {
@@ -38,8 +39,5 @@ public class Chat {
         chat.setChat_content(chatMessageSaveReqDto.getChat_content());
 
         return chat;
-
     }
-
-
 }

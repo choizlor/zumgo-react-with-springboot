@@ -1,15 +1,14 @@
 import React from "react";
 import styles from "./Login.module.css";
-import kakaoBtn from "../../assets/images/kakao_login_medium_wide.png";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import kakaoBtn from "../../assets/images/kakao_login_medium_wide.png";
 
 
 export default function Login() {
   const navigate = useNavigate();
 
   const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c';
-  // console.log(REST_API_KEY)
 
   const REDIRECT_URI = "http://i8c110.p.ssafy.io/oauth";
 

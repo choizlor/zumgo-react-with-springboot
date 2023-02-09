@@ -17,7 +17,7 @@ export default function Live() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/live/main?userCode=2`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/live/main?userCode=${userId}`)
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
         setMyLiveRequestList(res.data.MyLiveRequestList);
@@ -40,7 +40,7 @@ export default function Live() {
     <div className={styles.body}>
       <div className={styles.logo}>LIVE</div>
       {toggle ? (
-        <SellLive sellLiveRequestList={sellLiveRequestList} />
+        <SellLive sellLiveRequestList={sellLiveRequestList} userId={userId} />
       ) : (
         <BuyLive myLiveRequestList={myLiveRequestList} />
       )}
