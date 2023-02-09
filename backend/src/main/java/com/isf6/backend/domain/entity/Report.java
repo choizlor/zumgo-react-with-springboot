@@ -19,12 +19,12 @@ public class Report {
     private String content;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="reporter_id")
     private User reporter;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="reported_id")
     private User reported;
 }

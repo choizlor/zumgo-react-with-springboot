@@ -39,11 +39,11 @@ export default function Detail() {
   const [wishCnt, setwishCnt] = useState(product.wishSize);
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
-  // 내가 판매자인 상품인지 확인하는 state
   const [isMine, setIsMine] = useState(false);
+  const [chatters, setChatters] = useState([]);
+ 
 
-  useEffect(() => {
-    // 상품 정보 axios
+  useEffect(() => {     // 상품 정보 axios
     axios
       .get(
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
@@ -66,6 +66,17 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+
+
+      axios   // 채팅목록 불러오기
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user.userCode}/all`)
+      .then((res) => {
+        setChatters(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
   }, []);
 
   const changeStatus = (e) => {
@@ -87,6 +98,8 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+
+
   };
 
   // 일반채팅하기

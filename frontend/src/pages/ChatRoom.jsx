@@ -13,6 +13,7 @@ import {
   MegaphoneIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 export default function ChatRoom() {
   let navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function ChatRoom() {
     // 소켓 연결
     try {
       const clientdata = new StompJs.Client({
-        brokerURL: "w://i8c110.p.ssafy.io/chat",
+        brokerURL: "ws://i8c110.p.ssafy.io/chat",
         connectHeaders: {
           login: "",
           passcode: "password",
@@ -125,16 +126,16 @@ export default function ChatRoom() {
     //     headers: { priority: 9 },
     //   });
     // } else {
-      client.publish({
-        destination: "/pub/chat/" + chatroomId,
-        body: JSON.stringify({
-          type: "",
-          sender: user.userCode,
-          channelId: chatroomId,
-          data: chat,
-        }),
-        headers: { priority: 9 },
-      });
+    client.publish({
+      destination: "/pub/chat/" + chatroomId,
+      body: JSON.stringify({
+        type: "",
+        sender: user.userCode,
+        channelId: chatroomId,
+        data: chat,
+      }),
+      headers: { priority: 9 },
+    });
     // }
 
     setChat("");
@@ -155,10 +156,24 @@ export default function ChatRoom() {
     event.preventDefault();
   };
 
+  // 채팅방 삭제하기
+  const exitChatRoom = () => {
+
+    alert('대화정보가 함께 삭제됩니다!.')
+    axios
+      .delete("https://i8c110.p.ssafy.io/api/v1/socket", {
+        chatRoomCode: chatroomId,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
-      {/* {JSON.stringify(user)} */}
-      {/* <GlobalStyle/> */}
       <div className={styles.container}>
         {/* 상단 네비게이션 */}
         <div className={styles.topbar}>
@@ -168,7 +183,9 @@ export default function ChatRoom() {
             }}
           />
           <span>상대방 이름</span>
-          <MegaphoneIcon onClick={() => navigate(`/report/1`)} />
+          <div className={styles.delete} onClick={exitChatRoom}>
+            나가기
+          </div>
         </div>
 
         {/* 채팅 리스트 */}
@@ -176,8 +193,7 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          {/* <input type="file" accept='image/*'/>  */}
-          <CameraIcon className={styles.cameraicon} />
+          <MegaphoneIcon onClick={() => navigate(`/report/1`)} />
           <div className={styles.inputbar}>
             <div>
               <input
