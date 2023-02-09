@@ -24,11 +24,7 @@ import { useSelector } from "react-redux";
 export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const date = new Date(product.reserve);
-  var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
-  var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
-  var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+  
 
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
@@ -46,6 +42,11 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chatters, setChatters] = useState([]);
+  const date = new Date(product.reserve);
+  var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+  var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+  var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
   useEffect(() => {
     // 상품 정보 axios
