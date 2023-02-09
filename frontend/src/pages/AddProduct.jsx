@@ -8,14 +8,9 @@ import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const { userId } = location.state;
-  // console.log(location.state)
   
   // redux
-  const userId = useSelector((state) => {
-    return state.user.userCode;
-  });
+  const userId = useSelector((state) => {return state.user.userCode;});
   
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -34,6 +29,12 @@ export default function AddProduct() {
   // 상품등록 axios
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if ( !userId ) {
+      alert('로그인이 필요한 서비스 입니다.')
+      navigate('/login')
+      return
+    }
 
     let formData = new FormData();
     let files = e.target.imgurls.files;
@@ -61,11 +62,6 @@ export default function AddProduct() {
         console.log(err);
       });
 
-
-    // formData에 저장된 값 확인 하기  
-    for (var key of formData.keys()) {
-      console.log(key, formData.get(key), "👩");
-    }
   };
 
   const handleTitleChange = (e) => {
