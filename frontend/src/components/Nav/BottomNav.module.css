@@ -1,6 +1,11 @@
 .navbody {
   display: flex;
   flex-direction: column;
+  background-color: white;
+  position: fixed;
+  width : 100%;
+bottom : 0;
+
 }
 
 .body {
@@ -8,11 +13,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  clear: both;
-  position: fixed;
-  width : 100%;
-  bottom : 0;
-  background-color: white;
 }
 
 .icon {
@@ -23,4 +23,11 @@
 .liveicon {
   width: 52px;
   height: 52px;
+}
+
+.company {
+  width: 95%;
+  font-size: 9px;
+  margin : auto;
+  white-space:pre-wrap;
 }
