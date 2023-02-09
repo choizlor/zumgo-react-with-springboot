@@ -11,9 +11,7 @@ import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
 export default function BottomNav() {
-  const userId = useSelector((state) => {
-    return state.user.userCode;
-  });
+  const userCode = useSelector((state) => {return state.user.userCode})
 
   const navigate = useNavigate();
   return (
@@ -68,12 +66,12 @@ export default function BottomNav() {
       <UserCircleIcon
         className={styles.icon}
         onClick={() => {
-          // if (!userId) {
-          //   alert("로그인이 필요한 서비스 입니다!");
-          //   navigate("/login");
-          // } else {
-          navigate(`/userinfo/${userId}`);
-          // }
+          if (!userCode) {
+            alert("로그인이 필요한 서비스 입니다!");
+            navigate("/login");
+          } else {
+          navigate(`/userinfo/${userCode}`);
+          }
         }}
       />
     </nav>

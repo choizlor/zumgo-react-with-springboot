@@ -12,6 +12,7 @@ import ProductItem from "../components/Product/ProductItem";
 import axios from "axios";
 import { useRef } from "react";
 import { useInView } from 'react-intersection-observer';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
   // const SERVER = process.env.REACT_APP_SERVER;
@@ -19,6 +20,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0); // 현재 페이지 번호 (페이지네이션)
   const [ref, inView] = useInView();
+  const userCode = useSelector((state) => {return state.user.userCode})
 
   // 무한 스크롤
   // 지정한 타겟 div가 화면에 보일 때 마다 서버에 요청을 보냄
@@ -37,6 +39,10 @@ export default function Home() {
     })
     .catch((err) => {console.log(err)});
   };
+
+  useState(() => {
+    
+  })
 
   useEffect(() => {
     // inView가 true 일때만 실행한다.
