@@ -22,21 +22,20 @@ const VideoRoomTest = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
   const roomId = useParams().productId;
   const [product, setProduct] = useState({});
-  const userId = useSelector((state) => {
-    return state.user.userCode;
+  const user = useSelector((state) => {
+    return state.user;
   });
 
   useEffect(() => {
     axios
-      .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=2`
-      )
+      .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`)
       .then((res) => {
         setProduct(res.data);
+        setBidPrice(res.data.price);
         console.log(res.data, "😊라이브 눌렀을때 상품정보");
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [user]);
 
   // const dispatch = useDispatch();
   // const location = useLocation();
@@ -62,17 +61,17 @@ const VideoRoomTest = () => {
   // const [timerOpen, setTimerOpen] = useState(false);
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
-  const [bidPrice, setBidPrice] = useState(product.price);
+  const [bidPrice, setBidPrice] = useState(0);
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
 
-  const isHost = Number(product.userCode) === userId ? true : false;
+  const isHost = Number(product.userCode) === user.userCode ? true : false;
   console.log(
     product.userCode,
     typeof product.userCode,
-    userId,
-    typeof userId,
+    user.userCode,
+    typeof user.userCode,
     "😎"
   );
   console.log(isHost);
@@ -148,6 +147,7 @@ const VideoRoomTest = () => {
   // 세션 아이디 설정
   useEffect(() => {
     setMySessionId(`Session${roomId}`);
+    setMyUserName(user.kakaoNickname);
   }, []);
 
   // 세션에 참여하기
