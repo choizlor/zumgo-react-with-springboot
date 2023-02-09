@@ -24,7 +24,9 @@ export default function UpdateUserInfo() {
     e.preventDefault();
 
     let formData = new FormData();
-    let file = e.target.imgurl.files;
+    let file = e.target.imgurl.files
+    console.log(e.target.imgurl.files,'🎈')
+
 
     if(file.length()) {
       formData.append("imgUrl", file[0]);
@@ -67,7 +69,7 @@ export default function UpdateUserInfo() {
             />
             <div className={styles.title}>프로필 수정</div>
           </div>
-          <button type="submit" className={styles.navright} onClick={handleUpdate}>
+          <button type="submit" className={styles.navright}>
             <p className={styles.save}>저장</p>
           </button>
         </div>
