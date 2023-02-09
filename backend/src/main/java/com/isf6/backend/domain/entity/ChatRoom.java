@@ -23,12 +23,12 @@ public class ChatRoom {
 
     @JsonIgnore
     // 구매자, 판매자 단반향 매핑?????
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="buyer_id")
     private User buyer;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="seller_id")
     private User seller;
 
@@ -44,5 +44,4 @@ public class ChatRoom {
         chatRoom.setSeller(seller);
         return chatRoom;
     }
-
 }
