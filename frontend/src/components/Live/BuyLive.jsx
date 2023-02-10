@@ -1,10 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import styles from "./BuyLive.module.css";
 import LiveCard from "./LiveCard";
 import RequestLive from "./RequestLive";
 
 export default function BuyLive({ myLiveRequestList }) {
-
   const requestList = myLiveRequestList?.filter((product) => {
     return product.reserve !== null;
   });
@@ -13,7 +13,9 @@ export default function BuyLive({ myLiveRequestList }) {
     <div>
       <div className={styles.text}>방송 중</div>
       <div>
-        <LiveCard />
+        {/* {onairList?.map((product) => {
+          <LiveCard key={product.id} product={product} />;
+        })} */}
       </div>
       <div className={styles.text}>라이브 예정</div>
       <div>
