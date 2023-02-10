@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function DetailModal({ setModalOpen, chats }) {
+  console.log(chats)
   const navigate = useNavigate();
   const userId = useSelector((state) => {
     return state.user.userCode;

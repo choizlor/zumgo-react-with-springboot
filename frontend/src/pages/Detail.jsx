@@ -24,7 +24,6 @@ import { useSelector } from "react-redux";
 export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  
 
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
@@ -34,7 +33,7 @@ export default function Detail() {
   // 상품 ID
   const params = useParams();
   const productId = params.productId;
-  
+
   // 상품 정보
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
@@ -65,7 +64,7 @@ export default function Detail() {
         // 같으면 판매자, 다르면 구매자
         console.log(res.data);
         console.log("로그인된 사용자: ", userId);
-  
+
         if (userId !== res.data.userCode) {
           setIsMine(false);
         }
@@ -88,7 +87,17 @@ export default function Detail() {
   const changeStatus = (e) => {
     // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
-      setModalOpen(true);
+      // 채팅중인 사용자 불러오기
+      axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .then((res) => {
+        setChats(res.data);
+        setModalOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
     } else {
       setModalOpen(false);
     }
@@ -116,30 +125,18 @@ export default function Detail() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data.chatRoomId}`, {state : {
-          chats : res.data.chatList,
-          sellerId : product.userCode,
-          buyerId : userId,
-        }});
+        navigate(`/chatroom/${res.data.chatRoomId}`, {
+          state: {
+            chats: res.data.chatList,
+            sellerId: product.userCode,
+            buyerId: userId,
+          },
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // // 라이브 요청하기
-  // const requestLive = () => {
-  //   // 2 포인트 빼기,,,
-  //   // 판매자 정보, 구매자 정보 보내주기
-  //   axios
-  //     .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-  //       buyerCode: userId,
-  //       sellerCode: product.userCode,
-  //     })
-  //     .then((res) => {
-  //       navigate(`/chatroom/${res.data}`, { state: "live" });
-  //     });
-  // };
 
   // 찜 추가하기
   const addwish = () => {
@@ -192,10 +189,8 @@ export default function Detail() {
 
   const deleteproduct = () => {
     axios
-      .delete(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}`
-      )
-      .then((res) => { 
+      .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
+      .then((res) => {
         console.log(res);
       })
       .catch((err) => {
@@ -230,24 +225,30 @@ export default function Detail() {
         </Swiper>
 
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
-        {product.reserve !==null ? (
+        {product.reserve !== null ? (
           <div className={styles.livealert}>
-            <span>{month}/{day}</span>
-            <span>{hour}:{minute} LIVE 예정</span>
+            <span>
+              {month}/{day}
+            </span>
+            <span>
+              {hour}:{minute} LIVE 예정
+            </span>
           </div>
-        ):null }
+        ) : null}
       </div>
+
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div className={styles.seller} onClick={() => {
-          navigate(`/userinfo/${product.userCode}`)
-
-        }}>
+        <div
+          className={styles.seller}
+          onClick={() => {
+            navigate(`/userinfo/${product.userCode}`);
+          }}
+        >
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
-          <div className={styles.sellerName}>{product.kakaoNickname
-}</div>
+          <div className={styles.sellerName}>{product.kakaoNickname}</div>
         </div>
         <div className={styles.selectbox}>
           {/* 드롭다운 */}
@@ -313,7 +314,9 @@ export default function Detail() {
         )}
       </div>
       {/* 누구와 거래하셨나요 모달 */}
-      {modalOpen ? <DetailModal setModalOpen={setModalOpen} chats={chats}/> : null}
+      {modalOpen ? (
+        <DetailModal setModalOpen={setModalOpen} chats={chats} />
+      ) : null}
     </div>
   );
 }
