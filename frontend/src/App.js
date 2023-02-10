@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import {useDispatch} from 'react-redux'
-import {login} from './reducers/userSlice'
+import {login} from './store/userSlice'
 import axios from 'axios';
 import {useEffect} from 'react'
 import Root from "./pages/Root";
