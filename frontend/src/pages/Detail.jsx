@@ -64,7 +64,7 @@ export default function Detail() {
         // 같으면 판매자, 다르면 구매자
         console.log(res.data);
         console.log("로그인된 사용자: ", userId);
-
+  
         if (userId !== res.data.userCode) {
           setIsMine(false);
         }
@@ -82,7 +82,7 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
-  }, [userId]);
+  }, []);
 
   const changeStatus = (e) => {
     // 수정하기 api 요청
