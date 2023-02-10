@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/UserInfo.module.css";
+import styles from "./UserInfo.module.css";
 import BottomNav from "../../components/Nav/BottomNav";
 import Reviews from "./Reviews";
 import axios from "axios";
