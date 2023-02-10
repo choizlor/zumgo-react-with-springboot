@@ -41,7 +41,7 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
-  const [chatters, setChatters] = useState([]);
+  const [chats, setChats] = useState([]);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
