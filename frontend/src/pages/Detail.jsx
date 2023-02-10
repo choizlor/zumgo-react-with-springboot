@@ -116,7 +116,7 @@ export default function Detail() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data}`, {state : {
+        navigate(`/chatroom/${res.data.chatRoomId}`, {state : {
           chats : res.data.chatList,
           sellerId : product.userCode,
           buyerId : userId,

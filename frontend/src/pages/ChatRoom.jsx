@@ -24,12 +24,39 @@ export default function ChatRoom() {
 
   let [client, changeClient] = useState(null);
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
-  const [chatList, setChatList] = useState(location.state.chats); // 채팅 기록
+  const [chatList, setChatList] = useState([]); // 채팅 기록
+  const [history, setHistory] = useState(location.state.chats);
+
 
   const user = useSelector((state) => {
     return state.user;
   });
 
+
+  const preMsgBox = history.map((item, idx) => {
+    if (item.chatter !== user.kakaoNickname) {
+      return (
+        <div key={idx} className={styles.otherchat}>
+          <div className={styles.otherimg}>
+            <img src={testImg} alt="" />
+          </div>
+          <div className={styles.othermsg}>
+            <span>{item.chat_content}</span>
+          </div>
+          <span className={styles.otherdate}>{item.chat_date}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div key={idx} className={styles.mychat}>
+          <div className={styles.mymsg}>
+            <span>{item.chat_content}</span>
+          </div>
+          <span className={styles.mydate}>{item.chat_date}</span>
+        </div>
+      );
+    }
+  })
   const msgBox = chatList.map((item, idx) => {
     if (Number(item.sender) !== user.userCode) {
       return (
@@ -124,7 +151,7 @@ export default function ChatRoom() {
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
         type: "",
-        sender: user.userCode,
+        sender: user.kakaoNickname,
         channelId: chatroomId,
         data: chat,
       }),
