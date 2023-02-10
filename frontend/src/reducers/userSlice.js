@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import storage from 'redux-persist/lib/storage';
 
 let user = createSlice({
   name: "user",

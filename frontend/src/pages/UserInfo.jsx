@@ -5,7 +5,7 @@ import Reviews from "../components/UserInfo/Reviews";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/userSlice";
+import { logout } from "../reducers/userSlice";
 
 import {
   ChevronLeftIcon,

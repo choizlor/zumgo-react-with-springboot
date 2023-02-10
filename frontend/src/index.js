@@ -1,18 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import React from "react";
+import "./index.css";
+
+import { createRoot } from "react-dom/client";
 
 // import store
-import { Provider } from 'react-redux';
-import store from './store/userSlice.js';
+import { Provider as ReduxProvider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { store } from "store";
+import reportWebVitals from "./reportWebVitals";
+
+const persistor = persistStore(store);
+
+const root = createRoot(document.getElementById("root"));
 root.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
+  <ReduxProvider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </ReduxProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
