@@ -8,13 +8,14 @@ export default function Reviews({ userId }) {
   useEffect(() => {
     axios.get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
     .then((res)=>{
+      console.log(res.data)
       setReviews(res.data.myReview)
     })
     .catch((err) => {console.log(err)})
   })
   return (
     <div className={styles.body}>
-      <span className={styles.title}>{userInfo.kakaoNickname}님께 달린 리뷰</span>
+      <span className={styles.title}>{}님께 달린 리뷰</span>
       <div className={styles.reviewcontainer}>
         {
           reviews?.map((review) => {
