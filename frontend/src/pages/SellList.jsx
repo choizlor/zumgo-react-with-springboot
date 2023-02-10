@@ -16,7 +16,7 @@ export default function SellList() {
   const navigate = useNavigate();
   const userId = useParams().userId;
   const [products, setProducts] = useState();
-  const [filter, setFilter] = useState(filters[0]);
+  const [filter, setFilter] = useState("ONSALE");
   const [filtered, setFiltered] = useState();
 
   useEffect(() => {
