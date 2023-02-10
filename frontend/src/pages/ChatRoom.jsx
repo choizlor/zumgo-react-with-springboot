@@ -32,6 +32,10 @@ export default function ChatRoom() {
   });
 
   const preMsgBox = history.map((item, idx) => {
+    const date = new Date(item.chat_date);
+    var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+    var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+
     if (item.chatter !== user.kakaoNickname) {
       return (
         <div key={idx} className={styles.otherchat}>
@@ -41,7 +45,9 @@ export default function ChatRoom() {
           <div className={styles.othermsg}>
             <span>{item.chat_content}</span>
           </div>
-          <span className={styles.otherdate}>{item.chat_date}</span>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     } else {
@@ -50,11 +56,14 @@ export default function ChatRoom() {
           <div className={styles.mymsg}>
             <span>{item.chat_content}</span>
           </div>
-          <span className={styles.mydate}>{item.chat_date}</span>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     }
   });
+
   const msgBox = chatList.map((item, idx) => {
     if (Number(item.sender) !== user.userCode) {
       return (
@@ -135,6 +144,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
+      console.log(msg)
       setChatList((chats) => [...chats, msg]);
     }
   };
