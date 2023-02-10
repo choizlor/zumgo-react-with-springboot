@@ -60,8 +60,8 @@ public class ReviewController {
     }
 
     //로그인한 유저가 쓴 리뷰 전체 목록
-    @ApiOperation(value = "리뷰 조회", notes = "로그인한 유저가 작성한 리뷰 전체 목록 조회")
-    @GetMapping("/{userCode}")
+    @ApiOperation(value = "내가 작성한 리뷰 조회", notes = "로그인한 유저가 작성한 리뷰 전체 목록 조회")
+    @GetMapping("/buyer/{userCode}")
     public ResponseEntity getMyReviewAll(@ApiParam(value = "유저 정보", required = true) @PathVariable Long userCode) {
         log.info("userCode : {}", userCode);
         Map<String, Object> response = new HashMap<>();
@@ -69,6 +69,27 @@ public class ReviewController {
 
         try {
             reviewList = reviewService.getMyReviewAll(userCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("result", "FAIL");
+            response.put("reason", "리뷰 조회 실패");
+            return ResponseEntity.status(200).body(response);
+        }
+
+        response.put("result", "SUCCESS");
+        response.put("MyReview", reviewList);
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @ApiOperation(value = "나에게 달린 리뷰 조회", notes = "로그인한 유저에게 작성된 리뷰 전체 목록 조회")
+    @GetMapping("/seller/{userCode}")
+    public ResponseEntity getReviewAll(@ApiParam(value = "유저 정보", required = true) @PathVariable Long userCode) {
+        log.info("userCode : {}", userCode);
+        Map<String, Object> response = new HashMap<>();
+        List<ReviewInfoResDto> reviewList;
+
+        try {
+            reviewList = reviewService.getReviewAll(userCode);
         } catch (Exception e) {
             e.printStackTrace();
             response.put("result", "FAIL");

@@ -28,7 +28,6 @@ export default function UserInfo() {
 
   const dispatch = useDispatch();
 
-  console.log(me);
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
@@ -54,6 +53,8 @@ export default function UserInfo() {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
+
+   
   }, []);
 
   return (
@@ -119,7 +120,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/picklist/${userId}`);
+                  navigate(`/wishlist/${userId}`);
                 }}
               >
                 관심목록
@@ -155,7 +156,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo} />
+      {/* <Reviews userId={userId} userNickname={userInfo.kakaoNickname}/> */}
 
       {/* <UserInfoDetail/> */}
       <BottomNav />

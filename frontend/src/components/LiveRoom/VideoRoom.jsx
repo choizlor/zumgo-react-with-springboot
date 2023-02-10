@@ -8,12 +8,14 @@ import Timer from "../Auction/Timer";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
 import userImg from "../../assets/images/kim.png";
 import Price from "../Auction/Price";
+import SellerLoading from "../Live/SellerLoading";
+import BuyerLoading from "../Live/BuyerLoading";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
@@ -28,17 +30,46 @@ const VideoRoomTest = () => {
   const isHost = Number(product.userCode) === user.userCode ? true : false;
   const token = window.localStorage.getItem("token");
 
-  useEffect(() => {
-    setMyUserName(user.kakaoNickname)
+  // useEffect(() => {
+  //   setMyUserName(user.kakaoNickname);
 
-    axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`)
-      .then((res) => {
-        setProduct(res.data);
-        setBidPrice(res.data.price);
-        console.log(res.data, "😊라이브 눌렀을때 상품정보");
-      })
-      .catch((err) => console.log(err));
+  //   axios
+  //     .get(
+  //       `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
+  //     )
+  //     .then((res) => {
+  //       setProduct(res.data);
+  //       setBidPrice(res.data.price);
+  //       console.log(res.data, "😊라이브 눌렀을때 상품정보");
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [user]);
+
+  useEffect(() => {
+    setMyUserName(user.kakaoNickname);
+
+    (async () => {
+      try {
+        await axios
+          .get(
+            `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
+          )
+          .then((res) => {
+            setProduct(res.data);
+            setBidPrice(res.data.price);
+            const id = res.data.userCode;
+
+            axios
+              .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
+              .then((res) => {
+                console.log(res.data.user, "😖host 정보");
+                setHostName(res.data.user.kakaoNickname);
+              });
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   }, [user]);
 
   const [mySessionId, setMySessionId] = useState("SessionA");
@@ -63,8 +94,7 @@ const VideoRoomTest = () => {
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
 
-  
-  console.log(isHost, '😎');
+  console.log(isHost, "😎");
 
   let OV = undefined;
 
@@ -105,7 +135,7 @@ const VideoRoomTest = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
-    console.log(myRole, '🙄내역할')
+    console.log(myRole, "🙄내역할");
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -200,43 +230,43 @@ const VideoRoomTest = () => {
           let videoDevices = devices.filter(
             (device) => device.kind === "videoinput"
           );
+          // 전면 카메라(웹 내부에서 실험해볼 때)
+          // .then(async () => {
+          //   OV.getUserMedia({
+          //     audioSource: false,
+          //     videoSource: undefined,
+          //     resolution: "1280x720",
+          //     frameRate: 30,
+          //     video: { facingMode: { exact: "environment" } },
+          //   }).then((mediaStream) => {
+          //     var videoTrack = mediaStream.getVideoTracks()[0];
 
-        // .then(async () => {
-        //   OV.getUserMedia({
-        //     audioSource: false,
-        //     videoSource: undefined,
-        //     resolution: "1280x720",
-        //     frameRate: 30,
-        //     video: { facingMode: { exact: "environment" } },
-        //   }).then((mediaStream) => {
-        //     var videoTrack = mediaStream.getVideoTracks()[0];
-
-        //     var publisher = OV.initPublisher(undefined, {
-        //       audioSource: undefined,
-        //       videoSource: videoTrack,
-        //       publishAudio: true,
-        //       publishVideo: true,
-        //       insertMode: "APPEND",
-        //       mirror: true,
-        //     });
-        //     mySession.publish(publisher); // 자신의 화면을 송출
-        //     setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-        //     setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
-        //   });
+          //     var publisher = OV.initPublisher(undefined, {
+          //       audioSource: undefined,
+          //       videoSource: videoTrack,
+          //       publishAudio: true,
+          //       publishVideo: true,
+          //       insertMode: "APPEND",
+          //       mirror: true,
+          //     });
+          //     mySession.publish(publisher); // 자신의 화면을 송출
+          //     setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+          //     setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
+          //   });
           // Get your own camera stream ---(퍼블리셔)
-            let publisher = OV.initPublisher(undefined, {
-              audioSource: undefined, // The source of audio. If undefined default microphone
-              videoSource: videoDevices.slice(-1)[0].deviceId, // The source of video. If undefined default webcam
-              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-              publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: "1280x720", // The resolution of your video
-              frameRate: 30, // The frame rate of your video
-              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-              mirror: false, // Whether to mirror your local video or not
-            });
-            mySession.publish(publisher); // 자신의 화면을 송출
-            setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-            setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
+          let publisher = OV.initPublisher(undefined, {
+            audioSource: undefined, // The source of audio. If undefined default microphone
+            videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
+            publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+            publishVideo: true, // Whether you want to start publishing with your video enabled or not
+            resolution: "1280x720", // The resolution of your video
+            frameRate: 30, // The frame rate of your video
+            insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+            mirror: false, // Whether to mirror your local video or not
+          });
+          mySession.publish(publisher); // 자신의 화면을 송출
+          setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
+          setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
         })
         .catch((err) => {
           console.log(err);
@@ -370,21 +400,6 @@ const VideoRoomTest = () => {
     [subscribers]
   );
 
-  // console.log(mainStreamManager, '😎')
-  // user정보 가져오기
-  // axios 요청? redux?
-  // const getUserInfo = async () => {
-  //   const user = state.userinfo;
-  //   const ownerPicturePath = user.picture;
-  //   const ownerName = user.name;
-  //   setProFileImg(ownerPicturePath);
-  //   setHostName(ownerName);
-  // };
-
-  // useEffect(() => {
-  //   getUserInfo();
-  // }, []);
-
   useEffect(() => {
     const onbeforeunload = (event) => {
       leaveSession();
@@ -403,7 +418,7 @@ const VideoRoomTest = () => {
   return (
     // 입장 전 보이는 화면
     <div className={styles.container}>
-      {session === undefined ? (
+      {/* {session === undefined ? (
         <div id="join" className={styles.joinpage}>
           <div id="join-dialog" className="jumbotron vertical-center">
             <h1>{myUserName} 님,</h1>
@@ -417,6 +432,16 @@ const VideoRoomTest = () => {
               라이브 입장하기
             </button>
           </div>
+        </div>
+      ) : null} */}
+
+      {session === undefined ? (
+        <div>
+          {isHost ? (
+            <SellerLoading joinSession={joinSession} roomId={roomId} />
+          ) : (
+            <BuyerLoading joinSession={joinSession} />
+          )}
         </div>
       ) : null}
 
@@ -448,7 +473,7 @@ const VideoRoomTest = () => {
                   <div className={styles.sellerimg}>
                     <img src={userImg} alt="" />
                   </div>
-                  <div className={styles.sellername}>냠냠이 님</div>
+                  <div className={styles.sellername}>{hostName} 님</div>
                 </div>
                 <div className={styles.subtotal}>
                   <EyeIcon className={styles.eyeicon} />
@@ -476,12 +501,15 @@ const VideoRoomTest = () => {
                   onMessage={sendMsg}
                   currentSession={session}
                 />
-                <button onClick={startAuction} className={styles.gobtn}>
-                  go?
-                </button>
-                <button onClick={countBidder} className={styles.gobtn}>
-                  go!
-                </button>
+                {isHost ? (
+                  <button onClick={startAuction} className={styles.gobtn}>
+                    go?
+                  </button>
+                ) : (
+                  <button onClick={countBidder} className={styles.gobtn}>
+                    go!
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -509,8 +537,8 @@ const VideoRoomTest = () => {
             />
           </div> */}
 
-          <div>{bidders}</div>
-          <div>{bidPrice}</div>
+          <div>구매의사 수: {bidders}</div>
+          <div>입찰가: {bidPrice}</div>
           <div>
             {true ? (
               <Price
@@ -529,10 +557,8 @@ const VideoRoomTest = () => {
                 <div className={styles.modalimg}>
                   <img src={userImg} alt="" />
                 </div>
-                <div className={styles.modalbiddername}>
-                  딸기우유 서녕 님이,
-                </div>
-                <div className={styles.modalbidprice}>50300원에 낙찰!</div>
+                <div className={styles.modalbiddername}>{bestBidder} 님이,</div>
+                <div className={styles.modalbidprice}>{bidPrice}원에 낙찰!</div>
               </div>
             ) : null}
           </div>
