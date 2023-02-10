@@ -60,7 +60,7 @@ const VideoRoomTest = () => {
             axios
               .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
               .then((res) => {
-                console.log(res.data.user, '😖host 정보')
+                console.log(res.data.user, "😖host 정보");
                 setHostName(res.data.user.kakaoNickname);
               });
           });
@@ -489,12 +489,11 @@ const VideoRoomTest = () => {
                   onMessage={sendMsg}
                   currentSession={session}
                 />
-                <button onClick={startAuction} className={styles.gobtn}>
-                  go?
-                </button>
-                <button onClick={countBidder} className={styles.gobtn}>
-                  go!
-                </button>
+                {isHost ? (
+                  <button onClick={startAuction} className={styles.gobtn}>go?</button>
+                ) : (
+                  <button onClick={countBidder} className={styles.gobtn}>go!</button>
+                )}
               </div>
             </div>
           </div>
@@ -542,9 +541,7 @@ const VideoRoomTest = () => {
                 <div className={styles.modalimg}>
                   <img src={userImg} alt="" />
                 </div>
-                <div className={styles.modalbiddername}>
-                  {bestBidder} 님이,
-                </div>
+                <div className={styles.modalbiddername}>{bestBidder} 님이,</div>
                 <div className={styles.modalbidprice}>{bidPrice}원에 낙찰!</div>
               </div>
             ) : null}
