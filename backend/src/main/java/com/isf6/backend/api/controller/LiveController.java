@@ -165,9 +165,24 @@ public class LiveController {
 
         //내가 라이브 요청을 한 상품 목록
         List<Product> MyLiveRequestList = new ArrayList<>();
-        MyLiveRequestList = liveRequestService.getMyLiveRequestList(userCode);
+        MyLiveRequestList = liveRequestService.getMyLiveRequestProductList(userCode);
         log.info("listSize", MyLiveRequestList.size()); //확인용
         result.put("MyLiveRequestList", MyLiveRequestList);
+
+        return ResponseEntity.status(200).body(result);
+    }
+
+    //유저가 라이브 요청한 상품에 대한 라이브방 목록 조회(시작한 것만)
+    @ApiOperation(value = "라이브 요청한 상품에 대한 라이브방 목록 조회", notes = "라이브 요청한 상품에 대한 라이브방 목록 조회")
+    @GetMapping("/request/{userCode}")
+    public ResponseEntity getRequestLiveRoomList(@PathVariable long userCode) {
+        Map<String, Object> result = new HashMap<>();
+
+        //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
+        List<LiveRoom> liveRoomList = new ArrayList<>();
+        liveRoomList = liveService.getRequestLiveRoomList(userCode);
+        log.info("liveRoomList : {}", liveRoomList.size());
+        result.put("myLiveRoomList", liveRoomList);
 
         return ResponseEntity.status(200).body(result);
     }
