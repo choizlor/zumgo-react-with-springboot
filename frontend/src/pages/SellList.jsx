@@ -29,6 +29,7 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
+      handleChangeStatus(filter);
   }, []);
 
   const clickProduct = (id) => {
