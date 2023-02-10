@@ -3,9 +3,9 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = (app) => {
   app.use(
-    "ws",
+    "wss",
     createProxyMiddleware({
-      target: "http://i8c110.p.ssafy.io:8080",
+      target: "https://i8c110.p.ssafy.io",
       ws: true,  // 웹소켓을 사용하겠다!
     })
   );
