@@ -156,8 +156,8 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
-              // client.deactivate();
-              navigate(-1);
+              disConnect();
+              navigate('/chatlist');
             }}
           />
           <span>{other.kakaoNickname}</span>
