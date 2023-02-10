@@ -12,11 +12,12 @@ export default function Reviews({ userId, userNickname }) {
         console.log(res.data, '🎨');
         console.log(res.data.MyReview, '👓');
         setReviews(res.data.MyReview);
+        console.log(reviews, '뤼발')
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [reviews]);
 
   return (
     <div className={styles.body}>
