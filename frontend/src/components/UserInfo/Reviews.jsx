@@ -17,6 +17,7 @@ export default function Reviews({ userId, userNickname }) {
       .catch((err) => {
         console.log(err);
       });
+
   }, []);
 
   return (
@@ -24,6 +25,7 @@ export default function Reviews({ userId, userNickname }) {
       <span className={styles.title}>{userNickname}님께 달린 리뷰</span>
 
       <div className={styles.reviewcontainer}>
+        {reviews}
         {reviews?.map((review) => {
           <div className={styles.review} key={review.reviewId}>
             <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
