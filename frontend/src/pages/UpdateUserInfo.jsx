@@ -41,7 +41,7 @@ export default function UpdateUserInfo() {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
+      .then(() => {
         navigate(`/userinfo/${userId}`);
       })
       .catch((err) => {

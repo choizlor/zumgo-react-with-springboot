@@ -64,7 +64,7 @@ export default function UserInfo() {
           <ChevronLeftIcon
             className="w-6 h-6 text-black-100"
             onClick={() => {
-              navigate(-1);
+              navigate('/');
             }}
           />
           <div className={styles.title}>프로필</div>
