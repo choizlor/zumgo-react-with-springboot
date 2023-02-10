@@ -15,7 +15,7 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  const other = location.state.other;
+  // const other = location.state.other;
   const sellerId = location.state.sellerId;
   const buyerId = location.state.buyerId;
 
