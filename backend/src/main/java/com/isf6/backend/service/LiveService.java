@@ -1,6 +1,8 @@
 package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
+import com.isf6.backend.api.controller.LiveController;
+import com.isf6.backend.domain.entity.LiveRequest;
 import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.domain.entity.LiveStatus;
 import com.isf6.backend.domain.entity.Product;
@@ -19,8 +21,8 @@ import java.util.List;
 public class LiveService {
 
     private final LiveRoomRepository liveRoomRepository;
-
     private final ProductService productService;
+    private final LiveRequestService liveRequestService;
 
     public LiveRoom createLive(LiveRoomSaveReqDto liveRoomSaveReqDto) {
         //0. 예약이 삭제되야함,,,,
@@ -87,6 +89,14 @@ public class LiveService {
         }
 
         liveRoomRepository.save(liveRoom);
+    }
+
+    public List<LiveRoom> getRequestLiveRoomList(long userCode) {
+        //라이브요청 리스트로 라이브방 목록 가져오기... 근데 라이브 상태가 시작인 것만...
+        List<LiveRoom> liveRoomList = new ArrayList<>();
+        liveRoomList = liveRoomRepository.getStartLiveRoomList(userCode);
+
+        return liveRoomList;
     }
 
 }

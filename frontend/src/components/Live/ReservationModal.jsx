@@ -21,7 +21,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
     setModalOpen(false);
   };
 
-  console.log(typeof(productId), '🥱product type')
+  console.log(typeof productId, "🥱product type");
 
   // 상품정보 불러오기
   useEffect(() => {
@@ -51,23 +51,18 @@ export default function ReservationModal({ setModalOpen, productId }) {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
+    const body = {
+      productId: productId,
+      liveStartTime: reserve,
+      liveStatus: "WAIT",
+    };
     axios
-      .post(
-        `https://i8c110.p.ssafy.io/api/v1/live/room`,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
+      .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
         },
-        {
-          body: {
-            productId: productId,
-            liveStartTime: reserve,
-            liveStatus: "WAIT",
-          },
-        }
-      )
+      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };

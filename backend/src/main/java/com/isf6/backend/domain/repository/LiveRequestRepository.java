@@ -16,4 +16,8 @@ public interface LiveRequestRepository extends JpaRepository<LiveRequest, Object
 
     @Query("SELECT lr FROM LiveRequest lr WHERE lr.product.id = :productId and lr.user.userCode = :userCode")
     LiveRequest getLiveRequest(@Param("productId") long productId, @Param("userCode") long userCode);
+
+    @Query("SELECT lr FROM LiveRequest lr WHERE lr.user.userCode = :userCode")
+    List<LiveRequest> findByUserId(@Param("userCode") long userCode);
+
 }
