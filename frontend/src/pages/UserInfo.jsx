@@ -27,7 +27,7 @@ export default function UserInfo() {
   });
 
   const dispatch = useDispatch();
-  const [myReivews , setMyReviews] = useState([]);
+  const [myReviews , setMyReviews] = useState([]);
 
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
@@ -162,7 +162,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo} myReivews={myReivews} />
+      <Reviews userInfo={userInfo} myReviews={myReviews} />
 
       {/* <UserInfoDetail/> */}
       <BottomNav />
