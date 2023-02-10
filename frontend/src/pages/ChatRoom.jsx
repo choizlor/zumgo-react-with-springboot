@@ -179,7 +179,7 @@ export default function ChatRoom() {
               navigate("/chatlist");
             }}
           />
-          <span>{other.kakaoNickname}</span>
+          {/* <span>{other.kakaoNickname}</span> */}
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
@@ -191,13 +191,13 @@ export default function ChatRoom() {
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
           <MegaphoneIcon
-            onClick={() =>
-              navigate(`/report/${other?.userCode}`, {
-                state: {
-                  other,
-                },
-              })
-            }
+            // onClick={() =>
+            //   navigate(`/report/${other?.userCode}`, {
+            //     state: {
+            //       other,
+            //     },
+            //   })
+            // }
           />
           <div className={styles.inputbar}>
             <div>
