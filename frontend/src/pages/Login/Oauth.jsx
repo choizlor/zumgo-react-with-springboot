@@ -20,7 +20,7 @@ export default function Oauth() {
           console.log(token,'🖼')
           
           // 받아온 토큰을 로컬 스토리지에 token으로 저장
-          window.localStorage.setItem("token", token);
+          localStorage.setItem("token", token);
 
           // 유저 정보를 불러오는 api
           axios
