@@ -1,15 +1,16 @@
 package com.isf6.backend.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LiveBid {
 
     @Id
@@ -19,12 +20,18 @@ public class LiveBid {
 
     private String bidder;
 
-    private int bid_price;
+    private int bidPrice;
 
-    private Timestamp bid_time;
+    private Timestamp bidTime;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "liveRoom_id")
+    @JoinColumn(name = "liveRoom_id", insertable = false, updatable = false)
     private LiveRoom liveRoom;
+
+    @Column(name = "liveRoom_id", nullable = false)
+    private Long liveRoomId;
+    public LiveBid(Long livRoomId) {
+        this.liveRoomId = livRoomId;
+    }
 }

@@ -10,6 +10,10 @@ export default function Root() {
 
   useEffect(() => {
     // 유저 정보를 불러오는 api
+    if (!token) {
+      return
+    }
+    
     axios
       .get("http://i8c110.p.ssafy.io/api/me", {
         headers: {
@@ -26,7 +30,7 @@ export default function Root() {
           })
         );
       });
-  });
+  }, [token]);
 
   return (
     <div>

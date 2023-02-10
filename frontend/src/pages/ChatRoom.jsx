@@ -15,7 +15,9 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  const other = location.state.other
+  // const other = location.state.other;
+  const sellerId = location.state.sellerId;
+  const buyerId = location.state.buyerId;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -23,9 +25,43 @@ export default function ChatRoom() {
   let [client, changeClient] = useState(null);
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
   const [chatList, setChatList] = useState([]); // 채팅 기록
+  const [history, setHistory] = useState(location.state.chats);
 
   const user = useSelector((state) => {
     return state.user;
+  });
+
+  const preMsgBox = history.map((item, idx) => {
+    const date = new Date(item.chat_date);
+    var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+    var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+
+    if (item.chatter !== user.kakaoNickname) {
+      return (
+        <div key={idx} className={styles.otherchat}>
+          <div className={styles.otherimg}>
+            <img src={testImg} alt="" />
+          </div>
+          <div className={styles.othermsg}>
+            <span>{item.chat_content}</span>
+          </div>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
+        </div>
+      );
+    } else {
+      return (
+        <div key={idx} className={styles.mychat}>
+          <div className={styles.mymsg}>
+            <span>{item.chat_content}</span>
+          </div>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
+        </div>
+      );
+    }
   });
 
   const msgBox = chatList.map((item, idx) => {
@@ -52,6 +88,20 @@ export default function ChatRoom() {
       );
     }
   });
+
+  const getChatHistory = () => {
+    axios
+      .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
+        buyerCode: buyerId,
+        sellerCode: sellerId,
+      })
+      .then((res) => {
+        console.lof(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const connect = () => {
     // 소켓 연결
@@ -94,6 +144,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
+      console.log(msg)
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -108,7 +159,7 @@ export default function ChatRoom() {
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
         type: "",
-        sender: user.userCode,
+        sender: user.kakaoNickname,
         channelId: chatroomId,
         data: chat,
       }),
@@ -143,6 +194,9 @@ export default function ChatRoom() {
   };
 
   useEffect(() => {
+    // 기존의 대화 내용 불러오기
+    getChatHistory();
+
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
 
@@ -156,26 +210,33 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
-              client.deactivate();
-              navigate(-1);
+              disConnect();
+              navigate("/chatlist");
             }}
           />
-          <span>{other.kakaoNickname}</span>
+          {/* <span>{other.kakaoNickname}</span> */}
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
         </div>
 
         {/* 채팅 리스트 */}
-        <div className={styles.chatbox}>{msgBox}</div>
+        <div className={styles.chatbox}>
+          {preMsgBox}
+          {msgBox}
+        </div>
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/${other.userCode}`, {
-            state : {
-              other,
-            }
-          })} />
+          <MegaphoneIcon
+          // onClick={() =>
+          //   navigate(`/report/${other?.userCode}`, {
+          //     state: {
+          //       other,
+          //     },
+          //   })
+          // }
+          />
           <div className={styles.inputbar}>
             <div>
               <input
