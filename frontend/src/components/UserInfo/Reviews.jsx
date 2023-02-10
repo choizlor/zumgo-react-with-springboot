@@ -8,9 +8,9 @@ export default function Reviews({userInfo, myReivews}) {
       <span className={styles.title}>{userInfo.kakaoNickname}님께 달린 리뷰</span>
       <div className={styles.reviewcontainer}>
         {
-          myReivews.map((review) => {
+          myReivews?.map((review) => {
 
-            <ReviewItem key={review.id} review={review}/>
+            <ReviewItem key={review.reviewId} review={review}/>
           })
         }
       </div>

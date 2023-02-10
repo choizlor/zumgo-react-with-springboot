@@ -156,7 +156,7 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
-              client.deactivate();
+              // client.deactivate();
               navigate(-1);
             }}
           />
