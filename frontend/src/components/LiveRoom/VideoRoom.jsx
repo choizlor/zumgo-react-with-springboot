@@ -28,47 +28,47 @@ const VideoRoomTest = () => {
   const isHost = Number(product.userCode) === user.userCode ? true : false;
   const token = window.localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   setMyUserName(user.kakaoNickname);
-
-  //   axios
-  //     .get(
-  //       `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
-  //     )
-  //     .then((res) => {
-  //       setProduct(res.data);
-  //       setBidPrice(res.data.price);
-  //       console.log(res.data, "😊라이브 눌렀을때 상품정보");
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [user]);
-
   useEffect(() => {
     setMyUserName(user.kakaoNickname);
 
-    (async () => {
-      try {
-        await axios
-          .get(
-            `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
-          )
-          .then((res) => {
-            setProduct(res.data);
-            setBidPrice(res.data.price);
-            const id = res.data.userCode;
-
-            axios
-              .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
-              .then((res) => {
-                console.log(res.data, '😖host 정보')
-                setHostName(res.data.kakaoNickname);
-              });
-          });
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    axios
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
+      )
+      .then((res) => {
+        setProduct(res.data);
+        setBidPrice(res.data.price);
+        console.log(res.data, "😊라이브 눌렀을때 상품정보");
+      })
+      .catch((err) => console.log(err));
   }, [user]);
+
+  // useEffect(() => {
+  //   setMyUserName(user.kakaoNickname);
+
+  //   (async () => {
+  //     try {
+  //       await axios
+  //         .get(
+  //           `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
+  //         )
+  //         .then((res) => {
+  //           setProduct(res.data);
+  //           setBidPrice(res.data.price);
+  //           const id = res.data.userCode;
+
+  //           axios
+  //             .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
+  //             .then((res) => {
+  //               console.log(res.data, '😖host 정보')
+  //               setHostName(res.data.kakaoNickname);
+  //             });
+  //         });
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   });
+  // }, [user]);
 
   const [mySessionId, setMySessionId] = useState("SessionA");
   const [myUserName, setMyUserName] = useState(
