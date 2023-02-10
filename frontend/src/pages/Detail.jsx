@@ -34,6 +34,7 @@ export default function Detail() {
   // 상품 ID
   const params = useParams();
   const productId = params.productId;
+  
   // 상품 정보
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
@@ -41,7 +42,7 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
-  const [chatters, setChatters] = useState([]);
+  const [chats, setChats] = useState([]);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
