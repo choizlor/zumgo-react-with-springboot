@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/UserInfo.module.css";
-import BottomNav from "../components/Nav/BottomNav";
-import Reviews from "../components/UserInfo/Reviews";
+import BottomNav from "../../components/Nav/BottomNav";
+import Reviews from "./Reviews";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/userSlice";
+import { logout } from "../../store/userSlice";
 
 import {
   ChevronLeftIcon,
@@ -157,7 +157,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      {/* <Reviews userId={userId} userNickname={userInfo.kakaoNickname}/> */}
+      <Reviews userInfo={userInfo}/>
 
       {/* <UserInfoDetail/> */}
       <BottomNav />
