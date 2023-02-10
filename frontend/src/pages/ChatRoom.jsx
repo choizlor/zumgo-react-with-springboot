@@ -24,7 +24,7 @@ export default function ChatRoom() {
 
   let [client, changeClient] = useState(null);
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
-  const [chatList, setChatList] = useState([]); // 채팅 기록
+  const [chatList, setChatList] = useState(location.state.chats); // 채팅 기록
 
   const user = useSelector((state) => {
     return state.user;

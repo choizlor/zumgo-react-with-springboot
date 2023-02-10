@@ -116,7 +116,11 @@ export default function Detail() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data}`);
+        navigate(`/chatroom/${res.data}`, {state : {
+          chats : res.data.chatList,
+          sellerId : product.userCode,
+          buyerId : userId,
+        }});
       })
       .catch((err) => {
         console.log(err);
