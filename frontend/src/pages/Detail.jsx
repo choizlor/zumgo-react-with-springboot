@@ -270,7 +270,7 @@ export default function Detail() {
           )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {isMine ? (
+        {isMine && userId !==0 ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
             <PencilSquareIcon

@@ -9,10 +9,12 @@ const reducers = combineReducers({
     user: user.reducer,
 });
 
+
+
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userSlice"],
+  whitelist: ["user"],
 };
 
 

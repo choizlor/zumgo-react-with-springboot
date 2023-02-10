@@ -11,6 +11,7 @@ import BuyLive from "../components/Live/BuyLive.jsx";
 export default function Live() {
   const [sellLiveRequestList, setSellLiveRequestList] = useState();
   const [myLiveRequestList, setMyLiveRequestList] = useState();
+  const [onairList, setOnairList] = useState();
   const userId = useSelector((state) => {
     return state.user.userCode;
   });
@@ -22,6 +23,16 @@ export default function Live() {
         setSellLiveRequestList(res.data.sellLiveRequestList);
         setMyLiveRequestList(res.data.MyLiveRequestList);
         console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/${userId}`)
+      .then((res) => {
+        // setOnairList(res.data);
+        console.log(res.data, '😎라이브요청!')
       })
       .catch((err) => {
         console.log(err);
