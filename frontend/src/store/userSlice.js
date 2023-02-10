@@ -24,10 +24,5 @@ let user = createSlice({
   },
 });
 
-export default configureStore({
-  reducer: {
-    user: user.reducer,
-  },
-});
-
 export let { login, logout } = user.actions;
+export default user;

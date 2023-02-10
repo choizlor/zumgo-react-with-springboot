@@ -1,18 +1,24 @@
+import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
-import userSlice from "./userSlice";
+import { user } from "./userSlice";
+
+const reducers = combineReducers({
+  user: user.reducer,
+});
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userSlice"],
+  whitelist: ["user"],
 };
 
+const persistedReducer = persistReducer(persistConfig, reducers);
 
-const reducers = combineReducers({
-    userSlice
+const store = configureStore({
+  reducer: persistedReducer,
 });
 
-export default persistReducer(persistConfig, reducers)
+export default store;
