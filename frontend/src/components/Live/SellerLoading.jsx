@@ -25,8 +25,7 @@ export default function SellerLoading({ joinSession, roomId }) {
     <div>
       <div
         onClick={() => {
-          joinSession;
-          onairSession;
+          onairSession();
         }}
       >
         라이브 시작하기
