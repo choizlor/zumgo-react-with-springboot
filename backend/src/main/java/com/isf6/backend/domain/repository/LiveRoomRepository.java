@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface LiveRoomRepository extends JpaRepository<LiveRoom, Long> {
 
-    public LiveRoom findByProductId(long productId);
+    @Query("select r from LiveRoom r where r.product.id = :productId")
+    LiveRoom findByProductId(@Param("productId") long productId);
 
     @Query("select r from LiveRoom r " +
             "join LiveRequest lr " +
