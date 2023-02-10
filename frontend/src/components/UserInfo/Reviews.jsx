@@ -9,13 +9,15 @@ export default function Reviews({ userId, userNickname }) {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
       .then((res) => {
-        console.log(res.data);
-        setReviews(res.data);
+        console.log(res.data, '🎨');
+        console.log(res.data.MyReview, '👓');
+        setReviews(res.data.MyReview);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
+
   return (
     <div className={styles.body}>
       <span className={styles.title}>{userNickname}님께 달린 리뷰</span>
