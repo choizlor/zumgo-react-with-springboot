@@ -12,11 +12,15 @@ export default function BuyLive({ myLiveRequestList }) {
   return (
     <div>
       <div className={styles.text}>방송 중</div>
-      <LiveCard />
+      <div>
+        <LiveCard />
+      </div>
       <div className={styles.text}>라이브 예정</div>
-      {requestList?.map((product) => (
-        <RequestLive key={product.id} product={product} />
-      ))}
+      <div>
+        {requestList?.map((product) => (
+          <RequestLive key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 }
