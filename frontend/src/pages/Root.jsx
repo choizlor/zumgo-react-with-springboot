@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../store/userSlice.js";
+import { login } from "../reducers/userSlice.js";
 import axios from "axios";
 
 export default function Root() {
