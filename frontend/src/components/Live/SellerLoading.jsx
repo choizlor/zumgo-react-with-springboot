@@ -31,7 +31,8 @@ export default function SellerLoading({ joinSession, roomId, title }) {
         <div
           className={styles.live}
           onClick={() => {
-            joinSession, onairSession();
+            joinSession();
+            onairSession();
           }}
         >
           라이브 시작하기
