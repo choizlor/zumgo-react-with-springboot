@@ -34,6 +34,7 @@ export default function Detail() {
   // 상품 ID
   const params = useParams();
   const productId = params.productId;
+  
   // 상품 정보
   const [product, setProduct] = useState({});
   const [wishCheck, setwishcheck] = useState(product.wishCheck);
@@ -115,7 +116,12 @@ export default function Detail() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data}`);
+        navigate(`/chatroom/${res.data}`, {state : {
+          other : {
+            kakaoNickname : product.kakaoNickname,
+            userCode : product.userCode,
+          }
+        }});
       })
       .catch((err) => {
         console.log(err);

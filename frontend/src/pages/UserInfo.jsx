@@ -22,6 +22,7 @@ export default function UserInfo() {
   const param = useParams();
   const navigate = useNavigate();
   const userId = param.userId;
+  
   const me = useSelector((state) => {
     return state.user;
   });
