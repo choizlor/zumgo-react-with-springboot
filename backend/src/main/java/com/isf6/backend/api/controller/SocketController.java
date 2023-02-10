@@ -7,8 +7,10 @@ import com.isf6.backend.api.Response.ChatInfoResDto;
 import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.domain.entity.Chat;
 import com.isf6.backend.domain.entity.ChatRoom;
+import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.ChatRepository;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
+import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.service.SocketService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -101,6 +103,10 @@ public class SocketController {
             chatInfo.setChatRoomId(chatRoomId);
         }
 
+        // 프로필 이미지 추가
+        chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
+        chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
+        
         return chatInfo;
     }
 
