@@ -27,11 +27,9 @@ export default function ChatRoom() {
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const [history, setHistory] = useState(location.state.chats);
 
-
   const user = useSelector((state) => {
     return state.user;
   });
-
 
   const preMsgBox = history.map((item, idx) => {
     if (item.chatter !== user.kakaoNickname) {
@@ -56,7 +54,7 @@ export default function ChatRoom() {
         </div>
       );
     }
-  })
+  });
   const msgBox = chatList.map((item, idx) => {
     if (Number(item.sender) !== user.userCode) {
       return (
@@ -213,18 +211,21 @@ export default function ChatRoom() {
         </div>
 
         {/* 채팅 리스트 */}
-        <div className={styles.chatbox}>{msgBox}</div>
+        <div className={styles.chatbox}>
+          {preMsgBox}
+          {msgBox}
+        </div>
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
           <MegaphoneIcon
-            // onClick={() =>
-            //   navigate(`/report/${other?.userCode}`, {
-            //     state: {
-            //       other,
-            //     },
-            //   })
-            // }
+          // onClick={() =>
+          //   navigate(`/report/${other?.userCode}`, {
+          //     state: {
+          //       other,
+          //     },
+          //   })
+          // }
           />
           <div className={styles.inputbar}>
             <div>
