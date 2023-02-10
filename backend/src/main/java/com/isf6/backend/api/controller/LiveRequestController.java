@@ -37,7 +37,13 @@ public class LiveRequestController {
                                              @ApiParam(value = "라이브 요청을 받는 상품 정보", required = true) @RequestParam("productId") Long productId) {
         Map<String, Object> result = new HashMap<>();
         //userCode와 productId로 디비에 라이브 요청 생성
-        liveRequestService.saveLiveRequest(userCode, productId);
+        boolean check = liveRequestService.saveLiveRequest(userCode, productId);
+        if(!check) {
+            //라이브 요청 불가능
+            result.put("liveRequest", check);
+        } else {
+            result.put("liveRequest", check);
+        }
 
         //라이브 요청 개수 리턴
         long cnt = liveRequestService.getLiveRequestCnt(productId);
