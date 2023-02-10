@@ -1,6 +1,8 @@
 package com.isf6.backend.domain.repository.custom;
 
 import com.isf6.backend.api.Response.IndexProductsResDto;
+import com.isf6.backend.domain.entity.Img;
+import com.isf6.backend.domain.entity.QImg;
 import com.isf6.backend.domain.entity.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
     private final JPAQueryFactory queryFactory;
     QProduct product = QProduct.product;
+    QImg img = QImg.img;
 
 
 //    @Override
@@ -72,9 +75,11 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                         product.status,
                         product.createdDate,
                         product.wishes.size().as("wishSize"),
-                        product.liveRequests.size().as("liveReqSize")
+                        product.liveRequests.size().as("liveReqSize"),
+                        img.imgUrl.as("thumbnail")
                 ))
                 .from(product)
+                .join(img).on(product.id.eq(img.product.id))
                 .orderBy(product.id.desc())
                 .limit(pageSize)
                 .offset(pageNo * pageSize)

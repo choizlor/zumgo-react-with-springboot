@@ -112,8 +112,15 @@ public class UserService {
         //1. 이메일로 유저 정보 찾기
         User user = userRepository.findByKakaoEmail(profile.getKakao_account().getEmail());
 
-        //2. 유저 정보가 없다면 DB에 새로 저장
+        //2. 유저 정보가 없다면
         if(user == null) {
+            // 2-1. 유저 닉네임 중복 검사
+            Long userCnt = userRepository.countByKakaoNicknameStartingWith(profile.getKakao_account().getProfile().getNickname());
+            if (userCnt++ > 0) {
+                profile.getKakao_account().getProfile().setNickname(profile.getKakao_account().getProfile().getNickname() + userCnt);
+            };
+
+            // 2-2. DB에 새로 저장
             user = User.builder()
                     .kakaoId(profile.getId())
                     .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())

@@ -4,7 +4,9 @@ import BottomNav from "../components/Nav/BottomNav";
 import Reviews from "../components/UserInfo/Reviews";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store/userSlice";
+
 import {
   ChevronLeftIcon,
   HeartIcon,
@@ -24,7 +26,9 @@ export default function UserInfo() {
     return state.user;
   });
 
-  console.log(me)
+  const dispatch = useDispatch();
+
+  console.log(me);
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
@@ -35,16 +39,21 @@ export default function UserInfo() {
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
-    window.localStorage.removeItem("token");
+    dispatch(
+      logout({
+        userCode: "",
+        point: "",
+        kakaoNickname: "",
+        kakaoProfileImg: "",
+      })
+    );
   };
 
   //   사용자 정보를 불러오는 api
   useEffect(() => {
-    axios
-      .get(`https://i8c110.p.ssafy.io/api/user/${userId}`)
-      .then((res) => {
-        setUserInfo(res.data.user);
-      });
+    axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
+      setUserInfo(res.data.user);
+    });
   }, []);
 
   return (
@@ -91,9 +100,7 @@ export default function UserInfo() {
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>
-        <div className={styles.menustitle}>
-          거래 내역
-        </div>
+        <div className={styles.menustitle}>거래 내역</div>
         <div className={styles.menu}>
           <CircleStackIcon className={styles.menuicon} />
           <div
@@ -112,7 +119,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/picklist/${userId}`);
+                  navigate(`/wishlist/${userId}`);
                 }}
               >
                 관심목록
@@ -148,7 +155,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo}/>
+      <Reviews userInfo={userInfo} />
 
       {/* <UserInfoDetail/> */}
       <BottomNav />

@@ -37,7 +37,7 @@ public class LiveRoom {
     private int final_bid;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -48,6 +48,4 @@ public class LiveRoom {
     @JsonIgnore
     @OneToMany(mappedBy = "liveRoom")
     private List<LiveBid> liveBids = new ArrayList<>();
-
-
 }

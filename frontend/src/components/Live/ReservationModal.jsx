@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ReservationModal.module.css";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
@@ -10,19 +11,27 @@ import axios from "axios";
 export default function ReservationModal({ setModalOpen, productId }) {
   const [reserve, setReserve] = useState(new Date());
   const [product, setProduct] = useState({});
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
+  const token = window.localStorage.getItem("token");
 
   // 모달 끄기
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  console.log(typeof(productId), '🥱product type')
+
   // 상품정보 불러오기
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=1`)
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+      )
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,12 +40,34 @@ export default function ReservationModal({ setModalOpen, productId }) {
 
   const handleSubmit = () => {
     setModalOpen(false);
+    axios
+      .put(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`,
+        {
+          ...product,
+          reserve,
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
     axios
-      .put(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=1`, {
-        ...product,
-        reserve,
-      })
+      .post(
+        `https://i8c110.p.ssafy.io/api/v1/live/room`,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        },
+        {
+          body: {
+            productId: productId,
+            liveStartTime: reserve,
+            liveStatus: "WAIT",
+          },
+        }
+      )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };

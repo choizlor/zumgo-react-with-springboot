@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./styles/AddProduct.module.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// heroicons
 import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import testImg from "../assets/images/kim.png";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function AddProduct() {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const { userId } = location.state;
-  // console.log(location.state)
   
   // redux
-  const userId = useSelector((state) => {
-    return state.user.userCode;
-  });
+  const userId = useSelector((state) => {return state.user.userCode;});
   
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -35,6 +30,12 @@ export default function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if ( !userId ) {
+      alert('로그인이 필요한 서비스 입니다.')
+      navigate('/login')
+      return
+    }
+
     let formData = new FormData();
     let files = e.target.imgurls.files;
 
@@ -42,6 +43,7 @@ export default function AddProduct() {
       formData.append("imgUrl", files[i]);
     }
 
+    // content를 문자열로 변환
     formData.append(
       "content",
       new Blob([JSON.stringify(content)], { type: "application/json" })
@@ -54,18 +56,12 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
-        // navigate(`/detail/${res.data}`)
-        console.log(res.data)
+        navigate(`/detail/${res.data}`)
       })
       .catch((err) => {
         console.log(err);
       });
 
-
-    // formData에 저장된 값 확인 하기  
-    for (var key of formData.keys()) {
-      console.log(key, formData.get(key), "👩");
-    }
   };
 
   const handleTitleChange = (e) => {

@@ -11,13 +11,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ChatMessageSaveReqDto {
-    private Long roomId;
+    private String roomId;
     private String chat_content;
 //    private Timestamp chat_date;
     private String chatter;
 
     @Builder
-    public ChatMessageSaveReqDto(Long roomId, String chatter, String chat_content) {
+    public ChatMessageSaveReqDto(String roomId, String chatter, String chat_content) {
         this.roomId = roomId;
         this.chat_content = chat_content;
         this.chatter = chatter;

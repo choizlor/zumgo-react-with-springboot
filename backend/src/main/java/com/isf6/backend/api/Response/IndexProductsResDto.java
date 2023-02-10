@@ -3,6 +3,7 @@ package com.isf6.backend.api.Response;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
+import com.isf6.backend.domain.entity.QImg;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,5 +34,4 @@ public class IndexProductsResDto {
         liveReqSize = product.getLiveRequests().size();
         thumbnail = product.getImgList().get(0).getImgUrl();
     }
-
 }

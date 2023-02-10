@@ -48,7 +48,6 @@ public class ProductService {
     @Transactional
     public Long uploadProduct(ProductSaveRequestDto requestDto, List<String> imgPaths) {
         postBlankCheck(imgPaths);
-
         Long id = productRepository.save(requestDto.toEntity()).getId();
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 //        List<String> imgList = new ArrayList<>();
@@ -82,11 +81,20 @@ public class ProductService {
     public ProductResponseDto findById (Long id, Long userCode) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 
-        //라이브 요청 여부, 좋아요 여부 체크하여 포함해서 상세페이지로 전달
-        //지금 들어오는 유저가 이 상품에 좋아요를 눌렀는지...
-        boolean wishCheck = wishService.getUserWishChk(id, userCode);
-        //지금 들어오는 유저가 이 상품에 라이브 요청을 했는지...
-        boolean liveReqCheck = liveRequestService.getUserLiveReqChk(id, userCode);
+
+        boolean wishCheck;
+        boolean liveReqCheck;
+        //로그인한 유저인지 비로그인 유저인지 확인
+        if(userCode == 0) {
+            wishCheck = false;
+            liveReqCheck = false;
+        } else {
+            //라이브 요청 여부, 좋아요 여부 체크하여 포함해서 상세페이지로 전달
+            //지금 들어오는 유저가 이 상품에 좋아요를 눌렀는지...
+            wishCheck = wishService.getUserWishChk(id, userCode);
+            //지금 들어오는 유저가 이 상품에 라이브 요청을 했는지...
+            liveReqCheck = liveRequestService.getUserLiveReqChk(id, userCode);
+        }
 
         // 이미지 URL 문자열만 뽑아줌...
         List<Img> imgList = entity.getImgList();

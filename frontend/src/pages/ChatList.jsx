@@ -12,7 +12,6 @@ export default function ChatList() {
     return state.user.userCode
   });
 
-
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -20,11 +19,12 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [chats]);
 
   return (
     <div>
@@ -38,7 +38,11 @@ export default function ChatList() {
 
               className={styles.chat}
               onClick={() => {
-                navigate(`/chatroom/${chat.roomId}`, { state: {} });
+                navigate(`/chatroom/${chat.roomId}`, { state: {
+                  other : chat.seller.userCode === userId
+                  ? chat.buyer.kakaoNickname
+                  : chat.seller.kakaoNickName
+                } });
               }}
             >
               <div className={styles.leftbox}>
