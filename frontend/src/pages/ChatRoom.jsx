@@ -15,9 +15,9 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  const other = location.state.other
-  const sellerId = location.state.sellerId
-  const buyerId = location.state.buyerId
+  const other = location.state.other;
+  const sellerId = location.state.sellerId;
+  const buyerId = location.state.buyerId;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -56,12 +56,18 @@ export default function ChatRoom() {
   });
 
   const getChatHistory = () => {
-    axios.post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
-      buyerCode : buyerId,
-      sellerCode : sellerId,
-    }).then((res) => {console.lof(res.data)})
-    .catch((err) => {console.log(err)})
-  }
+    axios
+      .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
+        buyerCode: buyerId,
+        sellerCode: sellerId,
+      })
+      .then((res) => {
+        console.lof(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const connect = () => {
     // 소켓 연결
@@ -154,6 +160,7 @@ export default function ChatRoom() {
 
   useEffect(() => {
     // 기존의 대화 내용 불러오기
+    getChatHistory();
 
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
@@ -169,7 +176,7 @@ export default function ChatRoom() {
           <ChevronLeftIcon
             onClick={() => {
               disConnect();
-              navigate('/chatlist');
+              navigate("/chatlist");
             }}
           />
           <span>{other.kakaoNickname}</span>
@@ -183,11 +190,15 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/${other?.userCode}`, {
-            state : {
-              other,
+          <MegaphoneIcon
+            onClick={() =>
+              navigate(`/report/${other?.userCode}`, {
+                state: {
+                  other,
+                },
+              })
             }
-          })} />
+          />
           <div className={styles.inputbar}>
             <div>
               <input
