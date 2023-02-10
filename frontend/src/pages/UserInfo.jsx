@@ -55,12 +55,7 @@ export default function UserInfo() {
       setUserInfo(res.data.user);
     });
 
-    axios.get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
-    .then((res)=>{
-      console.log(res.data, '🎈🎈')
-      setMyReviews(res.data.myReview)
-    })
-    .catch((err) => {console.log(err)})
+   
   }, []);
 
   return (
@@ -162,7 +157,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo} myReviews={myReviews} />
+      <Reviews userId={userId} />
 
       {/* <UserInfoDetail/> */}
       <BottomNav />
