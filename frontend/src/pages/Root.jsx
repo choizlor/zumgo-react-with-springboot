@@ -30,7 +30,7 @@ export default function Root() {
           })
         );
       });
-  });
+  }, [token]);
 
   return (
     <div>
