@@ -206,7 +206,6 @@ img {
 
 
 .timeTitle {
-  color: black;
   font-size: 10px;
   font-weight: 700;
 }
@@ -220,4 +219,8 @@ img {
   display: flex;
   align-items: center;
   padding-left : 15px;
+}
+
+.time {
+  font-weight: 500;
 }
