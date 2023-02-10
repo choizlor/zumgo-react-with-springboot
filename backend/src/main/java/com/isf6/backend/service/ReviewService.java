@@ -55,6 +55,17 @@ public class ReviewService {
         return result;
     }
 
+    public List<ReviewInfoResDto> getReviewAll(Long userCode) {
+        List<Bill> reviewList = new ArrayList<>();
+        reviewList = billRepository.findBySellerUserCode(userCode);
+        log.info("review cnt : {}", reviewList.size());
+
+        List<ReviewInfoResDto> result = reviewList.stream()
+                .map(review -> new ReviewInfoResDto(review))
+                .collect(Collectors.toList());
+        return result;
+    }
+
     public Bill getReviewByProductId(Long productId) {
         Bill bill = billRepository.findByProductId(productId);
         return bill;

@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 export default function Detail() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  
 
   // 로그인된 유저 아이디
   const userId = useSelector((state) => {
@@ -41,6 +42,11 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chatters, setChatters] = useState([]);
+  const date = new Date(product.reserve);
+  var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+  var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+  var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
   useEffect(() => {
     // 상품 정보 axios
@@ -49,7 +55,7 @@ export default function Detail() {
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
@@ -136,7 +142,7 @@ export default function Detail() {
     if (wishCheck === false) {
       axios
         .post(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -150,7 +156,7 @@ export default function Detail() {
     else {
       axios
         .delete(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=2&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -167,10 +173,9 @@ export default function Detail() {
 
     axios
       .post(
-        "https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=6&productId=10"
+        `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${userId}&productId=${productId}`
       )
       .then((res) => {
-        console.log(res,'🧨')
         setliveReqSize(res.data.liveRequestCnt);
       })
       .catch((err) => {
@@ -181,18 +186,18 @@ export default function Detail() {
   //  상품 삭제하기
 
   const deleteproduct = () => {
-  axios
+    axios
+      .delete(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}`
+      )
+      .then((res) => { 
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`)
-  .then((res) => {
-    console.log(res)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-}
-
-  
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -219,25 +224,25 @@ export default function Detail() {
           })}
         </Swiper>
 
-        {/* 라이브 요청 수가 0 이상일 때 라이브 예약 알림  */}
-         { liveReqSize &&
+        {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
+        {product.reserve !==null ? (
           <div className={styles.livealert}>
-          <span>1/24 16시</span>
-          <span>LIVE 예정</span>
-        </div>
-        }
-        
+            <span>{month}/{day}</span>
+            <span>{hour}:{minute} LIVE 예정</span>
+          </div>
+        ):null }
       </div>
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div className={styles.seller}>
+        <div className={styles.seller} onClick={() => {
+          navigate(`/userinfo/${product.userCode}`)
+
+        }}>
           <div className={styles.sellerImgBox}>
-            <img
-              src="https://sitem.ssgcdn.com/18/83/93/item/2097000938318_i1_1200.jpg"
-              className={styles.sellerImg}
-            />
+            <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
-          <div className={styles.sellerName}></div>
+          <div className={styles.sellerName}>{product.kakaoNickname
+}</div>
         </div>
         <div className={styles.selectbox}>
           {/* 드롭다운 */}
@@ -245,14 +250,18 @@ export default function Detail() {
             className={styles.dropdown}
             onChange={changeStatus}
             value={product.status}
-            disabled={isMine ? 'false' : 'true'}
+            disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
             <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
-          </select> 
-          
-          {isMine && <div className={styles.delete} onClick={deleteproduct}>삭제하기</div>}
+          </select>
+
+          {isMine && (
+            <div className={styles.delete} onClick={deleteproduct}>
+              삭제하기
+            </div>
+          )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
         {isMine ? (
