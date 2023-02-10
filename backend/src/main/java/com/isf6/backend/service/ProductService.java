@@ -162,4 +162,14 @@ public class ProductService {
     public List<Product> findProducts(ProductSearchReqDto productSearch) {
         return productSearchRepository.findBySearch(productSearch);
     }
+
+    //라이브 방 삭제시 상품에 저장된 라이브 예약시간 null로 변경.
+    public void deleteProductReserveTime(long productId) {
+        //먼저 그 상품을 찾고
+        Product product = getProduct(productId);
+        //그 상품 예약시간을 null로 바꾸고
+        product.setReserve(null);
+        //다시 save
+        productRepository.save(product);
+    }
 }
