@@ -57,7 +57,7 @@ export default function ChatRoom() {
     // 소켓 연결
     try {
       const clientdata = new StompJs.Client({
-        brokerURL: "wss://i8c110.p.ssafy.io/chat",
+        brokerURL: "https://i8c110.p.ssafy.io/api/chat",
         connectHeaders: {
           login: "",
           passcode: "password",
@@ -156,7 +156,7 @@ export default function ChatRoom() {
         <div className={styles.topbar}>
           <ChevronLeftIcon
             onClick={() => {
-              client.deactivate();
+              // client.deactivate();
               navigate(-1);
             }}
           />

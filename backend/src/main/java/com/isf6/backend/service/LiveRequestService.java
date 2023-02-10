@@ -23,17 +23,24 @@ public class LiveRequestService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public void saveLiveRequest(Long userCode, Long productId) {
+    public boolean saveLiveRequest(Long userCode, Long productId) {
         LiveRequest liveRequest = new LiveRequest();
 
         User user = userRepository.findByUserCode(userCode);
-        user.setPoint(user.getPoint()-2);
-        liveRequest.setUser(user);
+        if(user.getPoint()-2 <= 0) {
+            //포인트가 없으면 라이브 요청이 안되도록 변경
+            return false;
+        } else {
+            user.setPoint(user.getPoint() - 2);
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
-        liveRequest.setProduct(product);
+            liveRequest.setUser(user);
 
-        liveRequestRepository.save(liveRequest);
+            Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
+            liveRequest.setProduct(product);
+
+            liveRequestRepository.save(liveRequest);
+            return true;
+        }
     }
 
     public Long getLiveRequestCnt(Long productId) {
@@ -45,7 +52,7 @@ public class LiveRequestService {
     }
 
     //내가 라이브 요청한 상품들의 목록
-    public List<Product> getMyLiveRequestList(Long userCode) {
+    public List<Product> getMyLiveRequestProductList(Long userCode) {
         log.info("getMyLiveRequestList : true ");
         List<Product> liveRequestList = new ArrayList<>();
         liveRequestList = productRepository.getMyLiveRequestList(userCode);
@@ -71,6 +78,13 @@ public class LiveRequestService {
         }
 
         return chk;
+    }
+
+    //내가 라이브 요청한 목록
+    public List<LiveRequest> getMyLiveRequestList(Long userCode) {
+        List<LiveRequest> liveRequestList = new ArrayList<>();
+        liveRequestList = liveRequestRepository.findByUserId(userCode);
+        return liveRequestList;
     }
 
 }
