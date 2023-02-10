@@ -6,7 +6,7 @@ export default function Reviews({ userInfo, myReivews }) {
   console.log(myReivews, "🎁🎁🎁");
   return (
     <div className={styles.body}>
-      {/* <span className={styles.title}>{userInfo.kakaoNickname}님께 달린 리뷰</span>
+      <span className={styles.title}>{userInfo.kakaoNickname}님께 달린 리뷰</span>
       <div className={styles.reviewcontainer}>
         {
           myReivews?.map((review) => {
@@ -14,7 +14,7 @@ export default function Reviews({ userInfo, myReivews }) {
             <ReviewItem key={review.reviewId} review={review}/>
           })
         }
-      </div> */}
+      </div>
     </div>
   );
 }
