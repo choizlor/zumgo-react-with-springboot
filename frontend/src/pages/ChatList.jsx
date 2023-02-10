@@ -35,9 +35,11 @@ export default function ChatList() {
       })
       .then((res) => {
         console.log(res.data);
-        // navigate(`/chatroom/${res.data}`, { state : {
-        //   chats : res.data
-        // }});
+        navigate(`/chatroom/${res.data}`, { state : {
+          chats : res.data.chatList,
+          sellerId,
+          buyerId,
+        }});
       })
       .catch((err) => {
         console.log(err);
