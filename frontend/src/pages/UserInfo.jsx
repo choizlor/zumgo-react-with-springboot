@@ -58,7 +58,7 @@ export default function UserInfo() {
     axios.get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
     .then((res)=>{
       console.log(res.data, '🎈🎈')
-      setMyReviews(res.data)
+      setMyReviews(res.data.myReview)
     })
     .catch((err) => {console.log(err)})
   }, []);

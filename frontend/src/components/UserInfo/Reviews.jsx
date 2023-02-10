@@ -10,7 +10,6 @@ export default function Reviews({ userInfo, myReivews }) {
       <div className={styles.reviewcontainer}>
         {
           myReivews?.map((review) => {
-
             <ReviewItem key={review.reviewId} review={review}/>
           })
         }
