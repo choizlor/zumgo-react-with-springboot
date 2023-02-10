@@ -7,29 +7,29 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import testImg from "../assets/images/testImg.jpg";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
   const [reviews, setReviews] = useState();
   const location = useLocation();
-  // const userId = location.state.userId;
+  const userId = location.state.userId;
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    // axios.get(`http://localhost:8080/review/${userId}`)
-    axios.get(`https://i8c110.p.ssafy.io/api/v1/review/7`).then((res) => {
-      setReviews(res.data.MyReview);
-      console.log(res.data.MyReview);
-    });
+    axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/review/${userId}`)
+      .then((res) => {
+        setReviews(res.data.MyReview);
+        console.log(res.data.MyReview);
+      });
   }, []);
 
   const handleDeleteReview = (productId) => {
     // 리뷰 삭제 요청은 제품 아이디로 보내기
     axios
-      // .delete(`http://localhost:8080/review/${productId}`)
       .delete(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`)
       .then((res) => {
         console.log(res);
@@ -44,7 +44,7 @@ export default function MyReviewList() {
       {/* 상단 네비게이션 */}
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
         </div>
       </div>
       {/* 타이틀 */}
@@ -76,7 +76,7 @@ export default function MyReviewList() {
                 <div className={styles.icons}>
                   <PencilIcon
                     onClick={() => {
-                      navigate(`/review/${1}/update`);
+                      navigate(`/review/${review.product.id}/update`);
                     }}
                   />
                   <TrashIcon onClick={handleDeleteReview(review.product.id)} />
