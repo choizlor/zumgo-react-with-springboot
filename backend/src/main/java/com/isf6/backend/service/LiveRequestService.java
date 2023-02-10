@@ -45,7 +45,7 @@ public class LiveRequestService {
     }
 
     //내가 라이브 요청한 상품들의 목록
-    public List<Product> getMyLiveRequestList(Long userCode) {
+    public List<Product> getMyLiveRequestProductList(Long userCode) {
         log.info("getMyLiveRequestList : true ");
         List<Product> liveRequestList = new ArrayList<>();
         liveRequestList = productRepository.getMyLiveRequestList(userCode);
@@ -71,6 +71,13 @@ public class LiveRequestService {
         }
 
         return chk;
+    }
+
+    //내가 라이브 요청한 목록
+    public List<LiveRequest> getMyLiveRequestList(Long userCode) {
+        List<LiveRequest> liveRequestList = new ArrayList<>();
+        liveRequestList = liveRequestRepository.findByUserId(userCode);
+        return liveRequestList;
     }
 
 }
