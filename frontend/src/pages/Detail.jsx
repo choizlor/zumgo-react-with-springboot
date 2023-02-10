@@ -116,7 +116,12 @@ export default function Detail() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data}`);
+        navigate(`/chatroom/${res.data}`, {state : {
+          other : {
+            kakaoNickname : product.kakaoNickname,
+            userCode : product.userCode,
+          }
+        }});
       })
       .catch((err) => {
         console.log(err);

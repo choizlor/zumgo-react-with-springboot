@@ -41,7 +41,9 @@ export default function ChatList() {
                     other:
                       chat.seller.userCode === userId
                         ? chat.buyer
-                        : chat.seller
+                        : chat.seller,
+                    sellerId : chat.sellerId,
+                    buyerId : chat.buyerId
                   },
                 });
               }}
