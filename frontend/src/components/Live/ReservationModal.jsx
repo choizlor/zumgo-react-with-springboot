@@ -51,11 +51,11 @@ export default function ReservationModal({ setModalOpen, productId }) {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
-    const body = {
+    const body = JSON.stringify({
       productId: productId,
       liveStartTime: reserve,
       liveStatus: "WAIT",
-    };
+    });
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
         headers: {

@@ -23,17 +23,24 @@ public class LiveRequestService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public void saveLiveRequest(Long userCode, Long productId) {
+    public boolean saveLiveRequest(Long userCode, Long productId) {
         LiveRequest liveRequest = new LiveRequest();
 
         User user = userRepository.findByUserCode(userCode);
-        user.setPoint(user.getPoint()-2);
-        liveRequest.setUser(user);
+        if(user.getPoint()-2 <= 0) {
+            //포인트가 없으면 라이브 요청이 안되도록 변경
+            return false;
+        } else {
+            user.setPoint(user.getPoint() - 2);
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
-        liveRequest.setProduct(product);
+            liveRequest.setUser(user);
 
-        liveRequestRepository.save(liveRequest);
+            Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + productId));
+            liveRequest.setProduct(product);
+
+            liveRequestRepository.save(liveRequest);
+            return true;
+        }
     }
 
     public Long getLiveRequestCnt(Long productId) {
