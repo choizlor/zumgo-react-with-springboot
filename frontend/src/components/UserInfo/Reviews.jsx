@@ -25,7 +25,10 @@ export default function Reviews({ userId, userNickname }) {
 
         <div className={styles.reviewcontainer}>
           {reviews.map((review) => {
-            <ReviewItem key={review.reviewId} review={review} />;
+            <div className={styles.review}>
+            <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
+            <div className={styles.comment}>{review.review}</div>
+          </div>
           })}
         </div>
     </div>
