@@ -461,7 +461,7 @@ const VideoRoomTest = () => {
                   <div className={styles.sellerimg}>
                     <img src={userImg} alt="" />
                   </div>
-                  <div className={styles.sellername}>냠냠이 님</div>
+                  <div className={styles.sellername}>{hostName} 님</div>
                 </div>
                 <div className={styles.subtotal}>
                   <EyeIcon className={styles.eyeicon} />
@@ -522,8 +522,8 @@ const VideoRoomTest = () => {
             />
           </div> */}
 
-          <div>{bidders}</div>
-          <div>{bidPrice}</div>
+          <div>구매의사 수: {bidders}</div>
+          <div>입찰가: {bidPrice}</div>
           <div>
             {true ? (
               <Price
@@ -543,9 +543,9 @@ const VideoRoomTest = () => {
                   <img src={userImg} alt="" />
                 </div>
                 <div className={styles.modalbiddername}>
-                  딸기우유 서녕 님이,
+                  {bestBidder} 님이,
                 </div>
-                <div className={styles.modalbidprice}>50300원에 낙찰!</div>
+                <div className={styles.modalbidprice}>{bidPrice}원에 낙찰!</div>
               </div>
             ) : null}
           </div>
