@@ -84,4 +84,8 @@ public class Product extends BaseTimeEntity {
         this.reserve = reserve;
         this.status = status;
     }
+
+    public void setReserve(Timestamp reserve) {
+        this.reserve = reserve;
+    }
 }
