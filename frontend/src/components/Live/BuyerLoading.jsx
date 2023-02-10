@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./BuyerLoading.module.css";
-import buyergo from "../../assets/images/buyergo.pnd";
+import buyergo from "../../assets/images/buyergo.png";
 
 export default function BuyerLoading({ joinSession, title }) {
   return (
