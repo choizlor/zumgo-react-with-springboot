@@ -295,7 +295,7 @@ export default function Detail() {
           </div>
         </div>
         <div className={styles.timeBox}>
-          <span className={styles.timeTitle}>Live 가능 시간대 :</span>
+          <span className={styles.timeTitle}>Live 가능 시간대 : {product.availableTime} </span>
           <div className={styles.timeContent}>
             <span>{product.reservation}</span>
           </div>
