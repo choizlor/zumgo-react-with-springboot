@@ -17,12 +17,12 @@ export default function Reviews({ userId, userNickname }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [reviews]);
+  }, []);
 
   return (
     <div className={styles.body}>
       <span className={styles.title}>{userNickname}님께 달린 리뷰</span>
-      { !reviews ? (
+      { reviews.length() === 0 ? (
         <div>작성된 댓글이 없어요 ㅠ</div>
       ) : (
         <div className={styles.reviewcontainer}>
