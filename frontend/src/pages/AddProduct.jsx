@@ -25,7 +25,6 @@ export default function AddProduct() {
     price,
     description,
     availableTime,
-    status: "ONSALE",
     userId,
   };
 
