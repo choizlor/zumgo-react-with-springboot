@@ -16,7 +16,7 @@ import Login from './pages/Login/Login';
 import BuyList from './pages/BuyList';
 import SellList from './pages/SellList';
 import WishList from './pages/WishList';
-import Search from './pages/Search';
+import Search from './pages/Search/Search';
 import UpdateUserInfo from './pages/UpdateUserInfo';
 import UserInfo from './pages/UserInfo';
 import AddReview from './pages/AddReview';

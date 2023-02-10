@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import SearchItems from "../components/Search/SearchItems";
+import SearchItems from "./SearchItems";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import styles from "./styles/Search.module.css";
+import styles from "./Search.module.css";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../../components/Product/ProductItem";
 
 export default function Search() {
   const navigate = useNavigate();
