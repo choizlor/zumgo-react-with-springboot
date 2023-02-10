@@ -25,8 +25,6 @@ public class LiveService {
     private final LiveRequestService liveRequestService;
 
     public LiveRoom createLive(LiveRoomSaveReqDto liveRoomSaveReqDto) {
-        //0. 예약이 삭제되야함,,,,
-
         //1. 새로운 라이브방 생성
         LiveRoom liveRoom = new LiveRoom();
 
@@ -74,8 +72,15 @@ public class LiveService {
 
     public void deleteLiveRoom(long productId) {
         LiveRoom liveRoom = getLiveByProductId(productId);
+        //라이브 방이 존재하면
         if(liveRoom != null) {
             liveRoomRepository.delete(liveRoom);
+
+            //예약시간 null로 변경
+            productService.deleteProductReserveTime(productId);
+
+            //해당 상품에 대한 라이브 요청 지우기
+            liveRequestService.deleteProductLiveRequest(productId);
         }
     }
 

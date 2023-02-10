@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +86,12 @@ public class LiveRequestService {
         List<LiveRequest> liveRequestList = new ArrayList<>();
         liveRequestList = liveRequestRepository.findByUserId(userCode);
         return liveRequestList;
+    }
+
+    //상품에 대한 라이브 요청 삭제하기
+    @Transactional
+    public void deleteProductLiveRequest(Long productId){
+        liveRequestRepository.deleteLiveRequest(productId);
     }
 
 }
