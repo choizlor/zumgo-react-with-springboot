@@ -44,7 +44,9 @@ const VideoRoomTest = () => {
   // }, [user]);
 
   useEffect(() => {
-    async () => {
+    setMyUserName(user.kakaoNickname);
+
+    (async () => {
       try {
         await axios
           .get(
@@ -54,7 +56,7 @@ const VideoRoomTest = () => {
             setProduct(res.data);
             setBidPrice(res.data.price);
             const id = res.data.userCode;
-            
+
             axios
               .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
               .then((res) => {
@@ -65,7 +67,7 @@ const VideoRoomTest = () => {
       } catch (err) {
         console.error(err);
       }
-    };
+    });
   }, [user]);
 
   const [mySessionId, setMySessionId] = useState("SessionA");
