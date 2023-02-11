@@ -32,10 +32,10 @@ export default function Reviews({ userInfo }) {
       <span className={styles.title}>{userInfo?.kakaoNickname}님께 달린 리뷰</span>
 
       <div className={styles.reviewcontainer}>
-        {reviews?.map((review, idx) => {
-          <div className={styles.review} key={idx}>
-            <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
-            <div className={styles.comment}>{review.review}</div>
+        {reviews?.map((review) => {
+          <div className={styles.review} key={review?.reviewId}>
+            <div className={styles.writer}>{review?.buyer.kakaoNickname}</div>
+            <div className={styles.comment}>{review?.review}</div>
           </div>;
         })}
       </div>
