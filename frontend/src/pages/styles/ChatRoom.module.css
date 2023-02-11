@@ -19,12 +19,20 @@
     font-weight: 700;
 }
 
+.delete {
+    font-size: 13px;
+    margin-right : 2%;
+    color : #d61919;
+    text-decoration: underline;
+}
+
 /* 채팅 리스트 */
 .chatbox {
     height : 80%;
     overflow: scroll;
     width : 85%;
     margin : auto;
+    scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

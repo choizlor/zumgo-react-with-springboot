@@ -41,8 +41,7 @@ public class ProductRepositoryTest {
                 .title(title)
                 .price(price)
                 .description(description)
-                .reservation(reservation)
-                .photo(photo)
+                .availableTime(reservation)
                 .build());
 
         //when
@@ -54,7 +53,7 @@ public class ProductRepositoryTest {
         assertThat(product.getDescription()).isEqualTo(description);
         assertThat(product.getPrice()).isEqualTo(price);
         // assertThat(product.getReservation()).isEqualTo(reservation);
-        assertThat(product.getPhoto()).isEqualTo(photo);
+        assertThat(product.getImgList()).isEqualTo(photo);
     }
 
     @Test
@@ -65,8 +64,7 @@ public class ProductRepositoryTest {
                 .title("상품명")
                 .price(10000)
                 .description("상품 설명글")
-                .reservation("예약시간")
-                .photo("이미지 링크")
+                .availableTime("예약시간")
                 .status(ProductStatus.ONSALE)
                 .build());
 

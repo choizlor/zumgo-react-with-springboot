@@ -1,0 +1,16 @@
+.prices {
+  margin: auto;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prices button {
+  background-color: white;
+  border-radius: 40px;
+  width: 70px;
+  height: 40px;
+  font-size: 17px;
+  font-weight: 800;
+  font-family: "Poppins", sans-serif;
+}

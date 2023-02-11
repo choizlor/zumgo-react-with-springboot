@@ -12,6 +12,7 @@ import com.isf6.backend.common.oauth.OauthToken;
 import com.isf6.backend.config.jwt.JwtProperties;
 import com.isf6.backend.domain.repository.UserRepository;
 import com.isf6.backend.domain.entity.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -25,8 +26,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
@@ -44,7 +47,7 @@ public class UserService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "b875d5c09e310962a4402f90c93aa19c"); //REST API KEY
-        params.add("redirect_uri", "http://localhost:3000/oauth"); //REDIRECT URI
+        params.add("redirect_uri", "http://i8c110.p.ssafy.io/oauth"); //REDIRECT URI
         params.add("code", code);
         params.add("client_secret", "QMJmsfyHMzlMcApqls4Txlhk7CrjE3LU"); // 생략 가능!
 
@@ -109,8 +112,15 @@ public class UserService {
         //1. 이메일로 유저 정보 찾기
         User user = userRepository.findByKakaoEmail(profile.getKakao_account().getEmail());
 
-        //2. 유저 정보가 없다면 DB에 새로 저장
+        //2. 유저 정보가 없다면
         if(user == null) {
+            // 2-1. 유저 닉네임 중복 검사
+            Long userCnt = userRepository.countByKakaoNicknameStartingWith(profile.getKakao_account().getProfile().getNickname());
+            if (userCnt++ > 0) {
+                profile.getKakao_account().getProfile().setNickname(profile.getKakao_account().getProfile().getNickname() + userCnt);
+            };
+
+            // 2-2. DB에 새로 저장
             user = User.builder()
                     .kakaoId(profile.getId())
                     .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())
@@ -176,11 +186,11 @@ public class UserService {
     }
 
     //유저 정보 수정
-    public User updateUser(Long userCode, UserUpdateReqDto userUpdateReqDto) {
+    public User updateUser(Long userCode, UserUpdateReqDto userUpdateReqDto, List<String> imgPath) {
         User user = userRepository.findByUserCode(userCode);
 
-        user.setKakaoProfileImg(userUpdateReqDto.getProfileImg());
         user.setKakaoNickname(userUpdateReqDto.getNickname());
+        user.setKakaoProfileImg(imgPath.get(0));
 
         userRepository.save(user);
 

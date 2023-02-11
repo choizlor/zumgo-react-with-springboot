@@ -16,13 +16,32 @@ export default function UpdateUserInfo() {
 
   const [nickname, setNickname] = useState(me.kakaoNickname);
 
-  const handleUpdate = () => {
-    axios
-      .patch(`http://localhost:8080/api/user/${userId}`, {
-        profileImg: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
-        nickname,
+  const content = {
+    nickname,
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+    let files = e.target.imgurl.files;
+
+    if (files[0]) {
+      formData.append("imgUrl", files[0]);
+    }
+
+    formData.append(
+      "content",
+      new Blob([JSON.stringify(content)], { type: "application/json" })
+    );
+
+    await axios
+      .patch(`http://i8c110.p.ssafy.io/api/user/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
-      .then((res) => {
+      .then(() => {
         navigate(`/userinfo/${userId}`);
       })
       .catch((err) => {
@@ -36,7 +55,7 @@ export default function UpdateUserInfo() {
 
   return (
     <>
-      <div className={styles.body}>
+      <form className={styles.body} onSubmit={handleUpdate}>
         <div className={styles.nav}>
           <div className={styles.navleft}>
             <ChevronLeftIcon
@@ -47,9 +66,9 @@ export default function UpdateUserInfo() {
             />
             <div className={styles.title}>프로필 수정</div>
           </div>
-          <div className={styles.navright} onClick={handleUpdate}>
+          <button type="submit" className={styles.navright}>
             <p className={styles.save}>저장</p>
-          </div>
+          </button>
         </div>
 
         <div className={styles.userimg}>
@@ -58,13 +77,13 @@ export default function UpdateUserInfo() {
             alt=""
             style={{ borderRadius: "100px" }}
           />
-          {/* <input
+
+          <input
             className={styles.file}
-            type="file"
-            accept="image/*"
-            capture="camera"
-            multiple
-          /> */}
+            type="file" // 파일로 입력 받음
+            accept="image/*" // 이미지 유형의 파일만 받기
+            name="imgurl" // 담긴 파일을 참조할 때 사용할 이름
+          />
         </div>
 
         <div className={styles.udtnickname}>
@@ -78,7 +97,7 @@ export default function UpdateUserInfo() {
             onChange={handleNicknameChange}
           ></textarea>
         </div>
-      </div>
+      </form>
     </>
   );
 }

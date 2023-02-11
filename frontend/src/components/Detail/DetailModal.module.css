@@ -24,7 +24,21 @@
 .title {
   font-size: 15px;
   font-weight: 700;
-  margin-top: 5%;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  /* border:red solid 1px; */
+}
+
+.xicon {
+  width: 20px;
+  height: 20px;
+  margin-top: 1.2rem;
+  margin-right: 1rem;
+  
 }
 
 .scrollbox {

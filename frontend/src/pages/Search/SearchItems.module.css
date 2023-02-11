@@ -1,0 +1,29 @@
+.body {
+    margin: 0 0.8rem;
+}
+
+.text {
+    font-weight: 800;
+    margin-left: 3%;
+}
+
+.wordcontainer {
+    display: flex;
+    flex-wrap: wrap;
+} 
+
+
+.word{
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom : solid gray 0.7px;
+    width: 44%;
+    margin: 3%;
+    padding :1%;
+}
+
+.icon {
+    width : 15px;
+}

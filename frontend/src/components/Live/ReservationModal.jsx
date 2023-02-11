@@ -1,32 +1,84 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ReservationModal.module.css";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { XMarkIcon, ClockIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
-export default function ReservationModal({ setModalOpen }) {
-  const [selectDate, setSelectDate] = useState(new Date());
+export default function ReservationModal({ setModalOpen, productId }) {
+  const [reserve, setReserve] = useState(new Date());
+  const [product, setProduct] = useState({});
+  const userId = useSelector((state) => {
+    return state.user.userCode;
+  });
+  const token = window.localStorage.getItem("token");
 
   // 모달 끄기
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  console.log(typeof productId, "🥱product type");
+
+  // 상품정보 불러오기
+  useEffect(() => {
+    axios
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+      )
+      .then((res) => {
+        setProduct(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleSubmit = () => {
     setModalOpen(false);
+    axios
+      .put(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`,
+        {
+          ...product,
+          reserve,
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    const body = JSON.stringify({
+      productId: productId,
+      liveStartTime: reserve,
+      liveStatus: "WAIT",
+    });
+    axios
+      .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}><ClockIcon className={styles.icon}/>라이브 예약하기</p>
+      <p className={styles.title}>
+        <ClockIcon className={styles.icon} />
+        라이브 예약하기
+      </p>
       <XMarkIcon onClick={closeModal} className={styles.close} />
       <div className={styles.date}>
         <DatePicker
           locale={ko}
-          selected={selectDate}
-          onChange={(date) => setSelectDate(date)}
+          selected={reserve}
+          onChange={(date) => setReserve(date)}
           showTimeInput
           dateFormat="Pp"
           minDate={new Date()}
@@ -38,7 +90,9 @@ export default function ReservationModal({ setModalOpen }) {
           }}
           className={styles.datepicker}
         />
-        <button onClick={handleSubmit} className={styles.btn}>예약하기</button>
+        <button onClick={handleSubmit} className={styles.btn}>
+          예약하기
+        </button>
       </div>
     </div>
   );

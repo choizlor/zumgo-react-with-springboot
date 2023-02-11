@@ -1,10 +1,7 @@
 package com.isf6.backend.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -30,51 +27,54 @@ public class Product extends BaseTimeEntity {
 
     private String description;
 
-    private String reservation;
+    private String availableTime;
 
-    private String photo;
+    private Timestamp reserve;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Img> imgList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
-    // 외래키는 어쩌지..?
-    // Timestamp..?
-//    @Builder
-//    public Product(String title, int price, String description, String reservation, String photo, ProductStatus status) {
-//        this.title = title;
-//        this.price = price;
-//        this.description = description;
-//        this.reservation = reservation;
-//        this.photo = photo;
-//        this.status = status;
-//    }
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+    public Product(Long userId) {
+        this.userId = userId;
+    }
+
     @JsonIgnore
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private LiveRoom liveroom;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<LiveRequest> liveRequests = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Wish> wishes = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Bill bill;
 
-    public void update(String title, int price, String description, String reservation, String photo, ProductStatus status) {
+    public void update(String title, int price, String description, String availableTime, Timestamp reserve,  ProductStatus status) {
         this.title = title;
         this.price = price;
         this.description = description;
-        this.reservation = reservation;
-        this.photo = photo;
+        this.availableTime = availableTime;
+        this.reserve = reserve;
         this.status = status;
+    }
+
+    public void setReserve(Timestamp reserve) {
+        this.reserve = reserve;
     }
 }
