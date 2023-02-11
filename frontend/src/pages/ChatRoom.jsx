@@ -15,9 +15,13 @@ import axios from "axios";
 export default function ChatRoom() {
   let navigate = useNavigate();
   const location = useLocation();
-  // const other = location.state.other;
   const sellerId = location.state.sellerId;
   const buyerId = location.state.buyerId;
+  const sellerImg = location.state.sellerImg;
+  const buyerImg = location.state.buyerImg;
+
+  const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
+  const otherId = sellerId === user.userCode ? buyerId : sellerId;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -25,7 +29,7 @@ export default function ChatRoom() {
   let [client, changeClient] = useState(null);
   const [chat, setChat] = useState(""); // 입력된 chat을 받을 변수
   const [chatList, setChatList] = useState([]); // 채팅 기록
-  const [history, setHistory] = useState(location.state.chats);
+  const history = location.state.chats;
 
   const user = useSelector((state) => {
     return state.user;
@@ -40,7 +44,7 @@ export default function ChatRoom() {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
-            <img src={testImg} alt="" />
+            <img src={otherImg} alt="" />
           </div>
           <div className={styles.othermsg}>
             <span>{item.chat_content}</span>
@@ -65,11 +69,12 @@ export default function ChatRoom() {
   });
 
   const msgBox = chatList.map((item, idx) => {
-    if (Number(item.sender) !== user.userCode) {
+    console.log(item)
+    if (item.sender !== user.kakaoNickname) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
-            <img src={testImg} alt="" />
+            <img src={otherImg} alt="" />
           </div>
           <div className={styles.othermsg}>
             <span>{item.data}</span>
@@ -96,7 +101,7 @@ export default function ChatRoom() {
         sellerCode: sellerId,
       })
       .then((res) => {
-        console.lof(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -144,7 +149,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
-      console.log(msg)
+      console.log(msg);
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -214,7 +219,7 @@ export default function ChatRoom() {
               navigate("/chatlist");
             }}
           />
-          {/* <span>{other.kakaoNickname}</span> */}
+          <span>{}</span>
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>

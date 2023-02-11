@@ -133,6 +133,8 @@ export default function Detail() {
             chats: res.data.chatList,
             sellerId: product.userCode,
             buyerId: userId,
+            sellerImg: res.data.sellerImg,
+            buyerImg: res.data.buyerImg,
           },
         });
       })
@@ -216,7 +218,6 @@ export default function Detail() {
           navigation={true}
           pagination={true}
           loop={true}
-
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
