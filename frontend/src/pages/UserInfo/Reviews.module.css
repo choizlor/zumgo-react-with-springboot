@@ -19,7 +19,14 @@
     border-radius: 15px;
     height : 75px;
     background-color: #DFDFDF;
-    margin : 5px;
+    text-align: center;
+}
+
+.review:nth-child(even) {
+    background-color: #DFDFDF;
+}
+.review:nth-child(odd) {
+    background-color: #BCFF5E;
 }
 
 .writer {
