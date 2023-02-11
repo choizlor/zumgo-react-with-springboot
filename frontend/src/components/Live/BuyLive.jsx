@@ -9,8 +9,8 @@ export default function BuyLive({ onairList, myLiveRequestList }) {
   const navigate = useNavigate();
 
   const clickLive = (productId) => {
-    navigate(`live/${productId}`);
-  };
+    navigate(`live/${productId}`)
+  }
 
   const requestList = myLiveRequestList?.filter((product) => {
     return product.reserve !== null;
