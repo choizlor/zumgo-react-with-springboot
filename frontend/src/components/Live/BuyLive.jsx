@@ -9,7 +9,7 @@ export default function BuyLive({ onairList, waitList }) {
   const navigate = useNavigate();
 
   const clickLive = (productId) => {
-    navigate(`live/${productId}`);
+    navigate(`/live/${productId}`);
   };
 
   return (

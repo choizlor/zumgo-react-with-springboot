@@ -13,7 +13,7 @@ export default function BuyerLoading({ joinSession, title }) {
         <ChevronLeftIcon
           className="w-6 h-6 text-white"
           onClick={() => {
-            navigate("/");
+            navigate("-1");
           }}
         />
       </div>

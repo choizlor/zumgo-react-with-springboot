@@ -14,14 +14,17 @@ export default function LiveReservation({ product }) {
       <div
         className={styles.image}
         style={{
-          backgroundImage:
-          "url("+`${product.thumbnail}`+")",
+          backgroundImage: "url(" + `${product.thumbnail}` + ")",
         }}
       >
         <p className={styles.title}>{product.title}</p>
-        <button className={styles.btn} onClick={showModal}>
-          시간 예약하기
-        </button>
+        {product.reserve === null ? (
+          <button className={styles.btn} onClick={showModal}>
+            시간 예약하기
+          </button>
+        ) : (
+          <button className={styles.btn}>예약되었습니다.</button>
+        )}
       </div>
       {modalOpen && (
         <ReservationModal

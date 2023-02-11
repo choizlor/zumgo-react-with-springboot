@@ -54,6 +54,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
       liveStartTime: reserve,
       liveStatus: "WAIT",
     });
+    
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
         headers: {
