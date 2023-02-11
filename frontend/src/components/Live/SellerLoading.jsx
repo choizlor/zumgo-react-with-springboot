@@ -31,7 +31,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
     <div className={styles.back}>
       <div className={styles.navleft}>
         <ChevronLeftIcon
-          className="w-6 h-6 text-white-100"
+          className="w-6 h-6 text-white"
           onClick={() => {
             navigate("/");
           }}

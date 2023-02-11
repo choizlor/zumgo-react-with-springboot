@@ -10,8 +10,8 @@ import BuyLive from "../components/Live/BuyLive.jsx";
 
 export default function Live() {
   const [sellLiveRequestList, setSellLiveRequestList] = useState();
-  const [myLiveRequestList, setMyLiveRequestList] = useState();
   const [onairList, setOnairList] = useState();
+  const [waitList, setWaitList] = useState();
   const userId = useSelector((state) => {
     return state.user.userCode;
   });
@@ -21,20 +21,29 @@ export default function Live() {
       .get(`https://i8c110.p.ssafy.io/api/v1/live/main?userCode=${userId}`)
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
-        setMyLiveRequestList(res.data.MyLiveRequestList);
       })
       .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/${userId}`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/start/${userId}`)
       .then((res) => {
         setOnairList(res.data.myLiveRoomList);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/wait/${userId}`)
+      .then((res) => {
+        setWaitList(res.data.myLiveRoomList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
   }, [userId]);
 
   //toggle 상태 표시
@@ -51,7 +60,7 @@ export default function Live() {
       {toggle ? (
         <SellLive sellLiveRequestList={sellLiveRequestList} userId={userId} />
       ) : (
-        <BuyLive onairList={onairList} myLiveRequestList={myLiveRequestList} />
+        <BuyLive onairList={onairList} waitList={waitList} />
       )}
 
       <div className={styles.togglebtn}>
