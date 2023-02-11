@@ -15,7 +15,7 @@ export default function LiveCard({ product, clickLive }) {
         <button
           className={styles.btn}
           onClick={() => {
-            clickLive(product.id);
+            clickLive(product.productId);
           }}
         >
           라이브 입장하기
