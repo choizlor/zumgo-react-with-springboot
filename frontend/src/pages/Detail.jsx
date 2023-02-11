@@ -264,7 +264,7 @@ export default function Detail() {
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
-            <option value="BOOKING">예약 중</option>
+            <option value="BOOKING">예약 중</           option>
             <option value="SOLDOUT">거래완료</option>
           </select>
 
