@@ -120,10 +120,14 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
+    console.log(userId)
+    console.log(product.userCode)
+    console.log(product?.userCode)
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+      // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: product?.userCode,
+        sellerCode: Number(product?.userCode),
       })
       .then((res) => {
         console.log(res.data);
