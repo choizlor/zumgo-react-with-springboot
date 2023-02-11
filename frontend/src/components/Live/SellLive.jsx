@@ -21,7 +21,6 @@ export default function SellLive({ sellLiveRequestList }) {
   });
 
   console.log(reserveList, "😀");
-  console.log(reserve)
 
   return (
     <div>
