@@ -1,6 +1,7 @@
 package com.isf6.backend.service;
 
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
+import com.isf6.backend.api.Response.LiveRoomResDto;
 import com.isf6.backend.api.controller.LiveController;
 import com.isf6.backend.domain.entity.LiveRequest;
 import com.isf6.backend.domain.entity.LiveRoom;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -96,20 +98,24 @@ public class LiveService {
         liveRoomRepository.save(liveRoom);
     }
 
-    public List<LiveRoom> getStartRequestLiveRoomList(long userCode) {
+    public List<LiveRoomResDto> getStartRequestLiveRoomList(long userCode) {
         //라이브요청 리스트로 라이브방 목록 가져오기... 근데 라이브 상태가 시작인 것만...
-        List<LiveRoom> liveRoomList = new ArrayList<>();
-        liveRoomList = liveRoomRepository.getStartLiveRoomList(userCode);
+//        List<LiveRoom> liveRoomList = new ArrayList<>();
+//        liveRoomList = liveRoomRepository.getStartLiveRoomList(userCode);
 
-        return liveRoomList;
+        return liveRoomRepository.getStartLiveRoomList(userCode).stream()
+                .map(liveRoom -> new LiveRoomResDto(liveRoom))
+                .collect(Collectors.toList());
     }
 
-    public List<LiveRoom> getWaitRequestLiveRoomList(long userCode) {
+    public List<LiveRoomResDto> getWaitRequestLiveRoomList(long userCode) {
         //라이브요청 리스트로 라이브방 목록 가져오기... 근데 라이브 상태가 대기인 것만...
-        List<LiveRoom> liveRoomList = new ArrayList<>();
-        liveRoomList = liveRoomRepository.getWaitLiveRoomList(userCode);
+//        List<LiveRoom> liveRoomList = new ArrayList<>();
+//        liveRoomList = liveRoomRepository.getWaitLiveRoomList(userCode);
 
-        return liveRoomList;
+        return liveRoomRepository.getWaitLiveRoomList(userCode).stream()
+                .map(liveRoom -> new LiveRoomResDto(liveRoom))
+                .collect(Collectors.toList());
     }
 
 }
