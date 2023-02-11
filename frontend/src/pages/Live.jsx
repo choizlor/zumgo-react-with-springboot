@@ -29,6 +29,7 @@ export default function Live() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/live/request/start/${userId}`)
       .then((res) => {
+        console.log(res.data.myLiveRoomList, '😀잇나요')
         setOnairList(res.data.myLiveRoomList);
       })
       .catch((err) => {
@@ -43,7 +44,7 @@ export default function Live() {
       .catch((err) => {
         console.log(err);
       });
-      
+
   }, [userId]);
 
   //toggle 상태 표시
