@@ -24,7 +24,6 @@ import { useLocation } from "react-router";
 
 export default function Detail() {
   const location = useLocation();
-  console.log(location.pathname);
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -124,7 +123,7 @@ export default function Detail() {
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: product.userCode,
+        sellerCode: product?.userCode,
       })
       .then((res) => {
         console.log(res.data);
@@ -212,7 +211,7 @@ export default function Detail() {
         <ChevronLeftIcon
           className={styles.goback}
           onClick={() => {
-            navigate(-1);
+            navigate('/');
           }}
         />
         <Swiper
