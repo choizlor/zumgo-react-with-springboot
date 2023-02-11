@@ -23,7 +23,7 @@ export default function MyReviewList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
       .then((res) => {
         setReviews(res.data.MyReview);
-        console.log(res.data,'🎨');
+        console.log(res.data.MyReview);
       });
   }, []);
 
