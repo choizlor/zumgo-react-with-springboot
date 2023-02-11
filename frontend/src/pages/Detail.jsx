@@ -309,12 +309,12 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-        { userId !== 0 && !isMine && (
+        { userId !== 0 && !isMine ? (
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
           />
-        )}
+        ) :null}
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (
