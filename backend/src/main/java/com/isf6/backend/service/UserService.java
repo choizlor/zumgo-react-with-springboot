@@ -33,8 +33,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public OauthToken getAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
@@ -197,7 +196,7 @@ public class UserService {
         return user;
     }
 
-
-
-
+    public boolean checkNicknameDuplicate(String nickname) {
+        return userRepository.existsByKakaoNickname(nickname);
+    }
 }

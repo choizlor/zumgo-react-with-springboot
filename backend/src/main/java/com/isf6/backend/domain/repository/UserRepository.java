@@ -10,5 +10,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public User findByKakaoEmail(String kakaoEmail);
     public User findByUserCode(Long userCode);
     public Long countByKakaoNicknameStartingWith(String KakaoNickname);
-
+    public boolean existsByKakaoNickname(String KakaoNickname);
 }

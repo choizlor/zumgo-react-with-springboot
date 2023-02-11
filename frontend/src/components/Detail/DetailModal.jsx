@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function DetailModal({ setModalOpen, chats }) {
-  console.log(chats)
+  console.log(chats);
   const navigate = useNavigate();
   const userId = useSelector((state) => {
     return state.user.userCode;
@@ -40,24 +40,23 @@ export default function DetailModal({ setModalOpen, chats }) {
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
         {chats?.map((chat) => {
-          <div
-            key={chat.roomId}
-            className={styles.userbox}
-            onClick={sendReviewMsg(
-              userId === chat.buyer.userCode
-                ? chat.seller.userCode
-                : chat.buyer.userCode
-            )}
-          >
+          <div key={chat.roomId} className={styles.userbox}>
             <img
               src="https://sitem.ssgcdn.com/18/83/93/item/2097000938318_i1_1200.jpg"
               className={styles.userimg}
             />
-            <span className={styles.username}>{
-              userId === chat.buyer.userCode
-              ? chat.seller.kakaoNickname
-              : chat.buyer.kakaoNickname
-            }</span>
+            <span
+              className={styles.username}
+              onClick={sendReviewMsg(
+                userId === chat.buyer.userCode
+                  ? chat.seller.userCode
+                  : chat.buyer.userCode
+              )}
+            >
+              {userId === chat.buyer.userCode
+                ? chat.seller.kakaoNickname
+                : chat.buyer.kakaoNickname}
+            </span>
           </div>;
         })}
       </div>

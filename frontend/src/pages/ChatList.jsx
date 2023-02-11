@@ -3,9 +3,12 @@ import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 import axios from "axios";
 
 export default function ChatList() {
+  const location = useLocation();
+  const curLocation = location.pathname
   const navigate = useNavigate();
 
   const userId = useSelector((state) => {
@@ -38,7 +41,9 @@ export default function ChatList() {
         navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
           chats : res.data.chatList,
           sellerId,
+          sellerImg : res.data.sellerImg,
           buyerId,
+          buyerImg : res.data.buyerImg,
         }});
       })
       .catch((err) => {
@@ -91,7 +96,7 @@ export default function ChatList() {
           );
         })}
       </div>
-      <Bottomnav />
+      <Bottomnav curLocation={curLocation}/>
     </div>
   );
 }

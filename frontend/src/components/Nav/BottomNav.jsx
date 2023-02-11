@@ -10,7 +10,8 @@ import {
 import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
-export default function BottomNav() {
+export default function BottomNav({ curLocation }) {
+  console.log(curLocation, "🩱");
   const userCode = useSelector((state) => {
     return state.user.userCode;
   });
@@ -20,15 +21,19 @@ export default function BottomNav() {
     <div className={styles.navbody}>
       <nav className={styles.body}>
         <HomeIcon
-          className={styles.icon}
+          className={
+            "styles.icon " + (curLocation === "/" ? "styles.black" : "")
+          }
           onClick={() => {
             navigate("/");
           }}
         />
         <ChatBubbleOvalLeftIcon
-          className={styles.icon}
+          className={
+            "styles.icon " + (curLocation === "/chatlist" ? "styles.black" : "")
+          }
           onClick={() => {
-            if (!userCode) {
+            if (!userCode || userCode === 0) {
               alert("로그인이 필요한 서비스 입니다!");
               navigate("/login");
             } else {
@@ -40,7 +45,7 @@ export default function BottomNav() {
           <img
             className={styles.liveicon}
             onClick={() => {
-              if (!userCode) {
+              if (!userCode || userCode === 0) {
                 alert("로그인이 필요한 서비스 입니다!");
                 navigate("/login");
               } else {
@@ -62,14 +67,17 @@ export default function BottomNav() {
           }}
         />
         <UserCircleIcon
-          className={styles.icon}
+          className={
+            "styles.icon " +
+            (curLocation.slice(0, 9) === "/userinfo" ? "styles.black" : "")
+          }
           onClick={() => {
-            // if (!userCode) {
-            //   alert("로그인이 필요한 서비스 입니다!");
-            //   navigate("/login");
-            // } else {
+            if (!userCode || userCode === 0) {
+              alert("로그인이 필요한 서비스 입니다!");
+              navigate("/login");
+            } else {
             navigate(`/userinfo/${userCode}`);
-            // }
+            }
           }}
         />
       </nav>

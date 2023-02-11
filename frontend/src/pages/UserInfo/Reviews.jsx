@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Reviews.module.css";
-import ReviewItem from "./ReviewItem";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import ReviewItem from './ReviewItem'
 
-export default function Reviews({ userId, userNickname }) {
+
+export default function Reviews({ userInfo }) {
   const [reviews, setReviews] = useState([]);
+  console.log(userInfo,'🎃🎃🎃')
+  
+  const params= useParams()
+  const userId = params.userId;
 
   useEffect(() => {
+    console.log('렌더링','')
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
       .then((res) => {
@@ -22,15 +29,15 @@ export default function Reviews({ userId, userNickname }) {
 
   return (
     <div className={styles.body}>
-      <span className={styles.title}>{userNickname}님께 달린 리뷰</span>
+      <span className={styles.title}>{userInfo?.kakaoNickname}님께 달린 리뷰</span>
 
       <div className={styles.reviewcontainer}>
-        {reviews?.map((review, idx) => {
-          <div className={styles.review} key={idx}>
-            <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
-            <div className={styles.comment}>{review.review}</div>
-          </div>;
-        })}
+        {reviews?.map((review) => (
+          <ReviewItem
+          key={review?.reviewId}
+          review={review}
+          />
+        ))}
       </div>
     </div>
   );
