@@ -78,7 +78,8 @@ const VideoRoom = () => {
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
   const [noncelebrity, setNonCelebrity] = useState(false);
-  const [sellerCheck, setSellerCheck] = useState(false);
+  const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
+  const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
 
   console.log(isHost, "😎");
 
@@ -193,7 +194,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      setSellerCheck(true)
+      setSellerCheck(true);
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
     });
@@ -201,7 +202,7 @@ const VideoRoom = () => {
     mySession.on("signal:count", (event) => {
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
-      setBestBidder(tmp[1])
+      setBestBidder(tmp[1]);
     });
 
     mySession.on("signal:bid", (event) => {
@@ -389,6 +390,10 @@ const VideoRoom = () => {
     [subscribers]
   );
 
+  const changeBuyerCheck = () => {
+    setBuyerCheck(true);
+  };
+
   useEffect(() => {
     const onbeforeunload = (event) => {
       leaveSession();
@@ -398,11 +403,6 @@ const VideoRoom = () => {
       window.removeEventListener("beforeunload", onbeforeunload);
     };
   }, [leaveSession]);
-
-  // 로딩 페이지를 통한 방 입장
-  // const enterAuctionRoom = () => {
-  //   joinSession();
-  // };
 
   return (
     <div className={styles.container}>
@@ -479,7 +479,13 @@ const VideoRoom = () => {
                     go?
                   </button>
                 ) : (
-                  <button onClick={countBidder} className={styles.gobtn}>
+                  <button
+                    onClick={() => {
+                      countBidder();
+                      changeBuyerCheck();
+                    }}
+                    className={styles.gobtn}
+                  >
                     go!
                   </button>
                 )}
@@ -515,7 +521,7 @@ const VideoRoom = () => {
           <div>구매의사 수: {bidders}</div>
           <div>입찰가: {bidPrice}</div>
           <div>
-            {true ? (
+            {buyerCheck && priceOpen ? (
               <Price
                 handleBidPrice={handleBidPrice}
                 setBidCount={setBidCount}
