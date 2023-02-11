@@ -1,28 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PURGE } from "redux-persist";
+
+const initialState = {
+  userCode: 0,
+  point: "",
+  kakaoNickname: "",
+  kakaoProfileImg: "",
+};
 
 let user = createSlice({
   name: "user",
-  initialState: {
-    userCode: 0,
-    point: "",
-    kakaoNickname: "",
-    kakaoProfileImg: "",
-  },
+  initialState,
   reducers: {
-    login(state, action) {
-      // console.log('action.payload : ', action.payload)
-      return action.payload;
+    login: (state, action) => {
+      state.userCode = action.payload.userCode;
+      state.point = action.payload.point;
+      state.kakaoNickname = action.payload.kakaoNickname;
+      state.kakaoProfileImg = action.payload.kakaoProfileImg;
     },
-    logout(action) {
-      // 토큰 삭제 해주기
-      window.localStorage.removeItem('token')
-      // 최근 검색어 삭제
-      window.localStorage.removeItem('recents')
-      return action.payload;
-    },
+  },
+  //초기화를 하고 싶은 state가 있는 slice마다 작성
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => initialState);
   },
 });
 
-
-export let { login, logout } = user.actions;
+export let { login } = user.actions;
 export default user;

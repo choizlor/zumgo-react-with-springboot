@@ -20,8 +20,12 @@ import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 export default function Detail() {
+  const location = useLocation();
+  console.log(location.pathname);
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 

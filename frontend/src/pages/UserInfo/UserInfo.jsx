@@ -4,8 +4,8 @@ import BottomNav from "../../components/Nav/BottomNav";
 import Reviews from "./Reviews";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../store/userSlice";
+import { useSelector } from "react-redux";
+import { persistor } from "../../index";
 
 import {
   ChevronLeftIcon,
@@ -27,8 +27,6 @@ export default function UserInfo() {
     return state.user;
   });
 
-  const dispatch = useDispatch();
-
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
@@ -39,14 +37,9 @@ export default function UserInfo() {
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
-    dispatch(
-      logout({
-        userCode: "",
-        point: "",
-        kakaoNickname: "",
-        kakaoProfileImg: "",
-      })
-    );
+   localStorage.removeItem('token')
+   localStorage.removeItem('recents')
+   persistor.purge()
   };
 
   //   사용자 정보를 불러오는 api
@@ -54,7 +47,6 @@ export default function UserInfo() {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-
    
   }, []);
 
