@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { persistor } from "../../index";
+import { useLocation } from "react-router";
 
 import {
   ChevronLeftIcon,
@@ -17,16 +18,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function UserInfo() {
+  const location = useLocation();
+  const curLocation = location.pathname;
   const [userInfo, setUserInfo] = useState({});
   // 마이 페이지 인지 확인하기
   const param = useParams();
   const navigate = useNavigate();
   const userId = param.userId;
-  
+
   const me = useSelector((state) => {
     return state.user;
   });
-
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
   const isMe = Number(userId) === me.userCode ? true : false;
@@ -37,9 +39,9 @@ export default function UserInfo() {
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
-   localStorage.removeItem('token')
-   localStorage.removeItem('recents')
-   persistor.purge()
+    localStorage.removeItem("token");
+    localStorage.removeItem("recents");
+    persistor.purge();
   };
 
   //   사용자 정보를 불러오는 api
@@ -47,7 +49,6 @@ export default function UserInfo() {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-   
   }, []);
 
   return (
@@ -57,7 +58,7 @@ export default function UserInfo() {
           <ChevronLeftIcon
             className="w-6 h-6 text-black-100"
             onClick={() => {
-              navigate('/');
+              navigate("/");
             }}
           />
           <div className={styles.title}>프로필</div>
@@ -149,10 +150,10 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo}/>
+      <Reviews userInfo={userInfo} />
 
       {/* <UserInfoDetail/> */}
-      <BottomNav />
+      <BottomNav curLocation={curLocation} />
     </div>
   );
 }
