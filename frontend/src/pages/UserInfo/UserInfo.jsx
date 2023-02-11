@@ -47,7 +47,6 @@ export default function UserInfo() {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-
    
   }, []);
 
