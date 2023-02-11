@@ -1,6 +1,7 @@
 package com.isf6.backend.api.controller;
 
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
+import com.isf6.backend.api.Response.LiveProductResDto;
 import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.service.LiveRequestService;
@@ -158,15 +159,15 @@ public class LiveController {
         Map<String, Object> result = new HashMap<>();
 
         //판매하고 있는 상품 중에서 라이브 요청이 1개 이상인 상품 목록
-        List<Product> sellLiveRequestList = new ArrayList<>();
+        List<LiveProductResDto> sellLiveRequestList = new ArrayList<>();
         sellLiveRequestList = liveRequestService.getSellLiveRequestList(userCode);
-        log.info("sellListSize", sellLiveRequestList.size());
+        log.info("sellListSize : {}", sellLiveRequestList.size());
         result.put("sellLiveRequestList", sellLiveRequestList);
 
         //내가 라이브 요청을 한 상품 목록
-        List<Product> MyLiveRequestList = new ArrayList<>();
+        List<LiveProductResDto> MyLiveRequestList = new ArrayList<>();
         MyLiveRequestList = liveRequestService.getMyLiveRequestProductList(userCode);
-        log.info("listSize", MyLiveRequestList.size()); //확인용
+        log.info("listSize : {}", MyLiveRequestList.size()); //확인용
         result.put("MyLiveRequestList", MyLiveRequestList);
 
         return ResponseEntity.status(200).body(result);
