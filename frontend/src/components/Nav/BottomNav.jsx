@@ -10,7 +10,8 @@ import {
 import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
-export default function BottomNav() {
+export default function BottomNav({curLocation}) {
+  console.log(curLocation, '🩱')
   const userCode = useSelector((state) => {
     return state.user.userCode;
   });
@@ -20,12 +21,14 @@ export default function BottomNav() {
     <div className={styles.navbody}>
       <nav className={styles.body}>
         <HomeIcon
+        style={curLocation === '/' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             navigate("/");
           }}
         />
         <ChatBubbleOvalLeftIcon
+        style={curLocation === '/chatlist' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             if (!userCode) {
@@ -62,6 +65,7 @@ export default function BottomNav() {
           }}
         />
         <UserCircleIcon
+        style={curLocation === '/userInfo' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             // if (!userCode) {
