@@ -20,8 +20,12 @@ import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 export default function Detail() {
+  const location = useLocation();
+  console.log(location.pathname);
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -89,15 +93,14 @@ export default function Detail() {
     if (e.target.value === "SOLDOUT") {
       // 채팅중인 사용자 불러오기
       axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
-      .then((res) => {
-        setChats(res.data);
-        setModalOpen(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      
+        .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+        .then((res) => {
+          setChats(res.data);
+          setModalOpen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setModalOpen(false);
     }
@@ -270,7 +273,7 @@ export default function Detail() {
           )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {isMine && userId !==0 ? (
+        {isMine && userId !== 0 ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
             <PencilSquareIcon
