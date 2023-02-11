@@ -133,6 +133,8 @@ export default function Detail() {
             chats: res.data.chatList,
             sellerId: product.userCode,
             buyerId: userId,
+            sellerImg: res.data.sellerImg,
+            buyerImg: res.data.buyerImg,
           },
         });
       })
@@ -216,7 +218,6 @@ export default function Detail() {
           navigation={true}
           pagination={true}
           loop={true}
-
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
@@ -310,7 +311,11 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
+<<<<<<< HEAD
         { userId !== 0 && !isMine ? (
+=======
+        {userId !== 0 && !isMine && (
+>>>>>>> 37e390326318353c0622a72c29775f34e7a3aee4
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
