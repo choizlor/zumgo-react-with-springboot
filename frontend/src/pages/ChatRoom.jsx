@@ -16,7 +16,7 @@ export default function ChatRoom() {
   const user = useSelector((state) => {
     return state.user;
   });
-  
+
   let navigate = useNavigate();
   const location = useLocation();
   const sellerId = location.state.sellerId;
@@ -165,7 +165,7 @@ export default function ChatRoom() {
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
         type: "",
-        sender: user.kakaoNickname,
+        sender: user.userCode,
         channelId: chatroomId,
         data: chat,
       }),
