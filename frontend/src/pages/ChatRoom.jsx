@@ -156,7 +156,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
-      console.log(msg, '🎁');
+      console.log(msg, "🎁");
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -176,7 +176,7 @@ export default function ChatRoom() {
         sender: user.userCode,
         channelId: chatroomId,
         data: chat,
-        chatDate : date,
+        chatDate: date,
       }),
       headers: { priority: 9 },
     });
@@ -188,9 +188,7 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", {
-        chatroomId,
-      })
+      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", chatroomId)
       .then((res) => {
         disConnect();
         console.log(res);
@@ -232,9 +230,7 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon
-          onClick={() => navigate(`/report/${otherId}`)}
-          />
+          <MegaphoneIcon onClick={() => navigate(`/report/${otherId}`)} />
           <div className={styles.inputbar}>
             <div>
               <input
