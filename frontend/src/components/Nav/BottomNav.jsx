@@ -66,7 +66,7 @@ export default function BottomNav({curLocation}) {
         />
         <UserCircleIcon
         // style={curLocation === '/userInfo' ? {fill : 'black', color : 'white'} : ""}
-          className={styles.icon}
+          className={"styles.icons" + (curLocation === 'userinfo' ? ' styles.black' : "" )}
           onClick={() => {
             // if (!userCode || userCode === 0) {
             //   alert("로그인이 필요한 서비스 입니다!");
