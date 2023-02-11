@@ -15,7 +15,7 @@ export default function LiveReservation({ product }) {
         className={styles.image}
         style={{
           backgroundImage:
-            "url('https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340')",
+          "url("+`${product.thumbnail}`+")",
         }}
       >
         <p className={styles.title}>{product.title}</p>
