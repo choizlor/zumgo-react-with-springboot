@@ -311,15 +311,7 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
         { userId !== 0 && !isMine ? (
-=======
-        {userId !== 0 && !isMine && (
->>>>>>> 37e390326318353c0622a72c29775f34e7a3aee4
-=======
-        { userId !== 0 && !isMine ? (
->>>>>>> 1148b5b1089b7a6f44c74ea0a988f40add2a55db
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
