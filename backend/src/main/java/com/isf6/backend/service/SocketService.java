@@ -32,7 +32,7 @@ public class SocketService {
 //    }
 
     //방 생성해서 코드 저장해야됨
-    public long createRoom(Long userCode1, Long userCode2) {
+    public ChatRoom createRoom(Long userCode1, Long userCode2) {
         //방이 null이라면 방 만들기
         ChatRoom chatRoomInfo = new ChatRoom();
         String randomId = UUID.randomUUID().toString();
@@ -54,7 +54,7 @@ public class SocketService {
 //                .roomId(randomId)
 //                .build();
 //        chatRooms.put(randomId, chatRoom);
-        return chatRoomId;
+        return chatRoomInfo;
     }
 
     public String deleteRoom(long id) {
