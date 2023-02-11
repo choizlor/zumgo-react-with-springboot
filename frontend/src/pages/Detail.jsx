@@ -274,10 +274,10 @@ export default function Detail() {
           )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {userId !==0 && !isMine ? (
+        {userId !== 0 && !isMine ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
-            <PencilSquareIcon
+            <PencilSquareIconF
               className={styles.editbtn}
               onClick={() => {
                 navigate(`/update/${productId}`, {
@@ -310,7 +310,7 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-        {!isMine && (
+        { userId !== 0 && !isMine && (
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
