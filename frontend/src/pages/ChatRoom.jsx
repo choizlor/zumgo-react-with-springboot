@@ -13,6 +13,10 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function ChatRoom() {
+  const user = useSelector((state) => {
+    return state.user;
+  });
+  
   let navigate = useNavigate();
   const location = useLocation();
   const sellerId = location.state.sellerId;
@@ -31,9 +35,6 @@ export default function ChatRoom() {
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const history = location.state.chats;
 
-  const user = useSelector((state) => {
-    return state.user;
-  });
 
   const preMsgBox = history.map((item, idx) => {
     const date = new Date(item.chat_date);
