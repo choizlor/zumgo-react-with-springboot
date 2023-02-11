@@ -31,8 +31,7 @@ export default function Live() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/live/request/${userId}`)
       .then((res) => {
-        // setOnairList(res.data);
-        console.log(res.data, '😎라이브요청!')
+        setOnairList(res.data.myLiveRoomList);
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +52,7 @@ export default function Live() {
       {toggle ? (
         <SellLive sellLiveRequestList={sellLiveRequestList} userId={userId} />
       ) : (
-        <BuyLive myLiveRequestList={myLiveRequestList} />
+        <BuyLive onairList={onairList} myLiveRequestList={myLiveRequestList} />
       )}
 
       <div className={styles.togglebtn}>
