@@ -11,8 +11,11 @@ import { useNavigate } from "react-router-dom";
 import ProductItem from "../components/Product/ProductItem";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
+import { useLocation } from "react-router";
 
 export default function Home() {
+  const location = useLocation();
+  console.log(location.pathname)
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);     // 현재 페이지 번호 (페이지네이션)
