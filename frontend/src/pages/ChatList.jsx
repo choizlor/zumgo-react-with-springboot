@@ -42,6 +42,10 @@ export default function ChatList() {
           chats : res.data.chatList,
           sellerId,
           buyerId,
+          sellerNickname : res.data.sellerNickname,
+          buyerNickname : res.data.buyerNickname,
+          sellerImg : res.data.sellerImg,
+          buyerImg : res.data.buyerImg,
         }});
       })
       .catch((err) => {

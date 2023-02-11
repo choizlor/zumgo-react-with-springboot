@@ -4,11 +4,6 @@ import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
 
-    // getNicknameTag() {
-    //     // Gets the nickName of the user
-    //     return JSON.parse(this.props.streamManager.stream.connection.data).clientData;
-    // }
-
     render() {
         return (
             <div>
@@ -16,7 +11,7 @@ export default class UserVideoComponent extends Component {
                     <div className="streamcomponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
                     </div>
-                ) : null}
+                ) : <div>호스트가 없습니다.</div>}
             </div>
         );
     }

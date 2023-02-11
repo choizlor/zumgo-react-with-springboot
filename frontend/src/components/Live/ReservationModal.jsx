@@ -21,8 +21,6 @@ export default function ReservationModal({ setModalOpen, productId }) {
     setModalOpen(false);
   };
 
-  console.log(typeof productId, "🥱product type");
-
   // 상품정보 불러오기
   useEffect(() => {
     axios
@@ -56,6 +54,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
       liveStartTime: reserve,
       liveStatus: "WAIT",
     });
+    
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
         headers: {

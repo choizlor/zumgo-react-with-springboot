@@ -24,7 +24,6 @@ import { useLocation } from "react-router";
 
 export default function Detail() {
   const location = useLocation();
-  console.log(location.pathname);
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -124,7 +123,7 @@ export default function Detail() {
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: product.userCode,
+        sellerCode: product?.userCode,
       })
       .then((res) => {
         console.log(res.data);
@@ -133,6 +132,10 @@ export default function Detail() {
             chats: res.data.chatList,
             sellerId: product.userCode,
             buyerId: userId,
+            sellerNickname : res.data.sellerNickname,
+            buyerNickname : res.data.buyerNickname,
+            sellerImg: res.data.sellerImg,
+            buyerImg: res.data.buyerImg,
           },
         });
       })
@@ -208,7 +211,7 @@ export default function Detail() {
         <ChevronLeftIcon
           className={styles.goback}
           onClick={() => {
-            navigate(-1);
+            navigate('/');
           }}
         />
         <Swiper
@@ -216,7 +219,6 @@ export default function Detail() {
           navigation={true}
           pagination={true}
           loop={true}
-
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
@@ -263,7 +265,7 @@ export default function Detail() {
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
-            <option value="BOOKING">예약 중</option>
+            <option value="BOOKING">예약 중</           option>
             <option value="SOLDOUT">거래완료</option>
           </select>
 
@@ -274,7 +276,7 @@ export default function Detail() {
           )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {isMine && userId !== 0 ? (
+        {userId !== 0 && isMine ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
             <PencilSquareIcon
@@ -310,12 +312,12 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-        {!isMine && (
+        { userId !== 0 && !isMine ? (
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
           />
-        )}
+        ) :null}
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (

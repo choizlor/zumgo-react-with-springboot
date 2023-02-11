@@ -11,7 +11,8 @@ import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
 export default function BottomNav({ curLocation }) {
-  console.log(curLocation, "🩱");
+  console.log(typeof curLocation);
+  
   const userCode = useSelector((state) => {
     return state.user.userCode;
   });
@@ -43,7 +44,7 @@ export default function BottomNav({ curLocation }) {
         />
         <div>
           <img
-            className={styles.liveicon}
+            className={styles.icon}
             onClick={() => {
               if (!userCode || userCode === 0) {
                 alert("로그인이 필요한 서비스 입니다!");
@@ -76,7 +77,7 @@ export default function BottomNav({ curLocation }) {
               alert("로그인이 필요한 서비스 입니다!");
               navigate("/login");
             } else {
-            navigate(`/userinfo/${userCode}`);
+              navigate(`/userinfo/${userCode}`);
             }
           }}
         />

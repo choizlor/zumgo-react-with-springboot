@@ -17,8 +17,8 @@ export default function Oauth() {
         // 토큰 axios 요청
         await axios.get(`api/oauth/token?code=${code}`).then((res) => {
           const token = res.headers.authorization;
-          console.log(token,'🖼')
-          
+          console.log(token, "🖼");
+
           // 받아온 토큰을 로컬 스토리지에 token으로 저장
           localStorage.setItem("token", token);
 
@@ -30,13 +30,14 @@ export default function Oauth() {
               },
             })
             .then((res) => {
-              console.log(res.data)
+              console.log(res.data);
               dispatch(
                 login({
                   userCode: res.data.user.userCode,
                   point: res.data.user.point,
                   kakaoNickname: res.data.user.kakaoNickname,
                   kakaoProfileImg: res.data.user.kakaoProfileImg,
+                  kakaoId: res.data.user.kakaoId,
                 })
               );
 

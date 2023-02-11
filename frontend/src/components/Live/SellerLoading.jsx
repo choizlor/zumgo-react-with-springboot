@@ -2,9 +2,12 @@ import axios from "axios";
 import React from "react";
 import styles from "./SellerLoading.module.css";
 import sellergo from "../../assets/images/sellergo.png";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function SellerLoading({ joinSession, roomId, title }) {
   const token = window.localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const onairSession = () => {
     const body = JSON.stringify({
@@ -26,13 +29,21 @@ export default function SellerLoading({ joinSession, roomId, title }) {
 
   return (
     <div className={styles.back}>
+      <div className={styles.navleft}>
+        <ChevronLeftIcon
+          className="w-6 h-6 text-white"
+          onClick={() => {
+            navigate("-1");
+          }}
+        />
+      </div>
       <div className={styles.body}>
         <div className={styles.title}>"{title}"</div>
         <div
           className={styles.live}
           onClick={() => {
-            joinSession();
             onairSession();
+            joinSession();
           }}
         >
           라이브 시작하기
@@ -57,7 +68,6 @@ export default function SellerLoading({ joinSession, roomId, title }) {
           </div>
           <div>줌고만의 미니 경매가 시작됩니다!</div>
         </div>
-
         <div>경매를 통해 물건을 팔아보세요😉</div>
       </div>
     </div>
