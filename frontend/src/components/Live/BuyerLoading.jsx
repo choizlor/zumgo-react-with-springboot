@@ -5,6 +5,14 @@ import buyergo from "../../assets/images/buyer.png";
 export default function BuyerLoading({ joinSession, title }) {
   return (
     <div className={styles.back}>
+      <div className={styles.navleft}>
+        <ChevronLeftIcon
+          className="w-6 h-6 text-black-100"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+      </div>
       <div className={styles.body}>
         <div className={styles.title}>"{title}"</div>
         <div className={styles.live} onClick={joinSession}>

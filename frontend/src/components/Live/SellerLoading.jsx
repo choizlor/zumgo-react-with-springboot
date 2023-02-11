@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import styles from "./SellerLoading.module.css";
 import sellergo from "../../assets/images/sellergo.png";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 export default function SellerLoading({ joinSession, roomId, title }) {
   const token = window.localStorage.getItem("token");
@@ -20,19 +21,27 @@ export default function SellerLoading({ joinSession, roomId, title }) {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => console.log(res, '🥱성공했나,,'))
       .catch((err) => console.log(err));
   };
 
   return (
     <div className={styles.back}>
+      <div className={styles.navleft}>
+        <ChevronLeftIcon
+          className="w-6 h-6 text-black-100"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+      </div>
       <div className={styles.body}>
         <div className={styles.title}>"{title}"</div>
         <div
           className={styles.live}
           onClick={() => {
-            joinSession();
             onairSession();
+            joinSession();
           }}
         >
           라이브 시작하기
