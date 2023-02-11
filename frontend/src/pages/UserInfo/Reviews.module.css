@@ -16,16 +16,15 @@
 }
 
 .review {
-    border-radius: 15px;
-    height : 75px;
-    background-color: #DFDFDF;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px; ;
 }
 
-.review:nth-child(even) {
+.review:nth-child(odd) {
     background-color: #DFDFDF;
 }
-.review:nth-child(odd) {
+.review:nth-child(even) {
     background-color: #BCFF5E;
 }
 
