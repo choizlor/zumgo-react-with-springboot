@@ -276,7 +276,7 @@ export default function Detail() {
         {userId !== 0 && !isMine ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
-            <PencilSquareIconF
+            <PencilSquareIcon
               className={styles.editbtn}
               onClick={() => {
                 navigate(`/update/${productId}`, {
