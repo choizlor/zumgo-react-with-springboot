@@ -165,7 +165,7 @@ export default function ChatRoom() {
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
         type: "",
-        sender: user.userCode,
+        sender: user.kakaoId,
         channelId: chatroomId,
         data: chat,
       }),
