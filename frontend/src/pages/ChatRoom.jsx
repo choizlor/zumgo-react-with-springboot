@@ -82,7 +82,7 @@ export default function ChatRoom() {
   });
 
   const msgBox = chatList.map((item, idx) => {
-    // console.log(item);
+    console.log(item);
     if (item.sender !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
@@ -167,6 +167,8 @@ export default function ChatRoom() {
       return;
     }
 
+    const date = new Date();
+
     client.publish({
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
@@ -174,6 +176,7 @@ export default function ChatRoom() {
         sender: user.userCode,
         channelId: chatroomId,
         data: chat,
+        chatDate : date,
       }),
       headers: { priority: 9 },
     });
@@ -198,7 +201,6 @@ export default function ChatRoom() {
   };
 
   useEffect(() => {
-
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
 
