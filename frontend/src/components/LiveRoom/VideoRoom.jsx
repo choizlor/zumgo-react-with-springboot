@@ -438,7 +438,7 @@ const VideoRoomTest = () => {
       {session === undefined ? (
         <div>
           {isHost ? (
-            <SellerLoading joinSession={joinSession} roomId={roomId} />
+            <SellerLoading joinSession={joinSession} roomId={roomId} title={product.title} />
           ) : (
             <BuyerLoading joinSession={joinSession} />
           )}

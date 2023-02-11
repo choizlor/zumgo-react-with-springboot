@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./LiveStart.module.css";
-import axios from "axios";
 
 export default function LiveStart({ product, clickLive }) {
   return (

@@ -25,13 +25,17 @@ export default function SellLive({ sellLiveRequestList }) {
   return (
     <div>
       <div className={styles.text}>예약 대기</div>
-      {reserveList?.map((product) => (
-        <LiveReservation key={product.id} product={product} />
-      ))}
+      <div>
+        {reserveList?.map((product) => (
+          <LiveReservation key={product.id} product={product} />
+        ))}
+      </div>
       <div className={styles.text}>라이브 시작 가능</div>
-      {startList?.map((product) => (
-        <LiveStart key={product.id} product={product} clickLive={clickLive} />
-      ))}
+      <div>
+        {startList?.map((product) => (
+          <LiveStart key={product.id} product={product} clickLive={clickLive} />
+        ))}
+      </div>
     </div>
   );
 }
