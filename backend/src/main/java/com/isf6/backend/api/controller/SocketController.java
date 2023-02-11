@@ -106,6 +106,10 @@ public class SocketController {
         // 프로필 이미지 추가
         chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
         chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
+
+        // 유저 닉네임 추가
+        chatInfo.setSellerNickname(chatRoomInfo.getSeller().getKakaoNickname());
+        chatInfo.setBuyerNickname(chatRoomInfo.getBuyer().getKakaoNickname());
         
         return chatInfo;
     }

@@ -10,7 +10,11 @@ public class ChatInfoResDto {
 
     long chatRoomId;
     List<Chat> chatList;
+    String buyerNickname;
+    String sellerNickname;
     String buyerImg;
     String sellerImg;
+
+
 
 }
