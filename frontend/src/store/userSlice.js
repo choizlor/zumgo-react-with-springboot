@@ -6,6 +6,7 @@ const initialState = {
   point: "",
   kakaoNickname: "",
   kakaoProfileImg: "",
+  kakaoId: "",
 };
 
 let user = createSlice({
@@ -17,6 +18,7 @@ let user = createSlice({
       state.point = action.payload.point;
       state.kakaoNickname = action.payload.kakaoNickname;
       state.kakaoProfileImg = action.payload.kakaoProfileImg;
+      state.kakaoId = action.payload.kakaoProfileImg;
     },
   },
   //초기화를 하고 싶은 state가 있는 slice마다 작성
