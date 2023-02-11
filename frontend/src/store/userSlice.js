@@ -13,7 +13,7 @@ let user = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login(state, action) {
+    login(action) {
       // console.log('action.payload : ', action.payload)
       return action.payload;
     },
@@ -24,5 +24,5 @@ let user = createSlice({
   }
 });
 
-export let { login, logout } = user.actions;
+export let { login } = user.actions;
 export default user;
