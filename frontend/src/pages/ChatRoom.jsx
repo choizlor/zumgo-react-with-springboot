@@ -232,7 +232,7 @@ export default function ChatRoom() {
               navigate("/chatlist");
             }}
           />
-          <span>{}</span>
+          <span>{otherNickname}</span>
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
