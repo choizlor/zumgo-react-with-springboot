@@ -23,7 +23,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => console.log(res, "🥱성공했나,,"))
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -31,7 +31,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
     <div className={styles.back}>
       <div className={styles.navleft}>
         <ChevronLeftIcon
-          className="w-6 h-6 text-black-100"
+          className="w-6 h-6 text-white"
           onClick={() => {
             navigate("/");
           }}
@@ -68,7 +68,6 @@ export default function SellerLoading({ joinSession, roomId, title }) {
           </div>
           <div>줌고만의 미니 경매가 시작됩니다!</div>
         </div>
-
         <div>경매를 통해 물건을 팔아보세요😉</div>
       </div>
     </div>
