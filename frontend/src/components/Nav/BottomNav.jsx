@@ -21,14 +21,14 @@ export default function BottomNav({curLocation}) {
     <div className={styles.navbody}>
       <nav className={styles.body}>
         <HomeIcon
-        style={curLocation === '/' ? {fill : 'black', color : 'white'} : ""}
+        // style={curLocation === '/' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             navigate("/");
           }}
         />
         <ChatBubbleOvalLeftIcon
-        style={curLocation === '/chatlist' ? {fill : 'black', color : 'white'} : ""}
+        // style={curLocation === '/chatlist' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             if (!userCode || userCode === 0) {
@@ -65,7 +65,7 @@ export default function BottomNav({curLocation}) {
           }}
         />
         <UserCircleIcon
-        style={curLocation === '/userInfo' ? {fill : 'black', color : 'white'} : ""}
+        // style={curLocation === '/userInfo' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
             // if (!userCode || userCode === 0) {
