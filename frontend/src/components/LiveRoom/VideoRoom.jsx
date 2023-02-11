@@ -20,7 +20,7 @@ import BuyerLoading from "../Live/BuyerLoading";
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
 
-const VideoRoomTest = () => {
+const VideoRoom = () => {
   const navigate = useNavigate(); // 네비게이터(방 나갈 때 사용)
   const roomId = useParams().productId;
   const [product, setProduct] = useState({});
@@ -29,21 +29,6 @@ const VideoRoomTest = () => {
   });
   const isHost = Number(product.userCode) === user.userCode ? true : false;
   const token = window.localStorage.getItem("token");
-
-  // useEffect(() => {
-  //   setMyUserName(user.kakaoNickname);
-
-  //   axios
-  //     .get(
-  //       `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
-  //     )
-  //     .then((res) => {
-  //       setProduct(res.data);
-  //       setBidPrice(res.data.price);
-  //       console.log(res.data, "😊라이브 눌렀을때 상품정보");
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [user]);
 
   useEffect(() => {
     setMyUserName(user.kakaoNickname);
@@ -62,7 +47,6 @@ const VideoRoomTest = () => {
             axios
               .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
               .then((res) => {
-                console.log(res.data.user, "😖host 정보");
                 setHostName(res.data.user.kakaoNickname);
               });
           });
@@ -93,6 +77,7 @@ const VideoRoomTest = () => {
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
+  const [noncelebrity, setNonCelebrity] = useState(false);
 
   console.log(isHost, "😎");
 
@@ -212,7 +197,9 @@ const VideoRoomTest = () => {
     });
 
     mySession.on("signal:count", (event) => {
-      setBidders(Number(event.data));
+      const tmp = event.data.split(" : ");
+      setBidders(Number(tmp[0]));
+      setBestBidder(tmp[1])
     });
 
     mySession.on("signal:bid", (event) => {
@@ -315,7 +302,7 @@ const VideoRoomTest = () => {
     // setBidders((bidders) => bidders + 1)
     session
       .signal({
-        data: Number(bidders) + 1,
+        data: `${Number(bidders) + 1} : ${myUserName}`,
         type: "count",
       })
       .then(() => {
@@ -416,38 +403,22 @@ const VideoRoomTest = () => {
   // };
 
   return (
-    // 입장 전 보이는 화면
     <div className={styles.container}>
-      {/* {session === undefined ? (
-        <div id="join" className={styles.joinpage}>
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1>{myUserName} 님,</h1>
-            <h1>"{mySessionId}" 라이브에 입장하시겠습니까?</h1>
-            <button
-              style={{ border: "1px solid red" }}
-              onClick={() => {
-                joinSession();
-              }}
-            >
-              라이브 입장하기
-            </button>
-          </div>
-        </div>
-      ) : null} */}
-
+      {/* 입장 전 보이는 화면 */}
       {session === undefined ? (
         <div>
           {isHost ? (
-            <SellerLoading joinSession={joinSession} roomId={roomId} title={product.title} />
+            <SellerLoading
+              joinSession={joinSession}
+              roomId={roomId}
+              title={product.title}
+            />
           ) : (
-            <BuyerLoading joinSession={joinSession} />
+            <BuyerLoading joinSession={joinSession} title={product.title} />
           )}
         </div>
       ) : null}
 
-      {/* {session === undefined && roomId !== null && (
-        <div enterAuctionRoom={enterAuctionRoom}></div> // Loading 페이지 만들어야 함.
-      )} */}
       {/* 비디오 화면 뜨는 곳 */}
       {session !== undefined ? (
         <div className={styles.container}>
@@ -490,7 +461,7 @@ const VideoRoomTest = () => {
                 />
               </div>
             </div>
-            <div className={styles.topbottom}>음성변조 아이콘</div>
+            {/* <div className={styles.topbottom}>음성변조 아이콘</div> */}
             <div className={styles.bottom}>
               <div className={styles.bottomtop}>
                 <ChattingList messageList={messageList} />
@@ -525,6 +496,7 @@ const VideoRoomTest = () => {
               bidPrice={bidPrice}
               bestBidder={bestBidder}
               setCelebrity={setCelebrity}
+              setNonCelebrity={setNonCelebrity}
               // setTimerOpen={setTimerOpen}
             />
           </div>
@@ -550,6 +522,7 @@ const VideoRoomTest = () => {
               />
             ) : null}
           </div>
+
           <div>
             {celebrity ? (
               <div className={styles.modal}>
@@ -562,10 +535,22 @@ const VideoRoomTest = () => {
               </div>
             ) : null}
           </div>
+
+          {/* bidder가 0명일 때 */}
+          <div>
+            {noncelebrity ? (
+              <div className={styles.modal}>
+                <div className={styles.modaltext}>입찰자가 없어서</div>
+                <div className={styles.modaltext}>
+                  경매가 진행되지 않습니다.
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       ) : null}
     </div>
   );
 };
 
-export default VideoRoomTest;
+export default VideoRoom;

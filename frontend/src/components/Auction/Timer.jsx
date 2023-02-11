@@ -8,7 +8,8 @@ export default function Timer({
   bidders,
   setPriceOpen,
   bidCount,
-  setCelebrity
+  setCelebrity,
+  setNonCelebrity,
   // setTimerOpen,
 }) {
   const sendCount = () => {
@@ -38,11 +39,17 @@ export default function Timer({
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
         clearInterval(id);
+        if (bidders === 0) {
+          setNonCelebrity(true);
+        }
+        if (bidders === 1) {
+          setCelebrity(true);
+        }
         if (bidders > 1) {
           setPriceOpen(true);
         }
         if (bidCount > 0) {
-          setCelebrity(true)
+          setCelebrity(true);
         }
       }
     }, 1000);
