@@ -38,17 +38,6 @@ public class Product extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus status; // ONSALE, BOOKING, SOLDOUT
 
-//    @Builder
-//    public Product(String title, int price, String description, String availableTime, Timestamp reserve, List<Img> imgList, ProductStatus status) {
-//        this.title = title;
-//        this.price = price;
-//        this.description = description;
-//        this.availableTime = availableTime;
-//        this.reserve = reserve;
-//        this.imgList = imgList;
-//        this.status = status;
-//    }
-
     @JsonIgnore
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -83,5 +72,9 @@ public class Product extends BaseTimeEntity {
         this.availableTime = availableTime;
         this.reserve = reserve;
         this.status = status;
+    }
+
+    public void setReserve(Timestamp reserve) {
+        this.reserve = reserve;
     }
 }

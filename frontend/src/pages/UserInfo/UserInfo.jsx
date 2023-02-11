@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/UserInfo.module.css";
-import BottomNav from "../components/Nav/BottomNav";
-import Reviews from "../components/UserInfo/Reviews";
+import styles from "./UserInfo.module.css";
+import BottomNav from "../../components/Nav/BottomNav";
+import Reviews from "./Reviews";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/userSlice";
+import { logout } from "../../store/userSlice";
 
 import {
   ChevronLeftIcon,
@@ -22,12 +22,12 @@ export default function UserInfo() {
   const param = useParams();
   const navigate = useNavigate();
   const userId = param.userId;
+  
   const me = useSelector((state) => {
     return state.user;
   });
 
   const dispatch = useDispatch();
-  const [myReivews , setMyReviews] = useState([]);
 
 
   // 해당 페이지의 사용자와 로그인 된 사용자가 동일한 인물인지 확인
@@ -55,12 +55,7 @@ export default function UserInfo() {
       setUserInfo(res.data.user);
     });
 
-    axios.get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
-    .then((res)=>{
-      console.log(res.data, '🎈🎈')
-      setMyReviews(res.data)
-    })
-    .catch((err) => {console.log(err)})
+   
   }, []);
 
   return (
@@ -70,7 +65,7 @@ export default function UserInfo() {
           <ChevronLeftIcon
             className="w-6 h-6 text-black-100"
             onClick={() => {
-              navigate(-1);
+              navigate('/');
             }}
           />
           <div className={styles.title}>프로필</div>
@@ -162,7 +157,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo} myReivews={myReivews} />
+      <Reviews userInfo={userInfo}/>
 
       {/* <UserInfoDetail/> */}
       <BottomNav />

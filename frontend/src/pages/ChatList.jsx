@@ -25,6 +25,27 @@ export default function ChatList() {
       });
   }, []);
 
+  // 일반채팅하기
+  const getChatHistory = (sellerId, buyerId) => {
+    // 판매자 정보, 구매자 정보 보내주기
+    axios
+      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        buyerCode: buyerId,
+        sellerCode: sellerId,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
+          chats : res.data.chatList,
+          sellerId,
+          buyerId,
+        }});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <div className={styles.title}>채팅</div>
@@ -35,15 +56,7 @@ export default function ChatList() {
               key={idx}
               className={styles.chat}
               onClick={() => {
-                // if (cha)
-                navigate(`/chatroom/${chat.roomId}`, {
-                  state: {
-                    other:
-                      chat.seller.userCode === userId
-                        ? chat.buyer
-                        : chat.seller
-                  },
-                });
+                getChatHistory(chat.seller.userCode, chat.buyer.userCode);
               }}
             >
               <div className={styles.leftbox}>
