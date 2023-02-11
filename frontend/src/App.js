@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import {useDispatch} from 'react-redux'
-import {login} from './reducers/userSlice'
+import {login} from './store/userSlice'
 import axios from 'axios';
 import {useEffect} from 'react'
 import Root from "./pages/Root";
@@ -22,7 +22,7 @@ import SellList from "./pages/SellList";
 import WishList from "./pages/WishList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfo from "./pages/UpdateUserInfo";
-import UserInfo from "./pages/UserInfo";
+import UserInfo from "./pages/UserInfo/UserInfo";
 import AddReview from "./pages/AddReview";
 import MyReviewList from "./pages/MyReviewList";
 import Report from "./pages/Report/Report";

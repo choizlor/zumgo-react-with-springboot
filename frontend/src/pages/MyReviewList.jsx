@@ -9,8 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router';
-
+import { useLocation } from "react-router";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
@@ -20,10 +19,12 @@ export default function MyReviewList() {
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
-    axios.get(`https://i8c110.p.ssafy.io/api/v1/review/${userId}`).then((res) => {
-      setReviews(res.data.MyReview);
-      console.log(res.data.MyReview);
-    });
+    axios
+      .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
+      .then((res) => {
+        setReviews(res.data.MyReview);
+        console.log(res.data.MyReview);
+      });
   }, []);
 
   const handleDeleteReview = (productId) => {
@@ -43,7 +44,7 @@ export default function MyReviewList() {
       {/* 상단 네비게이션 */}
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
         </div>
       </div>
       {/* 타이틀 */}
@@ -75,7 +76,7 @@ export default function MyReviewList() {
                 <div className={styles.icons}>
                   <PencilIcon
                     onClick={() => {
-                      navigate(`/review/${userId}/update`);
+                      navigate(`/review/${review.product.id}/update`);
                     }}
                   />
                   <TrashIcon onClick={handleDeleteReview(review.product.id)} />

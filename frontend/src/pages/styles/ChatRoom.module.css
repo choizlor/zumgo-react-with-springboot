@@ -32,6 +32,7 @@
     overflow: scroll;
     width : 85%;
     margin : auto;
+    scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

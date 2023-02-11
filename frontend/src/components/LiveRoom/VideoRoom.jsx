@@ -14,6 +14,8 @@ import styles from "./VideoRoom.module.css";
 
 import userImg from "../../assets/images/kim.png";
 import Price from "../Auction/Price";
+import SellerLoading from "../Live/SellerLoading";
+import BuyerLoading from "../Live/BuyerLoading";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
@@ -416,7 +418,7 @@ const VideoRoomTest = () => {
   return (
     // 입장 전 보이는 화면
     <div className={styles.container}>
-      {session === undefined ? (
+      {/* {session === undefined ? (
         <div id="join" className={styles.joinpage}>
           <div id="join-dialog" className="jumbotron vertical-center">
             <h1>{myUserName} 님,</h1>
@@ -430,6 +432,16 @@ const VideoRoomTest = () => {
               라이브 입장하기
             </button>
           </div>
+        </div>
+      ) : null} */}
+
+      {session === undefined ? (
+        <div>
+          {isHost ? (
+            <SellerLoading joinSession={joinSession} roomId={roomId} title={product.title} />
+          ) : (
+            <BuyerLoading joinSession={joinSession} />
+          )}
         </div>
       ) : null}
 
@@ -490,9 +502,13 @@ const VideoRoomTest = () => {
                   currentSession={session}
                 />
                 {isHost ? (
-                  <button onClick={startAuction} className={styles.gobtn}>go?</button>
+                  <button onClick={startAuction} className={styles.gobtn}>
+                    go?
+                  </button>
                 ) : (
-                  <button onClick={countBidder} className={styles.gobtn}>go!</button>
+                  <button onClick={countBidder} className={styles.gobtn}>
+                    go!
+                  </button>
                 )}
               </div>
             </div>

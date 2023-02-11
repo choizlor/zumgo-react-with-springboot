@@ -10,5 +10,7 @@ public class ChatInfoResDto {
 
     long chatRoomId;
     List<Chat> chatList;
+    String buyerImg;
+    String sellerImg;
 
 }

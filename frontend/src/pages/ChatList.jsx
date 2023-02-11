@@ -3,9 +3,12 @@ import styles from "./styles/ChatList.module.css";
 import Bottomnav from "../components/Nav/BottomNav.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 import axios from "axios";
 
 export default function ChatList() {
+  const location = useLocation();
+  const curLocation = location.pathname
   const navigate = useNavigate();
 
   const userId = useSelector((state) => {
@@ -25,6 +28,27 @@ export default function ChatList() {
       });
   }, []);
 
+  // 일반채팅하기
+  const getChatHistory = (sellerId, buyerId) => {
+    // 판매자 정보, 구매자 정보 보내주기
+    axios
+      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        buyerCode: buyerId,
+        sellerCode: sellerId,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
+          chats : res.data.chatList,
+          sellerId,
+          buyerId,
+        }});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <div className={styles.title}>채팅</div>
@@ -35,15 +59,7 @@ export default function ChatList() {
               key={idx}
               className={styles.chat}
               onClick={() => {
-                // if (cha)
-                navigate(`/chatroom/${chat.roomId}`, {
-                  state: {
-                    other:
-                      chat.seller.userCode === userId
-                        ? chat.buyer
-                        : chat.seller
-                  },
-                });
+                getChatHistory(chat.seller.userCode, chat.buyer.userCode);
               }}
             >
               <div className={styles.leftbox}>
@@ -78,7 +94,7 @@ export default function ChatList() {
           );
         })}
       </div>
-      <Bottomnav />
+      <Bottomnav curLocation={curLocation}/>
     </div>
   );
 }

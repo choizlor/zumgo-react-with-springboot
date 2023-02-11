@@ -31,7 +31,7 @@ export default function BottomNav({curLocation}) {
         style={curLocation === '/chatlist' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
-            if (!userCode) {
+            if (!userCode || userCode === 0) {
               alert("로그인이 필요한 서비스 입니다!");
               navigate("/login");
             } else {
@@ -43,7 +43,7 @@ export default function BottomNav({curLocation}) {
           <img
             className={styles.liveicon}
             onClick={() => {
-              if (!userCode) {
+              if (!userCode || userCode === 0) {
                 alert("로그인이 필요한 서비스 입니다!");
                 navigate("/login");
               } else {
@@ -68,7 +68,7 @@ export default function BottomNav({curLocation}) {
         style={curLocation === '/userInfo' ? {fill : 'black', color : 'white'} : ""}
           className={styles.icon}
           onClick={() => {
-            // if (!userCode) {
+            // if (!userCode || userCode === 0) {
             //   alert("로그인이 필요한 서비스 입니다!");
             //   navigate("/login");
             // } else {
