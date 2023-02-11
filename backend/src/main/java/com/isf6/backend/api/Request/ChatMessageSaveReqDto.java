@@ -14,13 +14,13 @@ public class ChatMessageSaveReqDto {
     private Long roomId;
     private String chat_content;
 //    private Timestamp chat_date;
-    private String chatter;
+    private Long chatterId;
 
     @Builder
-    public ChatMessageSaveReqDto(Long roomId, String chatter, String chat_content) {
+    public ChatMessageSaveReqDto(Long roomId, Long chatterId, String chat_content) {
         this.roomId = roomId;
         this.chat_content = chat_content;
-        this.chatter = chatter;
+        this.chatterId = chatterId;
     }
 
     public ChatMessageSaveReqDto toChatMessageSaveReqDto(Chat chat) {
@@ -28,7 +28,7 @@ public class ChatMessageSaveReqDto {
 
         chatMessageSaveReqDto.setChat_content(chat.getChat_content());
 //        chatMessageSaveReqDto.setChat_date(chat.getChat_date());
-        chatMessageSaveReqDto.setChatter(chat.getChatter());
+        chatMessageSaveReqDto.setChatterId(chat.getChatterId());
         return chatMessageSaveReqDto;
     }
 }
