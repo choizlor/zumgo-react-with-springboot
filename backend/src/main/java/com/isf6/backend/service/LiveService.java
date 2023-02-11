@@ -96,10 +96,18 @@ public class LiveService {
         liveRoomRepository.save(liveRoom);
     }
 
-    public List<LiveRoom> getRequestLiveRoomList(long userCode) {
+    public List<LiveRoom> getStartRequestLiveRoomList(long userCode) {
         //라이브요청 리스트로 라이브방 목록 가져오기... 근데 라이브 상태가 시작인 것만...
         List<LiveRoom> liveRoomList = new ArrayList<>();
         liveRoomList = liveRoomRepository.getStartLiveRoomList(userCode);
+
+        return liveRoomList;
+    }
+
+    public List<LiveRoom> getWaitRequestLiveRoomList(long userCode) {
+        //라이브요청 리스트로 라이브방 목록 가져오기... 근데 라이브 상태가 대기인 것만...
+        List<LiveRoom> liveRoomList = new ArrayList<>();
+        liveRoomList = liveRoomRepository.getWaitLiveRoomList(userCode);
 
         return liveRoomList;
     }

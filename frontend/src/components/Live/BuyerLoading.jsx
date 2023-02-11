@@ -11,7 +11,7 @@ export default function BuyerLoading({ joinSession, title }) {
     <div className={styles.back}>
       <div className={styles.navleft}>
         <ChevronLeftIcon
-          className="w-6 h-6 text-black-100"
+          className="w-6 h-6 text-white"
           onClick={() => {
             navigate("/");
           }}
