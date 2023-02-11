@@ -151,7 +151,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userId={userId} />
+      <Reviews userInfo={userInfo} />
 
       {/* <UserInfoDetail/> */}
       <BottomNav curLocation={curLocation} />
