@@ -16,7 +16,6 @@ export default function BuyLive({ onairList, waitList }) {
     <div>
       <div className={styles.text}>방송 중</div>
       <div>
-        방송중인 라이브라고요 왜 안나오냐고요,,,
         {onairList?.map((product) => (
           <LiveCard key={product.id} product={product} clickLive={clickLive} />
         ))}
