@@ -8,9 +8,13 @@ import java.util.List;
 @Data
 public class ChatInfoResDto {
 
-    long chatRoomId;
-    List<Chat> chatList;
-    String buyerImg;
-    String sellerImg;
+    private long chatRoomId;
+    private List<Chat> chatList;
+    private String buyerNickname;
+    private String sellerNickname;
+    private String buyerImg;
+    private String sellerImg;
+
+
 
 }
