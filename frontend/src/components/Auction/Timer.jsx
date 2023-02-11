@@ -10,6 +10,7 @@ export default function Timer({
   bidCount,
   setCelebrity,
   setNonCelebrity,
+  sellerCheck,
   // setTimerOpen,
 }) {
   const sendCount = () => {
@@ -39,7 +40,7 @@ export default function Timer({
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
         clearInterval(id);
-        if (bidders === 0) {
+        if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
         }
         if (bidders === 1) {

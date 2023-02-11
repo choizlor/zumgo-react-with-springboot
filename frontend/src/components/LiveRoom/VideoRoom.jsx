@@ -78,6 +78,7 @@ const VideoRoom = () => {
   const [bestBidder, setBestBidder] = useState("");
   const [celebrity, setCelebrity] = useState(false);
   const [noncelebrity, setNonCelebrity] = useState(false);
+  const [sellerCheck, setSellerCheck] = useState(false);
 
   console.log(isHost, "😎");
 
@@ -192,6 +193,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
+      setSellerCheck(true)
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
     });
@@ -497,6 +499,7 @@ const VideoRoom = () => {
               bestBidder={bestBidder}
               setCelebrity={setCelebrity}
               setNonCelebrity={setNonCelebrity}
+              sellerCheck={sellerCheck}
               // setTimerOpen={setTimerOpen}
             />
           </div>
