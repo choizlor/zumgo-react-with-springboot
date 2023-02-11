@@ -13,13 +13,21 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router";
 
+// swiper 사용하기
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
+// 자동 페이지 넘김
+import { Autoplay } from "swiper";
+
+
 export default function Home() {
   const location = useLocation();
-  const curLocation = location.pathname
+  const curLocation = location.pathname;
 
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);     // 현재 페이지 번호 (페이지네이션)
+  const [page, setPage] = useState(0); // 현재 페이지 번호 (페이지네이션)
   const [ref, inView] = useInView();
 
   // 무한 스크롤
@@ -60,8 +68,16 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
+      <Swiper
+        className={styles.swiper}
+        loop={true}
+        autoplay ={{delay:3000}}
+      >
+        <SwiperSlide className={styles.swiperimg}>
+          <HomeBanner />
+        </SwiperSlide>
+      </Swiper>
 
-      <HomeBanner />
       <div className={styles.body}>
         <div className={styles.onsale}>판매중</div>
         <div className={styles.scrollarea}>
@@ -76,8 +92,7 @@ export default function Home() {
           })}
           <div ref={ref}>안녕</div>
         </div>
-        <BottomNav curLocation={curLocation}/>
-       
+        <BottomNav curLocation={curLocation} />
       </div>
     </div>
   );
