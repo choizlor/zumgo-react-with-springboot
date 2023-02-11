@@ -15,7 +15,8 @@ import { useLocation } from "react-router";
 
 export default function Home() {
   const location = useLocation();
-  console.log(location.pathname)
+  const curLocation = location.pathname
+
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);     // 현재 페이지 번호 (페이지네이션)
@@ -75,7 +76,7 @@ export default function Home() {
           })}
           <div ref={ref}>안녕</div>
         </div>
-        <BottomNav />
+        <BottomNav curLocation={curLocation}/>
        
       </div>
     </div>

@@ -8,6 +8,7 @@ import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function AddProduct() {
+  
   const navigate = useNavigate();
 
   // redux
