@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./LiveCard.module.css";
 
 export default function LiveCard({ product, clickLive }) {
+  console.log(product, '😙방송중인 라이브라고요')
+
   return (
     <div>
       <div
