@@ -173,14 +173,28 @@ public class LiveController {
     }
 
     //유저가 라이브 요청한 상품에 대한 라이브방 목록 조회(시작한 것만)
-    @ApiOperation(value = "라이브 요청한 상품에 대한 라이브방 목록 조회", notes = "라이브 요청한 상품에 대한 라이브방 목록 조회")
-    @GetMapping("/request/{userCode}")
-    public ResponseEntity getRequestLiveRoomList(@PathVariable long userCode) {
+    @ApiOperation(value = "라이브 요청한 상품 중 시작한 라이브방 목록 조회", notes = "라이브 요청한 상품 중 시작한 라이브방 목록 조회")
+    @GetMapping("/request/start/{userCode}")
+    public ResponseEntity getStartRequestLiveRoomList(@PathVariable long userCode) {
         Map<String, Object> result = new HashMap<>();
 
         //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
         List<LiveRoom> liveRoomList = new ArrayList<>();
-        liveRoomList = liveService.getRequestLiveRoomList(userCode);
+        liveRoomList = liveService.getStartRequestLiveRoomList(userCode);
+        log.info("liveRoomList : {}", liveRoomList.size());
+        result.put("myLiveRoomList", liveRoomList);
+
+        return ResponseEntity.status(200).body(result);
+    }
+
+    @ApiOperation(value = "라이브 요청한 상품 중 대기 상태인 라이브방 목록 조회", notes = "라이브 요청한 상품 중 대기 상태인 라이브방 목록 조회")
+    @GetMapping("/request/wait/{userCode}")
+    public ResponseEntity getWaitRequestLiveRoomList(@PathVariable long userCode) {
+        Map<String, Object> result = new HashMap<>();
+
+        //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
+        List<LiveRoom> liveRoomList = new ArrayList<>();
+        liveRoomList = liveService.getWaitRequestLiveRoomList(userCode);
         log.info("liveRoomList : {}", liveRoomList.size());
         result.put("myLiveRoomList", liveRoomList);
 
