@@ -3,9 +3,11 @@ import React from "react";
 import styles from "./SellerLoading.module.css";
 import sellergo from "../../assets/images/sellergo.png";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function SellerLoading({ joinSession, roomId, title }) {
   const token = window.localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const onairSession = () => {
     const body = JSON.stringify({
@@ -21,7 +23,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => console.log(res, '🥱성공했나,,'))
+      .then((res) => console.log(res, "🥱성공했나,,"))
       .catch((err) => console.log(err));
   };
 

@@ -1,8 +1,12 @@
 import React from "react";
 import styles from "./BuyerLoading.module.css";
 import buyergo from "../../assets/images/buyer.png";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function BuyerLoading({ joinSession, title }) {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.back}>
       <div className={styles.navleft}>
