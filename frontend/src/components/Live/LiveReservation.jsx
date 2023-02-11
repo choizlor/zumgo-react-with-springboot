@@ -23,7 +23,12 @@ export default function LiveReservation({ product }) {
           시간 예약하기
         </button>
       </div>
-      {modalOpen && <ReservationModal setModalOpen={setModalOpen} productId={product.id}/>}
+      {modalOpen && (
+        <ReservationModal
+          setModalOpen={setModalOpen}
+          productId={product.productId}
+        />
+      )}
     </div>
   );
 }
