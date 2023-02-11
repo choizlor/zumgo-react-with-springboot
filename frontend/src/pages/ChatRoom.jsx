@@ -48,27 +48,12 @@ export default function ChatRoom() {
     event.preventDefault();
   };
 
-  // const getChatHistory = () => {
-  //   // 이전 채팅 정보를 불러오는 axios
-  //   axios
-  //     .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
-  //       buyerCode: buyerId,
-  //       sellerCode: sellerId,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const preMsgBox = history.map((item, idx) => {
     const date = new Date(item.chat_date);
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatter !== user.kakaoNickname) {
+    if (item.chatterId !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -97,7 +82,7 @@ export default function ChatRoom() {
   });
 
   const msgBox = chatList.map((item, idx) => {
-    console.log(item);
+    // console.log(item);
     if (item.sender !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
@@ -171,6 +156,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
+      console.log(msg, '🎁');
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -200,7 +186,7 @@ export default function ChatRoom() {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
       .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", {
-        chatRoomCode: chatroomId,
+        chatroomId,
       })
       .then((res) => {
         disConnect();
@@ -212,8 +198,6 @@ export default function ChatRoom() {
   };
 
   useEffect(() => {
-    // // 기존의 대화 내용 불러오기
-    // getChatHistory();
 
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();

@@ -30,7 +30,7 @@ export default function DetailModal({ setModalOpen }) {
       })
       .then((res) => {
         closeModal(false);
-        navigate(`/chatroom/${res.data}`, { state: isReview });
+        navigate(`/chatroom/${res.data.roomId}`, { state: isReview });
       });
   };
 
