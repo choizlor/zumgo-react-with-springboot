@@ -216,6 +216,7 @@ export default function Detail() {
           navigation={true}
           pagination={true}
           loop={true}
+
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
