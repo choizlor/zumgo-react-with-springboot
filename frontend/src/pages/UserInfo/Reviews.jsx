@@ -4,10 +4,11 @@ import axios from "axios";
 
 export default function Reviews({ userInfo }) {
   const [reviews, setReviews] = useState([]);
-
+  console.log(userInfo,'🎃🎃🎃')
   useEffect(() => {
+    console.log('렌더링',userInfo)
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userInfo.userCode}`)
+      .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userInfo?.userCode}`)
       .then((res) => {
         console.log(res.data, "🎨");
         console.log(res.data.MyReview, "👓");
