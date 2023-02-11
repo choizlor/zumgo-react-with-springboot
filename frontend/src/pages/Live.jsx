@@ -22,7 +22,6 @@ export default function Live() {
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
         setMyLiveRequestList(res.data.MyLiveRequestList);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +35,7 @@ export default function Live() {
       .catch((err) => {
         console.log(err);
       });
-  }, [userId, sellLiveRequestList, myLiveRequestList, onairList]);
+  }, [userId]);
 
   //toggle 상태 표시
   const [toggle, settoggle] = useState(true);
