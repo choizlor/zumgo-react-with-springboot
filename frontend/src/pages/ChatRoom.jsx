@@ -13,6 +13,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function ChatRoom() {
+  // 현재 로그인된 사용자
   const user = useSelector((state) => {
     return state.user;
   });
@@ -21,11 +22,15 @@ export default function ChatRoom() {
   const location = useLocation();
   const sellerId = location.state.sellerId;
   const buyerId = location.state.buyerId;
+  const sellerNickname = location.state.sellerNickname;
+  const buyerNickname = location.state.buyerNickname;
   const sellerImg = location.state.sellerImg;
   const buyerImg = location.state.buyerImg;
 
   const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
   const otherId = sellerId === user.userCode ? buyerId : sellerId;
+  const otherNickname =
+    sellerId === user.userCode ? buyerNickname : sellerNickname;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -35,6 +40,28 @@ export default function ChatRoom() {
   const [chatList, setChatList] = useState([]); // 채팅 기록
   const history = location.state.chats;
 
+  const onChangeChat = (e) => {
+    setChat(e.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  // const getChatHistory = () => {
+  //   // 이전 채팅 정보를 불러오는 axios
+  //   axios
+  //     .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
+  //       buyerCode: buyerId,
+  //       sellerCode: sellerId,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const preMsgBox = history.map((item, idx) => {
     const date = new Date(item.chat_date);
@@ -70,8 +97,8 @@ export default function ChatRoom() {
   });
 
   const msgBox = chatList.map((item, idx) => {
-    console.log(item)
-    if (item.sender !== user.kakaoNickname) {
+    console.log(item);
+    if (item.sender !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -95,19 +122,13 @@ export default function ChatRoom() {
     }
   });
 
-  const getChatHistory = () => {
-    axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
-        buyerCode: buyerId,
-        sellerCode: sellerId,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // websocket
+  // websocket
+  // websocket
+  // websocket
+  // websocket
+  // websocket
+  // websocket
 
   const connect = () => {
     // 소켓 연결
@@ -150,7 +171,6 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
-      console.log(msg);
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -165,7 +185,7 @@ export default function ChatRoom() {
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
         type: "",
-        sender: user.kakaoId,
+        sender: user.userCode,
         channelId: chatroomId,
         data: chat,
       }),
@@ -191,17 +211,9 @@ export default function ChatRoom() {
       });
   };
 
-  const onChangeChat = (e) => {
-    setChat(e.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   useEffect(() => {
-    // 기존의 대화 내용 불러오기
-    getChatHistory();
+    // // 기존의 대화 내용 불러오기
+    // getChatHistory();
 
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
@@ -235,13 +247,7 @@ export default function ChatRoom() {
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
           <MegaphoneIcon
-          // onClick={() =>
-          //   navigate(`/report/${other?.userCode}`, {
-          //     state: {
-          //       other,
-          //     },
-          //   })
-          // }
+          onClick={() => navigate(`/report/${otherId}`)}
           />
           <div className={styles.inputbar}>
             <div>

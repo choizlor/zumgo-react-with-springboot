@@ -133,6 +133,8 @@ export default function Detail() {
             chats: res.data.chatList,
             sellerId: product.userCode,
             buyerId: userId,
+            sellerNickname : res.data.sellerNickname,
+            buyerNickname : res.data.buyerNickname,
             sellerImg: res.data.sellerImg,
             buyerImg: res.data.buyerImg,
           },

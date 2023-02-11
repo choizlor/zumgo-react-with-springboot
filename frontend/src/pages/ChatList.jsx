@@ -41,8 +41,10 @@ export default function ChatList() {
         navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
           chats : res.data.chatList,
           sellerId,
-          sellerImg : res.data.sellerImg,
           buyerId,
+          sellerNickname : res.data.sellerNickname,
+          buyerNickname : res.data.buyerNickname,
+          sellerImg : res.data.sellerImg,
           buyerImg : res.data.buyerImg,
         }});
       })
