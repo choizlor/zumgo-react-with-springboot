@@ -3,9 +3,10 @@ import styles from "./UserInfo.module.css";
 import BottomNav from "../../components/Nav/BottomNav";
 import Reviews from "./Reviews";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { persistor } from "../../index";
+import {useLocation} from 'react-router'
 
 import {
   ChevronLeftIcon,
@@ -17,6 +18,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function UserInfo() {
+  const location = useLocation();
+  const curLocation = location.pathname
   const [userInfo, setUserInfo] = useState({});
   // 마이 페이지 인지 확인하기
   const param = useParams();
@@ -152,7 +155,7 @@ export default function UserInfo() {
       <Reviews userInfo={userInfo}/>
 
       {/* <UserInfoDetail/> */}
-      <BottomNav />
+      <BottomNav curLocation={curLocation}/>
     </div>
   );
 }
