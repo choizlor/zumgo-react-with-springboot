@@ -90,9 +90,10 @@ public class SocketController {
         //채팅방이 null이면 채팅방 만들어주고 아니면 채팅 내역 함께 넘겨주기
         if(chatRoomInfo == null) {
             //String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
-            chatRoomId = socketService.createRoom(buyerCode, sellerCode);
+            chatRoomInfo = socketService.createRoom(buyerCode, sellerCode);
             chatInfo.setChatRoomId(chatRoomId);
             chatInfo.setChatList(new ArrayList<>());
+            
         } else {
             //채팅 내역 가져오기
             log.info("채팅방 존재");
