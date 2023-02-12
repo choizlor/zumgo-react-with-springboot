@@ -16,7 +16,7 @@
 .togglebtn {
   position: fixed;
   bottom: 17%;
-  left: 30%;
+  left: 33%;
 }
 
 /* 토글 버튼 */
@@ -93,7 +93,7 @@
   font-family: "Poppins", sans-serif;
   content: "S E L L";
   position: absolute;
-  top: 13%;
+  top: 18%;
   left: 5%;
   width: 75px;
   height: 20px;
@@ -110,7 +110,7 @@
 
 .checkbox:checked + .knobs:before {
   content: "B U Y";
-  left: 40%;
+  left: 45%;
   color: black;
   background-color: white;
 }
