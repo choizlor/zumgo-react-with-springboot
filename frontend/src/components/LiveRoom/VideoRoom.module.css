@@ -168,6 +168,14 @@
 }
 
 /* celebrity css */
+:root {
+  --color1: #55476a;
+  --color2: #ae3d63;
+  --color3: #db3853;
+  --color4: #f45c44;
+  --color5: #f8b663;
+}
+
 .confetticon {
   min-height: 100vh;
   overflow: hidden;
