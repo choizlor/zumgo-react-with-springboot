@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Detail.module.css";
 import LiveBtn from "./LiveBtn";
-import zImg from "../assets/images/z.png";
+import zImg from "../../assets/images/z.png";
 import DetailModal from "./DetailModal";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
