@@ -20,12 +20,12 @@ export default function ChatRoom() {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const sellerId = location.state.sellerId;
-  const buyerId = location.state.buyerId;
-  const sellerNickname = location.state.sellerNickname;
-  const buyerNickname = location.state.buyerNickname;
-  const sellerImg = location.state.sellerImg;
-  const buyerImg = location.state.buyerImg;
+  const sellerId = location.state?.sellerId;
+  const buyerId = location.state?.buyerId;
+  const sellerNickname = location.state?.sellerNickname;
+  const buyerNickname = location.state?.buyerNickname;
+  const sellerImg = location.state?.sellerImg;
+  const buyerImg = location.state?.buyerImg;
 
   const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
   const otherId = sellerId === user.userCode ? buyerId : sellerId;
@@ -82,7 +82,10 @@ export default function ChatRoom() {
   });
 
   const msgBox = chatList?.map((item, idx) => {
-    console.log(item);
+    const date = new Date();
+    var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+    var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+
     if (item.sender !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
@@ -92,7 +95,7 @@ export default function ChatRoom() {
           <div className={styles.othermsg}>
             <span>{item.data}</span>
           </div>
-          <span className={styles.otherdate}>{item.date}</span>
+          <span className={styles.otherdate}>{hour}:{minute}</span>
         </div>
       );
     } else {
@@ -101,7 +104,7 @@ export default function ChatRoom() {
           <div className={styles.mymsg}>
             <span>{item.data}</span>
           </div>
-          <span className={styles.mydate}>{item.date}</span>
+          <span className={styles.mydate}>{hour}:{minute}</span>
         </div>
       );
     }
@@ -167,7 +170,6 @@ export default function ChatRoom() {
       return;
     }
 
-    const date = new Date();
 
     client.publish({
       destination: "/pub/chat/" + chatroomId,
@@ -176,7 +178,6 @@ export default function ChatRoom() {
         sender: user.userCode,
         channelId: chatroomId,
         data: chat,
-        chatDate: date,
       }),
       headers: { priority: 9 },
     });
