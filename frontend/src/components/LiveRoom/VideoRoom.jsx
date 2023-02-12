@@ -485,9 +485,11 @@ const VideoRoom = () => {
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
                   </button>
-                ) : null}
+                ) : (
+                  <button className={styles.nogobtn}>go?</button>
+                )}
 
-                {isHost && !buyerCheck ? (
+                {!isHost && !buyerCheck ? (
                   <button
                     onClick={() => {
                       countBidder();
@@ -497,8 +499,9 @@ const VideoRoom = () => {
                   >
                     go!
                   </button>
-                ) : null}
-                
+                ) : (
+                  <button className={styles.nogobtn}>go!</button>
+                )}
               </div>
             </div>
           </div>
