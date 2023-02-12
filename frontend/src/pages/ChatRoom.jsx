@@ -136,7 +136,21 @@ export default function ChatRoom() {
 
       // 구독
       clientdata.onConnect = function () {
-        clientdata.subscribe("/sub/channels/" + chatroomId, callback);  
+        clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
+        if (type==='live') {
+          clientdata?.publish({
+            destination: "/pub/chat/" + chatroomId,
+            body: JSON.stringify({
+              type: "",
+              sender: user.userCode,
+              channelId: chatroomId,
+              data: `${title}의 라이브 요청!`,
+            }),
+            headers: { priority: 9 },
+          });
+        } else if (type==='review') {
+          
+        } 
       };
 
       clientdata.activate(); // 클라이언트 활성화
@@ -201,21 +215,6 @@ export default function ChatRoom() {
   useEffect(() => {
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
-
-    if (type==='live') {
-      client?.publish({
-        destination: "/pub/chat/" + chatroomId,
-        body: JSON.stringify({
-          type: "",
-          sender: user.userCode,
-          channelId: chatroomId,
-          data: `${title}의 라이브 요청!`,
-        }),
-        headers: { priority: 9 },
-      });
-    } else if (type==='review') {
-      
-    }
 
     return () => disConnect();
   }, []);

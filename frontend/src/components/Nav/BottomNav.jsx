@@ -11,7 +11,6 @@ import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
 export default function BottomNav({ curLocation }) {
-  console.log(typeof curLocation);
 
   const userCode = useSelector((state) => {
     return state.user.userCode;
