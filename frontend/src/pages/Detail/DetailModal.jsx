@@ -28,7 +28,7 @@ export default function DetailModal({ setModalOpen }) {
       .then((res) => {
         console.log(res.data)
         closeModal(false);
-        navigate(`/chatroom/${res.data.roomId}`, {state : {
+        navigate(`/chatroom/${res.data.chatRoomId}`, {state : {
           chats: res.data.chatList,
           sellerId: userId,
           buyerId: buyerCode,
