@@ -41,13 +41,13 @@ public class TalkController {
     private final ProductService productService;
     private final UserService userService;
 
-    @GetMapping("/userList")
-    public List<User> LiveRequestUser(@RequestParam("productId") long productId) {
-        return userService.getLiveRequestUser(productId);
-    }
+//    @GetMapping("/userList")
+//    public List<User> LiveRequestUser(@RequestParam("productId") long productId) {
+//        return userService.getLiveRequestUser(productId);
+//    }
 
     @ApiOperation(value = "상품 예약시간 업데이트 및 알림톡 전송", notes = "상품을 등록을 위해 DB에 저장하고 정보를 반환")
-    @PostMapping("/api/v1/product")
+    @PostMapping("/reserve")
     public ResponseEntity uploadProduct(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id,
                                         @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) {
         //Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
@@ -62,9 +62,6 @@ public class TalkController {
         String productName = requestDto.getTitle();
         Timestamp reserveTime = requestDto.getReserve();
         String subject = "상품 라이브 예약 알림";
-//        String message = "이 알림톡은 " + productName + " 상품 라이브 요청자에게만 발송됩니다.\n" +
-//                "\n" +
-//                "#{고객명}님께서 요청하신 " + productName + " 라이브가 " + reserveTime + "에 예약 되었습니다.";
         Map<String, String> button = new HashMap<>();
         button.put("name", "zum:go 바로가기"); //버튼명
         button.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)

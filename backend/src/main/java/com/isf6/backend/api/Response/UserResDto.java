@@ -12,6 +12,7 @@ public class UserResDto {
     private String kakaoProfileImg;
     private String kakaoNickname;
     private String kakaoEmail;
+    private String kakaoPhone;
     private int point;
 
     public UserResDto(User user) {
@@ -21,5 +22,6 @@ public class UserResDto {
         this.kakaoNickname = user.getKakaoNickname();
         this.kakaoEmail = user.getKakaoEmail();
         this.point = user.getPoint();
+        this.kakaoPhone = user.getKakaoPhone();
     }
 }
