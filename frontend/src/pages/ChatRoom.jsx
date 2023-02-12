@@ -141,6 +141,9 @@ export default function ChatRoom() {
       // 구독
       clientdata.onConnect = function () {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback);
+        if (type == 'live') {
+          
+        }
       };
 
       clientdata.activate(); // 클라이언트 활성화
