@@ -30,13 +30,10 @@ export default function DetailModal({ setModalOpen }) {
         closeModal(false);
         navigate(`/chatroom/${res.data.chatRoomId}`, {state : {
           chats: res.data.chatList,
-          sellerId: userId,
-          buyerId: buyerCode,
-          sellerNickname: res.data.sellerNickname,
-          buyerNickname: res.data.buyerNickname,
-          sellerImg: res.data.sellerImg,
-          buyerImg: res.data.buyerImg,
-          type: "review"
+          seller : res.data.seller,
+          buyer : res.data.buyer,
+          type: "review",
+          title: "",
         }});
       });
   };

@@ -117,21 +117,17 @@ export default function Detail() {
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: Number(product?.userCode),
+        sellerCode: product?.userCode,
       })
       .then((res) => {
         console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
-            sellerId: product.userCode,
-            buyerId: userId,
-            sellerNickname: res.data.sellerNickname,
-            buyerNickname: res.data.buyerNickname,
-            sellerImg: res.data.sellerImg,
-            buyerImg: res.data.buyerImg,
+            seller : res.data.seller,
+            buyer : res.data.buyer,
             type: "",
-            title: "",
+            title: product.title,
           },
         });
       })
@@ -198,12 +194,8 @@ export default function Detail() {
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
-            sellerId: product.userCode,
-            buyerId: userId,
-            sellerNickname: res.data.sellerNickname,
-            buyerNickname: res.data.buyerNickname,
-            sellerImg: res.data.sellerImg,
-            buyerImg: res.data.buyerImg,
+            seller : res.data.seller,
+            buyer : res.data.buyer,
             type: "live",
             title: product.title,
           },
@@ -215,7 +207,6 @@ export default function Detail() {
   };
 
   //  상품 삭제하기
-
   const deleteproduct = () => {
     axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
@@ -269,16 +260,18 @@ export default function Detail() {
 
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div
-          className={styles.seller}
-          onClick={() => {
-            navigate(`/userinfo/${product.userCode}`);
-          }}
-        >
+        <div className={styles.seller}>
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
-          <div className={styles.sellerName}>{product.kakaoNickname}</div>
+          <div
+            className={styles.sellerName}
+            onClick={() => {
+              navigate(`/userinfo/${product.userCode}`);
+            }}
+          >
+            {product.kakaoNickname}
+          </div>
         </div>
         <div className={styles.selectbox}>
           {/* 드롭다운 */}
