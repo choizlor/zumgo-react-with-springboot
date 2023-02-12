@@ -28,7 +28,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.user.userCode = :id")
     List<Product> findSellUserCode(@Param("id") long id);
 
-    @Query("SELECT p FROM Product p WHERE p.id = (SELECT b.product.id FROM Bill b WHERE b.buyer.userCode = :id)")
+    //select p.* from products p join bill b on b.buyer_id = 9 where p.product_id = b.product_id;
+    @Query("SELECT p FROM Product p join Bill b on b.buyer.userCode = :id where p.id = b.product.id")
     List<Product> findBuyUserCode(@Param("id") long id);
 
     // subquery가 2번 이상 호출되면 에러가 발생 = -> in 으로 해결..
