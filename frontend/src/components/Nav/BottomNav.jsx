@@ -23,7 +23,7 @@ export default function BottomNav({ curLocation }) {
           className={styles.icon}
           style={{
             fill: curLocation === "/" ? "black" : "white",
-            color: curLocation === "/" ? "#BCFF5E" : "black",
+            color: curLocation === "/" ? "black" : "black",
           }}
           onClick={() => {
             navigate("/");
@@ -33,7 +33,7 @@ export default function BottomNav({ curLocation }) {
           className={styles.icon}
           style={{
             fill: curLocation === "/chatlist" ? "black" : "white",
-            color: curLocation === "/chatlist" ? "#BCFF5E" : "black",
+            color: curLocation === "/chatlist" ? "black" : "black",
           }}
           onClick={() => {
             if (!userCode || userCode === 0) {
@@ -73,7 +73,7 @@ export default function BottomNav({ curLocation }) {
           className={styles.icon}
           style={{
             fill: curLocation.slice(0, 9) === "/userinfo" ? "black" : "white",
-            color: curLocation.slice(0, 9) === "/userinfo" ? "#BCFF5E" : "black",
+            color: curLocation.slice(0, 9) === "/userinfo" ? "black" : "black",
           }}
           onClick={() => {
             if (!userCode || userCode === 0) {
