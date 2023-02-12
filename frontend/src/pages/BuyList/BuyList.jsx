@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import styles from "./styles/BuyList.module.css";
+import styles from "./BuyList.module.css";
 import { useNavigate, useParams } from "react-router";
 import BuyProductItem from "./BuyProductItem";
 
