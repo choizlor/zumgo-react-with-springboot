@@ -24,18 +24,11 @@
 /* 토글 버튼 */
 .toggle {
   display: table-cell;
-  /* position: relative; */
   width: 200px;
-  /* box-sizing: border-box; */
   border: 2px solid white;
   border-radius: 100px;
 }
 
-/* .cover {
-  border-radius: 100px;
-} */
-
-/* .cover, */
 .knobs,
 .layer {
   position: absolute;
@@ -46,11 +39,11 @@
 }
 
 .button {
-  position: relative;
-  top: 50%;
+  /* position: relative; */
+  /* top: 50%; */
   width: 150px;
   height: 30px;
-  margin: -20px auto 0 auto;
+  /* margin: -20px auto 0 auto; */
   overflow: hidden;
 }
 
