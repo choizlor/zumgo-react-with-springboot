@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function ChatList() {
   const location = useLocation();
-  const curLocation = location.pathname
+  const curLocation = location.pathname;
   const navigate = useNavigate();
 
   const userId = useSelector((state) => {
@@ -38,15 +38,19 @@ export default function ChatList() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
-          chats : res.data.chatList,
-          sellerId,
-          buyerId,
-          sellerNickname : res.data.sellerNickname,
-          buyerNickname : res.data.buyerNickname,
-          sellerImg : res.data.sellerImg,
-          buyerImg : res.data.buyerImg,
-        }});
+        navigate(`/chatroom/${res.data.chatRoomId}`, {
+          state: {
+            chats: res.data.chatList,
+            sellerId,
+            buyerId,
+            sellerNickname: res.data.sellerNickname,
+            buyerNickname: res.data.buyerNickname,
+            sellerImg: res.data.sellerImg,
+            buyerImg: res.data.buyerImg,
+            type: "",
+            title: "",
+          },
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -97,7 +101,7 @@ export default function ChatList() {
           );
         })}
       </div>
-      <Bottomnav curLocation={curLocation}/>
+      <Bottomnav curLocation={curLocation} />
     </div>
   );
 }

@@ -63,8 +63,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding : 5%;
+    padding: 1%;
     margin-right : 2%;
+    max-width: 70%;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -89,16 +90,19 @@
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
-    padding : 5%;
+    padding : 1%;
     margin-left: 2%;
+    max-width: 70%;
 }
-
-
 
 
 .mydate {
     font-family: 'Roboto', sans-serif;
     font-size: 10px;
+}
+
+.msgdata {
+    margin : 1%;
 }
 
 /* 메시지 입력 바 */
