@@ -15,6 +15,7 @@
 
 .cardbox {
   display: flex;
-  flex-direction: row;
-  overflow: scroll;
+  float: left;
+  overflow: auto;
+  white-space: nowrap;
 }
