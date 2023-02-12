@@ -111,11 +111,11 @@ public class ProductController {
 
     @ApiOperation(value = "상품 검색", notes = "DB에서 상품 제목으로 상품 검색하여 5개씩 전달")
     @PostMapping("/api/v1/product/search")
-    public List<IndexProductsDto> searchProducts(@ApiParam(value = "상품 검색 정보", required = true) @RequestBody ProductSearchReqDto requestDto) {
+    public List<IndexProductsResDto> searchProducts(@ApiParam(value = "상품 검색 정보", required = true) @RequestBody ProductSearchReqDto requestDto) {
         List<Product> products = productSearchRepository.findBySearch(requestDto);
 
-        List<IndexProductsDto> result = products.stream()
-                .map(p -> new IndexProductsDto(p))
+        List<IndexProductsResDto> result = products.stream()
+                .map(p -> new IndexProductsResDto(p))
                 .collect(Collectors.toList());
 
         return result;
@@ -123,11 +123,11 @@ public class ProductController {
 
     @ApiOperation(value = "유저 판매 목록", notes = "DB에서 유저가 판매한 상품 목록을 전달")
     @GetMapping("/api/v1/products/sellList/{id}")
-    public List<IndexProductsDto> userSellList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
+    public List<IndexProductsResDto> userSellList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
         List<Product> products = productRepository.findSellUserCode(id);
 
-        List<IndexProductsDto> result = products.stream()
-                .map(p -> new IndexProductsDto(p))
+        List<IndexProductsResDto> result = products.stream()
+                .map(p -> new IndexProductsResDto(p))
                 .collect(Collectors.toList());
 
         return result;
@@ -135,11 +135,11 @@ public class ProductController {
 
     @ApiOperation(value = "유저 구매 목록", notes = "DB에서 유저가 구매한 상품 목록을 전달")
     @GetMapping("/api/v1/products/buyList/{id}")
-    public List<IndexProductsDto> userBuyList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
+    public List<IndexProductsResDto> userBuyList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
         List<Product> products = productRepository.findBuyUserCode(id);
 
-        List<IndexProductsDto> result = products.stream()
-                .map(p -> new IndexProductsDto(p))
+        List<IndexProductsResDto> result = products.stream()
+                .map(p -> new IndexProductsResDto(p))
                 .collect(Collectors.toList());
 
         return result;
@@ -147,12 +147,12 @@ public class ProductController {
 
     @ApiOperation(value = "유저 관심 목록", notes = "DB에서 유저가 좋아요를 누른 관심상품 목록을 전달")
     @GetMapping("/api/v1/products/wishList/{id}")
-    public List<IndexProductsDto> userWishList(@PathVariable Long id) {
+    public List<IndexProductsResDto> userWishList(@PathVariable Long id) {
         log.info("wishList");
         List<Product> products = productRepository.findWishUserCode(id);
 
-        List<IndexProductsDto> result = products.stream()
-                .map(p -> new IndexProductsDto(p))
+        List<IndexProductsResDto> result = products.stream()
+                .map(p -> new IndexProductsResDto(p))
                 .collect(Collectors.toList());
 
         return result;
