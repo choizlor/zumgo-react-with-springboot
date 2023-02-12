@@ -62,10 +62,8 @@ export default function MyReviewList() {
                       <img src="" alt="" />
                     </div>
                     <div className={styles.topright}>
-                      <div className={styles.title}>{review?.product.title}</div>
-                      <div className={styles.price}>
-                        {review?.product.price}원
-                      </div>
+                      <div className={styles.title}>{review.product.title}</div>
+                      <div className={styles.price}>{review.product.price}</div>
                     </div>
                   </div>
                   <div className={styles.bottom}>
@@ -76,10 +74,10 @@ export default function MyReviewList() {
                 <div className={styles.icons}>
                   <PencilIcon
                     onClick={() => {
-                      navigate(`/review/${review?.product.id}/update`);
+                      navigate(`/review/${review.product.id}/update`);
                     }}
                   />
-                  <TrashIcon onClick={handleDeleteReview(review?.product.id)} />
+                  <TrashIcon onClick={handleDeleteReview(review.product.id)} />
                 </div>
               </div>
             </div>
