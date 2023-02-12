@@ -28,7 +28,15 @@ export default function DetailModal({ setModalOpen }) {
       .then((res) => {
         console.log(res.data)
         closeModal(false);
-        navigate(`/chatroom/${res.data.roomId}`);
+        navigate(`/chatroom/${res.data.roomId}`, {state : {
+          chats: res.data.chatList,
+          sellerId: userId,
+          buyerId: buyerCode,
+          sellerNickname: res.data.sellerNickname,
+          buyerNickname: res.data.buyerNickname,
+          sellerImg: res.data.sellerImg,
+          buyerImg: res.data.buyerImg,
+        }});
       });
   };
 
@@ -63,11 +71,11 @@ export default function DetailModal({ setModalOpen }) {
             />
             <span
               className={styles.username}
-              // onClick={sendReviewMsg(
-              //   userId === chat.buyer.userCode
-              //     ? chat.seller.userCode
-              //     : chat.buyer.userCode
-              // )}
+              onClick={() => {sendReviewMsg(
+                userId === chat.buyer.userCode
+                  ? chat.seller.userCode
+                  : chat.buyer.userCode
+              )}}
             >
               {userId === chat.buyer.userCode
                 ? chat.seller.kakaoNickname
