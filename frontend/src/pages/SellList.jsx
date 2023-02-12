@@ -18,20 +18,18 @@ export default function SellList() {
   const [filter, setFilter] = useState("ONSALE");
   const [filtered, setFiltered] = useState();
 
-  useEffect(() => {
-    axios
+  const dataload = async () => {
+    await axios
       .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
-      .then((res) => {
+      .then((res) => 
         setProducts(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      )
       console.log(filter,'======')
       handleChangeStatus(filter)
       console.log(products,'-------')
-  }, []);
+  }
+
+  useEffect(dataload, []);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
