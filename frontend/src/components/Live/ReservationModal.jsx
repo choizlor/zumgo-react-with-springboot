@@ -38,14 +38,12 @@ export default function ReservationModal({ setModalOpen, productId }) {
 
   const handleSubmit = () => {
     setModalOpen(false);
+
     axios
-      .put(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`,
-        {
-          ...product,
-          reserve,
-        }
-      )
+      .post(`https://i8c110.p.ssafy.io/api/v1/talk/reserve/${productId}`, {
+        ...product,
+        reserve,
+      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
@@ -54,7 +52,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
       liveStartTime: reserve,
       liveStatus: "WAIT",
     });
-    
+
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
         headers: {
@@ -87,7 +85,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
               enabled: true,
             },
           }}
-          onFocus={e => e.target.blur()}
+          onFocus={(e) => e.target.blur()}
           className={styles.datepicker}
         />
         <button onClick={handleSubmit} className={styles.btn}>
