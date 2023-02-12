@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ProductItem.module.css";
+import styles from "../../components/Product/ProductItem.module.css";
 import zImg from "../../assets/images/z.png";
 import axios from "axios";
 import { HeartIcon } from "@heroicons/react/24/solid";

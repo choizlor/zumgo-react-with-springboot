@@ -17,7 +17,7 @@ import ChatRoom from "./pages/ChatRoom";
 import AddProduct from "./pages/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import Login from "./pages/Login/Login";
-import BuyList from "./pages/BuyList";
+import BuyList from "./pages/BuyList/BuyList";
 import SellList from "./pages/SellList";
 import WishList from "./pages/WishList";
 import Search from "./pages/Search/Search";

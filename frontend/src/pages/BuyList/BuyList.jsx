@@ -3,7 +3,7 @@ import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./styles/BuyList.module.css";
 import { useNavigate, useParams } from "react-router";
-import BuyProductItem from '../components/Product/BuyProductItem'
+import BuyProductItem from "./BuyProductItem";
 
 export default function BuyList() {
   const navigate = useNavigate();
