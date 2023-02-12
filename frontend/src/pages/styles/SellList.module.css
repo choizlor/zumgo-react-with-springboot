@@ -37,6 +37,7 @@
 .btn {
   font-size: 0.9rem;
 }
+
 .btn:hover {
   border-bottom: 2px solid black;
   font-weight: 700;

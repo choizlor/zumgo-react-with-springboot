@@ -131,6 +131,7 @@ export default function Detail() {
             sellerImg: res.data.sellerImg,
             buyerImg: res.data.buyerImg,
             type: "",
+            title: "",
           },
         });
       })
@@ -204,6 +205,7 @@ export default function Detail() {
             sellerImg: res.data.sellerImg,
             buyerImg: res.data.buyerImg,
             type: "live",
+            title: product.title,
           },
         });
       })
