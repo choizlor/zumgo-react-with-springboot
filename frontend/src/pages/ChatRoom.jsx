@@ -142,18 +142,8 @@ export default function ChatRoom() {
       // 구독
       clientdata.onConnect = function () {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback);
-        if (type == 'live') {
-          client.publish({
-            destination: "/pub/chat/" + chatroomId,
-            body: JSON.stringify({
-              type: "",
-              sender: user.userCode,
-              channelId: chatroomId,
-              data: title,
-            }),
-            headers: { priority: 9 },
-          });
-        }
+        
+       
       };
 
       clientdata.activate(); // 클라이언트 활성화
