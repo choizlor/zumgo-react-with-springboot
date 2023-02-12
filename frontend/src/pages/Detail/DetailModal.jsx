@@ -24,10 +24,11 @@ export default function DetailModal({ setModalOpen, productId }) {
       .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
         sellerUserCode: userId,
         buyerUserCode: buyerId,
-        review : "",
+        review: "",
       })
       .then((res) => {
-        console.log(res);  
+        console.log(res);
+        closeModal();
       })
       .catch((err) => {
         console.log(err);

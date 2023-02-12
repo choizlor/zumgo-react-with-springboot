@@ -3,7 +3,7 @@ import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./styles/BuyList.module.css";
 import { useNavigate, useParams } from "react-router";
-import ProductItem from "../components/Product/ProductItem";
+import buyProductItem from "../components/Product/buyProductItem";
 
 export default function BuyList() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function BuyList() {
       <div className={styles.scrollarea}>
         {products?.map((product) => {
           return (
-            <ProductItem
+            <buyProductItem
               key={product.productId}
               product={product}
               clickProduct={clickProduct}
