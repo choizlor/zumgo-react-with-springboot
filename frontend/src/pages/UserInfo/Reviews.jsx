@@ -6,9 +6,8 @@ import ReviewItem from "./ReviewItem";
 
 export default function Reviews({ userInfo }) {
   const [reviews, setReviews] = useState([]);
-  console.log(userInfo, "🎃🎃🎃");
 
-  const params = useParams();
+  const params= useParams()
   const userId = params.userId;
 
   useEffect(() => {
@@ -16,8 +15,6 @@ export default function Reviews({ userInfo }) {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
       .then((res) => {
-        console.log(res.data, "🎨");
-        console.log(res.data.MyReview, "👓");
         setReviews(res.data.MyReview);
       })
       .catch((err) => {

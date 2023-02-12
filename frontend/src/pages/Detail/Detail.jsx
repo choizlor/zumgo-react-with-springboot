@@ -133,6 +133,10 @@ export default function Detail() {
 
   // 찜 추가하기
   const addwish = () => {
+    if (userId == 0) {
+      alert("로그인이 필요한 서비스 입니다.");
+      return;
+    }
     // wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
