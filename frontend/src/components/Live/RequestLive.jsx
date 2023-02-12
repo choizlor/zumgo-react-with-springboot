@@ -10,7 +10,7 @@ export default function RequestLive({ product }) {
   var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
   return (
-    <div>
+    <div className={styles.box}>
       <div
         className={styles.image}
         style={{
