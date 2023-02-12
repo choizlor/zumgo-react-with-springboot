@@ -31,17 +31,17 @@ const ChattingList = (props) => {
   })
 
   return (
-    <div ref={boxRef}>
+    <div ref={boxRef} className={styles.chattinglist}>
       <div>
         {props.messageList.map((msg, i) => (
           <div key={i}>
-            <div>
-              {/* <div>
+            <div className={styles.chat}>
+              {/* <div className={styles.profile}>
                 <img src={temp_logo}></img>
               </div> */}
               <div>
-                <div>{msg.split(":")[0]}</div>
-                <div>{msg.split(":")[1]}</div>
+                <div className={styles.sender}>{msg.split(":")[0]}</div>
+                <div className={styles.content}>{msg.split(":")[1]}</div>
               </div>
             </div>
           </div>
