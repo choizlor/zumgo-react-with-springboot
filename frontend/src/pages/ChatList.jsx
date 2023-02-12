@@ -90,7 +90,6 @@ export default function ChatList() {
                     <span className={styles.lastmsg}>
                       {chat.lastChat["chat_content"]}
                     </span>
-                    <span className={styles.notyet}>{chat.notyet}</span>
                   </div>
                 </div>
               </div>
