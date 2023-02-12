@@ -111,11 +111,8 @@ export default function AddProduct() {
       </div>
       <div className={styles.container}>
         <div className={styles.button}>
-          <CameraIcon className={styles.camera} />
-          <div className={styles.num}>0/5</div>
-        </div>
-
-        <input
+          <CameraIcon className={styles.camera}>
+          <input
           className={styles.file}
           type="file" // 파일로 입력 받음
           accept="image/*" // 이미지 유형의 파일만 받기
@@ -123,6 +120,11 @@ export default function AddProduct() {
           name="imgurls" // 담긴 파일을 참조할 때 사용할 이름
           multiple // 다중 업로드
         />
+            </CameraIcon> 
+          <div className={styles.num}>0/5</div>
+        </div>
+
+        
 
         <input
           className={`${styles.input} ${styles.titleinput}`}
