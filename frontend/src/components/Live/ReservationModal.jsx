@@ -87,6 +87,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
               enabled: true,
             },
           }}
+          onFocus={e => e.target.blur()}
           className={styles.datepicker}
         />
         <button onClick={handleSubmit} className={styles.btn}>
