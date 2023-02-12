@@ -141,7 +141,7 @@ export default function ChatRoom() {
           clientdata.publish({
             destination: "/pub/chat/" + chatroomId,
             body: JSON.stringify({
-              type: type,
+              type: '',
               sender: user.userCode,
               channelId: chatroomId,
               data: `${title} 상품의 라이브를 요청합니다!`,
