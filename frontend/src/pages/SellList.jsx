@@ -7,7 +7,6 @@ import ProductItem from "../components/Product/ProductItem";
 import BottomNav from "../components/Nav/BottomNav"
 
 
-
 export default function SellList() {
   //status 상태
   const filters = ["ONSALE", "BOOKING", "SOLDOUT"];
@@ -29,7 +28,9 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-      setFiltered(getFilteredItems(filter));
+      console.log(filter,'======')
+      handleChangeStatus(filter)
+      console.log(products,'-------')
   }, []);
 
   const clickProduct = (id) => {
