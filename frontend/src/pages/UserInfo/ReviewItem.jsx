@@ -14,8 +14,6 @@ export default function ReviewItem({ review }) {
           <div className={styles.comment}>{review.review}</div>
         </div>
       </div>
-      <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
-      <div className={styles.comment}>{review.review}</div>
     </div>
   );
 }
