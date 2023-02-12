@@ -3,7 +3,7 @@ import styles from "./LiveCard.module.css";
 
 export default function LiveCard({ product, clickLive }) {
   return (
-    <div>
+    <div className={styles.box}>
       <div
         className={styles.image}
         style={{
