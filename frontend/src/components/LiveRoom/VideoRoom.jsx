@@ -481,15 +481,15 @@ const VideoRoom = () => {
                   onMessage={sendMsg}
                   currentSession={session}
                 />
-                {isHost && !sellerCheck ? (
-                  <button onClick={startAuction} className={styles.gobtn}>
-                    go?
-                  </button>
-                ) : (
-                  <button className={styles.nogobtn}>go?</button>
-                )}
-
-                {!isHost && !buyerCheck ? (
+                {isHost ? (
+                  !sellerCheck ? (
+                    <button onClick={startAuction} className={styles.gobtn}>
+                      go?
+                    </button>
+                  ) : (
+                    <button className={styles.nogobtn}>go?</button>
+                  )
+                ) : !buyerCheck ? (
                   <button
                     onClick={() => {
                       countBidder();
