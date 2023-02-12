@@ -1,10 +1,17 @@
 .body {
     border-radius: 15px;
     height : 75px;
-    background-color: #DFDFDF;
+    
     margin : 5px;
 }
 
+.body:nth-child(odd) {
+    background-color: #DFDFDF;
+}
+
+.body:nth-child(even) {
+    background-color: #BCFF5E;
+}
 .writer {
     font-weight: 700;
     font-size: 14px;
@@ -20,12 +27,6 @@
     border-radius: 15px; ;
 }
 
-.review:nth-child(odd) {
-    background-color: #DFDFDF;
-}
-.review:nth-child(even) {
-    background-color: #BCFF5E;
-}
 
 .writer {
     font-weight: 700;

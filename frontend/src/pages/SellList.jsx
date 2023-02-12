@@ -41,7 +41,10 @@ export default function SellList() {
     setFiltered(getFilteredItems(filter));
   };
 
+<<<<<<< HEAD
+=======
   // console.log(filter);
+>>>>>>> 357c0a6e68fe05b5b93c146c9c844c66b1b5168b
 
   const getFilteredItems = (filter) => {
     return products?.filter((product) => product.status === filter);
