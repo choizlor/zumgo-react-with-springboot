@@ -17,22 +17,25 @@
   position: fixed;
   bottom: 17%;
   left: 33%;
+  display: table;
+  table-layout: fixed;
 }
 
 /* 토글 버튼 */
 .toggle {
   display: table-cell;
-  position: relative;
+  /* position: relative; */
   width: 200px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   border: 2px solid white;
-}
-
-.cover {
   border-radius: 100px;
 }
 
-.cover,
+/* .cover {
+  border-radius: 100px;
+} */
+
+/* .cover, */
 .knobs,
 .layer {
   position: absolute;
@@ -86,7 +89,7 @@
   font-size: 12px;
   font-weight: 800;
   text-align: center;
-  /* line-height: 1; */
+  line-height: 1;
   padding: 4px 4px;
   background-color: white;
   border-radius: 100px;
