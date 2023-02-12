@@ -90,7 +90,7 @@ export default function BottomNav({ curLocation }) {
             });
           }}
         />
-        {curLocation.slice(0, 9) === "/userinfo" ? (
+        {curLocation?.slice(0, 9) === "/userinfo" ? (
           <BlackUser
             className={styles.icon}
             onClick={() => {

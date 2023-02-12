@@ -16,6 +16,8 @@
 }
 
 
+
+
 .statusnav{
   display: flex;
   justify-content: space-around;
@@ -35,8 +37,8 @@
   cursor: pointer;
 }
 
-.alert {
-  height: 100vh;
+.alert { 
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;

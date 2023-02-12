@@ -132,16 +132,17 @@ public class LiveController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @ApiOperation(value = "라이브방 시작 상태 변경", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
-    @PatchMapping("/start/{productId}")
-    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
-        Map<String, Object> response = new HashMap<>();
-        liveService.updateStatus(productId, "start");
-        response.put("status", "ONAIR");
-        response.put("result", "SUCCESS");
-
-        return ResponseEntity.status(200).body(response);
-    }
+//    @ApiOperation(value = "라이브방 시작 상태 변경", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
+//    @PatchMapping("/start/{productId}")
+//    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
+//        Map<String, Object> response = new HashMap<>();
+//        liveService.updateStatus(productId, "start");
+//        response.put("status", "ONAIR");
+//        response.put("result", "SUCCESS");
+//
+//        return ResponseEntity.status(200).body(response);
+//    }
+    //시작하기 누르면 바뀜 여기에 알림톡 추가
 
     @ApiOperation(value = "라이브방 종료 상태 변경", notes = "DB에서 라이브 방의 상태를 종료로 변경")
     @PatchMapping("/end/{productId}")
