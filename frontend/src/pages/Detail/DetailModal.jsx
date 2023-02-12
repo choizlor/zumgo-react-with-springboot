@@ -81,7 +81,7 @@ export default function DetailModal({ setModalOpen }) {
                 ? chat.seller.kakaoNickname
                 : chat.buyer.kakaoNickname}
             </span>
-          </div>;
+          </div>
         ))}
       </div>
     </div>
