@@ -23,7 +23,7 @@
 .review:nth-child(odd) {
     background-color: #DFDFDF;
 }
-.review:nth-child(even) {
+.review.review:nth-child(2n) {
     background-color: #BCFF5E;
 }
 
