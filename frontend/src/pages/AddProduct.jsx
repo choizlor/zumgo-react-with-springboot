@@ -75,7 +75,7 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
-        navigate(`/detail/${res.data}`);
+        navigate(`/`);
       })
       .catch((err) => {
         console.log(err);
