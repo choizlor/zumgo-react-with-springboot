@@ -94,11 +94,14 @@
 }
 
 
-
-
 .mydate {
     font-family: 'Roboto', sans-serif;
     font-size: 10px;
+}
+
+.msgdata {
+    margin : 1%;
+    max-width: 70%;
 }
 
 /* 메시지 입력 바 */

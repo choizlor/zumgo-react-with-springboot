@@ -46,6 +46,7 @@ export default function ChatList() {
           buyerNickname : res.data.buyerNickname,
           sellerImg : res.data.sellerImg,
           buyerImg : res.data.buyerImg,
+          type:""
         }});
       })
       .catch((err) => {
