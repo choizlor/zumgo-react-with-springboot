@@ -25,16 +25,6 @@
     flex-direction: column;
 }
 
-.chatinfotop {
-    display: flex;
-    margin-bottom: 2%;
-    align-items: flex-end;
-}
-
-.chatinfobottom {
-    align-items: center;
-    display: flex;
-}
 
 /* 채팅 정보 */
 .leftbox {

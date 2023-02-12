@@ -80,18 +80,14 @@ export default function ChatList() {
                   />
                 </div>
                 <div className={styles.chatinfo}>
-                  <div className={styles.chatinfotop}>
                     <div className={styles.othername}>
                       {chat.seller.userCode === userId
                         ? chat.buyer.kakaoNickname
                         : chat.seller.kakaoNickname}
                     </div>
-                  </div>
-                  <div className={styles.chatinfobottom}>
                     <span className={styles.lastmsg}>
                       {chat.lastChat["chat_content"]}
                     </span>
-                  </div>
                 </div>
               </div>
             </div>
