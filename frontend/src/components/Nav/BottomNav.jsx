@@ -11,7 +11,6 @@ import LiveIcon from "../../assets/images/LiveIcon.png";
 import { useSelector } from "react-redux";
 
 export default function BottomNav({ curLocation }) {
-
   const userCode = useSelector((state) => {
     return state.user.userCode;
   });
@@ -21,19 +20,21 @@ export default function BottomNav({ curLocation }) {
     <div className={styles.navbody}>
       <nav className={styles.body}>
         <HomeIcon
-          // className={
-          //   "styles.icon " + (curLocation === "/" ? "styles.black" : "")
-          // }
           className={styles.icon}
+          style={{
+            fill: curLocation === "/" ? "black" : "white",
+            color: curLocation === "/" ? "white" : "black",
+          }}
           onClick={() => {
             navigate("/");
           }}
         />
         <ChatBubbleOvalLeftIcon
-          // className={
-          //   "styles.icon " + (curLocation === "/chatlist" ? "styles.black" : "")
-          // }
           className={styles.icon}
+          style={{
+            fill: curLocation === "/chatlist" ? "black" : "white",
+            color: curLocation === "/chatlist" ? "white" : "black",
+          }}
           onClick={() => {
             if (!userCode || userCode === 0) {
               alert("로그인이 필요한 서비스 입니다!");
@@ -70,10 +71,10 @@ export default function BottomNav({ curLocation }) {
         />
         <UserCircleIcon
           className={styles.icon}
-          // className={
-          //   "styles.icon " +
-          //   (curLocation.slice(0, 9) === "/userinfo" ? "styles.black" : "")
-          // }
+          style={{
+            fill: curLocation.slice(0, 9) === "/userinfo" ? "black" : "white",
+            color: curLocation.slice(0, 9) === "/userinfo" ? "white" : "black",
+          }}
           onClick={() => {
             if (!userCode || userCode === 0) {
               alert("로그인이 필요한 서비스 입니다!");

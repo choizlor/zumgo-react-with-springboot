@@ -3,7 +3,6 @@ import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
-import { useBeforeUnload } from "react-router-dom";
 import * as StompJs from "@stomp/stompjs";
 import axios from "axios";
 
@@ -23,6 +22,7 @@ export default function ChatRoom() {
   const buyer = location.state.buyer;
   const type = location.state?.type;
   const title = location.state?.title;
+  const productId = location.state?.productId;
 
   const me = user.userCode === seller.userCode ? seller : buyer;
   const other = user.userCode === seller.userCode ? buyer : seller;
@@ -56,6 +56,7 @@ export default function ChatRoom() {
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.chat_content}</div>
+            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -67,6 +68,7 @@ export default function ChatRoom() {
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.chat_content}</div>
+            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -89,6 +91,7 @@ export default function ChatRoom() {
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.data}</div>
+            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -100,6 +103,7 @@ export default function ChatRoom() {
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.data}</div>
+            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.mydate}>
             {hour}:{minute}
@@ -135,13 +139,14 @@ export default function ChatRoom() {
       });
 
       // 구독
-      clientdata.onConnect = function () {
+      clientdata.onConnect = async () => {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
+        
         if (type==='live') {
           clientdata?.publish({
             destination: "/pub/chat/" + chatroomId,
             body: JSON.stringify({
-              type: "",
+              type: type,
               sender: user.userCode,
               channelId: chatroomId,
               data: `${title}의 라이브 요청!`,
@@ -149,7 +154,16 @@ export default function ChatRoom() {
             headers: { priority: 9 },
           });
         } else if (type==='review') {
-          
+          clientdata?.publish({
+            destination: "/pub/chat/" + chatroomId,
+            body: JSON.stringify({
+              type: type,
+              sender: user.userCode,
+              channelId: chatroomId,
+              data: `${user.kakaoNickname}님 과의 거래 어떠셨나요?`,
+            }),
+            headers: { priority: 9 },
+          });
         } 
       };
 
