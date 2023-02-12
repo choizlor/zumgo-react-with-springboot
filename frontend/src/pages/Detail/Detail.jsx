@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/Detail.module.css";
-import LiveBtn from "../components/Detail/LiveBtn";
+import LiveBtn from "./LiveBtn";
 import zImg from "../assets/images/z.png";
-import DetailModal from "../components/Detail/DetailModal";
+import DetailModal from "./DetailModal";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 // heroicons
