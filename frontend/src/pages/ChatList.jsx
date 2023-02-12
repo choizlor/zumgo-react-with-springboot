@@ -56,7 +56,7 @@ export default function ChatList() {
   };
 
   return (
-    <div >
+    <div>
       <div className={styles.title}>채팅</div>
       <div className={styles.chatlistbox}>
         {chats?.map((chat, idx) => {
