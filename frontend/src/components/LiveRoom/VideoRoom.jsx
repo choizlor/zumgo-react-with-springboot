@@ -205,6 +205,7 @@ const VideoRoom = () => {
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
+      setBestBidderImg(tmp[2])
     });
 
     mySession.on("signal:bid", (event) => {
@@ -308,7 +309,7 @@ const VideoRoom = () => {
     // setBidders((bidders) => bidders + 1)
     session
       .signal({
-        data: `${Number(bidders) + 1} : ${myUserName}`,
+        data: `${Number(bidders) + 1} : ${myUserName} : ${myProfileImg}`,
         type: "count",
       })
       .then(() => {

@@ -16,4 +16,5 @@
 .cardbox {
   display: flex;
   overflow: scroll;
+  min-height: 200px;
 }
