@@ -55,8 +55,6 @@
 }
 
 .userimg img {
-    width : 23px;
-    height : 23px;
     border-radius: 100px;
     object-fit: cover;
 }
