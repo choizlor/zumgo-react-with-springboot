@@ -32,18 +32,6 @@
   border-radius: 100px;
 }
 
-/* .cover:before {
-  counter-increment: button-counter;
-  content: counter(button-counter);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: #d7e3e3;
-  font-size: 12px;
-  line-height: 1;
-  padding: 5px;
-} */
-
 .cover,
 .knobs,
 .layer {
@@ -98,7 +86,7 @@
   font-size: 12px;
   font-weight: 800;
   text-align: center;
-  line-height: 1;
+  /* line-height: 1; */
   padding: 4px 4px;
   background-color: white;
   border-radius: 100px;
