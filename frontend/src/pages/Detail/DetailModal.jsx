@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function DetailModal({ setModalOpen }) {
+export default function DetailModal({ setModalOpen, productId }) {
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
-  const userId = useSelector((state) => {  // 현재 로그인된 사용자 === 판매자
+  const userId = useSelector((state) => {
+    // 현재 로그인된 사용자 === 판매자
     return state.user.userCode;
   });
 
@@ -26,17 +27,18 @@ export default function DetailModal({ setModalOpen }) {
         sellerCode: userId,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         closeModal(false);
-        navigate(`/chatroom/${res.data.roomId}`, {state : {
-          chats: res.data.chatList,
-          sellerId: userId,
-          buyerId: buyerCode,
-          sellerNickname: res.data.sellerNickname,
-          buyerNickname: res.data.buyerNickname,
-          sellerImg: res.data.sellerImg,
-          buyerImg: res.data.buyerImg,
-        }});
+        navigate(`/chatroom/${res.data.chatRoomId}`, {
+          state: {
+            chats: res.data.chatList,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
+            type: "review",
+            title: "",
+            productId: productId,
+          },
+        });
       });
   };
 
@@ -59,7 +61,7 @@ export default function DetailModal({ setModalOpen }) {
       </div>
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
-        {chats?.map((chat) => {
+        {chats?.map((chat) => (
           <div key={chat.roomId} className={styles.userbox}>
             <img
               src={
@@ -71,18 +73,20 @@ export default function DetailModal({ setModalOpen }) {
             />
             <span
               className={styles.username}
-              onClick={() => {sendReviewMsg(
-                userId === chat.buyer.userCode
-                  ? chat.seller.userCode
-                  : chat.buyer.userCode
-              )}}
+              onClick={() => {
+                sendReviewMsg(
+                  userId === chat.buyer.userCode
+                    ? chat.seller.userCode
+                    : chat.buyer.userCode
+                );
+              }}
             >
               {userId === chat.buyer.userCode
                 ? chat.seller.kakaoNickname
                 : chat.buyer.kakaoNickname}
             </span>
-          </div>;
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

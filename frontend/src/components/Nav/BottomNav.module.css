@@ -24,14 +24,10 @@ padding-bottom : 1px;
 .liveicon {
   width: 52px;
   height: 52px;
+  margin : 0 8px;
 }
 
 .company {
   font-size: 9px;
   margin : auto;
-}
-
-.black {
-  fill : black;
-  color : white;
 }

@@ -17,10 +17,28 @@
 }
 
 .font {
-  font-size: 20px;
+  height: 23px;
   font-weight: 800;
   color: white;
   margin: 0;
+  overflow-y: hidden;
+    display: block;
+}
+
+.fontchild {
+  font-size: 20px;
+  line-height: 1;
+    animation-name: grow;
+    animation-duration: 1s;
+    /* animation-delay: 5s; */
+    animation-iteration-count: 5s infinite;
+    /* animation-duration: 5s; */
+}
+
+/* 키프레임 애니메이션 */
+@keyframes grow {
+  from { transform: translateY(20px) }/* 애니메이션 높이 */
+  to { transform: translateY(0) }
 }
 
 .bottom {

@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function ChatList() {
   const location = useLocation();
-  const curLocation = location.pathname
+  const curLocation = location.pathname;
   const navigate = useNavigate();
 
   const userId = useSelector((state) => {
@@ -22,6 +22,7 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,15 +39,16 @@ export default function ChatList() {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/chatroom/${res.data.chatRoomId}`, { state : {
-          chats : res.data.chatList,
-          sellerId,
-          buyerId,
-          sellerNickname : res.data.sellerNickname,
-          buyerNickname : res.data.buyerNickname,
-          sellerImg : res.data.sellerImg,
-          buyerImg : res.data.buyerImg,
-        }});
+        navigate(`/chatroom/${res.data.chatRoomId}`, {
+          state: {
+            chats: res.data.chatList,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
+            type: "",
+            title: "",
+            productId : "",
+          },
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -84,13 +86,11 @@ export default function ChatList() {
                         ? chat.buyer.kakaoNickname
                         : chat.seller.kakaoNickname}
                     </div>
-                    <div className={styles.time}>{chat.time}</div>
                   </div>
                   <div className={styles.chatinfobottom}>
                     <span className={styles.lastmsg}>
                       {chat.lastChat["chat_content"]}
                     </span>
-                    <span className={styles.notyet}>{chat.notyet}</span>
                   </div>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export default function ChatList() {
           );
         })}
       </div>
-      <Bottomnav curLocation={curLocation}/>
+      <Bottomnav curLocation={curLocation} />
     </div>
   );
 }

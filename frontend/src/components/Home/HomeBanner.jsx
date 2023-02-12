@@ -10,8 +10,8 @@ export default function HomeBanner() {
     <div className={styles.body}>
       <div className={styles.top}>
         <div className={styles.topleft}>
-          <div className={styles.font}>중고 거래,</div>
-          <div className={styles.font}>줌고로 생생하게!</div>
+          <div className={styles.font}><div className={styles.fontchild}>중고 거래,</div></div>
+          <div className={styles.font}><div className={styles.fontchild}>줌고로 생생하게!</div></div>
         </div>
         <div className={styles.topright}></div>
       </div>

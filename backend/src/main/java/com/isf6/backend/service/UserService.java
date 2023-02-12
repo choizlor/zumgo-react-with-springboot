@@ -25,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +126,7 @@ public class UserService {
                     .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())
                     .kakaoNickname(profile.getKakao_account().getProfile().getNickname())
                     .kakaoEmail(profile.getKakao_account().getEmail())
+                    .kakaoPhoneNumber(profile.kakao_account.getPhone_number())
                     .point(5) //기본 포인트 5로 설정
                     //.userRole("ROLE_USER")
                     .build();
@@ -197,6 +199,16 @@ public class UserService {
     }
 
     public boolean checkNicknameDuplicate(String nickname) {
+
         return userRepository.existsByKakaoNickname(nickname);
+    }
+
+    //해당 상품에 라이브 요청한 유저들 정보 가져오기
+    public List<User> getLiveRequestUser(Long productId) {
+        List<User> liveRequestUserList = new ArrayList<>();
+
+        liveRequestUserList = userRepository.getLiveRequestUser(productId);
+
+        return liveRequestUserList;
     }
 }
