@@ -36,6 +36,7 @@ export default function DetailModal({ setModalOpen }) {
           buyerNickname: res.data.buyerNickname,
           sellerImg: res.data.sellerImg,
           buyerImg: res.data.buyerImg,
+          type: ""
         }});
       });
   };

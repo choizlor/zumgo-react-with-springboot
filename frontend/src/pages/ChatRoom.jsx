@@ -3,6 +3,7 @@ import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
+import { useBeforeUnload } from "react-router-dom";
 import * as StompJs from "@stomp/stompjs";
 import axios from "axios";
 
@@ -11,13 +12,6 @@ import { ChevronLeftIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ChatRoom() {
-  window.addEventListener('beforeunload', (event) => {
-    // 표준에 따라 기본 동작 방지
-    event.preventDefault();
-    // Chrome에서는 returnValue 설정이 필요함
-    event.returnValue = '';
-  });
-
   // 현재 로그인된 사용자
   const user = useSelector((state) => {
     return state.user;
@@ -31,11 +25,11 @@ export default function ChatRoom() {
   const buyerNickname = location.state?.buyerNickname;
   const sellerImg = location.state?.sellerImg;
   const buyerImg = location.state?.buyerImg;
+  const type = location.state?.type;
 
   const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
   const otherId = sellerId === user.userCode ? buyerId : sellerId;
-  const otherNickname =
-    sellerId === user.userCode ? buyerNickname : sellerNickname;
+  const otherNickname = sellerId === user.userCode ? buyerNickname : sellerNickname;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
