@@ -17,3 +17,8 @@
   display: flex;
   overflow: scroll;
 }
+
+.box {
+  margin-right: 2%;
+  margin-left: 2%;
+}

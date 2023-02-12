@@ -33,7 +33,12 @@ export default function SellLive({ sellLiveRequestList }) {
       <div className={styles.text}>라이브 시작 가능</div>
       <div className={styles.cardbox}>
         {startList?.map((product) => (
-          <LiveStart key={product.id} product={product} clickLive={clickLive} />
+          <LiveStart
+            key={product.id}
+            product={product}
+            clickLive={clickLive}
+            className={styles.box}
+          />
         ))}
       </div>
     </div>
