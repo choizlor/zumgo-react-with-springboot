@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
-import testImg from "../assets/images/testImg.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
-
 import * as StompJs from "@stomp/stompjs";
+import axios from "axios";
 
 // heroicons
 import { ChevronLeftIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
 
 export default function ChatRoom() {
+  window.addEventListener('beforeunload', (event) => {
+    // 표준에 따라 기본 동작 방지
+    event.preventDefault();
+    // Chrome에서는 returnValue 설정이 필요함
+    event.returnValue = '';
+  });
+
   // 현재 로그인된 사용자
   const user = useSelector((state) => {
     return state.user;
@@ -95,7 +100,9 @@ export default function ChatRoom() {
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.data}</div>
           </div>
-          <span className={styles.otherdate}>{hour}:{minute}</span>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     } else {
@@ -104,7 +111,9 @@ export default function ChatRoom() {
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.data}</div>
           </div>
-          <span className={styles.mydate}>{hour}:{minute}</span>
+          <span className={styles.mydate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     }
@@ -170,7 +179,6 @@ export default function ChatRoom() {
       return;
     }
 
-
     client.publish({
       destination: "/pub/chat/" + chatroomId,
       body: JSON.stringify({
@@ -189,10 +197,10 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`, )
+      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`)
       .then((res) => {
         disConnect();
-        navigate('/chatlist')
+        navigate("/chatlist");
       })
       .catch((err) => {
         console.log(err);
