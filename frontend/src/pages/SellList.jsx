@@ -29,6 +29,7 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
+      console.log(filter,'🎉🎉')
       handleChangeStatus(filter);
   }, []);
 
