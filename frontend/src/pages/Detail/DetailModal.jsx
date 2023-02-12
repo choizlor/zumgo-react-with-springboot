@@ -22,8 +22,8 @@ export default function DetailModal({ setModalOpen, productId }) {
   const addBuyList = (buyerId) => {
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
-        seller: userId,
-        buyer: buyerId,
+        sellerUserCode: userId,
+        buyerUserCode: buyerId,
         review : "",
       })
       .then((res) => {
