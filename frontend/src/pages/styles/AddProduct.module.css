@@ -85,6 +85,6 @@
     justify-content: center;
     align-items: center;
     margin: auto;
-    position: absolute;
+    position: fixed;
     bottom : 5%;
 }
