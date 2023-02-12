@@ -79,13 +79,13 @@ export default function SellList() {
         <div className={styles.status}>
         <ul>
           {/**filtered된 product리스트 productitem에 보여주기 */}
-          {filtered?.map((product) => (
+          {filtered ? filtered.map((product) => (
             <ProductItem
               key={product.productId}
               product={product}
               clickProduct={clickProduct}
             />
-          ))}
+          )) : <div>상품이 없어여</div>} 
         </ul>
       </div>
       <BottomNav />   
