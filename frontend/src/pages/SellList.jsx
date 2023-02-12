@@ -16,7 +16,7 @@ export default function SellList() {
   const navigate = useNavigate();
   const userId = useParams().userId;
   const [products, setProducts] = useState();
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("ONSALE");
   const [filtered, setFiltered] = useState();
 
   useEffect(() => {
@@ -29,13 +29,8 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-      setFilter('ONSALE')
+      setFiltered(getFilteredItems(filter));
   }, []);
-
-  useEffect(() => {
-    console.log(filter,'🎉🎉')
-    handleChangeStatus(filter);
-  }, [filter])
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
