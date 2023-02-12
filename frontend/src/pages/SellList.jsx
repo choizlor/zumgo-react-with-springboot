@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import styles from "./styles/SellList.module.css";
@@ -31,16 +31,16 @@ export default function SellList() {
       console.log(filter,'======')
 
       console.log(products,'-------')
-  }, [products]);
+  }, []);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
   };
   // filter
-  const handleChangeStatus = (filter) => {
+  const handleChangeStatus = useMemo((filter) => {
     setFilter(filter);
     setFiltered(getFilteredItems(filter));
-  };
+  }, [products]);
 
   // console.log(filter);
 
