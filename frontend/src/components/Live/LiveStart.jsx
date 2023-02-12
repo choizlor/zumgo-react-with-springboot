@@ -3,7 +3,7 @@ import styles from "./LiveStart.module.css";
 
 export default function LiveStart({ product, clickLive }) {
   return (
-    <div>
+    <div className={styles.box}>
       <div
         className={styles.image}
         style={{
