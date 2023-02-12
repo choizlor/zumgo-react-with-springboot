@@ -121,6 +121,15 @@
   background-color: #bcff5e;
 }
 
+.nogobtn {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  width: 65px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #d9d9d9;
+}
+
 /* 낙찰자 모달 */
 .modal {
   width: 70%;
