@@ -23,8 +23,8 @@
 .chatinfo {
     display: flex;
     flex-direction: column;
-    width : 80%;
 }
+
 .chatinfotop {
     display: flex;
     margin-bottom: 2%;
