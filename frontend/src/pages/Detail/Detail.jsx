@@ -314,7 +314,7 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.icon} onClick={addwish}>
+          <div className={styles.icon} onClick={ userId !== 0 ? () => addwish : null}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}
             <div className={styles.count}>{String(wishCnt)}</div>
           </div>
