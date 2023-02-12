@@ -213,6 +213,7 @@ const VideoRoom = () => {
       setBidPrice(tmp[0]);
       setBestBidder(tmp[1]);
       setBestBidderImg(tmp[2]);
+      setBidCount(tmp[3])
     });
 
     // 유효한 토큰으로 세션에 접속하기
@@ -321,10 +322,10 @@ const VideoRoom = () => {
   };
 
   // bidPrice가 갱신될 때마다 signal 보내서 동기화
-  const bidding = (price, bidder, myProfileImg) => {
+  const bidding = (price, bidder, myProfileImg, bidCount) => {
     session
       .signal({
-        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg}`,
+        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg} : ${bidCount}`,
         type: "bid",
       })
       .then(() => {
@@ -336,8 +337,8 @@ const VideoRoom = () => {
   };
 
   // price가 변경될 때마다 bidding 실행
-  const handleBidPrice = (price, bidder, myProfileImg) => {
-    bidding(price, bidder, myProfileImg);
+  const handleBidPrice = (price, bidder, myProfileImg, bidCount) => {
+    bidding(price, bidder, myProfileImg, bidCount);
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
