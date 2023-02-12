@@ -41,13 +41,13 @@ public class TalkController {
     private final ProductService productService;
     private final UserService userService;
 
-//    @GetMapping("/userList")
-//    public List<User> LiveRequestUser(@RequestParam("productId") long productId) {
-//        return userService.getLiveRequestUser(productId);
-//    }
+    @GetMapping("/userList")
+    public List<User> LiveRequestUser(@RequestParam("productId") long productId) {
+        return userService.getLiveRequestUser(productId);
+    }
 
     @ApiOperation(value = "상품 예약시간 업데이트 및 알림톡 전송", notes = "상품을 등록을 위해 DB에 저장하고 정보를 반환")
-    @PostMapping("/reserve")
+    @PostMapping("/reserve/{id}")
     public ResponseEntity uploadProduct(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id,
                                         @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) {
         //Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
@@ -59,8 +59,9 @@ public class TalkController {
         List<User> liveRequestUser = userService.getLiveRequestUser(id);
 
         //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
+        log.info("productName : {}", requestDto.getTitle());
         String productName = requestDto.getTitle();
-        Timestamp reserveTime = requestDto.getReserve();
+        String reserveTime = requestDto.getReserve().toString().substring(0,16);
         String subject = "상품 라이브 예약 알림";
         Map<String, String> button = new HashMap<>();
         button.put("name", "zum:go 바로가기"); //버튼명
@@ -81,17 +82,23 @@ public class TalkController {
         body.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
         body.add("userid", "gyeoul98"); //사이트 아이디
         //토큰 발급 받는 부분 만들기
-        body.add("token", "489f6bb9ce64a8c64d5a14e1388df42aa44189f713b38331971de3a575ffc699e921e47e58513403dcbbdaaeac97905ea4277b653889e6f9d9005e95812bb74ePiALdhMsuTjOfg11wSdoriRSuNOad4Ij4IKlqjgG3jQeaG811f5v0fvgEnJfsLw"); //발급받은 토큰
+        body.add("token", "25a4b79f6c3750feebbd262abca8419bd6dadde63ad8fe067f23acb44594d3c410b5adf1cc84c1eb0a9919e901ab6aca486081f204b97fb0f4b9a4b8033a4ccd40OR8Ezbtv2gNcWEWQT2Oo04rgFZWUPp0SoUL1j74q7DXl6zwMfeBzoGwxEGvqMv0zCvGBcu1BdmRRU1llYnew%3D%3D"); //발급받은 토큰
         body.add("senderkey", "aed29693a2cb5db41813209853bf64be349aead8"); //발신프로파일 키
         body.add("tpl_code", "TL_8062"); //템플릿 코드
         body.add("sender", "01076100034"); //발신자 연락처
         //여기서부터
-        body.add("receiver_1", "01063677054"); //수신자 연락처 -> 여기 수정 수신자 개수만큼
-        body.add("subject_1", subject); //알림톡 제목(나만 보임)
-        body.add("message_1", "이 알림톡은 " + productName + " 상품 라이브 요청자에게만 발송됩니다.\n" +
-                "\n" +
-                "#{고객명}님께서 요청하신 " + productName + " 라이브가 " + reserveTime + "에 예약 되었습니다."); //알림톡 내용
-        body.add("button_1", buttonInfo); //버튼정보
+        log.info("수신자 입력");
+        int receiverSize = liveRequestUser.size();
+        log.info("receiverSize : {}", receiverSize);
+        for (int i=0; i<receiverSize; i++) {
+            body.add("receiver_"+ (i+1), liveRequestUser.get(i).getKakaoPhoneNumber()); //수신자 연락처 -> 여기 수정 수신자 개수만큼
+            body.add("subject_" + (i+1), subject); //알림톡 제목(나만 보임)
+            body.add("message_" + (i+1), "이 알림톡은 " + productName + " 상품 라이브 요청자에게만 발송됩니다.\n" +
+                    "\n" +
+                    liveRequestUser.get(i).getKakaoNickname() + "님께서 요청하신 " + productName + " 라이브가 " + reserveTime + "에 예약 되었습니다."); //알림톡 내용
+            log.info("message : {}", body.get("message_"+ (i+1)));
+            body.add("button_" + i, buttonInfo); //버튼정보
+        }
         //여기까지 반복문으로 liveRequestUser만큼 돌려야 될듯?
         body.add("testMode", "Y"); //테스트모드
 
@@ -109,7 +116,7 @@ public class TalkController {
         //결과코드(code)가 0이면 성공 -99이면 전송 실패
 
 
-        return ResponseEntity.ok().body("seccess");
+        return ResponseEntity.ok().body(LiveReserveResponse);
     }
 
 }
