@@ -26,6 +26,7 @@ export default function ChatRoom() {
   const sellerImg = location.state?.sellerImg;
   const buyerImg = location.state?.buyerImg;
   const type = location.state?.type;
+  const title = location.state?.title;
 
   const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
   const otherId = sellerId === user.userCode ? buyerId : sellerId;
@@ -142,7 +143,16 @@ export default function ChatRoom() {
       clientdata.onConnect = function () {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback);
         if (type == 'live') {
-          
+          client.publish({
+            destination: "/pub/chat/" + chatroomId,
+            body: JSON.stringify({
+              type: "",
+              sender: user.userCode,
+              channelId: chatroomId,
+              data: title,
+            }),
+            headers: { priority: 9 },
+          });
         }
       };
 

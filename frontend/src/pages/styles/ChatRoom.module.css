@@ -65,6 +65,7 @@
     align-items: center;
     padding: 1%;
     margin-right : 2%;
+    max-width: 70%;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -91,6 +92,7 @@
     font-family: 'Roboto', sans-serif;
     padding : 1%;
     margin-left: 2%;
+    max-width: 70%;
 }
 
 
@@ -101,7 +103,6 @@
 
 .msgdata {
     margin : 1%;
-    max-width: 70%;
 }
 
 /* 메시지 입력 바 */
