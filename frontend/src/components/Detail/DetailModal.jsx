@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./DetailModal.module.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function DetailModal({ setModalOpen, chats }) {
-  console.log(chats);
+export default function DetailModal({ setModalOpen }) {
+  const [chats, setChats] = useState([]);
   const navigate = useNavigate();
-  const userId = useSelector((state) => {
+
+  const userId = useSelector((state) => {  // 현재 로그인된 사용자 === 판매자
     return state.user.userCode;
   });
-
-  const isReview = true;
 
   const closeModal = () => {
     setModalOpen(false);
@@ -28,9 +27,21 @@ export default function DetailModal({ setModalOpen, chats }) {
       })
       .then((res) => {
         closeModal(false);
-        navigate(`/chatroom/${res.data}`, { state: isReview });
+        navigate(`/chatroom/${res.data.roomId}`);
       });
   };
+
+  useEffect(() => {
+    axios // 채팅목록 불러오기
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .then((res) => {
+        setChats(res.data);
+        console.log(res.data, "detail 모달 채팅 리스트 🎄");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className={styles.body}>
@@ -42,7 +53,11 @@ export default function DetailModal({ setModalOpen, chats }) {
         {chats?.map((chat) => {
           <div key={chat.roomId} className={styles.userbox}>
             <img
-              src="https://sitem.ssgcdn.com/18/83/93/item/2097000938318_i1_1200.jpg"
+              src={
+                userId === chat.buyer.userCode
+                  ? chat.seller.kakaoProfileImg
+                  : chat.buyer.kakaoProfileImg
+              }
               className={styles.userimg}
             />
             <span

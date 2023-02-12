@@ -75,16 +75,6 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
-
-    axios // 채팅목록 불러오기
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
-      .then((res) => {
-        setChats(res.data);
-        console.log(res.data, "detail 모달 채팅 리스트 🎄");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
 
   const changeStatus = (e) => {
@@ -120,10 +110,14 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
+    console.log(userId)
+    console.log(product.userCode)
+    console.log(product?.userCode)
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+      // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: product?.userCode,
+        sellerCode: Number(product?.userCode),
       })
       .then((res) => {
         console.log(res.data);
@@ -321,7 +315,7 @@ export default function Detail() {
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (
-        <DetailModal setModalOpen={setModalOpen} chats={chats} />
+        <DetailModal setModalOpen={setModalOpen} chats={chats}/>
       ) : null}
     </div>
   );

@@ -19,6 +19,7 @@ export default function WishList() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/products/wishList/${userId}`)
       .then((res) => {
+        console.log(res.data, '👠');
         setProducts(res.data);
       })
       .catch((err) => console.log(err));

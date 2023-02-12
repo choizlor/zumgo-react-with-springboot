@@ -13,3 +13,48 @@
 .comment {
     font-size: 12px;
 }
+
+.review {
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px; ;
+}
+
+.review:nth-child(odd) {
+    background-color: #DFDFDF;
+}
+.review:nth-child(even) {
+    background-color: #BCFF5E;
+}
+
+.writer {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.comment {
+    margin-top: 0.2rem;
+    font-size: 12px;
+}
+
+.userinfo { 
+    display: flex;
+    flex-direction: column;
+    margin: 0.8rem;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.userimg {
+    margin-top: 0.7rem;
+    margin-left: 0.7rem;
+    width : 23px;
+    height : 23px;
+    border-radius: 23px;
+}
+
+.userimg img {
+    border-radius: 23px;
+    object-fit: cover;
+}
+

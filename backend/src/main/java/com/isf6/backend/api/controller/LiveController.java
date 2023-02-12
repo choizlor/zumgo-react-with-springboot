@@ -1,5 +1,6 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Response.LiveRoomResDto;
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
 import com.isf6.backend.api.Response.LiveProductResDto;
 import com.isf6.backend.domain.entity.LiveRoom;
@@ -180,7 +181,7 @@ public class LiveController {
         Map<String, Object> result = new HashMap<>();
 
         //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
-        List<LiveRoom> liveRoomList = new ArrayList<>();
+        List<LiveRoomResDto> liveRoomList = new ArrayList<>();
         liveRoomList = liveService.getStartRequestLiveRoomList(userCode);
         log.info("liveRoomList : {}", liveRoomList.size());
         result.put("myLiveRoomList", liveRoomList);
@@ -194,7 +195,7 @@ public class LiveController {
         Map<String, Object> result = new HashMap<>();
 
         //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
-        List<LiveRoom> liveRoomList = new ArrayList<>();
+        List<LiveRoomResDto> liveRoomList = new ArrayList<>();
         liveRoomList = liveService.getWaitRequestLiveRoomList(userCode);
         log.info("liveRoomList : {}", liveRoomList.size());
         result.put("myLiveRoomList", liveRoomList);

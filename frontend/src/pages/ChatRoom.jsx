@@ -20,12 +20,12 @@ export default function ChatRoom() {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const sellerId = location.state.sellerId;
-  const buyerId = location.state.buyerId;
-  const sellerNickname = location.state.sellerNickname;
-  const buyerNickname = location.state.buyerNickname;
-  const sellerImg = location.state.sellerImg;
-  const buyerImg = location.state.buyerImg;
+  const sellerId = location.state?.sellerId;
+  const buyerId = location.state?.buyerId;
+  const sellerNickname = location.state?.sellerNickname;
+  const buyerNickname = location.state?.buyerNickname;
+  const sellerImg = location.state?.sellerImg;
+  const buyerImg = location.state?.buyerImg;
 
   const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
   const otherId = sellerId === user.userCode ? buyerId : sellerId;
@@ -48,27 +48,12 @@ export default function ChatRoom() {
     event.preventDefault();
   };
 
-  // const getChatHistory = () => {
-  //   // 이전 채팅 정보를 불러오는 axios
-  //   axios
-  //     .post(`https://i8c110.p.ssafy.io/api/v1/socket/room`, {
-  //       buyerCode: buyerId,
-  //       sellerCode: sellerId,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  const preMsgBox = history.map((item, idx) => {
+  const preMsgBox = history?.map((item, idx) => {
     const date = new Date(item.chat_date);
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatter !== user.kakaoNickname) {
+    if (item.chatterId !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -96,8 +81,11 @@ export default function ChatRoom() {
     }
   });
 
-  const msgBox = chatList.map((item, idx) => {
-    console.log(item);
+  const msgBox = chatList?.map((item, idx) => {
+    const date = new Date();
+    var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+    var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+
     if (item.sender !== user.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
@@ -107,7 +95,7 @@ export default function ChatRoom() {
           <div className={styles.othermsg}>
             <span>{item.data}</span>
           </div>
-          <span className={styles.otherdate}>{item.date}</span>
+          <span className={styles.otherdate}>{hour}:{minute}</span>
         </div>
       );
     } else {
@@ -116,7 +104,7 @@ export default function ChatRoom() {
           <div className={styles.mymsg}>
             <span>{item.data}</span>
           </div>
-          <span className={styles.mydate}>{item.date}</span>
+          <span className={styles.mydate}>{hour}:{minute}</span>
         </div>
       );
     }
@@ -171,6 +159,7 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
+      console.log(msg, "🎁");
       setChatList((chats) => [...chats, msg]);
     }
   };
@@ -180,6 +169,7 @@ export default function ChatRoom() {
     if (chat === "") {
       return;
     }
+
 
     client.publish({
       destination: "/pub/chat/" + chatroomId,
@@ -199,9 +189,7 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", {
-        chatRoomCode: chatroomId,
-      })
+      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", chatroomId)
       .then((res) => {
         disConnect();
         console.log(res);
@@ -212,9 +200,6 @@ export default function ChatRoom() {
   };
 
   useEffect(() => {
-    // // 기존의 대화 내용 불러오기
-    // getChatHistory();
-
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
 
@@ -246,9 +231,7 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon
-          onClick={() => navigate(`/report/${otherId}`)}
-          />
+          <MegaphoneIcon onClick={() => navigate(`/report/${otherId}`)} />
           <div className={styles.inputbar}>
             <div>
               <input
