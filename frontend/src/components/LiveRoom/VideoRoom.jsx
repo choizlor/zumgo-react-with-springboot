@@ -12,7 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
-import userImg from "../../assets/images/kim.png";
 import Price from "../Auction/Price";
 import SellerLoading from "../Live/SellerLoading";
 import BuyerLoading from "../Live/BuyerLoading";
@@ -530,8 +529,8 @@ const VideoRoom = () => {
                 handleBidPrice={handleBidPrice}
                 setBidCount={setBidCount}
                 myUserName={myUserName}
-                setBestBidder={setBestBidder}
                 className={styles.price}
+                myProfileImg={myProfileImg}
               />
             ) : null}
           </div>
