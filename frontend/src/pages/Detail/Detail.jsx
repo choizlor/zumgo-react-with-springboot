@@ -58,15 +58,12 @@ export default function Detail() {
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
-        console.log(res.data);
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
         // 같으면 판매자, 다르면 구매자
-        console.log(res.data);
-        console.log("로그인된 사용자: ", userId);
 
         if (userId !== res.data.userCode) {
           setIsMine(false);
@@ -110,9 +107,6 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    console.log(userId);
-    console.log(product.userCode);
-    console.log(product?.userCode);
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
