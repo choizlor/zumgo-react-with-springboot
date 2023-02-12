@@ -44,7 +44,7 @@ export default function MyReviewList() {
       {/* 상단 네비게이션 */}
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(-1)}}/>
+          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(`userinfo/${userId}`)}}/>
         </div>
       </div>
       {/* 타이틀 */}
@@ -63,14 +63,12 @@ export default function MyReviewList() {
                     </div>
                     <div className={styles.topright}>
                       <div className={styles.title}>{review.product.title}</div>
-                      <div className={styles.price}>
-                        {review.product.price}원
-                      </div>
+                      <div className={styles.price}>{review.product.price}</div>
                     </div>
                   </div>
                   <div className={styles.bottom}>
                     <ArrowRightIcon />
-                    <div className={styles.comment}>{review.review}</div>
+                    <div className={styles.comment}>{review?.review}</div>
                   </div>
                 </div>
                 <div className={styles.icons}>

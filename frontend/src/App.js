@@ -8,7 +8,7 @@ import Root from "./pages/Root";
 import Oauth from "./pages/Login/Oauth";
 import NotFound from "./pages/NotFound/NotFound";
 import Home from "./pages/Home";
-import Detail from "./pages/Detail";
+import Detail from "./pages/Detail/Detail";
 import Live from "./pages/Live";
 import LiveRoom from "./pages/LiveRoom";
 import VideoRoom from "./components/LiveRoom/VideoRoom";

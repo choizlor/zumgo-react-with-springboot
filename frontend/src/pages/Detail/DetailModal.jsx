@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./DetailModal.module.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useSelector } from "react-redux";
@@ -6,15 +6,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function DetailModal({ setModalOpen }) {
-  console.log(chats);
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
-  const userId = useSelector((state) => {
+  const userId = useSelector((state) => {  // 현재 로그인된 사용자 === 판매자
     return state.user.userCode;
   });
-
-  const isReview = true;
 
   const closeModal = () => {
     setModalOpen(false);
@@ -29,12 +26,21 @@ export default function DetailModal({ setModalOpen }) {
         sellerCode: userId,
       })
       .then((res) => {
+        console.log(res.data)
         closeModal(false);
-        navigate(`/chatroom/${res.data.roomId}`, { state: isReview });
+        navigate(`/chatroom/${res.data.roomId}`, {state : {
+          chats: res.data.chatList,
+          sellerId: userId,
+          buyerId: buyerCode,
+          sellerNickname: res.data.sellerNickname,
+          buyerNickname: res.data.buyerNickname,
+          sellerImg: res.data.sellerImg,
+          buyerImg: res.data.buyerImg,
+        }});
       });
   };
 
-  useState(() => {
+  useEffect(() => {
     axios // 채팅목록 불러오기
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
@@ -65,11 +71,11 @@ export default function DetailModal({ setModalOpen }) {
             />
             <span
               className={styles.username}
-              onClick={sendReviewMsg(
+              onClick={() => {sendReviewMsg(
                 userId === chat.buyer.userCode
                   ? chat.seller.userCode
                   : chat.buyer.userCode
-              )}
+              )}}
             >
               {userId === chat.buyer.userCode
                 ? chat.seller.kakaoNickname
