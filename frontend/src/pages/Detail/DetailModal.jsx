@@ -18,27 +18,19 @@ export default function DetailModal({ setModalOpen, productId }) {
     setModalOpen(false);
   };
 
-  // 리뷰 메시지 보내기
-  const sendReviewMsg = (buyerCode) => {
-    // 판매자 정보, 구매자 정보 보내주기
+  // 리뷰 만들어주기 -> 판매 목록에 추가
+  const addBuyList = (buyerId) => {
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        buyerCode: buyerCode,
-        sellerCode: userId,
+      .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
+        seller: userId,
+        buyer: buyerId,
+        review : "",
       })
       .then((res) => {
-        console.log(res.data);
-        closeModal(false);
-        navigate(`/chatroom/${res.data.chatRoomId}`, {
-          state: {
-            chats: res.data.chatList,
-            seller: res.data.seller,
-            buyer: res.data.buyer,
-            type: "review",
-            title: "",
-            productId: productId,
-          },
-        });
+        console.log(res);  
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -74,7 +66,7 @@ export default function DetailModal({ setModalOpen, productId }) {
             <span
               className={styles.username}
               onClick={() => {
-                sendReviewMsg(
+                addBuyList(
                   userId === chat.buyer.userCode
                     ? chat.seller.userCode
                     : chat.buyer.userCode

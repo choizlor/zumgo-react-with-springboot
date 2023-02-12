@@ -48,7 +48,7 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatterId !== me.userCode) {
+    if (item.chatterId !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -56,7 +56,6 @@ export default function ChatRoom() {
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.chat_content}</div>
-            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -68,7 +67,6 @@ export default function ChatRoom() {
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.chat_content}</div>
-            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -83,7 +81,7 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.sender !== me.userCode) {
+    if (item.sender !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -91,7 +89,6 @@ export default function ChatRoom() {
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.data}</div>
-            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -103,7 +100,6 @@ export default function ChatRoom() {
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.data}</div>
-            { item.type === 'review' ? <button onClick={()=>{navigate(`/review/${productId}/create`)}}>리뷰 작성하기</button>:null}
           </div>
           <span className={styles.mydate}>
             {hour}:{minute}
@@ -141,30 +137,18 @@ export default function ChatRoom() {
       // 구독
       clientdata.onConnect = async () => {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
-        
         if (type==='live') {
-          clientdata?.publish({
+          clientdata.publish({
             destination: "/pub/chat/" + chatroomId,
             body: JSON.stringify({
               type: type,
               sender: user.userCode,
               channelId: chatroomId,
-              data: `${title}의 라이브 요청!`,
+              data: `${title} 상품의 라이브를 요청합니다!`,
             }),
             headers: { priority: 9 },
           });
-        } else if (type==='review') {
-          clientdata?.publish({
-            destination: "/pub/chat/" + chatroomId,
-            body: JSON.stringify({
-              type: type,
-              sender: user.userCode,
-              channelId: chatroomId,
-              data: `${user.kakaoNickname}님 과의 거래 어떠셨나요?`,
-            }),
-            headers: { priority: 9 },
-          });
-        } 
+        }
       };
 
       clientdata.activate(); // 클라이언트 활성화
@@ -191,6 +175,10 @@ export default function ChatRoom() {
       setChatList((chats) => [...chats, msg]);
     }
   };
+
+  useEffect(() => {
+    
+  })
 
   // 메시지 보내기
   const sendChat = () => {
