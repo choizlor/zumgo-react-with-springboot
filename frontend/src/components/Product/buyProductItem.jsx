@@ -5,7 +5,7 @@ import axios from "axios";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductItem({ product, clickProduct }) {
+export default function BuyProductItem({ product, clickProduct }) {
   const navigate = useNavigate();
   return (
     <div className={styles.body}>

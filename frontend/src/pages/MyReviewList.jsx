@@ -3,8 +3,6 @@ import styles from "./styles/MyReviewList.module.css";
 import {
   ChevronLeftIcon,
   ArrowRightIcon,
-  EllipsisVerticalIcon,
-  PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
@@ -23,7 +21,6 @@ export default function MyReviewList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
       .then((res) => {
         setReviews(res.data.MyReview);
-        console.log(res.data.MyReview);
       });
   }, []);
 
@@ -72,11 +69,6 @@ export default function MyReviewList() {
                   </div>
                 </div>
                 <div className={styles.icons}>
-                  <PencilIcon
-                    onClick={() => {
-                      navigate(`/review/${review.product.id}/update`);
-                    }}
-                  />
                   <TrashIcon onClick={handleDeleteReview(review.product.id)} />
                 </div>
               </div>
