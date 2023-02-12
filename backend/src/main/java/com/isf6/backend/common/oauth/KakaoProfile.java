@@ -28,12 +28,6 @@ public class KakaoProfile {
         public Boolean is_email_verified;
         public String email;
 
-        public Boolean has_phone;
-        public Boolean phone_needs_agreement;
-        public Boolean is_email_phone;
-        public Boolean is_phone_verified;
-        public String phone;
-
         @Data
         public class Profile {
             public String nickname;
