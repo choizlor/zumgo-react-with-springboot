@@ -59,7 +59,7 @@ export default function DetailModal({ setModalOpen }) {
       </div>
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
-        {chats?.map((chat) => {
+        {chats?.map((chat) => (
           <div key={chat.roomId} className={styles.userbox}>
             <img
               src={
@@ -82,7 +82,7 @@ export default function DetailModal({ setModalOpen }) {
                 : chat.buyer.kakaoNickname}
             </span>
           </div>;
-        })}
+        ))}
       </div>
     </div>
   );
