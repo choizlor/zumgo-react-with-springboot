@@ -30,7 +30,7 @@ export default function SellList() {
         console.log(err);
       });
       handleChangeStatus(filter);
-  }, []);
+  }, [res.data]);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
