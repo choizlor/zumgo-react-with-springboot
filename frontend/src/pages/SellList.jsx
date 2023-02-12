@@ -24,12 +24,13 @@ export default function SellList() {
       .then((res) => {
         setProducts(res.data);
         console.log(res.data);
+        handleChangeStatus(filter)
       })
       .catch((err) => {
         console.log(err);
       });
       console.log(filter,'======')
-      handleChangeStatus(filter)
+
       console.log(products,'-------')
   }, []);
 
