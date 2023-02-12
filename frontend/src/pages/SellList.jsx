@@ -88,7 +88,7 @@ export default function SellList() {
           )) : <div className={styles.alert}>상품이 없어요 😢</div> } 
         </ul>
       </div>
-      <BottomNav />   
+      {/* <BottomNav />    */}
     </div>
   );
 }
