@@ -22,8 +22,8 @@ export default function SellList() {
     await axios
       .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
       .then((res) => 
-        setProducts(res.data);
-      )
+        setProducts(res.data)
+      );
       console.log(filter,'======')
       handleChangeStatus(filter)
       console.log(products,'-------')
