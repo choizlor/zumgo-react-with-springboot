@@ -98,6 +98,7 @@ public class LiveRequestService {
     //상품에 대한 라이브 요청 삭제하기
     @Transactional
     public void deleteProductLiveRequest(Long productId){
+
         liveRequestRepository.deleteLiveRequest(productId);
     }
 
