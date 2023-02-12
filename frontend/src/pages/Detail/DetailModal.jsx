@@ -26,6 +26,7 @@ export default function DetailModal({ setModalOpen }) {
         sellerCode: userId,
       })
       .then((res) => {
+        console.log(res.data)
         closeModal(false);
         navigate(`/chatroom/${res.data.roomId}`);
       });
@@ -62,11 +63,11 @@ export default function DetailModal({ setModalOpen }) {
             />
             <span
               className={styles.username}
-              onClick={sendReviewMsg(
-                userId === chat.buyer.userCode
-                  ? chat.seller.userCode
-                  : chat.buyer.userCode
-              )}
+              // onClick={sendReviewMsg(
+              //   userId === chat.buyer.userCode
+              //     ? chat.seller.userCode
+              //     : chat.buyer.userCode
+              // )}
             >
               {userId === chat.buyer.userCode
                 ? chat.seller.kakaoNickname
