@@ -10,21 +10,27 @@ export default function SellerLoading({ joinSession, roomId, title }) {
   const navigate = useNavigate();
 
   const onairSession = () => {
-    const body = JSON.stringify({
-      productId: roomId,
-      liveStartTime: new Date(),
-      liveStatus: "ONAIR",
-    });
-
     axios
-      .patch(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, body, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      })
+      .patch(`https://i8c110.p.ssafy.io/api/v1/talk/start/${roomId}`)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+
+    //   .catch((err) => console.log(err));
+    // const body = JSON.stringify({
+    //   productId: roomId,
+    //   liveStartTime: new Date(),
+    //   liveStatus: "ONAIR",
+    // });
+
+    // axios
+    //   .patch(`https://i8c110.p.ssafy.io/api/v1/live/${roomId}`, body, {
+    //     headers: {
+    //       Authorization: token,
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   return (
