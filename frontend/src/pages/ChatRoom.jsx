@@ -201,9 +201,9 @@ export default function ChatRoom() {
   useEffect(() => {
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
-    
+
     if (type==='live') {
-      client.publish({
+      client?.publish({
         destination: "/pub/chat/" + chatroomId,
         body: JSON.stringify({
           type: "",
@@ -213,6 +213,8 @@ export default function ChatRoom() {
         }),
         headers: { priority: 9 },
       });
+    } else if (type==='review') {
+      
     }
 
     return () => disConnect();
