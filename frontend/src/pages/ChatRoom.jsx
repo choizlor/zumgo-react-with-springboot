@@ -48,7 +48,7 @@ export default function ChatRoom() {
     event.preventDefault();
   };
 
-  const preMsgBox = history.map((item, idx) => {
+  const preMsgBox = history?.map((item, idx) => {
     const date = new Date(item.chat_date);
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
@@ -81,7 +81,7 @@ export default function ChatRoom() {
     }
   });
 
-  const msgBox = chatList.map((item, idx) => {
+  const msgBox = chatList?.map((item, idx) => {
     console.log(item);
     if (item.sender !== user.userCode) {
       return (

@@ -6,7 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function DetailModal({ setModalOpen }) {
-  console.log(chats);
   const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
