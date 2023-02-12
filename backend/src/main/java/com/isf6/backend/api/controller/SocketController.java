@@ -42,6 +42,7 @@ public class SocketController {
 
     private final SocketService socketService;
     private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
     private final ChatRepository chatRepository;
     private static Set<Integer> userList = new HashSet<>();
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -97,6 +98,13 @@ public class SocketController {
         } else {
             //채팅 내역 가져오기
             log.info("채팅방 존재");
+
+            User buyer = userRepository.findByUserCode(chatRoomInfo.getBuyer().getUserCode());
+            chatRoomInfo.setBuyer(buyer);
+
+            User seller = userRepository.findByUserCode(chatRoomInfo.getSeller().getUserCode());
+            chatRoomInfo.setSeller(seller);
+
             chatList = chatRepository.getChatList(chatRoomInfo.getId());
             chatInfo.setChatList(chatList);
 
