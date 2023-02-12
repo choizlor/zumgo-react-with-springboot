@@ -67,16 +67,7 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
-      <Swiper
-        className={styles.swiper}
-        loop={true}
-        autoplay ={{delay:3000}}
-      >
-        <SwiperSlide className={styles.swiperimg}>
           <HomeBanner />
-        </SwiperSlide>
-      </Swiper>
-
       <div className={styles.body}>
         <div className={styles.onsale}>판매중</div>
         <div className={styles.scrollarea}>
