@@ -92,33 +92,31 @@ public class SocketController {
         if(chatRoomInfo == null) {
             //String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
             chatRoomInfo = socketService.createRoom(buyerCode, sellerCode);
-            chatInfo.setChatRoomId(chatRoomId);
-            chatInfo.setChatList(new ArrayList<>());
+            chatInfo.setChatRoomId(chatRoomId); //채팅방 id
+            chatInfo.setBuyer(chatRoomInfo.getBuyer()); //구매자 정보
+            chatInfo.setSeller(chatRoomInfo.getSeller()); //판매자 정보
+            chatInfo.setChatList(new ArrayList<>()); //채팅내역은 빈 리스트
             
         } else {
             //채팅 내역 가져오기
             log.info("채팅방 존재");
 
-            User buyer = userRepository.findByUserCode(chatRoomInfo.getBuyer().getUserCode());
-            chatRoomInfo.setBuyer(buyer);
-
-            User seller = userRepository.findByUserCode(chatRoomInfo.getSeller().getUserCode());
-            chatRoomInfo.setSeller(seller);
+            chatInfo.setBuyer(chatRoomInfo.getBuyer()); //구매자 정보
+            chatInfo.setSeller(chatRoomInfo.getSeller()); //판매자 정보
 
             chatList = chatRepository.getChatList(chatRoomInfo.getId());
-            chatInfo.setChatList(chatList);
+            chatInfo.setChatList(chatList); //채팅내역
 
-            chatRoomId = chatRoomInfo.getId();
-            chatInfo.setChatRoomId(chatRoomId);
+            chatInfo.setChatRoomId(chatRoomInfo.getId()); //채팅방 id
         }
 
-        // 프로필 이미지 추가
-        chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
-        chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
-
-        // 유저 닉네임 추가
-        chatInfo.setSellerNickname(chatRoomInfo.getSeller().getKakaoNickname());
-        chatInfo.setBuyerNickname(chatRoomInfo.getBuyer().getKakaoNickname());
+//        // 프로필 이미지 추가
+//        chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
+//        chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
+//
+//        // 유저 닉네임 추가
+//        chatInfo.setSellerNickname(chatRoomInfo.getSeller().getKakaoNickname());
+//        chatInfo.setBuyerNickname(chatRoomInfo.getBuyer().getKakaoNickname());
         
         return chatInfo;
     }
