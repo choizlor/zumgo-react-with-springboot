@@ -15,4 +15,5 @@
 
 .cardbox {
   display: flex;
+  overflow: scroll;
 }
