@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import styles from "./styles/SellList.module.css";
@@ -23,7 +23,7 @@ export default function SellList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
-        handleChangeStatus(filter)
+        setFiltered(res.data.filter((product) => product.status === filter))
       })
       .catch((err) => {
         console.log(err);
@@ -37,10 +37,10 @@ export default function SellList() {
     navigate(`/detail/${id}`);
   };
   // filter
-  const handleChangeStatus = useMemo((filter) => {
+  const handleChangeStatus = (filter) => {
     setFilter(filter);
     setFiltered(getFilteredItems(filter));
-  }, [products]);
+  };
 
   // console.log(filter);
 
