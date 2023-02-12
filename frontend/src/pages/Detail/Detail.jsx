@@ -139,6 +139,10 @@ export default function Detail() {
 
   // 찜 추가하기
   const addwish = () => {
+    if (userId == 0) {
+      alert("로그인이 필요한 서비스 입니다.");
+      return;
+    }
     // wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
@@ -314,7 +318,7 @@ export default function Detail() {
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.desc}>{product.description}</div>
         <div className={styles.icons}>
-          <div className={styles.icon} onClick={ userId !== 0 ? () => addwish : null}>
+          <div className={styles.icon} onClick={addwish}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}
             <div className={styles.count}>{String(wishCnt)}</div>
           </div>
