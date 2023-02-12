@@ -538,7 +538,7 @@ const VideoRoom = () => {
 
           <div>
             {celebrity ? (
-              <div className={styles.container}>
+              <div className={styles.confetticon}>
                 <div className={styles.modal}>
                   <div className={styles.modaltitle}>축하합니다!</div>
                   <div className={styles.modalimg}>
