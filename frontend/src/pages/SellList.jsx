@@ -46,6 +46,7 @@ export default function SellList() {
   // console.log(filter);
 
   const getFilteredItems = (filter) => {
+    console.log(products, '🎈🎈🎈🎈🎈🎈')
     return products?.filter((product) => product.status === filter);
   };
 
