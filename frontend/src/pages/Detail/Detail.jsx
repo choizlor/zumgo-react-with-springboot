@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/Detail.module.css";
-import LiveBtn from "../components/Detail/LiveBtn";
-import zImg from "../assets/images/z.png";
-import DetailModal from "../components/Detail/DetailModal";
+import styles from "./Detail.module.css";
+import LiveBtn from "./LiveBtn";
+import zImg from "../../assets/images/z.png";
+import DetailModal from "./DetailModal";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 // heroicons
@@ -110,12 +110,12 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    console.log(userId)
-    console.log(product.userCode)
-    console.log(product?.userCode)
+    console.log(userId);
+    console.log(product.userCode);
+    console.log(product?.userCode);
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-      // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
         sellerCode: Number(product?.userCode),
       })
@@ -126,8 +126,8 @@ export default function Detail() {
             chats: res.data.chatList,
             sellerId: product.userCode,
             buyerId: userId,
-            sellerNickname : res.data.sellerNickname,
-            buyerNickname : res.data.buyerNickname,
+            sellerNickname: res.data.sellerNickname,
+            buyerNickname: res.data.buyerNickname,
             sellerImg: res.data.sellerImg,
             buyerImg: res.data.buyerImg,
           },
@@ -205,10 +205,11 @@ export default function Detail() {
         <ChevronLeftIcon
           className={styles.goback}
           onClick={() => {
-            navigate('/');
+            navigate("/");
           }}
         />
         <Swiper
+          autoHeight={true}
           className={styles.swiper}
           navigation={true}
           pagination={true}
@@ -259,7 +260,7 @@ export default function Detail() {
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
-            <option value="BOOKING">예약 중</           option>
+            <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
           </select>
 
@@ -306,16 +307,16 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-        { userId !== 0 && !isMine ? (
+        {userId !== 0 && !isMine ? (
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
           />
-        ) :null}
+        ) : null}
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (
-        <DetailModal setModalOpen={setModalOpen} chats={chats}/>
+        <DetailModal setModalOpen={setModalOpen} chats={chats} />
       ) : null}
     </div>
   );
