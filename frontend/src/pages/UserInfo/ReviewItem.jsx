@@ -7,7 +7,7 @@ export default function ReviewItem({ review }) {
     <div className={styles.body}>
       <div className={styles.review}>
         <div className={styles.userimg}>
-          <img src={review.buyer.kakaoProfileImg} />
+          <img src={review.buyer.kakaoProfileImg}/>
         </div>
         <div className={styles.userinfo}>
           <div className={styles.writer}>{review.buyer.kakaoNickname}</div>
