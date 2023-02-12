@@ -16,16 +16,15 @@
 }
 
 .review {
-    border-radius: 15px;
-    height : 75px;
-    background-color: #DFDFDF;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px; ;
 }
 
-.review:nth-child(even) {
+.review:nth-child(odd) {
     background-color: #DFDFDF;
 }
-.review:nth-child(odd) {
+.review:nth-child(even) {
     background-color: #BCFF5E;
 }
 
@@ -35,5 +34,31 @@
 }
 
 .comment {
+    margin-top: 0.2rem;
     font-size: 12px;
 }
+
+.userinfo { 
+    display: flex;
+    flex-direction: column;
+    margin: 0.8rem;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.userimg {
+    margin-top: 0.7rem;
+    margin-left: 0.7rem;
+    width : 23px;
+    height : 23px;
+    border-radius: 100px;
+}
+
+.userimg img {
+    width : 23px;
+    height : 23px;
+    border-radius: 100px;
+    object-fit: cover;
+}
+
+
