@@ -22,11 +22,7 @@
   font-weight: 600;
 }
 
-.status {
 
-
-
-}
 
 .block {
   margin: 0 1.3rem;
@@ -37,5 +33,14 @@
 .btn {
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+.alert {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  
 }
 
