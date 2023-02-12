@@ -117,7 +117,7 @@ public class SocketController {
 
     @ApiOperation(value = "채팅방 나가기(삭제)", notes = "채팅방 Id로 채팅방 삭제")
     @DeleteMapping("/exit")
-    public ResponseEntity deleteChatRoom(@ApiParam(value = "채팅방 Id", required = true) @RequestBody long id) {
+    public ResponseEntity deleteChatRoom(@ApiParam(value = "채팅방 Id", required = true) @RequestParam long id) {
         log.info("chatRoomCode : {}", id);
         String result = socketService.deleteRoom(id);
         if(result.equals("null")) {
