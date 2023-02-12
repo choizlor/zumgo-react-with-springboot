@@ -60,7 +60,7 @@ export default function ChatRoom() {
             <img src={otherImg} alt="" />
           </div>
           <div className={styles.othermsg}>
-            <span>{item.chat_content}</span>
+            <div className={styles.msgdata}>{item.chat_content}</div>
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -71,7 +71,7 @@ export default function ChatRoom() {
       return (
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
-            <span>{item.chat_content}</span>
+            <div className={styles.msgdata}>{item.chat_content}</div>
           </div>
           <span className={styles.otherdate}>
             {hour}:{minute}
@@ -93,7 +93,7 @@ export default function ChatRoom() {
             <img src={otherImg} alt="" />
           </div>
           <div className={styles.othermsg}>
-            <span>{item.data}</span>
+            <div className={styles.msgdata}>{item.data}</div>
           </div>
           <span className={styles.otherdate}>{hour}:{minute}</span>
         </div>
@@ -102,7 +102,7 @@ export default function ChatRoom() {
       return (
         <div key={idx} className={styles.mychat}>
           <div className={styles.mymsg}>
-            <span>{item.data}</span>
+            <div className={styles.msgdata}>{item.data}</div>
           </div>
           <span className={styles.mydate}>{hour}:{minute}</span>
         </div>
@@ -189,10 +189,10 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", chatroomId)
+      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`, )
       .then((res) => {
         disConnect();
-        console.log(res);
+        navigate('/chatlist')
       })
       .catch((err) => {
         console.log(err);

@@ -3,6 +3,7 @@ package com.isf6.backend.service;
 import com.isf6.backend.api.Response.ChatRoomInfoResDto;
 import com.isf6.backend.domain.entity.ChatRoom;
 import com.isf6.backend.domain.entity.User;
+import com.isf6.backend.domain.repository.ChatRepository;
 import com.isf6.backend.domain.repository.ChatRoomRepository;
 import com.isf6.backend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class SocketService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
+    private final ChatRepository chatRepository;
 
 //    private Map<String, ChatRoomResDto> chatRooms;
 //
@@ -65,6 +67,8 @@ public class SocketService {
         if(chatroom == null) {
             return "null";
         }
+
+        chatRepository.deleteChat(id);
 
         chatRoomRepository.delete(chatroom);
         return "success";

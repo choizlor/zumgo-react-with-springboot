@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 export default function BottomNav({ curLocation }) {
   console.log(typeof curLocation);
-  
+
   const userCode = useSelector((state) => {
     return state.user.userCode;
   });
@@ -25,6 +25,7 @@ export default function BottomNav({ curLocation }) {
           // className={
           //   "styles.icon " + (curLocation === "/" ? "styles.black" : "")
           // }
+          className={styles.icon}
           onClick={() => {
             navigate("/");
           }}
@@ -33,6 +34,7 @@ export default function BottomNav({ curLocation }) {
           // className={
           //   "styles.icon " + (curLocation === "/chatlist" ? "styles.black" : "")
           // }
+          className={styles.icon}
           onClick={() => {
             if (!userCode || userCode === 0) {
               alert("로그인이 필요한 서비스 입니다!");
@@ -68,6 +70,7 @@ export default function BottomNav({ curLocation }) {
           }}
         />
         <UserCircleIcon
+          className={styles.icon}
           // className={
           //   "styles.icon " +
           //   (curLocation.slice(0, 9) === "/userinfo" ? "styles.black" : "")

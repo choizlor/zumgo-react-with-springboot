@@ -12,7 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
-import userImg from "../../assets/images/kim.png";
 import Price from "../Auction/Price";
 import SellerLoading from "../Live/SellerLoading";
 import BuyerLoading from "../Live/BuyerLoading";
@@ -32,6 +31,7 @@ const VideoRoom = () => {
 
   useEffect(() => {
     setMyUserName(user.kakaoNickname);
+    setMyProFileImg(user.kakaoProfileImg);
 
     (async () => {
       try {
@@ -48,6 +48,7 @@ const VideoRoom = () => {
               .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
               .then((res) => {
                 setHostName(res.data.user.kakaoNickname);
+                setHostImg(res.data.user.kakaoProfileImg);
               });
           });
       } catch (err) {
@@ -68,14 +69,15 @@ const VideoRoom = () => {
   const [seconds, setSeconds] = useState(0); //타이머 시작 시간
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
   const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
-  const [profileImg, setProFileImg] = useState(userImg); // 프로필 이미지
+  const [myProfileImg, setMyProFileImg] = useState(undefined); // 프로필 이미지
   const [hostName, setHostName] = useState(undefined); // host 이름
-  // const [timerOpen, setTimerOpen] = useState(false);
+  const [hostImg, setHostImg] = useState(undefined); // host 사진
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
   const [bidPrice, setBidPrice] = useState(0);
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
+  const [bestBidderImg, setBestBidderImg] = useState(undefined);
   const [celebrity, setCelebrity] = useState(false);
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
@@ -203,12 +205,14 @@ const VideoRoom = () => {
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
+      setBestBidderImg(tmp[2])
     });
 
     mySession.on("signal:bid", (event) => {
       const tmp = event.data.split(" : ");
       setBidPrice(tmp[0]);
       setBestBidder(tmp[1]);
+      setBestBidderImg(tmp[2]);
     });
 
     // 유효한 토큰으로 세션에 접속하기
@@ -305,7 +309,7 @@ const VideoRoom = () => {
     // setBidders((bidders) => bidders + 1)
     session
       .signal({
-        data: `${Number(bidders) + 1} : ${myUserName}`,
+        data: `${Number(bidders) + 1} : ${myUserName} : ${myProfileImg}`,
         type: "count",
       })
       .then(() => {
@@ -317,10 +321,10 @@ const VideoRoom = () => {
   };
 
   // bidPrice가 갱신될 때마다 signal 보내서 동기화
-  const bidding = (price, bidder) => {
+  const bidding = (price, bidder, myProfileImg) => {
     session
       .signal({
-        data: `${Number(bidPrice) + price} : ${bidder}`,
+        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg}`,
         type: "bid",
       })
       .then(() => {
@@ -332,8 +336,8 @@ const VideoRoom = () => {
   };
 
   // price가 변경될 때마다 bidding 실행
-  const handleBidPrice = (price, bidder) => {
-    bidding(price, bidder);
+  const handleBidPrice = (price, bidder, myProfileImg) => {
+    bidding(price, bidder, myProfileImg);
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
@@ -444,7 +448,7 @@ const VideoRoom = () => {
               <div className={styles.topleft}>
                 <div className={styles.host}>
                   <div className={styles.sellerimg}>
-                    <img src={userImg} alt="" />
+                    <img src={hostImg} alt="" />
                   </div>
                   <div className={styles.sellername}>{hostName} 님</div>
                 </div>
@@ -526,8 +530,8 @@ const VideoRoom = () => {
                 handleBidPrice={handleBidPrice}
                 setBidCount={setBidCount}
                 myUserName={myUserName}
-                setBestBidder={setBestBidder}
                 className={styles.price}
+                myProfileImg={myProfileImg}
               />
             ) : null}
           </div>
@@ -537,7 +541,7 @@ const VideoRoom = () => {
               <div className={styles.modal}>
                 <div className={styles.modaltitle}>축하합니다!</div>
                 <div className={styles.modalimg}>
-                  <img src={userImg} alt="" />
+                  <img src={bestBidderImg} alt="" />
                 </div>
                 <div className={styles.modalbiddername}>{bestBidder} 님이,</div>
                 <div className={styles.modalbidprice}>{bidPrice}원에 낙찰!</div>

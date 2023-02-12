@@ -10,7 +10,7 @@ export default function LiveReservation({ product }) {
   };
 
   return (
-    <div>
+    <div className={styles.box}>
       <div
         className={styles.image}
         style={{
