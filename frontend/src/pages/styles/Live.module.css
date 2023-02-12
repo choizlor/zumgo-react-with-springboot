@@ -16,7 +16,7 @@
 .togglebtn {
   position: fixed;
   bottom: 17%;
-  left: 33%;
+  left: 30%;
   display: table;
   table-layout: fixed;
 }
