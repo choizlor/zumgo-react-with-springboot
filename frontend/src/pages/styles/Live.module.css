@@ -24,7 +24,6 @@
   display: table-cell;
   position: relative;
   width: 200px;
-  height: 140px;
   box-sizing: border-box;
   border: 2px solid white;
 }
