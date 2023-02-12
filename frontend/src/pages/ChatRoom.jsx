@@ -48,7 +48,7 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatterId !== me.userCode) {
+    if (item.chatterId !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -83,7 +83,7 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.sender !== me.userCode) {
+    if (item.sender !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -141,6 +141,16 @@ export default function ChatRoom() {
       // 구독
       clientdata.onConnect = async () => {
         clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
+        clientdata?.publish({
+          destination: "/pub/chat/" + chatroomId,
+          body: JSON.stringify({
+            type: '',
+            sender: user.userCode,
+            channelId: chatroomId,
+            data: "",
+          }),
+          headers: { priority: 9 },
+        });
         
         if (type==='live') {
           clientdata?.publish({
