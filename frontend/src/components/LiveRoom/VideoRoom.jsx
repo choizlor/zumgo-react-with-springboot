@@ -213,7 +213,7 @@ const VideoRoom = () => {
       setBidPrice(tmp[0]);
       setBestBidder(tmp[1]);
       setBestBidderImg(tmp[2]);
-      setBidCount(tmp[3])
+      setBidCount(tmp[3]);
     });
 
     // 유효한 토큰으로 세션에 접속하기
@@ -325,7 +325,9 @@ const VideoRoom = () => {
   const bidding = (price, bidder, myProfileImg, bidCount) => {
     session
       .signal({
-        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg} : ${bidCount}`,
+        data: `${
+          Number(bidPrice) + price
+        } : ${bidder} : ${myProfileImg} : ${bidCount}`,
         type: "bid",
       })
       .then(() => {
@@ -479,11 +481,13 @@ const VideoRoom = () => {
                   onMessage={sendMsg}
                   currentSession={session}
                 />
-                {isHost ? (
+                {isHost && !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
                   </button>
-                ) : (
+                ) : null}
+
+                {isHost && !buyerCheck ? (
                   <button
                     onClick={() => {
                       countBidder();
@@ -493,7 +497,8 @@ const VideoRoom = () => {
                   >
                     go!
                   </button>
-                )}
+                ) : null}
+                
               </div>
             </div>
           </div>
