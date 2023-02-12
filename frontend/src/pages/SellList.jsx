@@ -23,7 +23,6 @@ export default function SellList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
-        console.log(res.data);
         handleChangeStatus(filter)
       })
       .catch((err) => {
@@ -32,7 +31,7 @@ export default function SellList() {
       console.log(filter,'======')
 
       console.log(products,'-------')
-  }, []);
+  }, [products]);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
@@ -46,7 +45,6 @@ export default function SellList() {
   // console.log(filter);
 
   const getFilteredItems = (filter) => {
-    console.log(products, '🎈🎈🎈🎈🎈🎈')
     return products?.filter((product) => product.status === filter);
   };
 
