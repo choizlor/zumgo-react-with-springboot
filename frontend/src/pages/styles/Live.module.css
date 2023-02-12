@@ -29,12 +29,10 @@
 }
 
 .cover {
-  height: 100px;
-  margin: 20px;
   border-radius: 100px;
 }
 
-.cover:before {
+/* .cover:before {
   counter-increment: button-counter;
   content: counter(button-counter);
   position: absolute;
@@ -44,7 +42,7 @@
   font-size: 12px;
   line-height: 1;
   padding: 5px;
-}
+} */
 
 .cover,
 .knobs,

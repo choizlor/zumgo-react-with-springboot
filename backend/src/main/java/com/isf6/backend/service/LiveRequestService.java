@@ -30,7 +30,7 @@ public class LiveRequestService {
         LiveRequest liveRequest = new LiveRequest();
 
         User user = userRepository.findByUserCode(userCode);
-        if(user.getPoint()-2 <= 0) {
+        if(user.getPoint()-2 < 0) {
             //포인트가 없으면 라이브 요청이 안되도록 변경
             return false;
         } else {
