@@ -189,7 +189,7 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete("https://i8c110.p.ssafy.io/api/v1/socket/exit", chatroomId)
+      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`, )
       .then((res) => {
         disConnect();
         console.log(res);
