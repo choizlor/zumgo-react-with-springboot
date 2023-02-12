@@ -69,6 +69,11 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.msgdata {
+    margin : 1%;
+    width: 100%;
+}
+
 .otherdate {
     font-family: 'Roboto', sans-serif;
     font-size: 10px;
@@ -94,6 +99,7 @@
     padding : 5%;
     margin-left: 2%;
 }
+
 
 .mydate {
     font-family: 'Roboto', sans-serif;
