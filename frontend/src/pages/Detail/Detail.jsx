@@ -124,10 +124,11 @@ export default function Detail() {
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
-            seller : res.data.seller,
-            buyer : res.data.buyer,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
             type: "",
             title: product.title,
+            productId: productId,
           },
         });
       })
@@ -194,10 +195,11 @@ export default function Detail() {
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
-            seller : res.data.seller,
-            buyer : res.data.buyer,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
             type: "live",
             title: product.title,
+            productId: productId,
           },
         });
       })
@@ -338,7 +340,11 @@ export default function Detail() {
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (
-        <DetailModal setModalOpen={setModalOpen} chats={chats} />
+        <DetailModal
+          setModalOpen={setModalOpen}
+          chats={chats}
+          productId={productId}
+        />
       ) : null}
     </div>
   );
