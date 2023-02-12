@@ -32,6 +32,9 @@ public class User {
     @Column(name = "kakao_email")
     private String kakaoEmail;
 
+    @Column(name = "kakao_phone_number")
+    private String kakaoPhoneNumber;
+
     @Column(name = "point", columnDefinition = "integer default 5")
     private int point;
 
@@ -52,11 +55,12 @@ public class User {
     private List<Wish> wishes = new ArrayList<>();
 
     @Builder
-    public User(Long kakaoId, String kakaoProfileImg, String kakaoNickname, String kakaoEmail, int point) {
+    public User(Long kakaoId, String kakaoProfileImg, String kakaoNickname, String kakaoEmail, String kakaoPhoneNumber, int point) {
         this.kakaoId = kakaoId;
         this.kakaoProfileImg = kakaoProfileImg;
         this.kakaoNickname = kakaoNickname;
         this.kakaoEmail = kakaoEmail;
+        this.kakaoPhoneNumber = kakaoPhoneNumber;
         this.point = point;
     }
 }

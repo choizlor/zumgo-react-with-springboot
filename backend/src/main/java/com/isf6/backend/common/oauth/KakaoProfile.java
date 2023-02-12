@@ -28,6 +28,14 @@ public class KakaoProfile {
         public Boolean is_email_verified;
         public String email;
 
+//        "has_phone_number": true,
+//                "phone_number_needs_agreement": false,
+//                "phone_number": "+82 10-7610-0034"
+
+        public boolean has_phone_number;
+        public boolean phone_number_needs_agreement;
+        public String phone_number;
+
         @Data
         public class Profile {
             public String nickname;
