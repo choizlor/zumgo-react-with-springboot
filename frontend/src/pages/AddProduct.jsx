@@ -19,7 +19,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [availableTime, setAvailableTime] = useState("");
-  const [filesLen, setfileLen] = useState(0);
+  const [fileLen, setFileLen] = useState(0);
 
   const content = {
     title,
@@ -57,8 +57,6 @@ export default function AddProduct() {
 
     let formData = new FormData();
     let files = e.target.imgurls.files;
-
-    // setfileLen(files.length);
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
@@ -100,9 +98,9 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
-  const handleImageChange = (e) => {
-    setfileLen(e.target.files.length)
-  }
+  const handleFileChange = (e) => {
+    setFileLen(e.target.files.length);
+  };
 
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
@@ -118,17 +116,16 @@ export default function AddProduct() {
       <div className={styles.container}>
         <div className={styles.button}>
           <CameraIcon className={styles.camera} />
-          <div className={styles.num}>{filesLen}/5</div>
+          <div className={styles.num}>{fileLen}/5</div>
         </div>
 
         <input
           className={styles.file}
           type="file" // 파일로 입력 받음
           accept="image/*" // 이미지 유형의 파일만 받기
-          // capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
           name="imgurls" // 담긴 파일을 참조할 때 사용할 이름
           multiple // 다중 업로드
-          onChange={handleImageChange}
+          onChange={handleFileChange}
         />
 
         <input
