@@ -78,7 +78,7 @@ export default function Detail() {
     setValue(value);
     console.log(value,'👻👻👻👻')
     // 수정하기 api 요청
-    if (e.target.value === "SOLDOUT") {
+    if (e.target?.value === "SOLDOUT") {
       // 채팅중인 사용자 불러오기
       axios
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
@@ -98,7 +98,7 @@ export default function Detail() {
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
-        status: e.target.value,
+        status: e.target?.value,
       })
       .then(() => {
         navigate(`/detail/${product.id}`);
