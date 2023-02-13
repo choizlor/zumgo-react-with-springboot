@@ -207,8 +207,8 @@ export default function Detail() {
   };
 
   //  상품 삭제하기
-  const deleteproduct = () => {
-    axios
+  const deleteproduct = async() => {
+    await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
         console.log(res);
