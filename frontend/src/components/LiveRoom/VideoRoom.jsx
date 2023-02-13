@@ -14,6 +14,7 @@ import styles from "./VideoRoom.module.css";
 import Price from "../Auction/Price";
 import SellerLoading from "../Live/SellerLoading";
 import BuyerLoading from "../Live/BuyerLoading";
+import Celebrity from "../Auction/Celebrity";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
@@ -548,63 +549,11 @@ const VideoRoom = () => {
 
           <div>
             {celebrity ? (
-              <div className={styles.confetticon}>
-                <div className={styles.modal}>
-                  <div className={styles.modaltitle}>축하합니다!</div>
-                  <div className={styles.modalimg}>
-                    <img src={bestBidderImg} alt="" />
-                  </div>
-                  <div className={styles.modalbiddername}>
-                    {bestBidder} 님이,
-                  </div>
-                  <div className={styles.modalbidprice}>
-                    {bidPrice}원에 낙찰!
-                  </div>
-                </div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-              </div>
+              <Celebrity
+                bestBidderImg={bestBidderImg}
+                bestBidder={bestBidder}
+                bidPrice={bidPrice}
+              />
             ) : null}
           </div>
 
