@@ -537,7 +537,7 @@ const VideoRoom = () => {
 
           <div className={styles.pricediv}>
             {buyerCheck && priceOpen && !celebrity ? (
-              <div>
+              <div className={styles.pricedivdiv}>
                 <Price
                   handleBidPrice={handleBidPrice}
                   setBidCount={setBidCount}
