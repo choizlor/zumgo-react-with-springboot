@@ -68,7 +68,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
     @Override
     public List<IndexProductsResDto> findAllOffSet(int pageNo, int pageSize) {
         return queryFactory
-                .select(Projections.fields(IndexProductsResDto.class,
+                .selectDistinct(Projections.fields(IndexProductsResDto.class,
                         product.id.as("productId"),
                         product.title,
                         product.price,
@@ -80,9 +80,11 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                 ))
                 .from(product)
                 .join(img).on(product.id.eq(img.product.id))
+                .groupBy(img.product.id)
                 .orderBy(product.id.desc())
                 .limit(pageSize)
                 .offset(pageNo * pageSize)
+                .distinct()
                 .fetch();
     }
 
