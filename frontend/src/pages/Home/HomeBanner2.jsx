@@ -1,10 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import styles from "./HomeBanner2.module.css";
 
 export default function HomeBanner() {
-  const navigate = useNavigate();
-  const token = window.localStorage.getItem("token");
 
   return (
     <div className={styles.body}>
