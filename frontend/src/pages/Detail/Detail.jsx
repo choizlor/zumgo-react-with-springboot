@@ -241,7 +241,7 @@ export default function Detail() {
           }}
         />
         <Swiper
-          // autoHeight={true}
+          autoHeight={true}
           className={styles.swiper}
           navigation={true}
           pagination={true}
