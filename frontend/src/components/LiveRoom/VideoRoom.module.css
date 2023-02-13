@@ -81,7 +81,6 @@
   width: 50px;
   height: 50px;
   border-radius: 100px;
-  margin-right: 5%;
 }
 
 .sellerimg img {
@@ -95,6 +94,7 @@
   font-weight: 700;
   color: white;
   width: 100px;
+  padding-left: 5%;
 }
 
 .subtotal {
@@ -112,7 +112,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* margin-top: 2%; */
   margin-right: 2%;
 }
 
