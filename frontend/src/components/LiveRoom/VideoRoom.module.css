@@ -2,7 +2,7 @@
   width: 100%;
   height: 100vh;
   position: relative;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 .joinpage {
@@ -11,7 +11,7 @@
 /* 배경 그라데이션 */
 .background {
   top: 0;
-  position : absolute;
+  position: absolute;
   width: 100%;
   /* z-index: -1; */
 }
@@ -23,6 +23,23 @@
     #000000 0.23%,
     rgba(17, 17, 17, 0.25) 48.65%,
     rgba(217, 217, 217, 0) 93.58%
+  );
+}
+
+.bottomgr {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.bgbottom {
+  width: 100%;
+  height: 15vh;
+  background: linear-gradient(
+    179.74deg,
+    rgba(217, 217, 217, 0) 0.23%,
+    rgba(17, 17, 17, 0.5) 48.65%,
+    #000000 93.58%
   );
 }
 
@@ -56,40 +73,46 @@
 .host {
   display: flex;
   align-items: center;
+  margin-top: 10%;
+  z-index: 2;
 }
 
 .sellerimg {
   width: 50px;
   height: 50px;
   border-radius: 100%;
+  margin-right: 5%;
 }
 
 .sellerimg img {
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  border: 1px solid black;
 }
 
 .sellername {
   font-size: 16px;
   font-weight: 700;
+  color: white;
+  width: 100px;
 }
 
 .subtotal {
   display: flex;
   align-items: center;
-}
-.eyeicon {
-  width: 20px;
+  color: white;
+  z-index: 2;
 }
 
-.topbottom {
+.eyeicon {
+  width: 20px;
 }
 
 .topright {
   display: flex;
   align-items: center;
+  z-index: 2;
+  margin-top: 5%;
 }
 
 .live {
@@ -107,6 +130,8 @@
 
 .xicon {
   width: 25px;
+  margin-left: 2%;
+  color: white;
 }
 
 .bottombottom {
@@ -121,6 +146,11 @@
   height: 40px;
   border-radius: 40px;
   background-color: #bcff5e;
+
+  position: fixed;
+  bottom: 5%;
+  right: 4%;
+  border: 1px solid #bcff5e;
 }
 
 .nogobtn {
@@ -130,6 +160,11 @@
   height: 40px;
   border-radius: 40px;
   background-color: #d9d9d9;
+
+  position: fixed;
+  bottom: 5%;
+  right: 4%;
+  border: 1px solid #d9d9d9;
 }
 
 /* 낙찰자 모달 */
