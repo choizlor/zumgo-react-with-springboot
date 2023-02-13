@@ -1,0 +1,73 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30% 0 15% 0;
+  border: 2px solid salmon;
+}
+
+.top {
+  display: flex;
+  width: 85%;
+}
+
+.topright {
+  display: flex;
+  flex-direction: column;
+  margin-right: 5px;
+}
+
+.font {
+  height: 23px;
+  font-weight: 800;
+  color: white;
+  margin-top: 2px;
+  overflow-y: hidden;
+  display: block;
+}
+
+.fontchild {
+  font-size: 20px;
+  line-height: 1;
+  animation-name: grow;
+  animation-duration: 5s;
+  animation-delay: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+/* 키프레임 애니메이션 */
+@keyframes grow {
+  0% {
+    transform: translateY(20px);
+  }
+  25% {
+    transform: translateY(0);
+  }
+}
+
+.bottom {
+  width: 85%;
+  display: flex;
+  justify-content: left;
+  margin-top: 1%;
+}
+
+.loginbtn {
+  font-family: "Poppins", sans-serif;
+  background-color: #bcff5e;
+  width: 85px;
+  height: 25px;
+  border-radius: 25px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.topleft {
+  box-sizing: border-box;
+  border-bottom: solid #bcff5e 3px;
+  width: 50%;
+}
