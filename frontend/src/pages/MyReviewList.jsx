@@ -81,7 +81,7 @@ export default function MyReviewList() {
               </div>
             </div>
           )
-        }) : <div className={styles.alert}>리뷰가 없어요 😢</div>}
+        }) : <div className={styles.alert}>작성한 리뷰가 없어요😥</div>}
       </div>
     </div>
   );
