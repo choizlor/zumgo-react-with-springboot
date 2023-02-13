@@ -5,8 +5,7 @@ import UserVideoComponent from "./UserVideoComponent";
 import ChattingForm from "./ChattingForm";
 import ChattingList from "./ChattingList";
 import Timer from "../Auction/Timer";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -442,6 +441,8 @@ const VideoRoom = () => {
           {/* 배경 그라데이션 */}
           <div className={styles.background}>
             <div className={styles.bgtop}></div>
+          </div>
+          <div className={styles.bottomgr}>
             <div className={styles.bgbottom}></div>
           </div>
 
@@ -470,7 +471,6 @@ const VideoRoom = () => {
                 />
               </div>
             </div>
-            {/* <div className={styles.topbottom}>음성변조 아이콘</div> */}
             <div className={styles.bottom}>
               <div className={styles.bottomtop}>
                 <ChattingList messageList={messageList} />
