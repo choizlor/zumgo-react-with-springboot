@@ -82,6 +82,7 @@ CI/CD
 
 # ERD
 ![erd](/uploads/4e780b97e14256156fa1862697e1eb77/erd.PNG)   
+<img src="/images/erd.PNG" width="900" height="400">
 
 # WireFrame   
 
