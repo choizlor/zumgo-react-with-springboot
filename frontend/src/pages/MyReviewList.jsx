@@ -4,7 +4,6 @@ import {
   ChevronLeftIcon,
   ArrowRightIcon,
   TrashIcon,
-  PencilSquareIcon
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +21,7 @@ export default function MyReviewList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
       .then((res) => {
         setReviews(res.data.MyReview);
+        console.log(res.data)
       });
   }, []);
 
