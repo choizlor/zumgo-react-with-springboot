@@ -13,6 +13,8 @@
 
 .swiperbox {
   position : relative;
+  height: 30%;
+  width: 100%;
   background-color: black;
 }
 
@@ -21,7 +23,6 @@
 
 .swiperimg {
   width: 100%;
-  /* height: 100%; */
 }
 
 .swiperimg img{
