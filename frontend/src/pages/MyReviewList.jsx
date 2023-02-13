@@ -7,13 +7,14 @@ import {
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router";
+import {useSelector} from "react-redux";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
-  const location = useLocation();
-  const userId = location.state.userId;
+  const userId = useSelector((state) => {
+    return state.user.userCode
+  })
 
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
