@@ -11,7 +11,6 @@ export default function Search() {
   const navigate = useNavigate();
   const [searchName, setSearchName] = useState("");
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
   const [recentOpen, setRecentOpen] = useState(true);
   const loadedRecents = localStorage.getItem("recents")
     ? JSON.parse(window.localStorage.getItem("recents"))
@@ -22,21 +21,14 @@ export default function Search() {
     setSearchName(e.target.value);
   };
 
-  // 무한 스크롤 요청
+
   const searchProducts = (searchWord) => {
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
         searchName: searchWord,
       })
       .then((res) => {
-        console.log(res.data);
         setProducts([...res.data]);
-
-        // 현재 불러온 데이터가 존재하면 다음 페이지로 이동
-        if (res.data) {
-          setPage(() => page + 1);
-          setRecentOpen(false);
-        }
       })
       .catch((err) => {
         console.log(err);
