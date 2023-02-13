@@ -8,7 +8,7 @@ export default function SearchItems({ recents, searchProducts, handleDeleteRecen
     <div className={styles.body}>
       <span className={styles.text}>최근 검색어</span>
       <div className={styles.wordcontainer}>
-        {recents.map((word, idx) => (
+        {recents?.map((word, idx) => (
           <div key={idx} className={styles.word} onClick={() => {searchProducts(word)}}>
             <span>{word}</span>
             <XMarkIcon className={styles.icon} onClick={()=>{handleDeleteRecent(word)}}/>

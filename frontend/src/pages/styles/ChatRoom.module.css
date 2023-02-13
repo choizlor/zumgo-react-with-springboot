@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: center;
     width : 95%;
-    margin : 3% auto;
+    margin : 1% auto;
 }
 
 .topbar span {
@@ -32,7 +32,7 @@
     height : 85%;
     overflow: scroll;
     width : 85%;
-    margin : 3% auto;
+    margin : 0 auto;
     scroll-behavior: smooth;
 }
 
@@ -132,7 +132,7 @@
     background-color: black;
     margin-left : 10%;
     border: none;
-    width: 75%;
+    width: 90%;
 }
 
 .sendbtn {
