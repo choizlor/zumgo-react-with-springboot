@@ -37,7 +37,14 @@ export default function WishList() {
         <div className={styles.title}>관심 목록</div>
       </div>
       <div className={styles.scrollarea}>
-        {products?.map((product) => {
+        {products.length !== 0 ? products.map((product) => (
+            <ProductItem
+              key={product.productId}
+              product={product}
+              clickProduct={clickProduct}
+            />
+          )): <div className={styles.alert}>상품이 없어요 😢</div> }
+        {/* {products?.map((product) => {
           return (
             <ProductItem
               key={product.productId}
@@ -45,7 +52,7 @@ export default function WishList() {
               clickProduct={clickProduct}
             />
           );
-        })}
+        })} */}
       </div>
     </div>
   );
