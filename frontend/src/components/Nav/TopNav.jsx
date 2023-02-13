@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./TopNav.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { BellIcon } from "@heroicons/react/24/solid";
@@ -31,7 +31,6 @@ export default function TopNav() {
               navigate("/search");
             }}
           />
-          <BellIcon onClick={showModal} className={styles.bellicon}/>
         </div>
       </div>
       {modalOpen && <AlertModal setModalOpen={setModalOpen} />}
