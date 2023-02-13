@@ -3,7 +3,6 @@
     height : 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     position: relative;
 }
 /* 상단 바 */
@@ -12,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width : 95%;
-    margin : 1% auto;
+    margin : 4% auto;
 }
 
 .topbar span {
@@ -29,7 +28,7 @@
 
 /* 채팅 리스트 */
 .chatbox {
-    height : 85%;
+    height : 82%;
     overflow: scroll;
     width : 85%;
     margin : 0 auto;
