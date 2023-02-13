@@ -3,10 +3,9 @@
   flex-direction: column;
   background-color: black;
   position: fixed;
-  width : 100%;
-bottom : 0;
-padding-bottom : 1px;
-
+  width: 100%;
+  bottom: 0;
+  padding-bottom: 1px;
 }
 
 .body {
@@ -29,5 +28,6 @@ padding-bottom : 1px;
 
 .company {
   font-size: 9px;
-  margin : auto;
+  margin: auto;
+  color: white;
 }

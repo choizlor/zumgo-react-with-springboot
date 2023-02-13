@@ -69,7 +69,7 @@ export default function SellList() {
               <div
                 onClick={() => handleChangeStatus(item)}
                 className={styles.btn}
-                style={{textDecoration: item===filter ? 'underline' : 'none'}}
+                style={{borderBottom: item===filter ? '1px solid black' : 'none'}}
               >
                 {filterText[index]}
               </div>
