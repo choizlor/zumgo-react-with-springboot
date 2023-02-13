@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles/AddReview.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function AddReview() {
   const navigate = useNavigate();
@@ -47,8 +47,7 @@ export default function AddReview() {
      review,
    })
    .then((res) => {
-     console.log(res.data);
-     navigate(-1);
+     navigate('/myreviewlist')
    })
    .catch((err) => {
      console.log(err);
@@ -58,7 +57,12 @@ export default function AddReview() {
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
-        <ChevronLeftIcon className="w-6 h-6 text-black-100" />
+        <ChevronLeftIcon className="w-6 h-6 text-black-100" 
+        onClick={() => {
+          console.log(1111)
+          navigate(`/userinfo/${buyerId}`);
+        }}
+        />
         <div className={styles.title}>리뷰 작성</div>
       </div>
       <div className={styles.reviewform}>

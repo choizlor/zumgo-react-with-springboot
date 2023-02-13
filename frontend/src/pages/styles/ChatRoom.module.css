@@ -3,7 +3,7 @@
     height : 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    position: relative;
 }
 /* 상단 바 */
 .topbar {
@@ -11,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width : 95%;
-    margin : auto;
+    margin : 4% auto;
 }
 
 .topbar span {
@@ -28,10 +28,10 @@
 
 /* 채팅 리스트 */
 .chatbox {
-    height : 80%;
+    height : 82%;
     overflow: scroll;
     width : 85%;
-    margin : auto;
+    margin : 0 auto;
     scroll-behavior: smooth;
 }
 
@@ -111,7 +111,9 @@
     width : 95%;
     display: flex;
     justify-content: space-between;
-    margin : auto;
+    margin : 0 auto;
+    position: absolute;
+    bottom : 5px;
 }
 
 .inputbar {
@@ -129,7 +131,7 @@
     background-color: black;
     margin-left : 10%;
     border: none;
-    width: 75%;
+    width: 90%;
 }
 
 .sendbtn {

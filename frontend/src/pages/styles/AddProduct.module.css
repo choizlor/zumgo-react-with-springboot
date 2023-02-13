@@ -26,6 +26,7 @@
     font-size: 18px;
     margin : 0.2rem;
 }
+
 .button {
     background-color: black;
     height: 70px;
@@ -45,6 +46,7 @@
     color: #BCFF5E;
     margin : 0;
 }
+
 
 .num {
     color: white;

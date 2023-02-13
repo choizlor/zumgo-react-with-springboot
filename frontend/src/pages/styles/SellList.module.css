@@ -35,6 +35,7 @@
 .btn {
   font-size: 0.9rem;
   cursor: pointer;
+  padding :2px;
 }
 
 .alert { 

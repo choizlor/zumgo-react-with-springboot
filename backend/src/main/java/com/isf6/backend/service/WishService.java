@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -45,11 +47,17 @@ public class WishService {
         return wish;
     }
 
+    public List<Wish> getWishList(Long productId) {
+        List<Wish> wish = wishRepository.getWishList(productId);
+
+        return wish;
+    }
+
     public void deleteWish(Long userCode, Long productId) {
-        Wish wish = getWish(productId);
+        List<Wish> wish = getWishList(productId);
         log.info("wish : {}", wish);
         if(wish != null) {
-            wishRepository.delete(wish);
+            wishRepository.deleteWish(productId, userCode);
         }
     }
     

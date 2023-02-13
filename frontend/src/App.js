@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, HashRouter } from "react-router-dom";
 import "./App.css";
 import {useDispatch} from 'react-redux'
 import {login} from './store/userSlice'
@@ -7,7 +7,7 @@ import {useEffect} from 'react'
 import Root from "./pages/Root";
 import Oauth from "./pages/Login/Oauth";
 import NotFound from "./pages/NotFound/NotFound";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Detail from "./pages/Detail/Detail";
 import Live from "./pages/Live";
 import LiveRoom from "./pages/LiveRoom";
@@ -48,12 +48,12 @@ const router = createBrowserRouter([
       { path: "/userinfo/:userId/update", element: <UpdateUserInfo /> },
       { path: "/search", element: <Search /> },
       { path: "/login", element: <Login /> },
-      { path: "/buylist/:userId", element: <BuyList /> },
+      { path: "/buylist", element: <BuyList /> },
       { path: "/selllist/:userId", element: <SellList /> },
-      { path: "/wishlist/:userId", element: <WishList /> },
+      { path: "/wishlist", element: <WishList /> },
       { path: "/myreviewlist", element: <MyReviewList /> },
       { path: "/report/:userId", element: <Report /> },
-      { path: "/report/:userId", element: <Report /> },
+      { path: "/report/:userId", element: <Report /> }, // ㅋ 잘하누 ㅋ
     ],
   },
 ]);

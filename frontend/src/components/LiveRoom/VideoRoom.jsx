@@ -5,8 +5,7 @@ import UserVideoComponent from "./UserVideoComponent";
 import ChattingForm from "./ChattingForm";
 import ChattingList from "./ChattingList";
 import Timer from "../Auction/Timer";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,6 +14,7 @@ import styles from "./VideoRoom.module.css";
 import Price from "../Auction/Price";
 import SellerLoading from "../Live/SellerLoading";
 import BuyerLoading from "../Live/BuyerLoading";
+import Celebrity from "../Auction/Celebrity";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
@@ -74,6 +74,7 @@ const VideoRoom = () => {
   const [hostImg, setHostImg] = useState(undefined); // host 사진
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
+  const [timerOpen, setTimerOpen] = useState(false);
   const [bidPrice, setBidPrice] = useState(0);
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
@@ -196,6 +197,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
+      setTimerOpen(true);
       setSellerCheck(true);
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
@@ -254,7 +256,7 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1280x720", // The resolution of your video
+            resolution: "1920x1080", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
@@ -442,6 +444,8 @@ const VideoRoom = () => {
           {/* 배경 그라데이션 */}
           <div className={styles.background}>
             <div className={styles.bgtop}></div>
+          </div>
+          <div className={styles.bottomgr}>
             <div className={styles.bgbottom}></div>
           </div>
 
@@ -470,43 +474,48 @@ const VideoRoom = () => {
                 />
               </div>
             </div>
-            {/* <div className={styles.topbottom}>음성변조 아이콘</div> */}
-            <div className={styles.bottom}>
-              <div className={styles.bottomtop}>
-                <ChattingList messageList={messageList} />
-              </div>
-              <div className={styles.bottombottom}>
-                <ChattingForm
-                  myUserName={myUserName}
-                  onMessage={sendMsg}
-                  currentSession={session}
-                />
-                {isHost ? (
-                  !sellerCheck ? (
-                    <button onClick={startAuction} className={styles.gobtn}>
-                      go?
-                    </button>
-                  ) : (
-                    <button className={styles.nogobtn}>go?</button>
-                  )
-                ) : !buyerCheck ? (
-                  <button
-                    onClick={() => {
-                      countBidder();
-                      changeBuyerCheck();
-                    }}
-                    className={styles.gobtn}
-                  >
-                    go!
+          </div>
+          <div className={styles.bottom}>
+            <div className={styles.bottomtop}>
+              <ChattingList messageList={messageList} />
+            </div>
+            <div className={styles.bottombottom}>
+              <ChattingForm
+                myProfileImg={myProfileImg}
+                myUserName={myUserName}
+                onMessage={sendMsg}
+                currentSession={session}
+              />
+              {isHost ? (
+                !sellerCheck ? (
+                  <button onClick={startAuction} className={styles.gobtn}>
+                    go?
                   </button>
                 ) : (
-                  <button className={styles.nogobtn}>go!</button>
-                )}
-              </div>
+                  <button className={styles.nogobtn}>go?</button>
+                )
+              ) : !buyerCheck ? (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              ) : (
+                <button className={styles.nogobtn}>go!</button>
+              )}
             </div>
           </div>
 
-          <div className={styles.timer}>
+          <div
+            className={styles.timer}
+            style={
+              !timerOpen ? { visibility: "hidden" } : { visibility: "visible" }
+            }
+          >
             <Timer
               seconds={seconds}
               setSeconds={setSeconds}
@@ -519,20 +528,13 @@ const VideoRoom = () => {
               setCelebrity={setCelebrity}
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
-              // setTimerOpen={setTimerOpen}
+              setTimerOpen={setTimerOpen}
             />
           </div>
-          {/* <div>
-            <ChattingList messageList={messageList} />
-            <ChattingForm
-              myUserName={myUserName}
-              onMessage={sendMsg}
-              currentSession={session}
-            />
-          </div> */}
 
           <div>구매의사 수: {bidders}</div>
           <div>입찰가: {bidPrice}</div>
+
           <div>
             {buyerCheck && priceOpen ? (
               <Price
@@ -545,65 +547,13 @@ const VideoRoom = () => {
             ) : null}
           </div>
 
-          <div>
+          <div className={styles.celediv}>
             {celebrity ? (
-              <div className={styles.confetticon}>
-                <div className={styles.modal}>
-                  <div className={styles.modaltitle}>축하합니다!</div>
-                  <div className={styles.modalimg}>
-                    <img src={bestBidderImg} alt="" />
-                  </div>
-                  <div className={styles.modalbiddername}>
-                    {bestBidder} 님이,
-                  </div>
-                  <div className={styles.modalbidprice}>
-                    {bidPrice}원에 낙찰!
-                  </div>
-                </div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-                <div className={styles.confetti}></div>
-              </div>
+              <Celebrity
+                bestBidderImg={bestBidderImg}
+                bestBidder={bestBidder}
+                bidPrice={bidPrice}
+              />
             ) : null}
           </div>
 

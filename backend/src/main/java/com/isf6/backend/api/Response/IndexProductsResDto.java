@@ -22,6 +22,7 @@ public class IndexProductsResDto {
     private int wishSize;
     private int liveReqSize;
     private String thumbnail;
+    private String review;
 
 
     public IndexProductsResDto(Product product) {
@@ -33,5 +34,6 @@ public class IndexProductsResDto {
         wishSize = product.getWishes().size();
         liveReqSize = product.getLiveRequests().size();
         thumbnail = product.getImgList().get(0).getImgUrl();
+        review = product.getBill().getReview();
     }
 }

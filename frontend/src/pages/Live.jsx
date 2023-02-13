@@ -43,7 +43,6 @@ export default function Live() {
       .catch((err) => {
         console.log(err);
       });
-
   }, [userId]);
 
   //toggle 상태 표시

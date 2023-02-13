@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import HomeBanner from "../components/Home/HomeBanner";
-import BottomNav from "../components/Nav/BottomNav";
-import TopNav from "../components/Nav/TopNav";
-import z from "../assets/images/z.png";
-import styles from "./styles/Home.module.css";
-
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import HomeBanner1 from "./HomeBanner1";
+import BottomNav from "../../components/Nav/BottomNav";
+import TopNav from "../../components/Nav/TopNav";
+import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../../components/Product/ProductItem";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router";
 
-// swiper 사용하기
+// swiper - 이미지 슬라이더
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
-// 자동 페이지 넘김
-import { Autoplay } from "swiper";
-
+import {Autoplay} from 'swiper';
 
 export default function Home() {
   const location = useLocation();
@@ -38,6 +31,7 @@ export default function Home() {
         `https://i8c110.p.ssafy.io/api/v1/products/main?pageNo=${page}&pageSize=5`
       )
       .then((res) => {
+        console.log(res.data);
         // 리스트 뒤로 붙여주기
         setProducts([...products, ...res.data]);
         // get으로 받은 데이터의 길이가 백에서 보내주기로 한 리스트보다 짧으면(?)
@@ -67,10 +61,23 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
-          <HomeBanner />
+      <Swiper
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        loop={true}
+        autoHeight={true}
+        modules={[Autoplay]}
+      >
+        <SwiperSlide>
+          <HomeBanner1 />
+        </SwiperSlide>
+        <SwiperSlide>
+          <HomeBanner1 />
+        </SwiperSlide>
+      </Swiper>
+
       <div className={styles.body}>
         <div className={styles.onsale}>판매중</div>
-        <div className={styles.scrollarea}>
+        <div className={styles.items}>
           {products?.map((product) => {
             return (
               <ProductItem
@@ -80,7 +87,7 @@ export default function Home() {
               />
             );
           })}
-          <div ref={ref}>안녕</div>
+          <div ref={ref} className={styles.ref}></div>
         </div>
         <BottomNav curLocation={curLocation} />
       </div>

@@ -23,7 +23,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
 export default function Detail() {
-  const location = useLocation();
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,6 +44,7 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chats, setChats] = useState([]);
+  const [value, setValue] = useState(product.status);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
@@ -75,6 +75,7 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
+    setValue(value);
     // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
       // 채팅중인 사용자 불러오기
@@ -82,6 +83,8 @@ export default function Detail() {
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
           setChats(res.data);
+
+
           setModalOpen(true);
         })
         .catch((err) => {
@@ -184,12 +187,10 @@ export default function Detail() {
     // 채팅방으로 메시지 보내기
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
         sellerCode: product?.userCode,
       })
       .then((res) => {
-        console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
@@ -207,16 +208,17 @@ export default function Detail() {
   };
 
   //  상품 삭제하기
-  const deleteproduct = () => {
-    axios
+  const deleteproduct = async() => {
+    await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
-        console.log(res);
+        navigate(`/selllist/${userId}`)
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
 
   return (
     <div className={styles.body}>
@@ -244,7 +246,6 @@ export default function Detail() {
             );
           })}
         </Swiper>
-
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
         {product.reserve !== null ? (
           <div className={styles.livealert}>
@@ -278,16 +279,19 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={product.status}
+            value={value}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
             <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
           </select>
-
           {isMine && (
-            <div className={styles.delete} onClick={deleteproduct}>
+            <div className={styles.delete} onClick= {() => {
+              deleteproduct();
+              navigate(`/selllist/${userId}`);
+
+            }}>
               삭제하기
             </div>
           )}

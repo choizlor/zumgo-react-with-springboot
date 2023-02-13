@@ -60,7 +60,10 @@ export default function ReservationModal({ setModalOpen, productId }) {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data)
+        window.location.replace("/live")
+      })
       .catch((err) => console.log(err));
   };
 

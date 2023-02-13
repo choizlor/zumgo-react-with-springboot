@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./styles/SellList.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import ProductItem from "../components/Product/ProductItem";
-import BottomNav from "../components/Nav/BottomNav"
 
 
 export default function SellList() {
@@ -28,10 +27,7 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-      console.log(filter,'======')
-
-      console.log(products,'-------')
-  }, []);
+  }, [products]);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
@@ -56,19 +52,20 @@ export default function SellList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(-1);
+            navigate(`/userinfo/${userId}`);
           }}
         />
         <div className={styles.title}>판매 목록</div>
       </div>
       {/*거래 상태 표시 */}
         <div className={styles.statusnav}>
-        {filters.map((filter, index) => {
+        {filters.map((item, index) => {
           return (
             <li key={index} className={styles.block}>
               <div
-                onClick={() => handleChangeStatus(filter)}
+                onClick={() => handleChangeStatus(item)}
                 className={styles.btn}
+                style={{borderBottom: item===filter ? '1px solid black' : 'none'}}
               >
                 {filterText[index]}
               </div>

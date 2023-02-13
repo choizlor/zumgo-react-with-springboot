@@ -115,3 +115,12 @@
     right : 5%;
 }
 
+.alert { 
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    
+  }
+  

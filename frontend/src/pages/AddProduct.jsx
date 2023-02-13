@@ -8,7 +8,6 @@ import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function AddProduct() {
-  
   const navigate = useNavigate();
 
   // redux
@@ -20,6 +19,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [availableTime, setAvailableTime] = useState("");
+  const [fileLen, setFileLen] = useState(0);
 
   const content = {
     title,
@@ -34,20 +34,20 @@ export default function AddProduct() {
     e.preventDefault();
 
     if (title === "") {
-      alert("제목을 입력하세요.")
-      return
+      alert("제목을 입력하세요.");
+      return;
     }
     if (price === "") {
-      alert("가격을 입력하세요.")
-      return
+      alert("가격을 입력하세요.");
+      return;
     }
     if (description === "") {
-      alert("상품 설명을 입력하세요.")
-      return
+      alert("상품 설명을 입력하세요.");
+      return;
     }
     if (availableTime === "") {
-      alert("라이브 가능한 시간대를 입력하세요.")
-      return
+      alert("라이브 가능한 시간대를 입력하세요.");
+      return;
     }
     if (!userId) {
       alert("로그인이 필요한 서비스 입니다.");
@@ -98,6 +98,10 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
+  const handleFileChange = (e) => {
+    setFileLen(e.target.files.length);
+  };
+
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
       <div className={styles.nav}>
@@ -111,17 +115,17 @@ export default function AddProduct() {
       </div>
       <div className={styles.container}>
         <div className={styles.button}>
-          <CameraIcon className={styles.camera} ></CameraIcon> 
-          <div className={styles.num}>0/5</div>
+          <CameraIcon className={styles.camera} />
+          <div className={styles.num}>{fileLen}/5</div>
         </div>
 
         <input
           className={styles.file}
           type="file" // 파일로 입력 받음
           accept="image/*" // 이미지 유형의 파일만 받기
-          // capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
           name="imgurls" // 담긴 파일을 참조할 때 사용할 이름
           multiple // 다중 업로드
+          onChange={handleFileChange}
         />
 
         <input

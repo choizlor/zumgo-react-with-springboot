@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./BuyList.module.css";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import BuyProductItem from "./BuyProductItem";
+import { useSelector } from 'react-redux'
 
 export default function BuyList() {
   const navigate = useNavigate();
-  const userId = useParams().userId;
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
+
+  const userId = useSelector((state) => { return state.user.userCode})
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
@@ -35,15 +37,17 @@ export default function BuyList() {
         <div className={styles.title}>구매 목록</div>
       </div>
       <div className={styles.scrollarea}>
-        {products?.map((product) => {
-          return (
+        {products.length !== 0 ? (
+          products.map((product) => (
             <BuyProductItem
               key={product.productId}
               product={product}
               clickProduct={clickProduct}
             />
-          );
-        })}
+          ))
+        ) : (
+          <div className={styles.alert}>상품이 없어요 😢</div>
+        )}
       </div>
     </div>
   );
