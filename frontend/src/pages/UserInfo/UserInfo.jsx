@@ -50,7 +50,7 @@ export default function UserInfo() {
       console.log("유저정보, ", res.data);
       setUserInfo(res.data.user);
     });
-  });
+  }, []);
 
   return (
     <div className={styles.body}>
