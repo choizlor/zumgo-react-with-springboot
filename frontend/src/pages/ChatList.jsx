@@ -22,7 +22,7 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -46,7 +46,7 @@ export default function ChatList() {
             buyer: res.data.buyer,
             type: "",
             title: "",
-            productId : "",
+            productId: "",
           },
         });
       })
@@ -68,26 +68,32 @@ export default function ChatList() {
                 getChatHistory(chat.seller.userCode, chat.buyer.userCode);
               }}
             >
-                <div className={styles.otherimg}>
-                  <img
-                    src={
-                      chat.seller.userCode === userId
-                        ? chat.buyer.kakaoProfileImg
-                        : chat.seller.kakaoProfileImg
-                    }
-                    alt=""
-                  />
+              <div className={styles.otherimg}>
+                <img
+                  src={
+                    chat.seller.userCode === userId
+                      ? chat.buyer.kakaoProfileImg
+                      : chat.seller.kakaoProfileImg
+                  }
+                  alt=""
+                />
+              </div>
+              <div className={styles.chatinfo}>
+                <div className={styles.chatinfotop}>
+                  <div className={styles.othername}>
+                    {chat.seller.userCode === userId
+                      ? chat.buyer.kakaoNickname
+                      : chat.seller.kakaoNickname}
+                  </div>
+                  <div className={styles.time}>
+                    {chat.chat_date.slice(5, 7)}월 {chat.chat_date.slice(8, 10)}
+                    일 {Number(chat.chat_date.slice(11, 13)) + 9}:{chat.chat_date.slice(14,16)}
+                  </div>
                 </div>
-                <div className={styles.chatinfo}>
-                    <div className={styles.othername}>
-                      {chat.seller.userCode === userId
-                        ? chat.buyer.kakaoNickname
-                        : chat.seller.kakaoNickname}
-                    </div>
-                    <span className={styles.lastmsg}>
-                      {chat.lastChat["chat_content"]}
-                    </span>
-                </div>
+                <span className={styles.lastmsg}>
+                  {chat.lastChat["chat_content"]}
+                </span>
+              </div>
             </div>
           );
         })}
