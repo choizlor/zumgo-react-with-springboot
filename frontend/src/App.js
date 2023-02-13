@@ -48,12 +48,12 @@ const router = createBrowserRouter([
       { path: "/userinfo/:userId/update", element: <UpdateUserInfo /> },
       { path: "/search", element: <Search /> },
       { path: "/login", element: <Login /> },
-      { path: "/buylist/:userId", element: <BuyList /> },
+      { path: "/buylist", element: <BuyList /> },
       { path: "/selllist/:userId", element: <SellList /> },
-      { path: "/wishlist/:userId", element: <WishList /> },
+      { path: "/wishlist", element: <WishList /> },
       { path: "/myreviewlist", element: <MyReviewList /> },
       { path: "/report/:userId", element: <Report /> },
-      { path: "/report/:userId", element: <Report /> },
+      { path: "/report/:userId", element: <Report /> }, // ㅋ 잘하누 ㅋ
     ],
   },
 ]);

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./BuyList.module.css";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import BuyProductItem from "./BuyProductItem";
+import { useSelector } from 'react-redux'
 
 export default function BuyList() {
   const navigate = useNavigate();
-  const userId = useParams().userId;
   const [products, setProducts] = useState();
+
+  const userId = useSelector((state) => { return state.user.userCode})
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);

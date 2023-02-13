@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-
+import { useNavigate } from "react-router";
+import { useSelector} from 'react-redux'
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./styles/WishList.module.css";
 import axios from "axios";
@@ -8,9 +8,10 @@ import ProductItem from "../components/Product/ProductItem";
 
 export default function WishList() {
   const navigate = useNavigate();
-  const userId = useParams().userId;
   const [products, setProducts] = useState();
 
+
+  const userId = useSelector((state) => { return state.user.userCode})
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
   };
@@ -19,7 +20,6 @@ export default function WishList() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/products/wishList/${userId}`)
       .then((res) => {
-        console.log(res.data, '👠');
         setProducts(res.data);
       })
       .catch((err) => console.log(err));
@@ -31,7 +31,7 @@ export default function WishList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(-1);
+            navigate(`/userinfo/${userId}`);
           }}
         />
         <div className={styles.title}>관심 목록</div>
