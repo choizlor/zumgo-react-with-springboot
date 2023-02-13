@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import HomeBanner1 from "../components/Home/HomeBanner1";
-import BottomNav from "../components/Nav/BottomNav";
-import TopNav from "../components/Nav/TopNav";
-import styles from "./styles/Home.module.css";
+import HomeBanner1 from "./HomeBanner1";
+import BottomNav from "../../components/Nav/BottomNav";
+import TopNav from "../../components/Nav/TopNav";
+import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../../components/Product/ProductItem";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router";
