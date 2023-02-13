@@ -33,6 +33,11 @@ develop: 필요 시
 
 # 팀 소개   
 
+|제목 셀2|제목 셀3|제목 셀4|
+|:---:|:---:|:---:|
+|내용 1|내용 2|내용 3|   
+|제목 셀2|제목 셀3|제목 셀4|
+|내용 1|내용 2|내용 3|
 
 
 # 개발 환경   
@@ -41,7 +46,7 @@ Backend
 - IntelliJ
 - Spring boot 2.7.8
 - Spring boot JPA
-- Java JWT 3.10.2
+- JWT Authentication 3.10.2
 - Java 8
 - MySQL 8.0.32
 - AWS S3

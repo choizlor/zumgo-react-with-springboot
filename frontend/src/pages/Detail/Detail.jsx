@@ -206,8 +206,8 @@ export default function Detail() {
   };
 
   //  상품 삭제하기
-  const deleteproduct = () => {
-    axios
+  const deleteproduct = async() => {
+    await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
         console.log(res);
@@ -215,7 +215,20 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+    // 상품 정보 axios
+    axios
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+      )
+      .then((res) => {
+        setProduct(res.data);
+        // 같으면 판매자, 다르면 구매자
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
 
   return (
     <div className={styles.body}>
@@ -243,7 +256,6 @@ export default function Detail() {
             );
           })}
         </Swiper>
-
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
         {product.reserve !== null ? (
           <div className={styles.livealert}>
@@ -284,9 +296,12 @@ export default function Detail() {
             <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
           </select>
-
           {isMine && (
-            <div className={styles.delete} onClick={deleteproduct}>
+            <div className={styles.delete} onClick= {() => {
+              deleteproduct();
+              navigate(`/selllist/${userId}`);
+
+            }}>
               삭제하기
             </div>
           )}

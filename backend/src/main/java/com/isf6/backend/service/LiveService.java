@@ -74,12 +74,11 @@ public class LiveService {
 
     public void deleteLiveRoom(long productId) {
         LiveRoom liveRoom = getLiveByProductId(productId);
+        log.info("liveRoom id : {}" , liveRoom.getId());
         //라이브 방이 존재하면
         if(liveRoom != null) {
-            liveRoomRepository.delete(liveRoom);
-
-            //예약시간 null로 변경
-            productService.deleteProductReserveTime(productId);
+            log.info("방 존재");
+            liveRoomRepository.deleteRoom(productId);
 
             //해당 상품에 대한 라이브 요청 지우기
             liveRequestService.deleteProductLiveRequest(productId);

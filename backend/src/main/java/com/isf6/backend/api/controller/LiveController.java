@@ -7,6 +7,7 @@ import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.service.LiveRequestService;
 import com.isf6.backend.service.LiveService;
+import com.isf6.backend.service.ProductService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ public class LiveController {
 
     private final LiveService liveService;
     private final LiveRequestService liveRequestService;
+    private final ProductService productService;
 
     @ApiOperation(value = "라이브 방 생성", notes = "라이브 방을 생성하여 DB에 저장하고 정보를 반환")
     @PostMapping("/room")
@@ -126,6 +128,10 @@ public class LiveController {
     @DeleteMapping("/{productId}")
     public ResponseEntity deleteLiveRoom(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
         Map<String, Object> response = new HashMap<>();
+        //상품에 라이브 예약 시간 삭제
+        productService.deleteProductReserveTime(productId);
+
+        //라이브 방 삭제
         liveService.deleteLiveRoom(productId);
         response.put("result", "SUCCESS");
 

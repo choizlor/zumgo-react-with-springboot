@@ -5,8 +5,7 @@ import UserVideoComponent from "./UserVideoComponent";
 import ChattingForm from "./ChattingForm";
 import ChattingList from "./ChattingList";
 import Timer from "../Auction/Timer";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -254,7 +253,7 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1280x720", // The resolution of your video
+            resolution: "1920x1080", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
@@ -442,6 +441,8 @@ const VideoRoom = () => {
           {/* 배경 그라데이션 */}
           <div className={styles.background}>
             <div className={styles.bgtop}></div>
+          </div>
+          <div className={styles.bottomgr}>
             <div className={styles.bgbottom}></div>
           </div>
 
@@ -470,7 +471,6 @@ const VideoRoom = () => {
                 />
               </div>
             </div>
-            {/* <div className={styles.topbottom}>음성변조 아이콘</div> */}
             <div className={styles.bottom}>
               <div className={styles.bottomtop}>
                 <ChattingList messageList={messageList} />

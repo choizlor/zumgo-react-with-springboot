@@ -27,7 +27,7 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [products]);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
@@ -52,7 +52,7 @@ export default function SellList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(-1);
+            navigate(`/userinfo/${userId}`);
           }}
         />
         <div className={styles.title}>판매 목록</div>
