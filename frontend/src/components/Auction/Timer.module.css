@@ -14,4 +14,7 @@
   font-size: 40px;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
