@@ -18,9 +18,9 @@ export default function Search() {
   const [recents, setRecents] = useState(loadedRecents);
 
   const handleSearchWord = (e) => {
+    console.log(e.target.value)
     setSearchName(e.target.value);
   };
-
 
   const searchProducts = (searchWord) => {
     axios

@@ -4,6 +4,7 @@
   display: flex;
   background-color: white;
   opacity: 65%;
+  z-index: 3;
   justify-content: center;
   padding: 1%;
   width : 100%;
