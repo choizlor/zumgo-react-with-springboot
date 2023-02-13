@@ -64,13 +64,6 @@ export default function Search() {
     navigate(`/detail/${id}`);
   };
 
-  // 검색어 삭제하기
-  const handleDeleteRecent = (item) => {
-    let newRecents = recents.filter((word) => {return item!==word})
-    setRecents(newRecents)
-    window.localStorage.setItem('recents', JSON.stringify(recents))
-  };
-
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
@@ -95,7 +88,6 @@ export default function Search() {
         <SearchItems
           recents={recents}
           searchProducts={searchProducts}
-          handleDeleteRecent={handleDeleteRecent}
         />
       ) : (
         <div className={styles.searchlist}>
