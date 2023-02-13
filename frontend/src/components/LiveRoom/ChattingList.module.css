@@ -8,6 +8,7 @@
   position: fixed;
   width: 100%;
   bottom: 13%;
+  z-index: 5;
 }
 
 .chat {
@@ -35,7 +36,7 @@
 }
 
 .sender {
-  color: black;
+  color: white;
   font-size: 0.9rem;
   margin-left: 5px;
   font-weight: 800;
@@ -43,7 +44,7 @@
 
 .content {
   width: 300px;
-  color: black;
+  color: white;
   font-size: 0.8rem;
   margin-left: 5px;
 }
