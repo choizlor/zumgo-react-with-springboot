@@ -48,7 +48,9 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatterId !== me.userCode && item.data) {
+    if (item.chatterId !== me.userCode) {
+      console.log(item.chatterId)
+      console.log(me.userCode)
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -81,7 +83,7 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.sender !== me.userCode && item.data) {
+    if (item.sender !== me.userCode) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
