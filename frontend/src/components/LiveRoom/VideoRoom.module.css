@@ -170,6 +170,7 @@
 
 /* 낙찰자 모달 */
 .modal {
+  z-index: 999;
   width: 70%;
   margin: auto;
   border-radius: 20px;
@@ -179,7 +180,7 @@
   align-items: center;
   position: absolute;
   top: 40%;
-  left: 40%;
+  left: 50%;
   transform: translate(-50%, -50%);
   padding: 5%;
   box-shadow: 14px 10px 30px -9px rgba(9, 9, 9, 0.73);
@@ -187,34 +188,11 @@
   -moz-box-shadow: 14px 10px 30px -9px rgba(9, 9, 9, 0.73);
 }
 
-.modal div {
-  margin: 1%;
-}
-
-.modaltitle {
-  font-size: 20px;
-}
-
-.modalimg {
-  width: 70px;
-  height: 70px;
-  border-radius: 70px;
-}
-
-.modalimg img {
-  object-fit: cover;
-  border-radius: 70px;
-}
-
-.modalbiddername {
-  font-size: 15px;
-}
-
-.modalbidprice {
-  font-size: 20px;
-}
-
 .modaltext {
-  font-size: 13px;
+  font-size: 17px;
 }
 
+.celediv {
+  position: absolute;
+  z-index: 999;
+}

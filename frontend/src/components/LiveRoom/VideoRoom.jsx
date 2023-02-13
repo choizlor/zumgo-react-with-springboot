@@ -547,7 +547,7 @@ const VideoRoom = () => {
             ) : null}
           </div>
 
-          <div>
+          <div className={styles.celediv}>
             {celebrity ? (
               <Celebrity
                 bestBidderImg={bestBidderImg}
