@@ -11,7 +11,7 @@ export default function Timer({
   setCelebrity,
   setNonCelebrity,
   sellerCheck,
-  // setTimerOpen,
+  setTimerOpen,
 }) {
   const sendCount = () => {
     currentSession
@@ -40,6 +40,8 @@ export default function Timer({
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
         clearInterval(id);
+        setTimerOpen(false);
+        
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
         }

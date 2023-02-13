@@ -74,6 +74,7 @@ const VideoRoom = () => {
   const [hostImg, setHostImg] = useState(undefined); // host 사진
   const [bidders, setBidders] = useState(0);
   const [priceOpen, setPriceOpen] = useState(false);
+  const [timerOpen, setTimerOpen] = useState(false);
   const [bidPrice, setBidPrice] = useState(0);
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
@@ -196,6 +197,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
+      setTimerOpen(true);
       setSellerCheck(true);
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
@@ -508,7 +510,12 @@ const VideoRoom = () => {
             </div>
           </div>
 
-          <div className={styles.timer}>
+          <div
+            className={styles.timer}
+            style={
+              !timerOpen ? { visibility: "hidden" } : { visibility: "visible" }
+            }
+          >
             <Timer
               seconds={seconds}
               setSeconds={setSeconds}
@@ -521,7 +528,7 @@ const VideoRoom = () => {
               setCelebrity={setCelebrity}
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
-              // setTimerOpen={setTimerOpen}
+              setTimerOpen={setTimerOpen}
             />
           </div>
           {/* <div>
