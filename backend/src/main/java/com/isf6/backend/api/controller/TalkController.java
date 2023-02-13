@@ -1,5 +1,6 @@
 package com.isf6.backend.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
@@ -8,6 +9,7 @@ import com.isf6.backend.service.*;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -47,10 +49,15 @@ public class TalkController {
         return userService.getLiveRequestUser(productId);
     }
 
+    @PostMapping("/oauth/token")
+    public String createToken() throws ParseException, JsonProcessingException {
+        return talkService.createToken();
+    }
+
     @ApiOperation(value = "상품 예약시간 업데이트 및 알림톡 전송", notes = "상품을 등록을 위해 DB에 저장하고 정보를 반환")
     @PostMapping("/reserve/{id}")
     public ResponseEntity uploadProduct(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id,
-                                        @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) {
+                                        @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) throws ParseException, JsonProcessingException {
         //Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
         //상품 예약시간을 업데이트 하고
@@ -61,6 +68,7 @@ public class TalkController {
 
         //토큰 생성
         String token = talkService.createToken();
+        //String token = "69587870930bb0ec738fe5d607ac7c0965b53236092636d50664ae2eb27700445e500b611bc4984f6ef7f3705f2ad907ca032dd84260013eae58dae6df47d906lQvkJOJ%2FWGgLhJ4DsXF4iEzQVdu26u%2Fsh22mctYPmo7BamZ0bl%2BjpQYfhc45Wws1YSl1VnjIK%2B%2BBayhiCf7Sfw%3D%3D";
 
         //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
         log.info("productName : {}", requestDto.getTitle());
@@ -126,7 +134,7 @@ public class TalkController {
 
     @ApiOperation(value = "라이브 시작 및 알림톡 전송", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
     @PatchMapping("/start/{productId}")
-    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
+    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) throws JsonProcessingException, ParseException {
         Map<String, Object> response = new HashMap<>();
 
         //라이브 방 시작 상태로 변경
