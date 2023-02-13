@@ -82,7 +82,7 @@ export default function Detail() {
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
           setChats(res.data);
-          console.log(res,'👻👻👻')
+          setStatus(e.target.value);
           setModalOpen(true);
         })
         .catch((err) => {
@@ -277,7 +277,7 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={product.status}
+            value={status}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
