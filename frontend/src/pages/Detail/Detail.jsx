@@ -95,7 +95,7 @@ export default function Detail() {
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
-        status: e.target.value,
+        status: e.target?.value,
       })
       .then(() => {
         navigate(`/detail/${product.id}`);
