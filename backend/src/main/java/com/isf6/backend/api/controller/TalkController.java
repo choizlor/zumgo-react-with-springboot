@@ -4,10 +4,7 @@ import com.isf6.backend.api.Request.ProductSaveRequestDto;
 import com.isf6.backend.api.Request.ProductUpdateRequestDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
-import com.isf6.backend.service.LiveRequestService;
-import com.isf6.backend.service.LiveService;
-import com.isf6.backend.service.ProductService;
-import com.isf6.backend.service.UserService;
+import com.isf6.backend.service.*;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +40,7 @@ public class TalkController {
     private final ProductService productService;
     private final UserService userService;
     private final LiveService liveService;
+    private final TalkService talkService;
 
     @GetMapping("/userList")
     public List<User> LiveRequestUser(@RequestParam("productId") long productId) {
@@ -60,6 +58,9 @@ public class TalkController {
 
         //해당 상품에 라이브 요청한 유저들 정보 가져오기
         List<User> liveRequestUser = userService.getLiveRequestUser(id);
+
+        //토큰 생성
+        String token = talkService.createToken();
 
         //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
         log.info("productName : {}", requestDto.getTitle());
@@ -85,7 +86,7 @@ public class TalkController {
         body.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
         body.add("userid", "gyeoul98"); //사이트 아이디
         //토큰 발급 받는 부분 만들기
-        body.add("token", "25a4b79f6c3750feebbd262abca8419bd6dadde63ad8fe067f23acb44594d3c410b5adf1cc84c1eb0a9919e901ab6aca486081f204b97fb0f4b9a4b8033a4ccd40OR8Ezbtv2gNcWEWQT2Oo04rgFZWUPp0SoUL1j74q7DXl6zwMfeBzoGwxEGvqMv0zCvGBcu1BdmRRU1llYnew%3D%3D"); //발급받은 토큰
+        body.add("token", token); //발급받은 토큰
         body.add("senderkey", "aed29693a2cb5db41813209853bf64be349aead8"); //발신프로파일 키
         body.add("tpl_code", "TL_8062"); //템플릿 코드
         body.add("sender", "01076100034"); //발신자 연락처
@@ -141,6 +142,9 @@ public class TalkController {
         //상품 정보 가져오기
         Product product = productService.getProduct(productId);
 
+        //토큰 생성
+        String token = talkService.createToken();
+
         //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
         log.info("productName : {}", product.getTitle());
         String productName = product.getTitle();
@@ -165,7 +169,7 @@ public class TalkController {
         body.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
         body.add("userid", "gyeoul98"); //사이트 아이디
         //토큰 발급 받는 부분 만들기
-        body.add("token", "25a4b79f6c3750feebbd262abca8419bd6dadde63ad8fe067f23acb44594d3c410b5adf1cc84c1eb0a9919e901ab6aca486081f204b97fb0f4b9a4b8033a4ccd40OR8Ezbtv2gNcWEWQT2Oo04rgFZWUPp0SoUL1j74q7DXl6zwMfeBzoGwxEGvqMv0zCvGBcu1BdmRRU1llYnew%3D%3D"); //발급받은 토큰
+        body.add("token", token); //발급받은 토큰
         body.add("senderkey", "aed29693a2cb5db41813209853bf64be349aead8"); //발신프로파일 키
         body.add("tpl_code", "TL_8079"); //템플릿 코드
         body.add("sender", "01076100034"); //발신자 연락처
