@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ArrowUpCircleIcon } from '@heroicons/react/24/solid';
-import styles from './ChattingForm.module.css';
+import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import styles from "./ChattingForm.module.css";
 
 const ChattingForm = (props) => {
   const [message, setMessage] = useState("");
@@ -10,7 +10,7 @@ const ChattingForm = (props) => {
     event.preventDefault();
     if (message.trim() !== "") {
       props.onMessage(
-        `${props.myUserName}: ` + message.trim(),
+        `${props.myProfileImg}: ` + `${props.myUserName}: ` + message.trim(),
         props.currentSession
       ); // 공백을 제거하여 전달
     }
@@ -31,11 +31,7 @@ const ChattingForm = (props) => {
         onChange={inputChangeHandler}
         className={styles.input}
       ></input>
-      <ArrowUpCircleIcon
-                  className={styles.submitbtn}
-                  onClick={sendMessage}
-                />
-     
+      <ArrowUpCircleIcon className={styles.submitbtn} onClick={sendMessage} />
     </form>
   );
 };
