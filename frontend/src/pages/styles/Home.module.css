@@ -12,9 +12,6 @@
   align-items: left;
   padding : 7% 0;
   width : 100%;
-  height : 67%;
-  position: absolute;
-  bottom: 0px;
 }
 
 
@@ -23,10 +20,10 @@
   font-weight: 800;
   text-align: left;
   width : 80%;
-  margin: 1% auto 2% auto;
+  margin: 1% auto 3% auto;
 }
 
-.scrollarea {
+.items {
   overflow: scroll;
 }
 
@@ -73,4 +70,10 @@
   display: flex;
   justify-content: space-between;
   padding-right: 4%;
+}
+
+
+.ref{
+  height : 10px;
+  width : 100%;
 }
