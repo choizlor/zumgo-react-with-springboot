@@ -43,7 +43,6 @@ export default function Live() {
       .catch((err) => {
         console.log(err);
       });
-
   }, [userId]);
 
   //toggle 상태 표시
@@ -52,6 +51,7 @@ export default function Live() {
   const toggleMode = () => {
     settoggle(!toggle);
     console.log(toggle); // toggle 바꿔주는 함수  //toggle에 따라 컴포넌트 변하는 함수
+    window.location.replace("/live");
   };
 
   return (
