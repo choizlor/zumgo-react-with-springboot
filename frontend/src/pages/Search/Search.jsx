@@ -72,8 +72,7 @@ export default function Search() {
 
   // 검색어 삭제하기
   const handleDeleteRecent = (item) => {
-    let tmp = JSON.parge(window.localStorage.getItem('recents'))
-    let newRecents = tmp.filter((word)=> {return word!==item})
+    let newRecents = recents.filter((word) => {return item!==word})
     setRecents(newRecents)
     window.localStorage.setItem('recents', JSON.stringify(recents))
   };
