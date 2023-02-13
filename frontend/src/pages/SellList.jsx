@@ -60,12 +60,13 @@ export default function SellList() {
       </div>
       {/*거래 상태 표시 */}
         <div className={styles.statusnav}>
-        {filters.map((filter, index) => {
+        {filters.map((item, index) => {
           return (
             <li key={index} className={styles.block}>
               <div
-                onClick={() => handleChangeStatus(filter)}
+                onClick={() => handleChangeStatus(item)}
                 className={styles.btn}
+                style={{textDecoration: item===filter ? 'underline' : 'none'}}
               >
                 {filterText[index]}
               </div>

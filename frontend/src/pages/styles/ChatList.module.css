@@ -24,7 +24,7 @@ overflow: scroll;
 .chatinfo {
     display: flex;
     flex-direction: column;
-    width : 70%;
+    width : 80%;
 }
 
 
