@@ -3,9 +3,10 @@
   top: 0;
   display: flex;
   background-color: white;
-  opacity: 50%;
+  opacity: 65%;
   justify-content: center;
   padding: 1%;
+  width : 100%;
 }
 
 .contentbox {
