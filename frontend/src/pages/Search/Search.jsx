@@ -99,7 +99,7 @@ export default function Search() {
         />
       ) : (
         <div className={styles.searchlist}>
-          {products.length > 0 ? (
+          {products?.length > 0 ? (
             products?.map((product) => (
               <ProductItem
                 key={product.productId}
