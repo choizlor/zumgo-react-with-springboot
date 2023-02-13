@@ -62,7 +62,6 @@ export default function ReservationModal({ setModalOpen, productId }) {
       })
       .then((res) => {
         console.log(res.data)
-        location.reload();
       })
       .catch((err) => console.log(err));
   };
