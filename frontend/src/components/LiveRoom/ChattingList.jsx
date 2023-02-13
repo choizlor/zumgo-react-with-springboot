@@ -40,10 +40,10 @@ const ChattingList = (props) => {
           <div key={i}>
             <div className={styles.chat}>
               {/* <div className={styles.profile}> */}
-                <img src={msg.split(":")[0]} className={styles.profileimg} alt="img" />
+                <img src={msg.split(":")[1]} className={styles.profileimg} alt="img" />
               {/* </div> */}
-              <div className={styles.sender}>{msg.split(":")[1]}</div>
-              <div className={styles.content}>{msg.split(":")[2]}</div>
+              <div className={styles.sender}>{msg.split(":")[2]}</div>
+              <div className={styles.content}>{msg.split(":")[3]}</div>
             </div>
           </div>
         ))}
