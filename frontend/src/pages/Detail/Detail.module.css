@@ -14,11 +14,13 @@
 .swiperbox {
   position : relative;
   width: 100%;
+  border-color: red 2px;
   background-color: black;
 }
 
 .swiper {
   height: 30%;
+  border-color: 2px blue;
 }
 
 .swiperimg {
