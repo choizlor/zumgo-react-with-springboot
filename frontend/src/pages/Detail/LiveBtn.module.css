@@ -7,7 +7,7 @@
   background-color: black;
   color: white;
   font-size: 10px;
-  width : 65px;
+  width : 15%;
   height : 35px;
   border-radius: 8px;
   display: flex;
@@ -17,7 +17,7 @@
 }
 
 .liveBtn {
-  width: 220px;
+  width: 60%;
   height : 35px;
   border-radius: 8px;
   border: 2px solid black;
