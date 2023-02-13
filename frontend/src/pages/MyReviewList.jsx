@@ -11,7 +11,7 @@ import { useLocation } from "react-router";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
-  const [reviews, setReviews] = useState();
+  const [reviews, setReviews] = useState([]);
   const location = useLocation();
   const userId = location.state.userId;
 
@@ -21,6 +21,7 @@ export default function MyReviewList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
       .then((res) => {
         setReviews(res.data.MyReview);
+        console.log(res.data)
       });
   }, []);
 
@@ -55,7 +56,7 @@ export default function MyReviewList() {
       {/* 타이틀 */}
 
       <div className={styles.reviews}>
-        {reviews?.map((review, idx) => {
+        {reviews.length !== 0? reviews.map((review, idx) => {
           return (
             <div key={idx} className={styles.reviewbox}>
               <div className={styles.ninety}>
@@ -75,12 +76,12 @@ export default function MyReviewList() {
                   </div>
                 </div>
                 <div className={styles.icons}>
-                  <TrashIcon onClick={handleDeleteReview(review.product.id)} />
+                  <TrashIcon onClick={() => {handleDeleteReview(review.product.id)}} />
                 </div>
               </div>
             </div>
-          );
-        })}
+          )
+        }) : <div className={styles.alert}>작성한 리뷰가 없어요😥</div>}
       </div>
     </div>
   );

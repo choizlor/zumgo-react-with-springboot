@@ -9,3 +9,14 @@
     display: flex;
     align-items: center;
 }
+
+
+.alert { 
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    
+  }
+  

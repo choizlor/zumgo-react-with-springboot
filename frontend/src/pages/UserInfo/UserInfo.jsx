@@ -47,7 +47,7 @@ export default function UserInfo() {
   //   사용자 정보를 불러오는 api
   useEffect(() => {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
-      console.log('유저정보, ', res.data)
+      console.log("유저정보, ", res.data);
       setUserInfo(res.data.user);
     });
   }, []);

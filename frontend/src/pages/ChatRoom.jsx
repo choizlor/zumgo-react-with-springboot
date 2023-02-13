@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -108,6 +108,13 @@ export default function ChatRoom() {
     }
   });
 
+  // // 스크롤 위치 제어하기
+  // const scrollRef = useRef();
+  // const chatDiv = document.getElementsById("ChatRoom");
+  // const nowScrollY = chatDiv.scrollTop;
+  // const scrollHeight = chatDiv.scrollHeight;
+  // chatDiv.scrollTop = chat.scrollHeight;
+
   // websocket
   // websocket
   // websocket
@@ -135,12 +142,12 @@ export default function ChatRoom() {
 
       // 구독
       clientdata.onConnect = async () => {
-        clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
-        if (type==='live') {
+        clientdata.subscribe("/sub/channels/" + chatroomId, callback);
+        if (type === "live") {
           clientdata.publish({
             destination: "/pub/chat/" + chatroomId,
             body: JSON.stringify({
-              type: '',
+              type: "",
               sender: user.userCode,
               channelId: chatroomId,
               data: `${title} 상품의 라이브를 요청합니다!`,
@@ -152,7 +159,6 @@ export default function ChatRoom() {
 
       clientdata.activate(); // 클라이언트 활성화
       changeClient(clientdata); // 클라이언트 갱신
-
     } catch (err) {
       console.log(err);
     }
@@ -174,9 +180,7 @@ export default function ChatRoom() {
     }
   };
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   // 메시지 보내기
   const sendChat = () => {
@@ -215,6 +219,8 @@ export default function ChatRoom() {
   useEffect(() => {
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
+    // 스크롤 위치 조작
+    // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 
     return () => disConnect();
   }, []);
@@ -244,7 +250,9 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/${other.userCode}`)} />
+          <MegaphoneIcon
+            onClick={() => navigate(`/report/${other.userCode}`)}
+          />
           <div className={styles.inputbar}>
             <div>
               <input
