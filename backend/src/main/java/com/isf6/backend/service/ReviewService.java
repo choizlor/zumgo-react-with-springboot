@@ -6,6 +6,7 @@ import com.isf6.backend.domain.entity.Bill;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.repository.BillRepository;
+import com.isf6.backend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final BillRepository billRepository;
+    private final UserRepository userRepository;
     private final ProductService productService;
     private final UserService userService;
 
@@ -31,7 +33,6 @@ public class ReviewService {
         bill.setProduct(product);
 
         User seller = userService.findUser(reviewSaveReqDto.getSellerUserCode());
-        seller.setPoint(seller.getPoint()+3);
         bill.setSeller(seller);
 
         User buyer = userService.findUser(reviewSaveReqDto.getBuyerUserCode());
@@ -71,14 +72,17 @@ public class ReviewService {
         return bill;
     }
 
-    public Bill updateReview(Long productId, ReviewSaveReqDto reviewSaveReqDto, Bill bill) {
-        Product product = productService.getProduct(productId);
-        bill.setProduct(product);
+    public Bill updateReview(ReviewSaveReqDto reviewSaveReqDto, Bill bill) {
+        //Bill updateBill = new Bill();
 
-        User seller = userService.findUser(reviewSaveReqDto.getSellerUserCode());
+        User seller = bill.getSeller();
+        seller.setPoint(seller.getPoint()+3); //판매자 3포인트
+        userRepository.save(seller);
         bill.setSeller(seller);
 
-        User buyer = userService.findUser(reviewSaveReqDto.getBuyerUserCode());
+        User buyer = bill.getBuyer();
+        buyer.setPoint(buyer.getPoint()+3); //구매자 3포인트
+        userRepository.save(buyer);
         bill.setBuyer(buyer);
 
         bill.setReview(reviewSaveReqDto.getReview());
