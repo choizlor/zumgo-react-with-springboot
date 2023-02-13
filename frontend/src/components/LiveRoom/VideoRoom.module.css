@@ -177,6 +177,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
   padding: 5%;
   box-shadow: 14px 10px 30px -9px rgba(9, 9, 9, 0.73);
   -webkit-box-shadow: 14px 10px 30px -9px rgba(9, 9, 9, 0.73);
