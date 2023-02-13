@@ -41,17 +41,19 @@ export default function MyReviewList() {
       {/* 상단 네비게이션 */}
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon 
-          className="w-6 h-6 text-black-100" 
-          onClick={() => {
-            navigate(-1)}
-            }/>
+          <ChevronLeftIcon
+            className="w-6 h-6 text-black-100"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+        </div>
+        <div className={styles.bigtitle}>
+          내가 쓴 리뷰 목록 ({reviews?.length})
         </div>
       </div>
       {/* 타이틀 */}
-      <div className={styles.bigtitle}>
-        내가 쓴 리뷰 목록 ({reviews?.length})
-      </div>
+
       <div className={styles.reviews}>
         {reviews?.map((review, idx) => {
           return (
