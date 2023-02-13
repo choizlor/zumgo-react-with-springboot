@@ -1,16 +1,19 @@
 .body {
+  position: fixed;
+  top: 0;
   display: flex;
-  background-color: #d1d1d1;
+  background-color: white;
+  opacity: 50%;
   justify-content: center;
-  padding : 1%;
+  padding: 1%;
 }
 
 .contentbox {
-  width : 95%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding : 1% 2%;
+  padding: 1% 2%;
 }
 
 .logo {
@@ -26,9 +29,9 @@
 }
 
 .glassicon {
-  width : 25px;
+  width: 25px;
 }
 
 .bellicon {
-  width : 25px;
+  width: 25px;
 }
