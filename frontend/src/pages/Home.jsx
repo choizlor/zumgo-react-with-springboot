@@ -65,7 +65,7 @@ export default function Home() {
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={true}
         autoHeight={true}
-        modules={Autoplay}
+        modules={[Autoplay]}
       >
         <SwiperSlide>
           <HomeBanner />
