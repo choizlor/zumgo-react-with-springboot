@@ -37,6 +37,8 @@ export default function AddReview() {
   };
 
   const addReview = () => {
+    console.log(sellerId)
+    console.log(buyerId)
    // productId로 수정하기
    axios
    .patch(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {

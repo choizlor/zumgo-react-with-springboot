@@ -14,7 +14,6 @@ overflow: scroll;
 .chat {
     width : 100%;
     display: flex;
-    justify-content: space-between;
     margin: auto;
     padding : 5% ;
     border-bottom: 1px solid #d9d9d9;
@@ -25,15 +24,11 @@ overflow: scroll;
 .chatinfo {
     display: flex;
     flex-direction: column;
+    width : 70%;
 }
 
 
 /* 채팅 정보 */
-.leftbox {
-    display: flex;
-    align-items: center;
-}
-
 .otherimg {
     width : 50px;
     height : 50px;
@@ -51,7 +46,6 @@ overflow: scroll;
 .othername {
     font-size: 12px;
     font-weight: 700;
-    width : 100%;
 }
 
 .time{
@@ -61,7 +55,6 @@ overflow: scroll;
 .lastmsg {
     font-size: 12px;
     margin-right: 10%;
-    width : 100%;
 }
 
 .productimg {

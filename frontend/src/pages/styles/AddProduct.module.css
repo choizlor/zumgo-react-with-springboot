@@ -26,6 +26,7 @@
     font-size: 18px;
     margin : 0.2rem;
 }
+
 .button {
     background-color: black;
     height: 70px;
@@ -38,9 +39,6 @@
     align-items: center;
     justify-content: center;
 }
-/* .file {
-    display: none;
-} */
 
 .camera {
     width: 30px;
@@ -59,7 +57,7 @@
     width : 100%;
     padding : 4%;
     border-top : 0.7px #e2e2e2 solid;
-    display: none;
+    /* display: none; */
 }
 
 .textarea {
