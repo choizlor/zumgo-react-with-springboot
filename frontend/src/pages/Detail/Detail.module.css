@@ -1,3 +1,8 @@
+.container {
+  
+}
+
+
 .body {
   width : 100vw;
 }
@@ -14,7 +19,6 @@
 .swiperbox {
   position : relative;
   width: 100%;
-  border-color: red 2px;
   background-color: black;
 }
 

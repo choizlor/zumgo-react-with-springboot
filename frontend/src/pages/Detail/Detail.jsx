@@ -244,7 +244,6 @@ export default function Detail() {
             );
           })}
         </Swiper>
-
         {/* 라이브가 null이 아닐 때 라이브 예약 알림  */}
         {product.reserve !== null ? (
           <div className={styles.livealert}>
@@ -285,9 +284,12 @@ export default function Detail() {
             <option value="BOOKING">예약 중</option>
             <option value="SOLDOUT">거래완료</option>
           </select>
-
           {isMine && (
-            <div className={styles.delete} onClick={deleteproduct}>
+            <div className={styles.delete} onClick= {() => {
+              deleteproduct();
+              navigate(`/selllist/${userId}`);
+
+            }}>
               삭제하기
             </div>
           )}
