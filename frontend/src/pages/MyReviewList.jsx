@@ -41,7 +41,11 @@ export default function MyReviewList() {
       {/* 상단 네비게이션 */}
       <div className={styles.nav}>
         <div className={styles.navleft}>
-          <ChevronLeftIcon className="w-6 h-6 text-black-100" onClick={() => {navigate(`userinfo/${userId}`)}}/>
+          <ChevronLeftIcon 
+          className="w-6 h-6 text-black-100" 
+          onClick={() => {
+            navigate(-1)}
+            }/>
         </div>
       </div>
       {/* 타이틀 */}

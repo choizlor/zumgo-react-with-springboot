@@ -28,9 +28,6 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-      console.log(filter,'======')
-
-      console.log(products,'-------')
   }, []);
 
   const clickProduct = (id) => {
