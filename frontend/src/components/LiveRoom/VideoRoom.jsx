@@ -371,7 +371,7 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setSeconds(2);
+    setSeconds(5);
   };
 
   const startBidding = () => {
@@ -535,7 +535,7 @@ const VideoRoom = () => {
           {/* <div>구매의사 수: {bidders}</div>
           <div>입찰가: {bidPrice}</div> */}
 
-          <div>
+          <div className={styles.pricediv}>
             {buyerCheck && priceOpen && !celebrity ? (
               <div>
                 <Price
