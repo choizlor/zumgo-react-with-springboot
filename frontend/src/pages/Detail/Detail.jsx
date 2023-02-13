@@ -216,7 +216,28 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+    // 상품 정보 axios
+    axios
+      .get(
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+      )
+      .then((res) => {
+        setProduct(res.data);
+        setwishCnt(res.data.wishSize);
+        setwishcheck(res.data.wishCheck);
+        setliveReqSize(res.data.liveReqSize);
+        setproductImgs(res.data.imgUrlList);
+        // 같으면 판매자, 다르면 구매자
+
+        if (userId !== res.data.userCode) {
+          setIsMine(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
 
   return (
     <div className={styles.body}>
