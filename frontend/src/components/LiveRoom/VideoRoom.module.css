@@ -106,7 +106,7 @@
   z-index: 4;
   position: fixed;
   left: 42%;
-  top: 6%;
+  top: 5%;
 }
 
 .eyeicon {
@@ -116,7 +116,7 @@
 .topright {
   display: flex;
   align-items: center;
-  z-index: 2;
+  z-index: 5;
   position: fixed;
   top: 7.5%;
 }
