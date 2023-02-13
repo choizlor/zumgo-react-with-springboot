@@ -23,7 +23,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
 export default function Detail() {
-  const location = useLocation();
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
