@@ -74,7 +74,7 @@ export default function Detail() {
       });
   }, []);
 
-  const changeStatus = (e) => {
+  const changeStatus = (value) => {
     setValue(value);
     console.log(value,'👻👻👻👻')
     // 수정하기 api 요청
@@ -279,7 +279,7 @@ export default function Detail() {
           {/* 드롭다운 */}
           <select
             className={styles.dropdown}
-            onChange={changeStatus}
+            onChange={changeStatus(value)}
             value={value}
             disabled={!isMine}
           >
