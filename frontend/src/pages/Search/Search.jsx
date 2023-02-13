@@ -29,6 +29,7 @@ export default function Search() {
         searchName: searchWord,
       })
       .then((res) => {
+        console.log(res.data)
         setProducts([...res.data]);
       })
       .catch((err) => {
