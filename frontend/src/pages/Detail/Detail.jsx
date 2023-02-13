@@ -75,41 +75,23 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
-    // 수정하기 api 요청
-
+    if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
-        .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
-        .then((res) => {
-          if(e.target.value <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Document</title>
-          </head>
-          <body>
-            
-          </body>
-          </html>== "SOLDOUT") {
-            setChats(res.data);
-            setStatus(e.target.value);
-            console.log(status,'😀')
-            setModalOpen(true);
-          }
-          else {
-            setChats(res.data);
-            setStatus(e.target.value);
-            console.log(status,'😀')
-            setModalOpen(false);
-          }
-         
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .then((res) => {
+        ///soldout 이면 modal open 해주기
+        setChats(res.data);
+        setStatus(e.target.value);
+        setModalOpen(true);
+        /// 아니면 status 업데이트
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
+    
+    // 수정하기 api 요청
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
@@ -234,6 +216,7 @@ export default function Detail() {
         console.log(err);
       });
   };
+
 
 
   return (
