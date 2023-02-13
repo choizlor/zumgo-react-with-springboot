@@ -28,7 +28,7 @@ export default function SellList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [products]);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
