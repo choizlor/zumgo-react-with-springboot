@@ -474,39 +474,39 @@ const VideoRoom = () => {
                 />
               </div>
             </div>
-            <div className={styles.bottom}>
-              <div className={styles.bottomtop}>
-                <ChattingList messageList={messageList} />
-              </div>
-              <div className={styles.bottombottom}>
-                <ChattingForm
-                  myProfileImg={myProfileImg}
-                  myUserName={myUserName}
-                  onMessage={sendMsg}
-                  currentSession={session}
-                />
-                {isHost ? (
-                  !sellerCheck ? (
-                    <button onClick={startAuction} className={styles.gobtn}>
-                      go?
-                    </button>
-                  ) : (
-                    <button className={styles.nogobtn}>go?</button>
-                  )
-                ) : !buyerCheck ? (
-                  <button
-                    onClick={() => {
-                      countBidder();
-                      changeBuyerCheck();
-                    }}
-                    className={styles.gobtn}
-                  >
-                    go!
+          </div>
+          <div className={styles.bottom}>
+            <div className={styles.bottomtop}>
+              <ChattingList messageList={messageList} />
+            </div>
+            <div className={styles.bottombottom}>
+              <ChattingForm
+                myProfileImg={myProfileImg}
+                myUserName={myUserName}
+                onMessage={sendMsg}
+                currentSession={session}
+              />
+              {isHost ? (
+                !sellerCheck ? (
+                  <button onClick={startAuction} className={styles.gobtn}>
+                    go?
                   </button>
                 ) : (
-                  <button className={styles.nogobtn}>go!</button>
-                )}
-              </div>
+                  <button className={styles.nogobtn}>go?</button>
+                )
+              ) : !buyerCheck ? (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              ) : (
+                <button className={styles.nogobtn}>go!</button>
+              )}
             </div>
           </div>
 
@@ -531,17 +531,10 @@ const VideoRoom = () => {
               setTimerOpen={setTimerOpen}
             />
           </div>
-          {/* <div>
-            <ChattingList messageList={messageList} />
-            <ChattingForm
-              myUserName={myUserName}
-              onMessage={sendMsg}
-              currentSession={session}
-            />
-          </div> */}
 
           <div>구매의사 수: {bidders}</div>
           <div>입찰가: {bidPrice}</div>
+
           <div>
             {buyerCheck && priceOpen ? (
               <Price

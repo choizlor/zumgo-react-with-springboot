@@ -53,8 +53,9 @@
 }
 
 .top {
-  /* z-index: 2; */
-  /* position: fixed; */
+  z-index: 5;
+  position: fixed;
+  top: 0;
   display: flex;
   flex-direction: column;
 }
@@ -75,8 +76,6 @@
   display: flex;
   align-items: center;
   top: 4%;
-  z-index: 4;
-  position: fixed;
 }
 
 .sellerimg {
@@ -103,10 +102,10 @@
   display: flex;
   align-items: center;
   color: white;
-  z-index: 4;
-  position: fixed;
-  left: 42%;
-  top: 5%;
+  /* z-index: 4; */
+  /* position: fixed; */
+  /* left: 42%; */
+  /* top: 5%; */
 }
 
 .eyeicon {
@@ -116,9 +115,9 @@
 .topright {
   display: flex;
   align-items: center;
-  z-index: 5;
-  position: fixed;
-  top: 7.5%;
+  /* z-index: 5; */
+  /* position: fixed; */
+  /* top: 7.5%; */
 }
 
 .live {
@@ -132,15 +131,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  right: 13%;
+  /* position: fixed; */
+  /* right: 13%; */
 }
 
 .xicon {
   width: 25px;
   color: white;
-  position: fixed;
-  right: 5%;
+  /* position: fixed; */
+  /* right: 5%; */
 }
 
 .bottombottom {

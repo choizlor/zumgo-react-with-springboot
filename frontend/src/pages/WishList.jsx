@@ -43,7 +43,7 @@ export default function WishList() {
               product={product}
               clickProduct={clickProduct}
             />
-          )): <div className={styles.alert}>상품이 없어요 😢</div> }
+          )) : <div className={styles.alert}>상품이 없어요 😢 </div> }
         {/* {products?.map((product) => {
           return (
             <ProductItem
