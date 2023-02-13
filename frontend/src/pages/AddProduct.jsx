@@ -8,7 +8,6 @@ import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 export default function AddProduct() {
-  
   const navigate = useNavigate();
 
   // redux
@@ -20,6 +19,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [availableTime, setAvailableTime] = useState("");
+  const [filesLen, setfileLen] = useState(0);
 
   const content = {
     title,
@@ -34,20 +34,20 @@ export default function AddProduct() {
     e.preventDefault();
 
     if (title === "") {
-      alert("제목을 입력하세요.")
-      return
+      alert("제목을 입력하세요.");
+      return;
     }
     if (price === "") {
-      alert("가격을 입력하세요.")
-      return
+      alert("가격을 입력하세요.");
+      return;
     }
     if (description === "") {
-      alert("상품 설명을 입력하세요.")
-      return
+      alert("상품 설명을 입력하세요.");
+      return;
     }
     if (availableTime === "") {
-      alert("라이브 가능한 시간대를 입력하세요.")
-      return
+      alert("라이브 가능한 시간대를 입력하세요.");
+      return;
     }
     if (!userId) {
       alert("로그인이 필요한 서비스 입니다.");
@@ -57,6 +57,8 @@ export default function AddProduct() {
 
     let formData = new FormData();
     let files = e.target.imgurls.files;
+
+    setfileLen(files.length);
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
@@ -112,7 +114,7 @@ export default function AddProduct() {
       <div className={styles.container}>
         <div className={styles.button}>
           <CameraIcon className={styles.camera} />
-          <div className={styles.num}>0/5</div>
+          <div className={styles.num}>{filesLen}/5</div>
         </div>
 
         <input
