@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import styles from './ChattingList.module.css'
 import _ from 'lodash';
 
 const ChattingList = (props) => {
