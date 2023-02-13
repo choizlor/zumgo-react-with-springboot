@@ -4,6 +4,7 @@ import {
   ChevronLeftIcon,
   ArrowRightIcon,
   TrashIcon,
+  PencilSquareIcon
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
