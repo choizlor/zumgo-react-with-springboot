@@ -22,7 +22,6 @@ export default function ChatRoom() {
   const buyer = location.state.buyer;
   const type = location.state?.type;
   const title = location.state?.title;
-  const productId = location.state?.productId;
 
   const me = user.userCode === seller.userCode ? seller : buyer;
   const other = user.userCode === seller.userCode ? buyer : seller;
@@ -49,8 +48,6 @@ export default function ChatRoom() {
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
     if (item.chatterId !== me.userCode) {
-      console.log(item.chatterId)
-      console.log(me.userCode)
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
@@ -173,7 +170,6 @@ export default function ChatRoom() {
   const callback = function (message) {
     if (message.body) {
       let msg = JSON.parse(message.body);
-      console.log(msg, "🎁");
       setChatList((chats) => [...chats, msg]);
     }
   };

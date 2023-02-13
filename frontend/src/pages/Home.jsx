@@ -2,24 +2,12 @@ import React, { useEffect, useState } from "react";
 import HomeBanner from "../components/Home/HomeBanner";
 import BottomNav from "../components/Nav/BottomNav";
 import TopNav from "../components/Nav/TopNav";
-import z from "../assets/images/z.png";
 import styles from "./styles/Home.module.css";
-
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import ProductItem from "../components/Product/ProductItem";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router";
-
-// swiper 사용하기
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-
-// 자동 페이지 넘김
-import { Autoplay } from "swiper";
-
 
 export default function Home() {
   const location = useLocation();
@@ -67,10 +55,10 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
-          <HomeBanner />
+      <HomeBanner />
       <div className={styles.body}>
         <div className={styles.onsale}>판매중</div>
-        <div className={styles.scrollarea}>
+        <div className={styles.items}>
           {products?.map((product) => {
             return (
               <ProductItem
@@ -80,7 +68,7 @@ export default function Home() {
               />
             );
           })}
-          <div ref={ref}>안녕</div>
+          <div ref={ref} className={styles.ref}></div>
         </div>
         <BottomNav curLocation={curLocation} />
       </div>

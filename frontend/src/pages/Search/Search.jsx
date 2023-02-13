@@ -4,7 +4,6 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "./Search.module.css";
 import axios from "axios";
-import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import ProductItem from "../../components/Product/ProductItem";
 
@@ -14,7 +13,6 @@ export default function Search() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [recentOpen, setRecentOpen] = useState(true);
-  const [ref, inView] = useInView();
   const loadedRecents = localStorage.getItem("recents")
     ? JSON.parse(window.localStorage.getItem("recents"))
     : window.localStorage.setItem("recents", JSON.stringify([]));
@@ -106,7 +104,6 @@ export default function Search() {
           ) : (
             <div className={styles.noresults}>검색 결과가 없습니다.</div>
           )}
-          <div className={styles.ref} ref={ref}></div>
         </div>
       )}
     </div>
