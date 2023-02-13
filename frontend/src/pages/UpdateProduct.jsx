@@ -41,6 +41,7 @@ export default function UpdateProduct() {
         price,
         description,
         availableTime,
+        status : product.status,
     })
     .then((res) => { navigate(`/detail/${product.id}`)})
     .catch((err) => { console.log(err)});
