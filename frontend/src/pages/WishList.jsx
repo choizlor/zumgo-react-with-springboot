@@ -8,7 +8,7 @@ import ProductItem from "../components/Product/ProductItem";
 
 export default function WishList() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
 
   const userId = useSelector((state) => { return state.user.userCode})
