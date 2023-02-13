@@ -65,8 +65,17 @@ export default function Search() {
     setSearchName("");
   };
 
+  // 검색한 상품을 클릭하면 상세페이지로 이동
   const handleClickProduct = (id) => {
     navigate(`/detail/${id}`);
+  };
+
+  // 검색어 삭제하기
+  const handleDeleteRecent = (item) => {
+    let tmp = JSON.parge(window.localStorage.getItem('recents'))
+    let newRecents = tmp.filter((word)=> {return word!==item})
+    setRecents(newRecents)
+    window.localStorage.setItem('recents', JSON.stringify(recents))
   };
 
   return (
@@ -90,7 +99,11 @@ export default function Search() {
       </div>
       {/* 최근 검색어 & 검색된 내용 리스트*/}
       {recentOpen ? (
-        <SearchItems recents={recents} searchProducts={searchProducts}/>
+        <SearchItems
+          recents={recents}
+          searchProducts={searchProducts}
+          handleDeleteRecent={handleDeleteRecent}
+        />
       ) : (
         <div className={styles.searchlist}>
           {products.length > 0 ? (
