@@ -82,7 +82,7 @@ export default function Detail() {
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
           setChats(res.data);
-          console.log(res.data,'👻👻👻')
+          console.log(res,'👻👻👻')
           setModalOpen(true);
         })
         .catch((err) => {
