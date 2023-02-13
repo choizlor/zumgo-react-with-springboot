@@ -1,6 +1,7 @@
 .body {
   display: flex;
   margin-bottom : 5%;
+  width : 90%;
 }
 
 .blackBtn {
