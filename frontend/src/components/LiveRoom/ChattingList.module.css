@@ -1,6 +1,6 @@
 .chattinglist {
   height: 240px;
-  background: rgba(0, 0, 0, 0.2);
+  background-color: transparent;
   text-align: left;
   overflow: scroll;
   padding-left: 10px;
@@ -15,7 +15,7 @@
 .profile {
   height: 50px;
   width: 50px;
-  border-radius: 70%;
+  border-radius: 100%;
   overflow: hidden;
   border: 1px solid rgba(33, 33, 33);
 }

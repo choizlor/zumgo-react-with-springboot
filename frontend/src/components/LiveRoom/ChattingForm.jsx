@@ -10,7 +10,7 @@ const ChattingForm = (props) => {
     event.preventDefault();
     if (message.trim() !== "") {
       props.onMessage(
-        `${props.myProfileImg}: ` + `${props.myUserName}: ` + message.trim(),
+        `${props.myProfileImg}:` + `${props.myUserName}: ` + message.trim(),
         props.currentSession
       ); // 공백을 제거하여 전달
     }
