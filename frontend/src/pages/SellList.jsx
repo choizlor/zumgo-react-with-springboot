@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./styles/SellList.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import ProductItem from "../components/Product/ProductItem";
-import BottomNav from "../components/Nav/BottomNav"
 
 
 export default function SellList() {
