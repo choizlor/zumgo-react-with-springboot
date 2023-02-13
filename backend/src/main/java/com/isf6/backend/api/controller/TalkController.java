@@ -116,7 +116,7 @@ public class TalkController {
             body.add("button_" + (i+1), buttonInfo); //버튼정보
         }
         //여기까지 반복문으로 liveRequestUser만큼 돌려야 될듯?
-        //body.add("testMode", "Y"); //테스트모드
+        body.add("testMode", "Y"); //테스트모드
         log.info("body : {}", body);
 
         //전송 객체 생성
@@ -204,7 +204,7 @@ public class TalkController {
             body.add("button_" + (i+1), buttonInfo); //버튼정보
         }
         //여기까지 반복문으로 liveRequestUser만큼 돌려야 될듯?
-        //body.add("testMode", "Y"); //테스트모드
+        body.add("testMode", "Y"); //테스트모드
 
         //전송 객체 생성
         HttpEntity<MultiValueMap<String, Object>> LiveReserveRequest = new HttpEntity<>(body);
