@@ -59,6 +59,7 @@ export default function AddReview() {
       <div className={styles.nav}>
         <ChevronLeftIcon className="w-6 h-6 text-black-100" 
         onClick={() => {
+          console.log(1111)
           navigate(`/userinfo/${buyerId}`);
         }}
         />
