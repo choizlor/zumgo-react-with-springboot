@@ -108,12 +108,12 @@ export default function ChatRoom() {
     }
   });
 
-  // 스크롤 위치 제어하기
-  const scrollRef = useRef();
-  const chatDiv = document.getElementsById("ChatRoom");
-  const nowScrollY = chatDiv.scrollTop;
-  const scrollHeight = chatDiv.scrollHeight;
-  chatDiv.scrollTop = chat.scrollHeight;
+  // // 스크롤 위치 제어하기
+  // const scrollRef = useRef();
+  // const chatDiv = document.getElementsById("ChatRoom");
+  // const nowScrollY = chatDiv.scrollTop;
+  // const scrollHeight = chatDiv.scrollHeight;
+  // chatDiv.scrollTop = chat.scrollHeight;
 
   // websocket
   // websocket
@@ -220,7 +220,7 @@ export default function ChatRoom() {
     // 최초 렌더링 시 , 웹소켓에 연결
     connect();
     // 스크롤 위치 조작
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 
     return () => disConnect();
   }, []);
