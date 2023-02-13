@@ -44,6 +44,7 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chats, setChats] = useState([]);
+  const [value, setValue] = useState(product.status);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
@@ -74,6 +75,7 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
+    setValue(value);
     // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
       // 채팅중인 사용자 불러오기
@@ -81,7 +83,7 @@ export default function Detail() {
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
           setChats(res.data);
-          
+
 
           setModalOpen(true);
         })
@@ -277,7 +279,7 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={product.status}
+            value={value}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
