@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, HashRouter } from "react-router-dom";
 import "./App.css";
 import {useDispatch} from 'react-redux'
 import {login} from './store/userSlice'
