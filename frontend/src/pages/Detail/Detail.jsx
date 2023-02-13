@@ -223,15 +223,7 @@ export default function Detail() {
       )
       .then((res) => {
         setProduct(res.data);
-        setwishCnt(res.data.wishSize);
-        setwishcheck(res.data.wishCheck);
-        setliveReqSize(res.data.liveReqSize);
-        setproductImgs(res.data.imgUrlList);
         // 같으면 판매자, 다르면 구매자
-
-        if (userId !== res.data.userCode) {
-          setIsMine(false);
-        }
       })
       .catch((err) => {
         console.log(err);
