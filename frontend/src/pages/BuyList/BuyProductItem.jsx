@@ -20,7 +20,7 @@ export default function BuyProductItem({ product, clickProduct }) {
               clickProduct(product.productId);
             }}
           >
-            {product.ttitle}
+            {product.title}
           </div>
           <div
             className={styles.review}
@@ -28,7 +28,7 @@ export default function BuyProductItem({ product, clickProduct }) {
               navigate(`/review/${product.productId}/create`);
             }}
           >
-            리뷰쓰고 포인트받기
+            리뷰쓰고 +2pt
           </div>
         </div>
         <div className={styles.price}>{product.price}원</div>
