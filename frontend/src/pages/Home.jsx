@@ -9,6 +9,10 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router";
 
+// swiper - 이미지 슬라이더
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
 export default function Home() {
   const location = useLocation();
   const curLocation = location.pathname;
@@ -26,7 +30,7 @@ export default function Home() {
         `https://i8c110.p.ssafy.io/api/v1/products/main?pageNo=${page}&pageSize=5`
       )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         // 리스트 뒤로 붙여주기
         setProducts([...products, ...res.data]);
         // get으로 받은 데이터의 길이가 백에서 보내주기로 한 리스트보다 짧으면(?)
@@ -56,7 +60,15 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
-      <HomeBanner />
+      <Swiper autoplay={true} loop={true} autoHeight={true}>
+        <SwiperSlide>
+          <HomeBanner />
+        </SwiperSlide>
+        <SwiperSlide>
+          <HomeBanner />
+        </SwiperSlide>
+      </Swiper>
+
       <div className={styles.body}>
         <div className={styles.onsale}>판매중</div>
         <div className={styles.items}>
