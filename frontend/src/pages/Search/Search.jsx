@@ -18,19 +18,19 @@ export default function Search() {
   const [recents, setRecents] = useState(loadedRecents);
 
   const handleSearchWord = (e) => {
-    console.log(e.target.value)
     setSearchName(e.target.value);
   };
 
   const searchProducts = (searchWord) => {
-    console.log('🧡🧡')
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
         searchName: searchWord,
       })
       .then((res) => {
-        console.log(res.data)
         setProducts([...res.data]);
+        if (res.data !== []) {
+          setRecentOpen(false)
+        }
       })
       .catch((err) => {
         console.log(err);
