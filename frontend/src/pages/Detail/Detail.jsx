@@ -44,7 +44,7 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chats, setChats] = useState([]);
-  const [value, setValue] = useState(product.status);
+  const [value, setValue] = useState('ONSALE');
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
@@ -75,8 +75,8 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
-    setValue(value,'👻👻👻');
-    console.log(value)
+    setValue(value);
+    console.log(value,'👻👻👻👻')
     // 수정하기 api 요청
     if (e.target.value === "SOLDOUT") {
       // 채팅중인 사용자 불러오기
