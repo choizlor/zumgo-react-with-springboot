@@ -477,6 +477,7 @@ const VideoRoom = () => {
               </div>
               <div className={styles.bottombottom}>
                 <ChattingForm
+                  myProfileImg={myProfileImg}
                   myUserName={myUserName}
                   onMessage={sendMsg}
                   currentSession={session}
