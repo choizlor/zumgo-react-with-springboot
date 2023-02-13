@@ -96,7 +96,9 @@ public class SocketController {
             chatInfo.setBuyer(chatRoomInfo.getBuyer()); //구매자 정보
             chatInfo.setSeller(chatRoomInfo.getSeller()); //판매자 정보
             chatInfo.setChatList(new ArrayList<>()); //채팅내역은 빈 리스트
-            
+
+            chatInfo.setChatRoomId(chatRoomInfo.getId()); //채팅방 id
+
         } else {
             //채팅 내역 가져오기
             log.info("채팅방 존재");
