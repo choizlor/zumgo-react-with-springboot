@@ -44,6 +44,7 @@ export default function Detail() {
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [chats, setChats] = useState([]);
+  const [status,setStatus] = useState(product.status);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
@@ -81,6 +82,7 @@ export default function Detail() {
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
           setChats(res.data);
+          console.log(res.data,'👻👻👻')
           setModalOpen(true);
         })
         .catch((err) => {
