@@ -15,6 +15,7 @@
   width: 100%;
   z-index: 3;
 }
+
 .bgtop {
   width: 100%;
   height: 50vh;
@@ -63,7 +64,7 @@
 
 .toptop {
   margin: auto;
-  width: 95%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -107,12 +108,12 @@
 }
 
 .topright {
-  width: 23%;
+  width: 25%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 3%;
-  margin-right: 3%;
+  /* margin-top: 2%; */
+  margin-right: 2%;
 }
 
 .live {
