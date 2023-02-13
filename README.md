@@ -1,10 +1,10 @@
-# Zum:go   
-<img src="/images/zumgo로고.png">   
-프로젝트 소개 적기~
+# zum:go   
+<img src="/images/logo.png">   
+프로젝트 소개 간단하게
 
 
 # :bulb: Description  
-#### 기간
+#### 기간 : 2023.01.03 ~ 2023.02.17
 #### 개요
 #### 
 
@@ -12,7 +12,7 @@
    
 
 
-# :family: Team  
+# :family: Team - isf6  
 
 <table>
   <tr>
@@ -39,7 +39,7 @@
 
 # :hammer: 개발 환경   
 
-Backend   
+#### Backend   
 - IntelliJ
 - Spring boot 2.7.8
 - Spring boot JPA
@@ -47,21 +47,21 @@ Backend
 - Java 8
 - MySQL 8.0.32
 - AWS S3
-- Junit:4.13.1
+- Junit 4.13.1
 
-Frontend   
+#### Frontend   
 - Visual Studio Code
 - React.js
 - Node.js 19.6.0
 - redux
 
-Web RTC
+#### Web RTC
 - Openvidu 2.25.0
 
-Web Socket
+#### Web Socket
 - stomp websocket 2.3.3
 
-CI/CD
+#### CI/CD
 - AWS EC2 (Ubuntu 20.04.1)
 - Docker 20.10.12
 - Nginx 1.23.3
