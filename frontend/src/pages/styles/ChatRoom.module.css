@@ -111,7 +111,7 @@
     width : 95%;
     display: flex;
     justify-content: space-between;
-    margin : auto;
+    margin : 0 auto;
     position: absolute;
     bottom : 5px;
 }
