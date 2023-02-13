@@ -39,9 +39,9 @@ const ChattingList = (props) => {
         {props.messageList.map((msg, i) => (
           <div key={i}>
             <div className={styles.chat}>
-              {/* <div className={styles.profile}> */}
+              <div className={styles.profile}>
                 <img src={msg.split(":")[1]} className={styles.profileimg} alt="img" />
-              {/* </div> */}
+              </div>
               <div className={styles.sender}>{msg.split(":")[2]}</div>
               <div className={styles.content}>{msg.split(":")[3]}</div>
             </div>
