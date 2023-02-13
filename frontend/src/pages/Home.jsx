@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HomeBanner from "../components/Home/HomeBanner";
+import HomeBanner1 from "../components/Home/HomeBanner1";
 import BottomNav from "../components/Nav/BottomNav";
 import TopNav from "../components/Nav/TopNav";
 import styles from "./styles/Home.module.css";
@@ -68,10 +68,10 @@ export default function Home() {
         modules={[Autoplay]}
       >
         <SwiperSlide>
-          <HomeBanner />
+          <HomeBanner1 />
         </SwiperSlide>
         <SwiperSlide>
-          <HomeBanner />
+          <HomeBanner1 />
         </SwiperSlide>
       </Swiper>
 
