@@ -23,6 +23,7 @@ export default function Search() {
   };
 
   const searchProducts = (searchWord) => {
+    console.log('🧡🧡')
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
         searchName: searchWord,
