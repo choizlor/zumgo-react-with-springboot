@@ -1,5 +1,5 @@
 # Zum:go   
-<img src="/images/zumgo로고.PNG">   
+<img src="/images/zumgo로고.png">   
 프로젝트 소개 적기~
 
 
