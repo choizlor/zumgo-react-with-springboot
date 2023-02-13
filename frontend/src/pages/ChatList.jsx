@@ -68,7 +68,6 @@ export default function ChatList() {
                 getChatHistory(chat.seller.userCode, chat.buyer.userCode);
               }}
             >
-              <div className={styles.leftbox}>
                 <div className={styles.otherimg}>
                   <img
                     src={
@@ -89,7 +88,6 @@ export default function ChatList() {
                       {chat.lastChat["chat_content"]}
                     </span>
                 </div>
-              </div>
             </div>
           );
         })}
