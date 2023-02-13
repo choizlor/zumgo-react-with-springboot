@@ -59,6 +59,7 @@
     width : 100%;
     padding : 4%;
     border-top : 0.7px #e2e2e2 solid;
+    display: none;
 }
 
 .textarea {
@@ -84,7 +85,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    position: absolute;
-    bottom : 5%;
+    margin: 5% auto;
 }

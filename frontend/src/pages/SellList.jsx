@@ -14,22 +14,24 @@ export default function SellList() {
   const filterText = ["판매 중", "예약 중", "판매완료"];
   const navigate = useNavigate();
   const userId = useParams().userId;
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("ONSALE");
-  const [filtered, setFiltered] = useState();
+  const [filtered, setFiltered] = useState([]);
 
-  const dataload = async () => {
-    await axios
+  useEffect(() => {
+    axios
       .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
-      .then((res) => 
-        setProducts(res.data)
-      );
+      .then((res) => {
+        setProducts(res.data);
+        setFiltered(res.data.filter((product) => product.status === filter))
+      })
+      .catch((err) => {
+        console.log(err);
+      });
       console.log(filter,'======')
-      handleChangeStatus(filter)
-      console.log(products,'-------')
-  }
 
-  useEffect(dataload, []);
+      console.log(products,'-------')
+  }, []);
 
   const clickProduct = (id) => {
     navigate(`/detail/${id}`);
@@ -77,16 +79,16 @@ export default function SellList() {
         <div className={styles.status}>
         <ul>
           {/**filtered된 product리스트 productitem에 보여주기 */}
-          {filtered?.map((product) => (
+          {filtered.length!== 0 ? filtered.map((product) => (
             <ProductItem
               key={product.productId}
               product={product}
               clickProduct={clickProduct}
             />
-          ))}
+          )) : <div className={styles.alert}>상품이 없어요 😢</div> } 
         </ul>
       </div>
-      <BottomNav />   
+      {/* <BottomNav />    */}
     </div>
   );
 }

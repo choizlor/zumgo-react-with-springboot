@@ -1,22 +1,36 @@
 import React from "react";
-import styles from "./ProductItem.module.css";
+import styles from "../../components/Product/ProductItem.module.css";
 import zImg from "../../assets/images/z.png";
+import axios from "axios";
 import { HeartIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductItem({ product, clickProduct }) {
-  
+export default function BuyProductItem({ product, clickProduct }) {
+  const navigate = useNavigate();
   return (
-    <div
-      className={styles.body}
-      onClick={() => {
-        clickProduct(product.productId);
-      }}
-    >
+    <div className={styles.body}>
       <div className={styles.productimg}>
         <img src={product.thumbnail} alt="" />
       </div>
       <div className={styles.product}>
-        <div className={styles.title}>{product.title}</div>
+        <div className={styles.top}>
+          <div
+            className={styles.ttitle}
+            onClick={() => {
+              clickProduct(product.productId);
+            }}
+          >
+            {product.ttitle}
+          </div>
+          <div
+            className={styles.review}
+            onClick={() => {
+              navigate(`/review/${product.productId}/create`);
+            }}
+          >
+            리뷰쓰고 포인트받기
+          </div>
+        </div>
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.bottom}>
           <div
@@ -27,9 +41,9 @@ export default function ProductItem({ product, clickProduct }) {
                 : { backgroundColor: "#d9d9d9" }
             }
           >
-            {product.status === 'ONSALE' && '판매중'}
-            {product.status === 'BOOKING' && '예약중'}
-            {product.status === 'SOLDOUT' && '거래완료'}
+            {product.status === "ONSALE" && "판매중"}
+            {product.status === "BOOKING" && "예약중"}
+            {product.status === "SOLDOUT" && "거래완료"}
           </div>
           <div className={styles.icons}>
             <div className={styles.icon}>

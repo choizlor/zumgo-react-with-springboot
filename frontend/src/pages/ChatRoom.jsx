@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
-import testImg from "../assets/images/testImg.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
-
 import * as StompJs from "@stomp/stompjs";
+import axios from "axios";
 
 // heroicons
 import { ChevronLeftIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
 
 export default function ChatRoom() {
   // 현재 로그인된 사용자
@@ -20,17 +18,14 @@ export default function ChatRoom() {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const sellerId = location.state?.sellerId;
-  const buyerId = location.state?.buyerId;
-  const sellerNickname = location.state?.sellerNickname;
-  const buyerNickname = location.state?.buyerNickname;
-  const sellerImg = location.state?.sellerImg;
-  const buyerImg = location.state?.buyerImg;
+  const seller = location.state.seller;
+  const buyer = location.state.buyer;
+  const type = location.state?.type;
+  const title = location.state?.title;
+  const productId = location.state?.productId;
 
-  const otherImg = sellerId === user.userCode ? buyerImg : sellerImg;
-  const otherId = sellerId === user.userCode ? buyerId : sellerId;
-  const otherNickname =
-    sellerId === user.userCode ? buyerNickname : sellerNickname;
+  const me = user.userCode === seller.userCode ? seller : buyer;
+  const other = user.userCode === seller.userCode ? buyer : seller;
 
   const param = useParams(); // 채널을 구분하는 식별자c
   const chatroomId = param.chatroomId;
@@ -53,11 +48,11 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.chatterId !== user.userCode) {
+    if (item.chatterId !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
-            <img src={otherImg} alt="" />
+            <img src={other.kakaoProfileImg} alt="" />
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.chat_content}</div>
@@ -86,16 +81,18 @@ export default function ChatRoom() {
     var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
     var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
 
-    if (item.sender !== user.userCode) {
+    if (item.sender !== me.userCode && item.data) {
       return (
         <div key={idx} className={styles.otherchat}>
           <div className={styles.otherimg}>
-            <img src={otherImg} alt="" />
+            <img src={other.kakaoProfileImg} alt="" />
           </div>
           <div className={styles.othermsg}>
             <div className={styles.msgdata}>{item.data}</div>
           </div>
-          <span className={styles.otherdate}>{hour}:{minute}</span>
+          <span className={styles.otherdate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     } else {
@@ -104,7 +101,9 @@ export default function ChatRoom() {
           <div className={styles.mymsg}>
             <div className={styles.msgdata}>{item.data}</div>
           </div>
-          <span className={styles.mydate}>{hour}:{minute}</span>
+          <span className={styles.mydate}>
+            {hour}:{minute}
+          </span>
         </div>
       );
     }
@@ -136,12 +135,25 @@ export default function ChatRoom() {
       });
 
       // 구독
-      clientdata.onConnect = function () {
-        clientdata.subscribe("/sub/channels/" + chatroomId, callback);
+      clientdata.onConnect = async () => {
+        clientdata.subscribe("/sub/channels/" + chatroomId, callback); 
+        if (type==='live') {
+          clientdata.publish({
+            destination: "/pub/chat/" + chatroomId,
+            body: JSON.stringify({
+              type: '',
+              sender: user.userCode,
+              channelId: chatroomId,
+              data: `${title} 상품의 라이브를 요청합니다!`,
+            }),
+            headers: { priority: 9 },
+          });
+        }
       };
 
       clientdata.activate(); // 클라이언트 활성화
       changeClient(clientdata); // 클라이언트 갱신
+
     } catch (err) {
       console.log(err);
     }
@@ -164,12 +176,15 @@ export default function ChatRoom() {
     }
   };
 
+  useEffect(() => {
+    
+  })
+
   // 메시지 보내기
   const sendChat = () => {
     if (chat === "") {
       return;
     }
-
 
     client.publish({
       destination: "/pub/chat/" + chatroomId,
@@ -189,10 +204,10 @@ export default function ChatRoom() {
   const exitChatRoom = () => {
     alert("대화정보가 함께 삭제됩니다!.");
     axios
-      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`, )
+      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`)
       .then((res) => {
         disConnect();
-        navigate('/chatlist')
+        navigate("/chatlist");
       })
       .catch((err) => {
         console.log(err);
@@ -217,7 +232,7 @@ export default function ChatRoom() {
               navigate("/chatlist");
             }}
           />
-          <span>{otherNickname}</span>
+          <span>{other.kakaoNickname}</span>
           <div className={styles.delete} onClick={exitChatRoom}>
             나가기
           </div>
@@ -231,7 +246,7 @@ export default function ChatRoom() {
 
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
-          <MegaphoneIcon onClick={() => navigate(`/report/${otherId}`)} />
+          <MegaphoneIcon onClick={() => navigate(`/report/${other.userCode}`)} />
           <div className={styles.inputbar}>
             <div>
               <input

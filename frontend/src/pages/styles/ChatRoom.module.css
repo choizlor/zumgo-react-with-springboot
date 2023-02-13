@@ -57,21 +57,16 @@
 }
 
 .othermsg {
-    height : 35px;
     font-size: 13px;
     border-radius: 15px 15px 15px 0;
     background-color: #e9e9e9;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding : 5%;
+    padding: 2% 3%;
     margin-right : 2%;
+    max-width: 70%;
     font-family: 'Roboto', sans-serif;
-}
-
-.msgdata {
-    margin : 1%;
-    width: 100%;
 }
 
 .otherdate {
@@ -87,7 +82,6 @@
 }
 
 .mymsg {
-    height : 35px;
     font-size: 13px;
     border-radius: 15px 15px 0 15px;
     background-color: black;
@@ -96,8 +90,9 @@
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
-    padding : 5%;
+    padding: 2% 3%;
     margin-left: 2%;
+    max-width: 70%;
 }
 
 
@@ -106,16 +101,17 @@
     font-size: 10px;
 }
 
+.msgdata {
+    margin : 2% auto;
+    padding: 0;
+}
+
 /* 메시지 입력 바 */
 .sendzone {
     width : 95%;
     display: flex;
     justify-content: space-between;
     margin : auto;
-}
-
-.cameraicon {
-
 }
 
 .inputbar {
@@ -133,6 +129,7 @@
     background-color: black;
     margin-left : 10%;
     border: none;
+    width: 75%;
 }
 
 .sendbtn {

@@ -12,6 +12,7 @@ export default function AddReview() {
 
   const [review, setreview] = useState("");
   const [sellerId, setSellerId] = useState("");
+  const [title, setTitle] = useState("");
 
   const param = useParams();
   const productId = param.productId;
@@ -20,34 +21,38 @@ export default function AddReview() {
     // 상품 정보 axios
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${sellerId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${buyerId}`
       )
       .then((res) => {
         setSellerId(res.data.userCode);
+        setTitle(res.data.title)
       })
       .catch((err) => {
         console.log(err);
       });
   });
+
   const handleChange = (e) => {
     setreview(e.target.value);
   };
 
   const addReview = () => {
-    axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
-        seller: sellerId,
-        buyer: buyerId,
-        review,
-      })
-      .then((res) => {
-        console.log(res);
-        navigate(-1);
-        // setreview("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(sellerId)
+    console.log(buyerId)
+   // productId로 수정하기
+   axios
+   .patch(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
+     seller: sellerId,
+     buyer: buyerId,
+     review,
+   })
+   .then((res) => {
+     console.log(res.data);
+     navigate(-1);
+   })
+   .catch((err) => {
+     console.log(err);
+   });
   };
 
   return (
@@ -57,7 +62,7 @@ export default function AddReview() {
         <div className={styles.title}>리뷰 작성</div>
       </div>
       <div className={styles.reviewform}>
-        <div className={styles.trade}>{} 님과의 거래 어떠셨나요?</div>
+        <div className={styles.trade}>"{title}" 거래 어떠셨나요?</div>
         <textarea
           className={styles.comments}
           cols="30"

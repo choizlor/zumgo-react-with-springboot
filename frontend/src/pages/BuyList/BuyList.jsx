@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import styles from "./styles/BuyList.module.css";
+import styles from "./BuyList.module.css";
 import { useNavigate, useParams } from "react-router";
-import ProductItem from "../components/Product/ProductItem";
+import BuyProductItem from "./BuyProductItem";
 
 export default function BuyList() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function BuyList() {
         <ChevronLeftIcon
           className="w-6 h-6 text-black-100"
           onClick={() => {
-            navigate(-1);
+            navigate(`/userInfo/${userId}`);
           }}
         />
         <div className={styles.title}>구매 목록</div>
@@ -37,7 +37,7 @@ export default function BuyList() {
       <div className={styles.scrollarea}>
         {products?.map((product) => {
           return (
-            <ProductItem
+            <BuyProductItem
               key={product.productId}
               product={product}
               clickProduct={clickProduct}

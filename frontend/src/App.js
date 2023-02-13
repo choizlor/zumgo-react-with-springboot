@@ -17,7 +17,7 @@ import ChatRoom from "./pages/ChatRoom";
 import AddProduct from "./pages/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import Login from "./pages/Login/Login";
-import BuyList from "./pages/BuyList";
+import BuyList from "./pages/BuyList/BuyList";
 import SellList from "./pages/SellList";
 import WishList from "./pages/WishList";
 import Search from "./pages/Search/Search";
@@ -26,7 +26,6 @@ import UserInfo from "./pages/UserInfo/UserInfo";
 import AddReview from "./pages/AddReview";
 import MyReviewList from "./pages/MyReviewList";
 import Report from "./pages/Report/Report";
-import UpdateReview from "./pages/UpdateReview";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +54,6 @@ const router = createBrowserRouter([
       { path: "/myreviewlist", element: <MyReviewList /> },
       { path: "/report/:userId", element: <Report /> },
       { path: "/report/:userId", element: <Report /> },
-      { path: "/review/:productId/update", element: <UpdateReview /> },
     ],
   },
 ]);

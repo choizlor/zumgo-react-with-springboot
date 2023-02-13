@@ -58,15 +58,12 @@ export default function Detail() {
         `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
-        console.log(res.data);
         setProduct(res.data);
         setwishCnt(res.data.wishSize);
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
         // 같으면 판매자, 다르면 구매자
-        console.log(res.data);
-        console.log("로그인된 사용자: ", userId);
 
         if (userId !== res.data.userCode) {
           setIsMine(false);
@@ -110,26 +107,22 @@ export default function Detail() {
   // 일반채팅하기
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
-    console.log(userId);
-    console.log(product.userCode);
-    console.log(product?.userCode);
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
-        sellerCode: Number(product?.userCode),
+        sellerCode: product?.userCode,
       })
       .then((res) => {
         console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
-            sellerId: product.userCode,
-            buyerId: userId,
-            sellerNickname: res.data.sellerNickname,
-            buyerNickname: res.data.buyerNickname,
-            sellerImg: res.data.sellerImg,
-            buyerImg: res.data.buyerImg,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
+            type: "",
+            title: product.title,
+            productId: productId,
           },
         });
       })
@@ -140,6 +133,10 @@ export default function Detail() {
 
   // 찜 추가하기
   const addwish = () => {
+    if (userId == 0) {
+      alert("로그인이 필요한 서비스 입니다.");
+      return;
+    }
     // wishcheck가 true라면 post 요청
     if (wishCheck === false) {
       axios
@@ -183,10 +180,33 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+
+    // 채팅방으로 메시지 보내기
+    axios
+      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        buyerCode: userId,
+        sellerCode: product?.userCode,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/chatroom/${res.data.chatRoomId}`, {
+          state: {
+            chats: res.data.chatList,
+            seller: res.data.seller,
+            buyer: res.data.buyer,
+            type: "live",
+            title: product.title,
+            productId: productId,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //  상품 삭제하기
-
   const deleteproduct = () => {
     axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
@@ -240,16 +260,18 @@ export default function Detail() {
 
       {/* 상품 정보 container */}
       <div className={styles.container}>
-        <div
-          className={styles.seller}
-          onClick={() => {
-            navigate(`/userinfo/${product.userCode}`);
-          }}
-        >
+        <div className={styles.seller}>
           <div className={styles.sellerImgBox}>
             <img src={product.kakaoProfileImg} className={styles.sellerImg} />
           </div>
-          <div className={styles.sellerName}>{product.kakaoNickname}</div>
+          <div
+            className={styles.sellerName}
+            onClick={() => {
+              navigate(`/userinfo/${product.userCode}`);
+            }}
+          >
+            {product.kakaoNickname}
+          </div>
         </div>
         <div className={styles.selectbox}>
           {/* 드롭다운 */}
@@ -316,7 +338,11 @@ export default function Detail() {
       </div>
       {/* 누구와 거래하셨나요 모달 */}
       {modalOpen ? (
-        <DetailModal setModalOpen={setModalOpen} chats={chats} />
+        <DetailModal
+          setModalOpen={setModalOpen}
+          chats={chats}
+          productId={productId}
+        />
       ) : null}
     </div>
   );

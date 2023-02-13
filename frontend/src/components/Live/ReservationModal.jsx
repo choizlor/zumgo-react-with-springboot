@@ -38,14 +38,12 @@ export default function ReservationModal({ setModalOpen, productId }) {
 
   const handleSubmit = () => {
     setModalOpen(false);
+
     axios
-      .put(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`,
-        {
-          ...product,
-          reserve,
-        }
-      )
+      .post(`https://i8c110.p.ssafy.io/api/v1/talk/reserve/${productId}`, {
+        ...product,
+        reserve,
+      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
@@ -54,7 +52,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
       liveStartTime: reserve,
       liveStatus: "WAIT",
     });
-    
+
     axios
       .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
         headers: {
@@ -79,7 +77,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
           selected={reserve}
           onChange={(date) => setReserve(date)}
           showTimeInput
-          dateFormat="Pp"
+          dateFormat="yyyy/MM/dd h:mm aa"
           minDate={new Date()}
           popperModifiers={{
             // 모바일 web 환경에서 화면을 벗어나지 않도록 하는 설정
@@ -87,6 +85,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
               enabled: true,
             },
           }}
+          onFocus={(e) => e.target.blur()}
           className={styles.datepicker}
         />
         <button onClick={handleSubmit} className={styles.btn}>

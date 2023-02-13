@@ -2,6 +2,7 @@ package com.isf6.backend.domain.repository;
 
 import com.isf6.backend.domain.entity.LiveRequest;
 import com.isf6.backend.domain.entity.Product;
+import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.domain.entity.Wish;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

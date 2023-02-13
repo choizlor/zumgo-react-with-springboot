@@ -205,6 +205,7 @@ const VideoRoom = () => {
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
+      setBestBidderImg(tmp[2]);
     });
 
     mySession.on("signal:bid", (event) => {
@@ -212,6 +213,7 @@ const VideoRoom = () => {
       setBidPrice(tmp[0]);
       setBestBidder(tmp[1]);
       setBestBidderImg(tmp[2]);
+      setBidCount(tmp[3]);
     });
 
     // 유효한 토큰으로 세션에 접속하기
@@ -308,7 +310,7 @@ const VideoRoom = () => {
     // setBidders((bidders) => bidders + 1)
     session
       .signal({
-        data: `${Number(bidders) + 1} : ${myUserName}`,
+        data: `${Number(bidders) + 1} : ${myUserName} : ${myProfileImg}`,
         type: "count",
       })
       .then(() => {
@@ -320,10 +322,12 @@ const VideoRoom = () => {
   };
 
   // bidPrice가 갱신될 때마다 signal 보내서 동기화
-  const bidding = (price, bidder, myProfileImg) => {
+  const bidding = (price, bidder, myProfileImg, bidCount) => {
     session
       .signal({
-        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg}`,
+        data: `${
+          Number(bidPrice) + price
+        } : ${bidder} : ${myProfileImg} : ${bidCount}`,
         type: "bid",
       })
       .then(() => {
@@ -335,8 +339,8 @@ const VideoRoom = () => {
   };
 
   // price가 변경될 때마다 bidding 실행
-  const handleBidPrice = (price, bidder, myProfileImg) => {
-    bidding(price, bidder, myProfileImg);
+  const handleBidPrice = (price, bidder, myProfileImg, bidCount) => {
+    bidding(price, bidder, myProfileImg, bidCount);
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
@@ -478,10 +482,14 @@ const VideoRoom = () => {
                   currentSession={session}
                 />
                 {isHost ? (
-                  <button onClick={startAuction} className={styles.gobtn}>
-                    go?
-                  </button>
-                ) : (
+                  !sellerCheck ? (
+                    <button onClick={startAuction} className={styles.gobtn}>
+                      go?
+                    </button>
+                  ) : (
+                    <button className={styles.nogobtn}>go?</button>
+                  )
+                ) : !buyerCheck ? (
                   <button
                     onClick={() => {
                       countBidder();
@@ -491,6 +499,8 @@ const VideoRoom = () => {
                   >
                     go!
                   </button>
+                ) : (
+                  <button className={styles.nogobtn}>go!</button>
                 )}
               </div>
             </div>
@@ -537,13 +547,62 @@ const VideoRoom = () => {
 
           <div>
             {celebrity ? (
-              <div className={styles.modal}>
-                <div className={styles.modaltitle}>축하합니다!</div>
-                <div className={styles.modalimg}>
-                  <img src={bestBidderImg} alt="" />
+              <div className={styles.confetticon}>
+                <div className={styles.modal}>
+                  <div className={styles.modaltitle}>축하합니다!</div>
+                  <div className={styles.modalimg}>
+                    <img src={bestBidderImg} alt="" />
+                  </div>
+                  <div className={styles.modalbiddername}>
+                    {bestBidder} 님이,
+                  </div>
+                  <div className={styles.modalbidprice}>
+                    {bidPrice}원에 낙찰!
+                  </div>
                 </div>
-                <div className={styles.modalbiddername}>{bestBidder} 님이,</div>
-                <div className={styles.modalbidprice}>{bidPrice}원에 낙찰!</div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
+                <div className={styles.confetti}></div>
               </div>
             ) : null}
           </div>

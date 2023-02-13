@@ -2,6 +2,7 @@
   background-color: black;
   width: 100vw;
   height: 100vh;
+  padding-top: 7%;
 }
 
 .logo {
@@ -12,48 +13,25 @@
   margin-left: 3%;
 }
 
-.logo span {
-  margin: 3%;
-}
-
 .togglebtn {
   position: fixed;
-  bottom: 120px;
-  left: 105px;
+  bottom: 17%;
+  left: 30%;
+  display: table;
+  table-layout: fixed;
 }
 
 /* 토글 버튼 */
 .toggle {
   display: table-cell;
-  position: relative;
   width: 200px;
-  height: 140px;
-  box-sizing: border-box;
   border: 2px solid white;
-}
-
-.cover {
-  height: 100px;
-  margin: 20px;
   border-radius: 100px;
 }
 
-.cover:before {
-  counter-increment: button-counter;
-  content: counter(button-counter);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: #d7e3e3;
-  font-size: 12px;
-  line-height: 1;
-  padding: 5px;
-}
-
-.cover,
 .knobs,
 .layer {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   right: 0;
   bottom: 0;
@@ -61,12 +39,12 @@
 }
 
 .button {
-  position: relative;
+  /* position: relative; */
   top: 50%;
   width: 150px;
   height: 30px;
   margin: -20px auto 0 auto;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .checkbox {
@@ -96,8 +74,8 @@
   font-family: "Poppins", sans-serif;
   content: "S E L L";
   position: absolute;
-  top: 6.5px;
-  left: 4px;
+  top: 18%;
+  left: 5%;
   width: 75px;
   height: 20px;
   color: black;
@@ -113,7 +91,7 @@
 
 .checkbox:checked + .knobs:before {
   content: "B U Y";
-  left: 70px;
+  left: 45%;
   color: black;
   background-color: white;
 }
