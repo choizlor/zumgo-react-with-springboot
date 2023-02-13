@@ -243,7 +243,7 @@ export default function ChatRoom() {
         </div>
 
         {/* 채팅 리스트 */}
-        <div className={styles.chatbox} ref={scrollRef}>
+        <div className={styles.chatbox}>
           {preMsgBox}
           {msgBox}
         </div>
