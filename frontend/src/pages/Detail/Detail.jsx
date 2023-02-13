@@ -74,7 +74,7 @@ export default function Detail() {
       });
   }, []);
 
-  const changeStatus = (value) => {
+  const changeStatus = (e) => {
     setValue(value);
     console.log(value,'👻👻👻👻')
     // 수정하기 api 요청
