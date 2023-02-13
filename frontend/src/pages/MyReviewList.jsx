@@ -20,8 +20,8 @@ export default function MyReviewList() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
       .then((res) => {
-        setReviews(res.data.MyReview);
-        console.log(res.data)
+        let tmpReviews = res.data.MyReview.filter((review) => { return review.review !== ''})
+        setReviews(tmpReviews)
       });
   }, []);
 
@@ -63,7 +63,7 @@ export default function MyReviewList() {
                 <div className={styles.review}>
                   <div className={styles.top}>
                     <div className={styles.topleft}>
-                      <img src="" alt="" />
+                      <img src={review.thumbnail} alt="" />
                     </div>
                     <div className={styles.topright}>
                       <div className={styles.title}>{review.product.title}</div>
