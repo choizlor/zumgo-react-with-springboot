@@ -21,7 +21,6 @@ export default function Search() {
     setSearchName(e.target.value);
   };
 
-
   const searchProducts = (searchWord) => {
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
@@ -29,6 +28,9 @@ export default function Search() {
       })
       .then((res) => {
         setProducts([...res.data]);
+        if (res.data !== []) {
+          setRecentOpen(false)
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -62,13 +64,6 @@ export default function Search() {
     navigate(`/detail/${id}`);
   };
 
-  // 검색어 삭제하기
-  const handleDeleteRecent = (item) => {
-    let newRecents = recents.filter((word) => {return item!==word})
-    setRecents(newRecents)
-    window.localStorage.setItem('recents', JSON.stringify(recents))
-  };
-
   return (
     <div className={styles.body}>
       <div className={styles.nav}>
@@ -93,11 +88,10 @@ export default function Search() {
         <SearchItems
           recents={recents}
           searchProducts={searchProducts}
-          handleDeleteRecent={handleDeleteRecent}
         />
       ) : (
         <div className={styles.searchlist}>
-          {products.length > 0 ? (
+          {products?.length > 0 ? (
             products?.map((product) => (
               <ProductItem
                 key={product.productId}

@@ -62,10 +62,10 @@ export default function Home() {
     <div className={styles.background}>
       <TopNav />
       <Swiper
-        autoplay={{ delay: 6, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={true}
         autoHeight={true}
-        modules={Autoplay}
+        modules={[Autoplay]}
       >
         <SwiperSlide>
           <HomeBanner />

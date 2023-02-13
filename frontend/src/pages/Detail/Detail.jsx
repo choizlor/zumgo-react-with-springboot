@@ -183,12 +183,10 @@ export default function Detail() {
     // 채팅방으로 메시지 보내기
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
         sellerCode: product?.userCode,
       })
       .then((res) => {
-        console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
@@ -210,19 +208,7 @@ export default function Detail() {
     await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // 상품 정보 axios
-    axios
-      .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
-      )
-      .then((res) => {
-        setProduct(res.data);
-        // 같으면 판매자, 다르면 구매자
+        navigate(`/selllist/${userId}`)
       })
       .catch((err) => {
         console.log(err);
