@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 export default function BuyList() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   const userId = useSelector((state) => { return state.user.userCode})
 
