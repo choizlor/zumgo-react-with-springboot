@@ -6,6 +6,7 @@
 }
 
 .prices button {
+  margin: 3%;
   background-color: white;
   border-radius: 40px;
   width: 70px;
