@@ -86,8 +86,8 @@ export default function ChatList() {
                       : chat.seller.kakaoNickname}
                   </div>
                   <div className={styles.time}>
-                    {chat?.["chat_date"].slice(5, 7)}월 {chat?.["chat_date"].slice(8, 10)}
-                    일 {Number(chat?.["chat_date"].slice(11, 13)) + 9}:{chat?.["chat_date"].slice(14,16)}
+                    {chat?.lastChat["chat_date"].slice(5, 7)}월 {chat?.lastChat["chat_date"].slice(8, 10)}
+                    일 {Number(chat?.lastChat["chat_date"]?.slice(11, 13)) + 9}:{chat?.lastChat["chat_date"].slice(14,16)}
                   </div>
                 </div>
                 <span className={styles.lastmsg}>
