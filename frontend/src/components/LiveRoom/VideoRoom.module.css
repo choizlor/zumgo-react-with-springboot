@@ -190,11 +190,27 @@
 }
 
 .modaltext {
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .celediv {
   top: 0;
-  position: absolute;
   z-index: 999;
+}
+
+.pricediv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bidtext {
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
 }

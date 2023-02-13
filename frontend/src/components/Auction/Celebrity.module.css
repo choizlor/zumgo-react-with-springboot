@@ -1,5 +1,6 @@
 /* 낙찰자 모달 */
 .modal {
+  background-color: white;
   width: 70%;
   margin: auto;
   border-radius: 20px;

@@ -532,18 +532,21 @@ const VideoRoom = () => {
             />
           </div>
 
-          <div>구매의사 수: {bidders}</div>
-          <div>입찰가: {bidPrice}</div>
+          {/* <div>구매의사 수: {bidders}</div>
+          <div>입찰가: {bidPrice}</div> */}
 
-          <div>
-            {buyerCheck && priceOpen ? (
-              <Price
-                handleBidPrice={handleBidPrice}
-                setBidCount={setBidCount}
-                myUserName={myUserName}
-                className={styles.price}
-                myProfileImg={myProfileImg}
-              />
+          <div className={styles.pricediv}>
+            {buyerCheck && priceOpen && !celebrity ? (
+              <div>
+                <Price
+                  handleBidPrice={handleBidPrice}
+                  setBidCount={setBidCount}
+                  myUserName={myUserName}
+                  className={styles.price}
+                  myProfileImg={myProfileImg}
+                />
+                <div className={styles.bidtext}>최고 {bidPrice}원!</div>
+              </div>
             ) : null}
           </div>
 
