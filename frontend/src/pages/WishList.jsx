@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useSelector} from 'react-redux'
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import styles from "./styles/WishList.module.css";
