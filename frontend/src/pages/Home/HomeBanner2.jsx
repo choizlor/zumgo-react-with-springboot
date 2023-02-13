@@ -16,7 +16,14 @@ export default function HomeBanner() {
           </div>
         </div>
       </div>
-      <div className={styles.bottom}></div>
+      <div className={styles.bottom}>
+      <div
+          className={styles.loginbtn}
+          style={{ visibility: "hidden" }}
+        >
+          <div>로그인하기</div>
+        </div>
+      </div>
     </div>
   );
 }
