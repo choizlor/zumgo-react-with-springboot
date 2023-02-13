@@ -58,7 +58,7 @@ export default function AddProduct() {
     let formData = new FormData();
     let files = e.target.imgurls.files;
 
-    setfileLen(files.length);
+    // setfileLen(files.length);
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
@@ -100,6 +100,10 @@ export default function AddProduct() {
     setDescription(e.target.value);
   };
 
+  const handleImageChange = (e) => {
+    setfileLen(e.target.files.length)
+  }
+
   return (
     <form className={styles.body} onSubmit={handleSubmit}>
       <div className={styles.nav}>
@@ -124,6 +128,7 @@ export default function AddProduct() {
           // capture="camera"     // 모바일에서 직접 카메라가 호출될 수 있도록 하는,,,근데 이제,, 나는 안해본,,
           name="imgurls" // 담긴 파일을 참조할 때 사용할 이름
           multiple // 다중 업로드
+          onChange={handleImageChange}
         />
 
         <input

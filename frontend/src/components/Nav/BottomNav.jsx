@@ -83,11 +83,16 @@ export default function BottomNav({ curLocation }) {
         <PlusCircleIcon
           className={styles.icon}
           onClick={() => {
-            navigate("/addproduct", {
-              state: {
-                userId: 3,
-              },
-            });
+            if (!userCode || userCode === 0) {
+              alert("로그인이 필요한 서비스 입니다!");
+              navigate("/login");
+            } else {
+              navigate("/addproduct", {
+                state: {
+                  userId: 3,
+                },
+              });
+            }
           }}
         />
         {curLocation?.slice(0, 9) === "/userinfo" ? (
