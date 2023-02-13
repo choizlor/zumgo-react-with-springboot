@@ -11,6 +11,8 @@
 /* 배경 그라데이션 */
 .background {
   top: 0;
+  position : absolute;
+  width: 100%;
   /* z-index: -1; */
 }
 .bgtop {
