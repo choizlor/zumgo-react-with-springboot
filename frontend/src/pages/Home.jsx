@@ -12,6 +12,7 @@ import { useLocation } from "react-router";
 // swiper - 이미지 슬라이더
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import {Autoplay} from 'swiper';
 
 export default function Home() {
   const location = useLocation();
@@ -60,7 +61,12 @@ export default function Home() {
   return (
     <div className={styles.background}>
       <TopNav />
-      <Swiper autoplay={true} loop={true} autoHeight={true}>
+      <Swiper
+        autoplay={{ delay: 6, disableOnInteraction: false }}
+        loop={true}
+        autoHeight={true}
+        modules={Autoplay}
+      >
         <SwiperSlide>
           <HomeBanner />
         </SwiperSlide>
