@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HomeBanner1 from "./HomeBanner1";
+import HomeBanner2 from "./HomeBanner2";
 import BottomNav from "../../components/Nav/BottomNav";
 import TopNav from "../../components/Nav/TopNav";
 import styles from "./Home.module.css";
@@ -71,7 +72,7 @@ export default function Home() {
           <HomeBanner1 />
         </SwiperSlide>
         <SwiperSlide>
-          <HomeBanner1 />
+          <HomeBanner2 />
         </SwiperSlide>
       </Swiper>
 
