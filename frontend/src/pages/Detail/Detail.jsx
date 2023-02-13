@@ -76,22 +76,29 @@ export default function Detail() {
 
   const changeStatus = (e) => {
     // 수정하기 api 요청
-    if (e.target.value === "SOLDOUT") {
+
       // 채팅중인 사용자 불러오기
       axios
         .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
         .then((res) => {
-          setChats(res.data);
-          setStatus(e.target.value);
-          setModalOpen(true);
+          if(e.target.value === "SOLDOUT") {
+            setChats(res.data);
+            setStatus(e.target.value);
+            console.log(status,'😀')
+            setModalOpen(true);
+          }
+          else {
+            setChats(res.data);
+            setStatus(e.target.value);
+            console.log(status,'😀')
+            setModalOpen(false);
+          }
+         
         })
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      setModalOpen(false);
     }
-
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
