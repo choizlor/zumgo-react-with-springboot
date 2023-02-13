@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import styles from './ChattingList.module.css'
 import _ from 'lodash';
 
 const ChattingList = (props) => {
@@ -31,17 +32,17 @@ const ChattingList = (props) => {
   })
 
   return (
-    <div ref={boxRef}>
+    <div ref={boxRef} className={styles.chattinglist}>
       <div>
         {props.messageList.map((msg, i) => (
           <div key={i}>
-            <div>
-              {/* <div>
+            <div className={styles.chat}>
+              {/* <div className={styles.profile}>
                 <img src={temp_logo}></img>
               </div> */}
               <div>
-                <div>{msg.split(":")[0]}</div>
-                <div>{msg.split(":")[1]}</div>
+                <div className={styles.sender}>{msg.split(":")[0]}</div>
+                <div className={styles.content}>{msg.split(":")[1]}</div>
               </div>
             </div>
           </div>
