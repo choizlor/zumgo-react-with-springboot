@@ -14,17 +14,20 @@
 }
 
 .profile {
-  height: 50px;
-  width: 50px;
+  height: 35px;
+  width: 35px;
   border-radius: 100%;
   overflow: hidden;
-  border: 1px solid rgba(33, 33, 33);
 }
 
 .profileimg {
-  height: 100%;
-  width: 100%;
+    border-radius: 35px;
   object-fit: cover;
+}
+
+.chatcontent {
+    display: flex;
+    flex-direction: column;
 }
 
 .sender {
