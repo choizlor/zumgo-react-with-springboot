@@ -23,6 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,14 +76,17 @@ public class TalkController {
         String productName = requestDto.getTitle();
         String reserveTime = requestDto.getReserve().toString().substring(0,16);
         String subject = "상품 라이브 예약 알림";
-        Map<String, String> button = new HashMap<>();
-        button.put("name", "zum:go 바로가기"); //버튼명
-        button.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
-        button.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
-        button.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
-        button.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
-        Map<String, Map> buttonInfo = new HashMap<>(); //버튼 정보
+        Map<String, String> buttonMap = new HashMap<>();
+        buttonMap.put("name", "zum:go 바로가기"); //버튼명
+        buttonMap.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
+        buttonMap.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
+        buttonMap.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        buttonMap.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        List<Map> button = new ArrayList<>();
+        button.add(buttonMap);
+        Map<String, List<Map>> buttonInfo = new HashMap<>(); //버튼 정보
         buttonInfo.put("button", button);
+        log.info("buttonInfo : {}", buttonInfo);
 
         //전송 객체 생성
         RestTemplate rt = new RestTemplate();
@@ -105,14 +109,15 @@ public class TalkController {
         for (int i=0; i<receiverSize; i++) {
             body.add("receiver_"+ (i+1), liveRequestUser.get(i).getKakaoPhoneNumber()); //수신자 연락처 -> 여기 수정 수신자 개수만큼
             body.add("subject_" + (i+1), subject); //알림톡 제목(나만 보임)
-            body.add("message_" + (i+1), "이 알림톡은 '" + productName + "' 상품 라이브 요청자에게만 발송됩니다.\n" +
+            body.add("message_" + (i+1), "이 알림톡은 " + productName + " 라이브 요청자에게만 발송됩니다.\n" +
                     "\n" +
-                    liveRequestUser.get(i).getKakaoNickname() + "님께서 요청하신 '" + productName + "' 라이브가 " + reserveTime + "에 예약 되었습니다."); //알림톡 내용
+                    liveRequestUser.get(i).getKakaoNickname() + "님께서 요청하신 " + productName + " 라이브가 " + reserveTime + " 예약 되었습니다."); //알림톡 내용
             log.info("message : {}", body.get("message_"+ (i+1)));
-            body.add("button_" + i, buttonInfo); //버튼정보
+            body.add("button_" + (i+1), buttonInfo); //버튼정보
         }
         //여기까지 반복문으로 liveRequestUser만큼 돌려야 될듯?
         //body.add("testMode", "Y"); //테스트모드
+        log.info("body : {}", body);
 
         //전송 객체 생성
         HttpEntity<MultiValueMap<String, Object>> LiveReserveRequest = new HttpEntity<>(body);
@@ -158,13 +163,15 @@ public class TalkController {
         String productName = product.getTitle();
         String reserveTime = product.getReserve().toString().substring(0,16);
         String subject = "라이브 시작 알림";
-        Map<String, String> button = new HashMap<>();
-        button.put("name", "zum:go 바로가기"); //버튼명
-        button.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
-        button.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
-        button.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
-        button.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
-        Map<String, Map> buttonInfo = new HashMap<>(); //버튼 정보
+        Map<String, String> buttonMap = new HashMap<>();
+        buttonMap.put("name", "zum:go 바로가기"); //버튼명
+        buttonMap.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
+        buttonMap.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
+        buttonMap.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        buttonMap.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        List<Map> button = new ArrayList<>();
+        button.add(buttonMap);
+        Map<String, List<Map>> buttonInfo = new HashMap<>(); //버튼 정보
         buttonInfo.put("button", button);
 
         //전송 객체 생성
@@ -188,13 +195,13 @@ public class TalkController {
         for (int i=0; i<receiverSize; i++) {
             body.add("receiver_"+ (i+1), liveRequestUser.get(i).getKakaoPhoneNumber()); //수신자 연락처 -> 여기 수정 수신자 개수만큼
             body.add("subject_" + (i+1), subject); //알림톡 제목(나만 보임)
-            body.add("message_" + (i+1), "이 알림톡은 '" + productName + "' 상품 라이브 요청자에게만 발송됩니다.\n" +
+            body.add("message_" + (i+1), "이 알림톡은 " + productName + " 라이브 요청자에게만 발송됩니다.\n" +
                     "\n" +
-                    liveRequestUser.get(i).getKakaoNickname() + "님께서 요청하신 '" + productName+ "' 상품 라이브 방송이 시작 되었습니다!\n" +
+                    liveRequestUser.get(i).getKakaoNickname() + "님께서 요청하신 " + productName+ " 라이브 방송이 시작 되었습니다!\n" +
                     "\n" +
                     "지금 zum:go 하세요!"); //알림톡 내용
             log.info("message : {}", body.get("message_"+ (i+1)));
-            body.add("button_" + i, buttonInfo); //버튼정보
+            body.add("button_" + (i+1), buttonInfo); //버튼정보
         }
         //여기까지 반복문으로 liveRequestUser만큼 돌려야 될듯?
         //body.add("testMode", "Y"); //테스트모드
