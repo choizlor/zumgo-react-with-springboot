@@ -34,6 +34,11 @@ public class IndexProductsResDto {
         wishSize = product.getWishes().size();
         liveReqSize = product.getLiveRequests().size();
         thumbnail = product.getImgList().get(0).getImgUrl();
-        review = product.getBill().getReview();
+        if(product.getBill() == null) {
+            review = "";
+        } else {
+            review = product.getBill().getReview();
+        }
+
     }
 }
