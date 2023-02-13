@@ -76,7 +76,7 @@ export default function MyReviewList() {
                   </div>
                 </div>
                 <div className={styles.icons}>
-                  <TrashIcon onClick={handleDeleteReview(review.product.id)} />
+                  <TrashIcon onClick={() => {handleDeleteReview(review.product.id)}} />
                 </div>
               </div>
             </div>
