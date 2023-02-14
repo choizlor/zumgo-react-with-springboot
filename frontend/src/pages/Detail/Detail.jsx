@@ -91,6 +91,7 @@ export default function Detail() {
     }
     else {
       setStatus(e.target.value);
+      console.log(status,'.👻👻👻👻👻');
     }
     
     // 수정하기 api 요청
