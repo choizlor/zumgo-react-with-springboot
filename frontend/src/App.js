@@ -18,7 +18,7 @@ import Detail from "./pages/Detail/Detail";
 import AddProduct from "./pages/ProductManagement/AddProduct";
 import UpdateProduct from "./pages/ProductManagement/UpdateProduct";
 // 라이브
-import Live from "./pages/Live";
+import Live from "./pages/Live/Live";
 import VideoRoom from "./pages/LiveRoom/VideoRoom";
 // 채팅
 import ChatList from "./pages/Chat/ChatList";
