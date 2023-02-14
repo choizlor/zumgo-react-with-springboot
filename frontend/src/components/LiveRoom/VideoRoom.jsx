@@ -83,6 +83,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
+  const [buyLimit, setBuyLimit] = useState(true);
 
   let OV = undefined;
 
@@ -492,7 +493,7 @@ const VideoRoom = () => {
                 ) : (
                   <button className={styles.nogobtn}>go?</button>
                 )
-              ) : !buyerCheck ? (
+              ) : !buyerCheck || buyLimit ? (
                 <button
                   onClick={() => {
                     countBidder();
@@ -527,6 +528,7 @@ const VideoRoom = () => {
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
+              setBuyLimit={setBuyLimit}
             />
 
             {priceOpen && !celebrity ? (
@@ -538,7 +540,7 @@ const VideoRoom = () => {
                 <div>GO! 버튼을 눌러</div>
                 <div>경매에 참여하세요!</div>
               </div>
-            ) : <div className={styles.gotext}>왜 아무것도 안뜨는대.</div>}
+            ) : null}
 
           </div>
 
