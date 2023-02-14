@@ -19,8 +19,7 @@ import AddProduct from "./pages/ProductManagement/AddProduct";
 import UpdateProduct from "./pages/ProductManagement/UpdateProduct";
 // 라이브
 import Live from "./pages/Live";
-import LiveRoom from "./pages/LiveRoom";
-import VideoRoom from "./components/LiveRoom/VideoRoom";
+import VideoRoom from "./pages/LiveRoom/VideoRoom";
 // 채팅
 import ChatList from "./pages/Chat/ChatList";
 import ChatRoom from "./pages/Chat/ChatRoom";
@@ -46,7 +45,6 @@ const router = createBrowserRouter([
       { path: "/oauth", element: <Oauth /> },
       { path: "/live", element: <Live /> },
       { path: "/live/:productId", element: <VideoRoom /> },
-      { path: "/liveroom", element: <LiveRoom /> },
       { path: "/detail/:productId", element: <Detail /> },
       { path: "/update/:productId", element: <UpdateProduct /> },
       { path: "/chatlist", element: <ChatList /> },

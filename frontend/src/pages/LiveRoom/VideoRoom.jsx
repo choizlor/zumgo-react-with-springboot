@@ -2,19 +2,19 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component, useCallback, useEffect, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import ChattingForm from "./ChattingForm";
-import ChattingList from "./ChattingList";
-import Timer from "../Auction/Timer";
+import ChattingForm from "../../components/LiveRoom/ChattingForm";
+import ChattingList from "../../components/LiveRoom/ChattingList";
+import Timer from "../../components/Auction/Timer";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
-import Price from "../Auction/Price";
-import SellerLoading from "../Live/SellerLoading";
-import BuyerLoading from "../Live/BuyerLoading";
-import Celebrity from "../Auction/Celebrity";
+import Price from "../../components/Auction/Price";
+import SellerLoading from "../../components/LiveRoom/SellerLoading";
+import BuyerLoading from "../../components/LiveRoom/BuyerLoading";
+import Celebrity from "../../components/Auction/Celebrity";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
