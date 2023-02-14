@@ -528,14 +528,18 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
             />
+            
             {priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
-            ) : (
-              <div>
-                <div className={styles.gotext}>GO! 버튼을 눌러</div>
-                <div className={styles.gotext}>경매에 참여하세요!</div>
+            ) : null}
+
+            {!priceOpen ? (
+              <div className={styles.gotext}>
+                <div>GO! 버튼을 눌러</div>
+                <div>경매에 참여하세요!</div>
               </div>
-            )}
+            ) : null}
+
           </div>
 
           {/* <div>구매의사 수: {bidders}</div>
