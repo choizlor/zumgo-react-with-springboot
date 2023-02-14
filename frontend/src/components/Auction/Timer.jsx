@@ -47,7 +47,7 @@ export default function Timer({
         if (bidders === 1) {
           setCelebrity(true);
         }
-        if (bidders > 1) {
+        if (bidders >= 1) {
           setPriceOpen(true);
           setBuyLimit(true);
         }
