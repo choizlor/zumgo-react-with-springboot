@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector} from 'react-redux'
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import styles from "./styles/WishList.module.css";
+import styles from "./WishList.module.css";
 import axios from "axios";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../../components/Product/ProductItem";
 
 export default function WishList() {
   const navigate = useNavigate();

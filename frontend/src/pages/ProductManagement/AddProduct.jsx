@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./styles/AddProduct.module.css";
+import styles from "./AddProduct.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

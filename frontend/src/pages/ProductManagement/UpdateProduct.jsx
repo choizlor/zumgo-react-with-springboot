@@ -1,9 +1,8 @@
 import { useLocation, useNavigate } from "react-router";
 import React, { useState } from "react";
-import styles from "./styles/AddProduct.module.css";
-import { ChevronLeftIcon, CameraIcon } from "@heroicons/react/24/solid";
+import styles from "./AddProduct.module.css"; 
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import testImg from "../assets/images/kim.png";
 // import { useSelector } from "react-redux";
 
 export default function UpdateProduct() {

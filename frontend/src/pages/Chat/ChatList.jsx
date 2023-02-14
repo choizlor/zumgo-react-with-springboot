@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/ChatList.module.css";
-import Bottomnav from "../components/Nav/BottomNav.jsx";
+import styles from "./ChatList.module.css";
+import Bottomnav from "../../components/Nav/BottomNav.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";

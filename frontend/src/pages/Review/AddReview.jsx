@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/AddReview.module.css";
+import styles from "./AddReview.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 export default function AddReview() {
   const navigate = useNavigate();
   const buyerId = useSelector((state) => {
@@ -37,8 +38,6 @@ export default function AddReview() {
   };
 
   const addReview = () => {
-    console.log(sellerId)
-    console.log(buyerId)
    // productId로 수정하기
    axios
    .patch(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
@@ -59,7 +58,6 @@ export default function AddReview() {
       <div className={styles.nav}>
         <ChevronLeftIcon className="w-6 h-6 text-black-100" 
         onClick={() => {
-          console.log(1111)
           navigate(`/userinfo/${buyerId}`);
         }}
         />
