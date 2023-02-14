@@ -1,13 +1,13 @@
 # EC2에 Docker MySQL 연결
 ---
 ## 목차   
-[1. Docker에 MySQL 이미지 다운](#1.-Docker에-MySQL-이미지-다운)   
-[2. Docker 컨테이너 볼륨 생성](#2.-Docker-컨테이너-볼륨-생성)   
+[1. Docker에 MySQL 이미지 다운](#1.-docker에-mysql-이미지-다운)   
+[2. Docker 컨테이너 볼륨 생성](#2.-docker-컨테이너-볼륨-생성)   
 [3. 컨테이너 실행](#3.-컨테이너-실행)   
 [4. 컨테이너 접속](#4.-컨테이너-접속)   
-[5. MySQL 서버 접속](#5.-MySQL-서버-접속)   
-[6. MySQL USER 생성 후 권한 부여](#6.-MySQL-USER-생성-후-권한-부여)   
-[7. MySQL 외부 접속 확인](##7.-MySQL-외부-접속-확인)   
+[5. MySQL 서버 접속](#5.-mysql-서버-접속)   
+[6. MySQL USER 생성 후 권한 부여](#6.-mysql-user-생성-후-권한-부여)   
+[7. MySQL 외부 접속 확인](#7.-mysql-외부-접속-확인)   
 <br/>
 
 ## 1. Docker에 MySQL 이미지 다운
