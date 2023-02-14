@@ -257,7 +257,7 @@ const VideoRoom = () => {
             resolution: "360x740", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: false, // Whether to mirror your local video or not
+            mirror: true, // Whether to mirror your local video or not
           });
           mySession.publish(publisher); // 자신의 화면을 송출
           setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
@@ -528,17 +528,17 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
             />
-            
+
             {priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
-            ) : null}
+            ) : <div className={styles.bidtext}>왜 아무것도 안뜨는대.</div>}
 
             {!priceOpen ? (
               <div className={styles.gotext}>
                 <div>GO! 버튼을 눌러</div>
                 <div>경매에 참여하세요!</div>
               </div>
-            ) : null}
+            ) : <div className={styles.gotext}>왜 아무것도 안뜨는대.</div>}
 
           </div>
 
