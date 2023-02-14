@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-import BottomNavDark from "../components/Nav/BottomNavDark.jsx";
-import styles from "./styles/Live.module.css";
+import BottomNavDark from "../../components/Nav/BottomNavDark.jsx";
+import styles from "./Live.module.css";
 import cn from "classnames";
-import SellLive from "../components/Live/SellLive";
-import BuyLive from "../components/Live/BuyLive.jsx";
+import SellLive from "./SellLive";
+import BuyLive from "./BuyLive.jsx";
 
 export default function Live() {
   const [sellLiveRequestList, setSellLiveRequestList] = useState();
