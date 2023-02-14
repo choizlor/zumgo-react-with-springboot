@@ -56,7 +56,7 @@
 <br/><br/>
 
 # 서비스 아키텍쳐   
-
+<img src="/images/시스템아키텍쳐.png">
 <br/><br/>
 
 # 📈 ERD
