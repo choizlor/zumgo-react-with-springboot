@@ -83,7 +83,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
-  const [buyLimit, setBuyLimit] = useState(true);
+  const [buyLimit, setBuyLimit] = useState(false);
 
   let OV = undefined;
 
@@ -493,7 +493,7 @@ const VideoRoom = () => {
                 ) : (
                   <button className={styles.nogobtn}>go?</button>
                 )
-              ) : !buyerCheck || buyLimit ? (
+              ) : !buyerCheck ? (
                 <button
                   onClick={() => {
                     countBidder();
@@ -503,8 +503,18 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : (
+              ) : buyLimit ? (
                 <button className={styles.nogobtn}>go!</button>
+              ) : (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
               )}
             </div>
           </div>
@@ -541,7 +551,6 @@ const VideoRoom = () => {
                 <div>경매에 참여하세요!</div>
               </div>
             ) : null}
-
           </div>
 
           {/* <div>구매의사 수: {bidders}</div>
