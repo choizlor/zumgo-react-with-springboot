@@ -23,7 +23,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
 export default function Detail() {
-  const location = useLocation();
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -44,13 +43,13 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
+  const [status,setStatus] = useState('');
   const [chats, setChats] = useState([]);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
   var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
-
+  var minute = ("0" + date.getMinutes()).slice(-2);                                                                                                                                                                                                    
   useEffect(() => {
     // 상품 정보 axios
     axios
@@ -63,6 +62,7 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
+        setStatus(res.data.status)
         // 같으면 판매자, 다르면 구매자
 
         if (userId !== res.data.userCode) {
@@ -73,24 +73,27 @@ export default function Detail() {
         console.log(err);
       });
   }, []);
-
+  
   const changeStatus = (e) => {
-    // 수정하기 api 요청
-    if (e.target.value === "SOLDOUT") {
+    setStatus(e.target.value);
+    console.log(e.target.value,'🐽🐽')
+    if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
-        .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
-        .then((res) => {
-          setChats(res.data);
-          setModalOpen(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setModalOpen(false);
+      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .then((res) => {
+        ///soldout 이면 modal open 해주기
+        setChats(res.data);
+        setModalOpen(true);
+        /// 아니면 status 업데이트
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
-
+    
+    
+    // 수정하기 api 요청
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
@@ -184,12 +187,10 @@ export default function Detail() {
     // 채팅방으로 메시지 보내기
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: userId,
         sellerCode: product?.userCode,
       })
       .then((res) => {
-        console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
@@ -211,12 +212,14 @@ export default function Detail() {
     await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
-        console.log(res);
+        navigate(`/selllist/${userId}`)
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+
 
   return (
     <div className={styles.body}>
@@ -229,7 +232,7 @@ export default function Detail() {
           }}
         />
         <Swiper
-          // autoHeight={true}
+          autoHeight={true}
           className={styles.swiper}
           navigation={true}
           pagination={true}
@@ -277,7 +280,7 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={product.status}
+            value={status}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
@@ -312,7 +315,7 @@ export default function Detail() {
         )}
 
         <div className={styles.price}>{product.price}원</div>
-        <div className={styles.desc}>{product.description}</div>
+        <div className={styles.desc}>{product?.description?.replaceAll("<br/>", "\r\n")}</div>
         <div className={styles.icons}>
           <div className={styles.icon} onClick={addwish}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}

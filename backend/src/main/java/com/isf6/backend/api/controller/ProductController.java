@@ -123,8 +123,9 @@ public class ProductController {
 
     @ApiOperation(value = "유저 판매 목록", notes = "DB에서 유저가 판매한 상품 목록을 전달")
     @GetMapping("/api/v1/products/sellList/{id}")
-    public List<IndexProductsResDto> userSellList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
+    public List<IndexProductsResDto> userSellList(@ApiParam(value = "유저 Id", required = true) @PathVariable Long id) {
         List<Product> products = productRepository.findSellUserCode(id);
+        log.info("product : {}", products);
 
         List<IndexProductsResDto> result = products.stream()
                 .map(p -> new IndexProductsResDto(p))
@@ -135,7 +136,7 @@ public class ProductController {
 
     @ApiOperation(value = "유저 구매 목록", notes = "DB에서 유저가 구매한 상품 목록을 전달")
     @GetMapping("/api/v1/products/buyList/{id}")
-    public List<IndexProductsResDto> userBuyList(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id) {
+    public List<IndexProductsResDto> userBuyList(@ApiParam(value = "유저 Id", required = true) @PathVariable Long id) {
         List<Product> products = productRepository.findBuyUserCode(id);
 
         List<IndexProductsResDto> result = products.stream()

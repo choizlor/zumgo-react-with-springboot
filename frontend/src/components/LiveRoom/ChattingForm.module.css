@@ -3,19 +3,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
+  width: 70%;
   height: 45px;
   border-radius: 45px;
-  
+
   position: fixed;
   bottom: 5%;
-  left: 5%;
+  right: 5%;
   z-index: 2;
 }
 
 .input {
   margin-left: 10%;
   font-size: 15px;
+  border: none;
+  background: transparent;
+  color: white;
 }
 
 .submitbtn {

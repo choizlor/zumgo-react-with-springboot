@@ -16,6 +16,7 @@ import {
   CircleStackIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import user from "../../store/userSlice";
 
 export default function UserInfo() {
   const location = useLocation();
@@ -39,6 +40,7 @@ export default function UserInfo() {
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
+    if(window.confirm('로그아웃 하시게?')) {alert('로그아웃 되었습니다.')}
     localStorage.removeItem("token");
     localStorage.removeItem("recents");
     persistor.purge();
@@ -47,7 +49,6 @@ export default function UserInfo() {
   //   사용자 정보를 불러오는 api
   useEffect(() => {
     axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
-      console.log('유저정보, ', res.data)
       setUserInfo(res.data.user);
     });
   }, []);
@@ -93,6 +94,12 @@ export default function UserInfo() {
             />
           ) : null}
         </div>
+        {isMe ? (
+          <div className={styles.mypoint}>
+            <div className={styles.myptblack}>내 포인트</div>
+            <div className={styles.myptgreen}>{userInfo.point}pt</div>
+          </div>
+        ) : null}
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>
@@ -115,7 +122,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/wishlist/${userId}`);
+                  navigate(`/wishlist`);
                 }}
               >
                 관심목록
@@ -126,7 +133,7 @@ export default function UserInfo() {
               <div
                 className={styles.menutitle}
                 onClick={() => {
-                  navigate(`/buylist/${userId}`);
+                  navigate(`/buylist`);
                 }}
               >
                 구매목록

@@ -63,8 +63,16 @@
 <img src="/images/erd.PNG" width="800" height="900">
 <br/><br/>
 
+# 상세 디자인   
+
+<br/><br/>
+
 # :art: WireFrame   
-![wireframe](/images/wireframe.png)
+
+<br/><br/>
+
+# Site Map
+![sitemap](/images/siteMap.png)
 <br/><br/>
 
 # :earth_asia: Browser Support   

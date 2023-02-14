@@ -11,7 +11,8 @@ export default function Timer({
   setCelebrity,
   setNonCelebrity,
   sellerCheck,
-  // setTimerOpen,
+  setTimerOpen,
+  setBuyLimit,
 }) {
   const sendCount = () => {
     currentSession
@@ -19,9 +20,7 @@ export default function Timer({
         data: seconds,
         type: "timer",
       })
-      .then(() => {
-        console.log("timer good");
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(error);
       });
@@ -40,14 +39,17 @@ export default function Timer({
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
         clearInterval(id);
+        setTimerOpen(false);
+
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
         }
         if (bidders === 1) {
           setCelebrity(true);
         }
-        if (bidders > 1) {
+        if (bidders >= 1) {
           setPriceOpen(true);
+          setBuyLimit(true);
         }
         if (bidCount > 0) {
           setCelebrity(true);
