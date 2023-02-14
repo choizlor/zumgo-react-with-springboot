@@ -195,7 +195,7 @@
 
 .celediv {
   /* position: absolute; */
-  top: 0;
+  top: 15%;
   z-index: 999;
 }
 
