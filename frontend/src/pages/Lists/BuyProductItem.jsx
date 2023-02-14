@@ -21,14 +21,16 @@ export default function BuyProductItem({ product, clickProduct }) {
           >
             {product.title}
           </div>
-          <div
-            className={styles.review}
-            onClick={() => {
-              navigate(`/review/${product.productId}/create`);
-            }}
-          >
-            리뷰쓰고 +2pt
-          </div>
+          {!product.reveiw && (
+            <div
+              className={styles.review}
+              onClick={() => {
+                navigate(`/review/${product.productId}/create`);
+              }}
+            >
+              리뷰쓰고 +2pt
+            </div>
+          )}
         </div>
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.bottom}>
