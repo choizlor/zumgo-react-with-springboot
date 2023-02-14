@@ -219,6 +219,7 @@
 }
 
 .gotext {
+  z-index: 10;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
