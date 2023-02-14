@@ -22,7 +22,7 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         const sorted_list = res.data.sort(function (a, b) {
-          return new Date(a.lastChat.chat_date).getTime() -  new Date(b.lastChat.chat_date).getTime()
+          return new Date(b.lastChat.chat_date).getTime() -  new Date(a.lastChat.chat_date).getTime()
         })
         setChats(sorted_list)
       })
