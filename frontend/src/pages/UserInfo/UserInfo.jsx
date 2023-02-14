@@ -93,10 +93,12 @@ export default function UserInfo() {
             />
           ) : null}
         </div>
-        <div className={styles.mypoint}>
-          <p className={styles.myptblack}>내 포인트</p>
-          <p className={styles.myptgreen}>{userInfo.point}pt</p>
-        </div>
+        {isMe ? (
+          <div className={styles.mypoint}>
+            <p className={styles.myptblack}>내 포인트</p>
+            <p className={styles.myptgreen}>{userInfo.point}pt</p>
+          </div>
+        ) : null}
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>
