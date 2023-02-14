@@ -63,7 +63,7 @@
     min-height: 100vh;
     overflow: hidden;
     padding: 60px;
-    position: relative;
+    position: absolute;
     width: 100%;
     z-index: 999;
   }

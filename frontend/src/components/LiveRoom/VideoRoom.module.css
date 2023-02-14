@@ -151,10 +151,6 @@
   left: 4%;
   border: 1px solid #bcff5e;
   z-index: 4;
-  
-  box-shadow: 12px 12px 46px 6px rgba(0,0,0,0.71);
-  -webkit-box-shadow: 12px 12px 46px 6px rgba(0,0,0,0.71);
-  -moz-box-shadow: 12px 12px 46px 6px rgba(0,0,0,0.71);
 }
 
 .nogobtn {
@@ -198,7 +194,7 @@
 }
 
 .celediv {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   z-index: 999;
 }
