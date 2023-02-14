@@ -55,6 +55,7 @@
 
 .mypoint {
   background-color: black;
+  margin : auto;
   width : 90%;
   height: 25px;
 justify-content: center;
