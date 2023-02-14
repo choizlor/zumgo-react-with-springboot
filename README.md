@@ -11,7 +11,7 @@
 # 📷 UCC
    
 <br/><br/>
-# 기능 소개   
+# 🔎 기능 소개   
 
 <br/><br/>
 
@@ -55,8 +55,8 @@
 - Mattermost   
 <br/><br/>
 
-# 서비스 아키텍쳐   
-<img src="/images/시스템아키텍쳐.png">
+# 시스템 아키텍쳐   
+![시스템 아키텍쳐](/images/시스템아키텍쳐.png)
 <br/><br/>
 
 # 📈 ERD
@@ -64,7 +64,7 @@
 <br/><br/>
 
 # :art: WireFrame   
-
+![wireframe](/images/wireframe.png)
 <br/><br/>
 
 # :earth_asia: Browser Support   
