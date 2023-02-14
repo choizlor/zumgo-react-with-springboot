@@ -40,7 +40,6 @@ export default function Timer({
       if (seconds === 0) {
         clearInterval(id);
         setTimerOpen(false);
-        setBuyLimit(true);
 
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
@@ -50,6 +49,7 @@ export default function Timer({
         }
         if (bidders > 1) {
           setPriceOpen(true);
+          setBuyLimit(true);
         }
         if (bidCount > 0) {
           setCelebrity(true);
