@@ -56,20 +56,21 @@
 .mypoint {
     background-color: black;
     height: 25px;
-    border-radius: black;
+    border-radius: 25px;
     text-align: center;
     padding: 5px auto;
+    display: flex;
 }
 
 .myptblack {
     color : white;
-    font-weight: 800;
+    font-weight: 700;
     margin : 1px;
 }
 
 .myptgreen {
     color : #B5FF23;
-    font-weight: 800;
+    font-weight: 700;
     margin : 1px;
 }
 

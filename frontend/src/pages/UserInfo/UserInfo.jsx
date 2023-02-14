@@ -95,8 +95,8 @@ export default function UserInfo() {
         </div>
         {isMe ? (
           <div className={styles.mypoint}>
-            <p className={styles.myptblack}>내 포인트</p>
-            <p className={styles.myptgreen}>{userInfo.point}pt</p>
+            <div className={styles.myptblack}>내 포인트</div>
+            <div className={styles.myptgreen}>{userInfo.point}pt</div>
           </div>
         ) : null}
       </div>
