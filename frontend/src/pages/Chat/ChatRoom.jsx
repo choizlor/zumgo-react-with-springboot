@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -204,17 +204,19 @@ export default function ChatRoom() {
 
   // 채팅방 삭제하기
   const exitChatRoom = () => {
-    if(window.confirm('대화 정보가 함께 삭제됩니다')) {alert('삭제되었습니다')}
-    
-    axios
-      .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`)
-      .then((res) => {
-        disConnect();
-        navigate("/chatlist");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (window.confirm("대화 정보가 함께 삭제됩니다")) {
+      alert("삭제되었습니다");
+
+      axios
+        .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`)
+        .then((res) => {
+          disConnect();
+          navigate("/chatlist");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
