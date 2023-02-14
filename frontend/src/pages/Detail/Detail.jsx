@@ -279,7 +279,7 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={text}
+            value={status}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
