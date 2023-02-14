@@ -19,9 +19,7 @@ export default function Timer({
         data: seconds,
         type: "timer",
       })
-      .then(() => {
-        console.log("timer good");
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(error);
       });
@@ -41,7 +39,7 @@ export default function Timer({
       if (seconds === 0) {
         clearInterval(id);
         setTimerOpen(false);
-        
+
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
         }

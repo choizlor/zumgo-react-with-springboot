@@ -84,8 +84,6 @@ const VideoRoom = () => {
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
 
-  console.log(isHost, "😎");
-
   let OV = undefined;
 
   // 토큰 받아오기
@@ -256,7 +254,7 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1920x1080", // The resolution of your video
+            resolution: "360x740", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
@@ -530,6 +528,14 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
             />
+            {priceOpen && !celebrity ? (
+              <div className={styles.bidtext}>최고 {bidPrice}원!</div>
+            ) : (
+              <div>
+                <div className={styles.gotext}>GO! 버튼을 눌러</div>
+                <div className={styles.gotext}>경매에 참여하세요!</div>
+              </div>
+            )}
           </div>
 
           {/* <div>구매의사 수: {bidders}</div>
@@ -545,7 +551,6 @@ const VideoRoom = () => {
                   className={styles.price}
                   myProfileImg={myProfileImg}
                 />
-                <div className={styles.bidtext}>최고 {bidPrice}원!</div>
               </div>
             ) : null}
           </div>
