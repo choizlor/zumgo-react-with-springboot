@@ -74,6 +74,7 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
+
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
@@ -87,6 +88,9 @@ export default function Detail() {
       .catch((err) => {
         console.log(err);
       });
+    }
+    else {
+      setStatus(e.target.value);
     }
     
     // 수정하기 api 요청
