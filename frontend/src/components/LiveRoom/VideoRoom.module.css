@@ -217,6 +217,9 @@
   font-size: 20px;
   font-weight: 800;
   color: white;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .gotext {
@@ -228,4 +231,7 @@
   align-items: center;
   font-size: 15px;
   color: white;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
