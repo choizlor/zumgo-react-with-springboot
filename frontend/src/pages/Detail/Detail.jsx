@@ -49,8 +49,7 @@ export default function Detail() {
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
   var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
-
+  var minute = ("0" + date.getMinutes()).slice(                                                                                                                                                                                                    
   useEffect(() => {
     // 상품 정보 axios
     axios
@@ -82,7 +81,6 @@ export default function Detail() {
       .then((res) => {
         ///soldout 이면 modal open 해주기
         setChats(res.data);
-        setStatus(e.target.value);
         setModalOpen(true);
         /// 아니면 status 업데이트
       })
