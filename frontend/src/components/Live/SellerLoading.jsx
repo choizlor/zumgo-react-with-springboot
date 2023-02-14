@@ -39,7 +39,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
         <ChevronLeftIcon
           className="w-6 h-6 text-white"
           onClick={() => {
-            navigate("-1");
+            navigate("/live");
           }}
         />
       </div>
