@@ -40,7 +40,7 @@
 # :hammer: 개발 환경   
 
 #### Backend   
-- IntelliJ
+- IntelliJ 2021.2.4
 - Spring boot 2.7.8
 - Spring boot JPA
 - JWT Authentication 3.10.2
@@ -50,7 +50,7 @@
 - Junit 4.13.1
 
 #### Frontend   
-- Visual Studio Code
+- Visual Studio Code 1.75
 - React.js
 - Node.js 19.6.0
 - redux
@@ -69,7 +69,7 @@
 
 # 협업 툴   
 - Jira
-- Notion
+- [Notion](https://enchanting-top-e29.notion.site/ISF6-560c04e9a853425f9bcd192184296d9a)
 - GitLab
 - DisCord
 - Mattermost   
