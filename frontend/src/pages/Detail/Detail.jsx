@@ -74,9 +74,10 @@ export default function Detail() {
   }, []);
 
   const changeStatus = (e) => {
+    setStatus(e.target.value);
+    console.log(e.target.value,'👻👻👻');
 
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
-      setStatus(e.target.value);
       // 채팅중인 사용자 불러오기
       axios
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
@@ -90,10 +91,7 @@ export default function Detail() {
         console.log(err);
       });
     }
-    else {
-      setStatus(e.target.value);
-      console.log(status,'.👻👻👻👻👻');
-    }
+    
     
     // 수정하기 api 요청
     axios
