@@ -218,6 +218,11 @@ export default function ChatRoom() {
         });
     }
   };
+  const onKeypress = (e) => {
+    if (e.keyCode==13) {
+      sendChat();
+    } 
+  }
 
   useEffect(() => {
     // 최초 렌더링 시 , 웹소켓에 연결
@@ -265,6 +270,7 @@ export default function ChatRoom() {
                 placeholder="메시지 보내기"
                 className={styles.input}
                 onChange={onChangeChat}
+                onKeypress={onKeypress}
               />
             </div>
             <ArrowUpCircleIcon
