@@ -62,6 +62,7 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
+        setStatus(res.data.status)
         // 같으면 판매자, 다르면 구매자
 
         if (userId !== res.data.userCode) {
@@ -96,7 +97,7 @@ export default function Detail() {
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
-        status: e.target?.value,
+        status: e.target.value,
       })
       .then(() => {
         navigate(`/detail/${product.id}`);
