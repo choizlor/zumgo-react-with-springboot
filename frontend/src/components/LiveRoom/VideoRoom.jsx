@@ -531,7 +531,7 @@ const VideoRoom = () => {
 
             {priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
-            ) : <div className={styles.bidtext}>왜 아무것도 안뜨는대.</div>}
+            ) : null}
 
             {!priceOpen ? (
               <div className={styles.gotext}>
