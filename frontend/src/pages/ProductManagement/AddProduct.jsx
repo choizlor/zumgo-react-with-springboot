@@ -32,7 +32,11 @@ export default function AddProduct() {
   // 상품등록 axios
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let files = e.target.imgurls.files;
 
+    if (files.length === 0) {
+      alert('상품 사진을 1장 이상 등록해주세요.')
+    }
     if (title === "") {
       alert("제목을 입력하세요.");
       return;
@@ -56,7 +60,8 @@ export default function AddProduct() {
     }
 
     let formData = new FormData();
-    let files = e.target.imgurls.files;
+    
+
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
