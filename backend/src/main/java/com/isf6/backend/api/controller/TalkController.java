@@ -59,18 +59,20 @@ public class TalkController {
     @PostMapping("/reserve/{id}")
     public ResponseEntity uploadProduct(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id,
                                         @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) throws ParseException, JsonProcessingException {
-        //Map<String, Object> response = new HashMap<>(); //결과를 담을 Map
 
-        //상품 예약시간을 업데이트 하고
+        //상품 예약시간을 업데이트 하기
         long productId = productService.update(id, requestDto);
 
         //해당 상품에 라이브 요청한 유저들 정보 가져오기
         List<User> liveRequestUser = userService.getLiveRequestUser(id);
 
-//        //토큰 생성
-//        String token = talkService.createToken();
-//        //String token = "69587870930bb0ec738fe5d607ac7c0965b53236092636d50664ae2eb27700445e500b611bc4984f6ef7f3705f2ad907ca032dd84260013eae58dae6df47d906lQvkJOJ%2FWGgLhJ4DsXF4iEzQVdu26u%2Fsh22mctYPmo7BamZ0bl%2BjpQYfhc45Wws1YSl1VnjIK%2B%2BBayhiCf7Sfw%3D%3D";
-//
+        //토큰 생성
+        //String token = talkService.createToken();
+
+        //알림톡 전송 -> 테스트모드 아님
+        //ResponseEntity<String> result = talkService.LiveReserveTalk(requestDto, liveRequestUser, token);
+
+        //안될때를 대비해서 예비로 남겨두기....
 //        //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
 //        log.info("productName : {}", requestDto.getTitle());
 //        String productName = requestDto.getTitle();
@@ -134,6 +136,8 @@ public class TalkController {
 //
 //
 //        return ResponseEntity.ok().body(LiveReserveResponse);
+
+        //return ResponseEntity.ok().body(result);
         return ResponseEntity.ok().body("");
     }
 
@@ -148,17 +152,19 @@ public class TalkController {
         response.put("status", "ONAIR");
         response.put("result", "SUCCESS");
 
-
-        //알림톡 전송
         //해당 상품에 라이브 요청한 유저들 정보 가져오기
         List<User> liveRequestUser = userService.getLiveRequestUser(productId);
 
         //상품 정보 가져오기
         Product product = productService.getProduct(productId);
 
-//        //토큰 생성
-//        String token = talkService.createToken();
-//
+        //토큰 생성
+        //String token = talkService.createToken();
+
+        //알림톡 전송 -> 테스트모드 아님
+        //ResponseEntity<String> result = talkService.LiveStartTalk(product, liveRequestUser, token);
+
+        //혹시 몰라서 남겨두는 예비용,,,
 //        //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
 //        log.info("productName : {}", product.getTitle());
 //        String productName = product.getTitle();
@@ -222,6 +228,8 @@ public class TalkController {
 //        response.put("messageResult", LiveReserveResponse);
 //
 //        return ResponseEntity.status(200).body(response);
+
+        //return ResponseEntity.ok().body(result);
         return ResponseEntity.status(200).body("");
     }
 
