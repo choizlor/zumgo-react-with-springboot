@@ -26,6 +26,7 @@
 - MySQL 8.0.32
 - AWS S3
 - Junit 4.13.1
+- Gradle 7.6
 
 #### Frontend   
 - Visual Studio Code 1.75
