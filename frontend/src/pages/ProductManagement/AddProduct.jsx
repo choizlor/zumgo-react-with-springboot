@@ -35,7 +35,10 @@ export default function AddProduct() {
     let files = e.target.imgurls.files;
 
     if (files.length === 0) {
-      alert('상품 사진을 1장 이상 등록해주세요.')
+      alert("상품 사진 등록은 필수입니다.");
+    }
+    if (files.length > 5) {
+      alert("상품 사진은 최대 5장 까지만 등록 가능합니다.");
     }
     if (title === "") {
       alert("제목을 입력하세요.");
@@ -60,8 +63,6 @@ export default function AddProduct() {
     }
 
     let formData = new FormData();
-    
-
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
