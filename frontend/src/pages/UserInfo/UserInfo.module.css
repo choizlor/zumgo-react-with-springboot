@@ -55,8 +55,9 @@
 
 .mypoint {
   background-color: black;
-  width : 100%;
+  width : 90%;
   height: 25px;
+justify-content: center;
   border-radius: 25px;
   text-align: center;
   padding: 5px auto;
