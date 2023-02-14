@@ -22,9 +22,12 @@ export default function ChatList() {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         const sorted_list = res.data.sort(function (a, b) {
-          return new Date(b.lastChat.chat_date).getTime() -  new Date(a.lastChat.chat_date).getTime()
-        })
-        setChats(sorted_list)
+          return (
+            new Date(b.lastChat.chat_date).getTime() -
+            new Date(a.lastChat.chat_date).getTime()
+          );
+        });
+        setChats(sorted_list);
       })
       .catch((err) => {
         console.log(err);
@@ -87,10 +90,14 @@ export default function ChatList() {
                       ? chat.buyer.kakaoNickname
                       : chat.seller.kakaoNickname}
                   </div>
-                  <div className={styles.time}>
-                    {chat?.lastChat["chat_date"]?.slice(5, 7)}월 {chat?.lastChat["chat_date"]?.slice(8, 10)}
-                    일 {Number(chat?.lastChat["chat_date"]?.slice(11, 13)) + 9}:{chat?.lastChat["chat_date"]?.slice(14,16)}
-                  </div>
+                  { chats &&
+                    <div className={styles.time}>
+                      {chat?.lastChat["chat_date"]?.slice(5, 7)}월{" "}
+                      {chat?.lastChat["chat_date"]?.slice(8, 10)}일{" "}
+                      {Number(chat?.lastChat["chat_date"]?.slice(11, 13)) + 9}:
+                      {chat?.lastChat["chat_date"]?.slice(14, 16)}
+                    </div>
+                  }
                 </div>
                 <span className={styles.lastmsg}>
                   {chat.lastChat["chat_content"]}

@@ -315,7 +315,7 @@ export default function Detail() {
         )}
 
         <div className={styles.price}>{product.price}원</div>
-        <div className={styles.desc}>{product.description}</div>
+        <div className={styles.desc}>{product.description.replaceAll("<br/>", "\r\n")}</div>
         <div className={styles.icons}>
           <div className={styles.icon} onClick={addwish}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}
