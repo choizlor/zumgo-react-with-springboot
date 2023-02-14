@@ -53,6 +53,26 @@
     font-size: 20px;
 }
 
+.mypoint {
+    background-color: black;
+    height: 25px;
+    border-radius: black;
+    text-align: center;
+    padding: 5px auto;
+}
+
+.myptblack {
+    color : white;
+    font-weight: 800;
+    margin : 1px;
+}
+
+.myptgreen {
+    color : #B5FF23;
+    font-weight: 800;
+    margin : 1px;
+}
+
 .menus {
     display: flex;
     flex-direction: column;

@@ -16,6 +16,7 @@ import {
   CircleStackIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import user from "../../store/userSlice";
 
 export default function UserInfo() {
   const location = useLocation();
@@ -92,6 +93,12 @@ export default function UserInfo() {
             />
           ) : null}
         </div>
+        {isMe ? (
+          <div className={styles.mypoint}>
+            <p className={styles.myptblack}>내 포인트</p>
+            <p className={styles.myptgreen}>{userInfo.point}pt</p>
+          </div>
+        ) : null}
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>
