@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./styles/SellList.module.css";
+import styles from "./SellList.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import ProductItem from "../components/Product/ProductItem";
+import ProductItem from "../../components/Product/ProductItem";
 
 
 export default function SellList() {
@@ -38,7 +38,6 @@ export default function SellList() {
     setFiltered(getFilteredItems(filter));
   };
 
-  // console.log(filter);
 
   const getFilteredItems = (filter) => {
     return products?.filter((product) => product.status === filter);
@@ -85,7 +84,6 @@ export default function SellList() {
           )) : <div className={styles.alert}>상품이 없어요 😢</div> } 
         </ul>
       </div>
-      {/* <BottomNav />    */}
     </div>
   );
 }

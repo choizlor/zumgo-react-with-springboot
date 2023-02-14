@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./styles/MyReviewList.module.css";
+import styles from "./MyReviewList.module.css";
 import {
   ChevronLeftIcon,
   ArrowRightIcon,

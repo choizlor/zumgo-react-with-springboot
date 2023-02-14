@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 
-import styles from "./styles/UpdateUserInfo.module.css";
+import styles from "./UpdateUserInfo.module.css";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 export default function UpdateUserInfo() {

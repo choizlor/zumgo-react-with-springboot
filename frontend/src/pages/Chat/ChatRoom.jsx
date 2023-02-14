@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import styles from "./styles/ChatRoom.module.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
