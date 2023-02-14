@@ -43,7 +43,7 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
-  const [text,setText] = useState('')
+  const [text,setText] = useState('');
   const [chats, setChats] = useState([]);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
@@ -75,7 +75,6 @@ export default function Detail() {
   
   const changeStatus = (e) => {
     setText(e.target.options[e.target.selectIndex].text)
-    console.log(e.target.value);
     console.log(e.target.options[e.target.selectIndex].text,'👻👻👻');
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
