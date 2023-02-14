@@ -75,7 +75,7 @@ export default function Detail() {
 
   const changeStatus = (e) => {
     setStatus(e.target.value);
-    console.log(e.target.value);
+    console.log(e.target.value,'👻👻👻');
 
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
