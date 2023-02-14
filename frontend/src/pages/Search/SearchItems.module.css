@@ -12,16 +12,17 @@
     flex-wrap: wrap;
 } 
 
-
 .word{
     font-size: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom : solid gray 0.7px;
-    width: 44%;
-    margin: 3%;
-    padding :1%;
+    height : 20px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px soldi black;
+    margin: 4%;
+    padding :2%;
 }
 
 .icon {
