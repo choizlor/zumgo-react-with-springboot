@@ -485,7 +485,7 @@ const VideoRoom = () => {
                 onMessage={sendMsg}
                 currentSession={session}
               />
-              {isHost && !sellerCheck ? (
+              {/* {isHost && !sellerCheck ? (
                 <button onClick={startAuction} className={styles.gobtn}>
                   go?
                 </button>
@@ -501,9 +501,9 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : null}
+              ) : null} */}
 
-              {/* {isHost ? (
+              {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
@@ -533,7 +533,7 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              )} */}
+              )}
             </div>
           </div>
 
