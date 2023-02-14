@@ -1,16 +1,77 @@
-# zum:go   
+# zum:go &nbsp;
 <img src="/images/logo.png">   
-프로젝트 소개 간단하게
+<br/><br/>
 
 
 # :bulb: Description  
-#### 기간 : 2023.01.03 ~ 2023.02.17
-#### 개요
-#### 
-
+#### 기간 : 2023.01.03 ~ 2023.02.17 (6주)
+#### 기획 배경
+#### 기대 효과
+<br/><br/>
 # 📷 UCC
    
+<br/><br/>
+# 기능 소개   
 
+<br/><br/>
+
+# :hammer: 개발 환경   
+
+#### Backend   
+- IntelliJ 2021.2.4
+- Spring boot 2.7.8
+- Spring boot JPA
+- JWT Authentication 3.10.2
+- Java 8
+- MySQL 8.0.32
+- AWS S3
+- Junit 4.13.1
+
+#### Frontend   
+- Visual Studio Code 1.75
+- React.js 18.2.05
+- Node.js 19.6.0
+- redux 8.0.5   
+
+#### Web RTC
+- Openvidu 2.25.0
+
+#### Web Socket
+- Stomp websocket 2.3.3
+
+#### CI/CD
+- AWS EC2 (Ubuntu 20.04.1)
+- Docker 20.10.12
+- Nginx 1.23.3
+- Jenkins 2.375.2
+<br/><br/>
+
+# 🔗 협업 툴   
+- Jira
+- [Notion](https://enchanting-top-e29.notion.site/ISF6-560c04e9a853425f9bcd192184296d9a)
+- GitLab
+- DisCord
+- Mattermost   
+<br/><br/>
+
+# 서비스 아키텍쳐   
+
+<br/><br/>
+
+# 📈 ERD
+<img src="/images/erd.PNG" width="800" height="900">
+<br/><br/>
+
+# :art: WireFrame   
+
+<br/><br/>
+
+# :earth_asia: Browser Support   
+|Chrome|Edge|Safari|
+|:-------:|:-------:|:-------:|
+|o|o|o|
+
+<br/><br/>
 
 # :family: Team - isf6  
 
@@ -37,59 +98,7 @@
   </tr>
 </table>
 
-# :hammer: 개발 환경   
-
-#### Backend   
-- IntelliJ 2021.2.4
-- Spring boot 2.7.8
-- Spring boot JPA
-- JWT Authentication 3.10.2
-- Java 8
-- MySQL 8.0.32
-- AWS S3
-- Junit 4.13.1
-
-#### Frontend   
-- Visual Studio Code 1.75
-- React.js
-- Node.js 19.6.0
-- redux
-
-#### Web RTC
-- Openvidu 2.25.0
-
-#### Web Socket
-- stomp websocket 2.3.3
-
-#### CI/CD
-- AWS EC2 (Ubuntu 20.04.1)
-- Docker 20.10.12
-- Nginx 1.23.3
-- Jenkins 2.375.2
-
-# 협업 툴   
-- Jira
-- [Notion](https://enchanting-top-e29.notion.site/ISF6-560c04e9a853425f9bcd192184296d9a)
-- GitLab
-- DisCord
-- Mattermost   
-
-# 서비스 아키텍쳐   
-
-
-# ERD
-<img src="/images/erd.PNG" width="700" height="800">
-
-# :art: WireFrame   
-
-# :earth_asia: Browser Support   
-|Chrome|Edge|Safari|
-|:-------:|:-------:|:-------:|
-|o|o|o|
-
-# 기능 소개   
-
-
+<br/><br/>
 
 
 # :pushpin: Git Convention
