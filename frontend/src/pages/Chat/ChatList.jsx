@@ -21,8 +21,10 @@ export default function ChatList() {
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
-        setChats(res.data);
-        console.log(res.data);
+        const sorted_list = res.data.sort(function (a, b) {
+          return new Date(a.lastChat.chat_date).getTime() -  new Date(b.lastChat.chat_date).getTime()
+        })
+        setChats(sorted_list)
       })
       .catch((err) => {
         console.log(err);
