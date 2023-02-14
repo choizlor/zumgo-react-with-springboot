@@ -43,8 +43,8 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
+  const [text,setText] = useState('')
   const [chats, setChats] = useState([]);
-  const [status,setStatus] = useState(product.status);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
@@ -72,9 +72,9 @@ export default function Detail() {
         console.log(err);
       });
   }, []);
-
+  
   const changeStatus = (e) => {
-    setStatus(e.target.value);
+    setText(e.target.options[e.target.selectIndex].text)
     console.log(e.target.value);
     console.log(e.target.options[e.target.selectIndex].text,'👻👻👻');
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
@@ -280,7 +280,7 @@ export default function Detail() {
           <select
             className={styles.dropdown}
             onChange={changeStatus}
-            value={status}
+            value={text}
             disabled={!isMine}
           >
             <option value="ONSALE">판매 중</option>
