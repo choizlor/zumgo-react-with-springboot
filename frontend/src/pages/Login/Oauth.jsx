@@ -29,7 +29,6 @@ export default function Oauth() {
               },
             })
             .then((res) => {
-              console.log(res.data);
               dispatch(
                 login({
                   userCode: res.data.user.userCode,

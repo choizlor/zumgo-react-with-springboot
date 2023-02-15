@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 export default function Report() {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  
   // 신고하는 사람
   const reporter = useSelector((state) => {return state.user.userCode;});
   const [reported, setReported] = useState();
@@ -43,7 +45,7 @@ export default function Report() {
       </div>
       <div className={styles.reportform}>
         <div className={styles.title}>
-          {reported?.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
+          {location?.state.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
         </div>
         <textarea
           className={styles.contents}

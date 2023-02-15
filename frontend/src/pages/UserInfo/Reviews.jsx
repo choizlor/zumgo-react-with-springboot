@@ -24,7 +24,7 @@ export default function Reviews({ userInfo }) {
   return (
     <div className={styles.body}>
       <span className={styles.title}>
-        {userInfo?.kakaoNickname}님께 달린 리뷰
+        {userInfo?.kakaoNickname}님께 달린 리뷰 ({Number(reviews?.length)})
       </span>
 
       <div className={styles.reviewcontainer}>
