@@ -57,4 +57,4 @@ mysql> exit;
 ```
 
 ## 7. MySQL 외부 접속 확인
-![db접속](/exec/DB/db 외부접속 확인.JPG)
+![db접속](/images/db 외부접속 확인.JPG)
