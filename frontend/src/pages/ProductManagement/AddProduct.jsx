@@ -24,7 +24,7 @@ export default function AddProduct() {
   const content = {
     title,
     price,
-    description : description.replace(/(\n|\r\n)/g, '<br>'),
+    description,
     availableTime,
     userId,
   };
