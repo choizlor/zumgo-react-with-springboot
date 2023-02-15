@@ -6,7 +6,6 @@ import DetailModal from "./DetailModal";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 // heroicons
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import {
   HeartIcon,
   ChevronLeftIcon,
@@ -20,7 +19,6 @@ import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
 
 export default function Detail() {
 
@@ -50,6 +48,7 @@ export default function Detail() {
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
   var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
   var minute = ("0" + date.getMinutes()).slice(-2);                                                                                                                                                                                                    
+  
   useEffect(() => {
     // 상품 정보 axios
     axios
@@ -76,7 +75,6 @@ export default function Detail() {
   
   const changeStatus = (e) => {
     setStatus(e.target.value);
-    console.log(e.target.value,'🐽🐽')
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
@@ -117,7 +115,6 @@ export default function Detail() {
         sellerCode: product?.userCode,
       })
       .then((res) => {
-        console.log(res.data);
         navigate(`/chatroom/${res.data.chatRoomId}`, {
           state: {
             chats: res.data.chatList,
@@ -219,8 +216,6 @@ export default function Detail() {
       });
   };
 
-
-
   return (
     <div className={styles.body}>
       {/* 상품 이미지 배너 */}
@@ -315,7 +310,7 @@ export default function Detail() {
         )}
 
         <div className={styles.price}>{product.price}원</div>
-        <div className={styles.desc}>{product?.description?.replaceAll("<br/>", "&#13;")}</div>
+        <div className={styles.desc} dangerouslySetInnerHTML={{__html : product?.description}}></div>
         <div className={styles.icons}>
           <div className={styles.icon} onClick={addwish}>
             {wishCheck ? <HeartIcon class="fill-black" /> : <HeartIcon />}

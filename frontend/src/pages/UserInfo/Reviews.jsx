@@ -11,7 +11,6 @@ export default function Reviews({ userInfo }) {
   const userId = params.userId;
 
   useEffect(() => {
-    console.log("렌더링", "");
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
       .then((res) => {
