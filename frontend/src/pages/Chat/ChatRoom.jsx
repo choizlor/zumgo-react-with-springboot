@@ -259,7 +259,9 @@ export default function ChatRoom() {
         {/* 하단 입력폼 */}
         <form className={styles.sendzone} onSubmit={handleSubmit}>
           <MegaphoneIcon
-            onClick={() => navigate(`/report/${other.userCode}`)}
+            onClick={() => navigate(`/report/${other.userCode}`, {state : {
+              kakaoNickname : other.kakaoNickname,
+            }})}
           />
           <div className={styles.inputbar}>
             <div>
