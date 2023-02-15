@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./BuyLive.module.css";
-import LiveCard from "./LiveCard";
-import RequestLive from "./RequestLive";
+import LiveCard from "../../components/Live/LiveCard";
+import RequestLive from "../../components/Live/RequestLive";
 
 export default function BuyLive({ onairList, waitList }) {
   const navigate = useNavigate();

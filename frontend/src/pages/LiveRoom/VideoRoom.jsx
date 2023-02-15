@@ -2,19 +2,19 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component, useCallback, useEffect, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import ChattingForm from "./ChattingForm";
-import ChattingList from "./ChattingList";
-import Timer from "../Auction/Timer";
+import ChattingForm from "../../components/LiveRoom/ChattingForm";
+import ChattingList from "../../components/LiveRoom/ChattingList";
+import Timer from "../../components/Auction/Timer";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./VideoRoom.module.css";
 
-import Price from "../Auction/Price";
-import SellerLoading from "../Live/SellerLoading";
-import BuyerLoading from "../Live/BuyerLoading";
-import Celebrity from "../Auction/Celebrity";
+import Price from "../../components/Auction/Price";
+import SellerLoading from "../../components/LiveRoom/SellerLoading";
+import BuyerLoading from "../../components/LiveRoom/BuyerLoading";
+import Celebrity from "../../components/Auction/Celebrity";
 
 const OPENVIDU_SERVER_URL = "https://i8c110.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "isf6";
@@ -83,8 +83,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
-
-  console.log(isHost, "😎");
+  const [buyLimit, setBuyLimit] = useState(false);
 
   let OV = undefined;
 
@@ -256,10 +255,10 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1920x1080", // The resolution of your video
+            resolution: "360x740", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: false, // Whether to mirror your local video or not
+            mirror: true, // Whether to mirror your local video or not
           });
           mySession.publish(publisher); // 자신의 화면을 송출
           setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
@@ -486,6 +485,24 @@ const VideoRoom = () => {
                 onMessage={sendMsg}
                 currentSession={session}
               />
+              {/* {isHost && !sellerCheck ? (
+                <button onClick={startAuction} className={styles.gobtn}>
+                  go?
+                </button>
+              ) : null}
+
+              {!isHost && !buyerCheck && !buyLimit ? (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              ) : null} */}
+
               {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
@@ -504,8 +521,18 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : (
+              ) : buyLimit ? (
                 <button className={styles.nogobtn}>go!</button>
+              ) : (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
               )}
             </div>
           </div>
@@ -529,7 +556,19 @@ const VideoRoom = () => {
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
+              setBuyLimit={setBuyLimit}
             />
+
+            {priceOpen && !celebrity ? (
+              <div className={styles.bidtext}>최고 {bidPrice}원!</div>
+            ) : null}
+
+            {!priceOpen ? (
+              <div className={styles.gotext}>
+                <div>GO! 버튼을 눌러</div>
+                <div>경매에 참여하세요!</div>
+              </div>
+            ) : null}
           </div>
 
           {/* <div>구매의사 수: {bidders}</div>
@@ -545,7 +584,6 @@ const VideoRoom = () => {
                   className={styles.price}
                   myProfileImg={myProfileImg}
                 />
-                <div className={styles.bidtext}>최고 {bidPrice}원!</div>
               </div>
             ) : null}
           </div>

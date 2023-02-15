@@ -14,7 +14,8 @@
   font-size: 17px;
   font-weight: 800;
   font-family: "Poppins", sans-serif;
-  box-shadow: 9px 11px 43px 6px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 9px 11px 43px 6px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 9px 11px 43px 6px rgba(0, 0, 0, 0.75);
+
+  box-shadow: 5px 7px 5px 0px rgba(0, 0, 0, 0.85);
+  -webkit-box-shadow: 5px 7px 5px 0px rgba(0, 0, 0, 0.85);
+  -moz-box-shadow: 5px 7px 5px 0px rgba(0, 0, 0, 0.85);
 }

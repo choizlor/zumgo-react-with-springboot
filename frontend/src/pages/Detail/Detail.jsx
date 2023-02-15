@@ -43,14 +43,13 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
+  const [status,setStatus] = useState('');
   const [chats, setChats] = useState([]);
-  const [status,setStatus] = useState(product.status);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
   var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-  var minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
-
+  var minute = ("0" + date.getMinutes()).slice(-2);                                                                                                                                                                                                    
   useEffect(() => {
     // 상품 정보 axios
     axios
@@ -63,6 +62,7 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
+        setStatus(res.data.status)
         // 같으면 판매자, 다르면 구매자
 
         if (userId !== res.data.userCode) {
@@ -73,8 +73,10 @@ export default function Detail() {
         console.log(err);
       });
   }, []);
-
+  
   const changeStatus = (e) => {
+    setStatus(e.target.value);
+    console.log(e.target.value,'🐽🐽')
     if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
@@ -82,7 +84,6 @@ export default function Detail() {
       .then((res) => {
         ///soldout 이면 modal open 해주기
         setChats(res.data);
-        setStatus(e.target.value);
         setModalOpen(true);
         /// 아니면 status 업데이트
       })
@@ -91,11 +92,12 @@ export default function Detail() {
       });
     }
     
+    
     // 수정하기 api 요청
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
         ...product,
-        status: e.target?.value,
+        status: e.target.value,
       })
       .then(() => {
         navigate(`/detail/${product.id}`);
