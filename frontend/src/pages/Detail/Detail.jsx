@@ -235,7 +235,7 @@ export default function Detail() {
         <ChevronLeftIcon
           className={styles.goback}
           onClick={() => {
-            navigate("/");
+            navigate(-1);
           }}
         />
         <Swiper

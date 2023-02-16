@@ -20,7 +20,10 @@ import {
 export default function UserInfo() {
   const location = useLocation();
   const curLocation = location.pathname;
-  const [userInfo, setUserInfo] = useState({});
+  const [userCode, setUserCode] = useState();
+  const [kakaoNickname, setKakaoNickname] = useState('');
+  const [kakaoProfileImg, setKakaoProfileImg] = useState('');
+  const [point, setPoint] = useState(0);
 
   // 마이 페이지 인지 확인하기
   const param = useParams();
@@ -48,10 +51,13 @@ export default function UserInfo() {
   //   사용자 정보를 불러오는 api
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_USER}/${userId}`).then((res) => {
-      setUserInfo(res.data.user);
+      setUserCode(res.data.user.userCode);
+      setKakaoNickname(res.data.user.kakaoNickname);
+      setKakaoProfileImg(res.data.user.kakaoProfileImg);
+      setPoint(res.data.user.point);
     });
     console.log('왠지 무한일 듯')
-  }, [userInfo]);
+  }, []);
 
   return (
     <div className={styles.body}>
@@ -75,9 +81,9 @@ export default function UserInfo() {
           <div
             className={styles.navright}
             onClick={() => {
-              navigate(`/report/${userInfo?.userCode}`, {
+              navigate(`/report/${userCode}`, {
                 state: {
-                  kakaoNickname: userInfo.kakaoNickname,
+                  kakaoNickname: kakaoNickname,
                 },
               });
             }}
@@ -89,10 +95,10 @@ export default function UserInfo() {
 
       <div className={styles.userinfo}>
         <div className={styles.userimg}>
-          <img src={userInfo.kakaoProfileImg} alt="" />
+          <img src={kakaoProfileImg} alt="" />
         </div>
         <div className={styles.userdiv}>
-          <div className={styles.username}>{userInfo.kakaoNickname}</div>
+          <div className={styles.username}>{kakaoNickname}</div>
           {isMe ? (
             <PencilSquareIcon
               className={styles.updateicon}
@@ -105,7 +111,7 @@ export default function UserInfo() {
         {isMe ? (
           <div className={styles.mypoint}>
             <div className={styles.myptblack}>내 포인트</div>
-            <div className={styles.myptgreen}>{userInfo.point}pt</div>
+            <div className={styles.myptgreen}>{point}pt</div>
           </div>
         ) : null}
       </div>
@@ -166,7 +172,7 @@ export default function UserInfo() {
         ) : null}
       </div>
       {/* 사용자에게 달린 리뷰 */}
-      <Reviews userInfo={userInfo} />
+      <Reviews userCode={userCode} kakaoNickname={kakaoNickname}/>
 
       {/* <UserInfoDetail/> */}
       <BottomNav curLocation={curLocation} />

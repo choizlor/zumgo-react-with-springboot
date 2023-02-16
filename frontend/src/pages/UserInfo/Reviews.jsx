@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Reviews.module.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
 
-export default function Reviews({ userInfo }) {
+export default function Reviews({ userCode , kakaoNickname}) {
   const [reviews, setReviews] = useState([]);
-
-  const params= useParams()
-  const userId = params.userId;
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/review/seller/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/review/seller/${userCode}`)
       .then((res) => {
         let tmpReviews = res.data.MyReview.filter((item) => {return item.review !== ''})
         setReviews(tmpReviews);
@@ -25,7 +21,7 @@ export default function Reviews({ userInfo }) {
   return (
     <div className={styles.body}>
       <span className={styles.title}>
-        {userInfo?.kakaoNickname}님께 달린 리뷰 ({Number(reviews?.length)})
+        {kakaoNickname}님께 달린 리뷰 ({Number(reviews?.length)})
       </span>
 
       <div className={styles.reviewcontainer}>
