@@ -3,6 +3,7 @@ import styles from "./Detail.module.css";
 import LiveBtn from "./LiveBtn";
 import zImg from "../../assets/images/z.png";
 import DetailModal from "./DetailModal";
+import Loading from "../Loading/Loading";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 // heroicons
@@ -21,6 +22,7 @@ import { Navigation, Pagination } from "swiper";
 import { useSelector } from "react-redux";
 
 export default function Detail() {
+  const [isLoading, setIsLoading] = useState(true)
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -67,6 +69,9 @@ export default function Detail() {
         if (userId !== res.data.userCode) {
           setIsMine(false);
         }
+
+        // 로딩창 닫아주기
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err);
@@ -218,6 +223,7 @@ export default function Detail() {
 
   return (
     <div className={styles.body}>
+      { isLoading && <Loading/>}
       {/* 상품 이미지 배너 */}
       <div className={styles.swiperbox}>
         <ChevronLeftIcon
