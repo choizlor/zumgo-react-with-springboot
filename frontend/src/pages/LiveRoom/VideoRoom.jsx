@@ -374,8 +374,7 @@ const VideoRoom = () => {
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setBuyerCheck(true)
-    setSeconds(5);
+    setSeconds(10);
   };
 
   useEffect(() => {
