@@ -68,7 +68,8 @@ const VideoRoom = () => {
   const [publisher, setPublisher] = useState(undefined); // 자기 자신의 캠
   const [subscribers, setSubscribers] = useState([]); // 다른 유저의 스트림 정보를 저장할 배열
   const [messageList, setMessageList] = useState([]); // 메세지 정보를 담을 배열
-  const [seconds, setSeconds] = useState(0); //타이머 시작 시간
+  const [thSeconds, setThSeconds] = useState(30); //go? 타이머 시작 시간
+  const [tenSeconds, setTenSeconds] = useState(10); // go! 타이머
   const [totalUsers, setTotalUsers] = useState(0); // 총 유저수
   const [chatDisplay, setChatDisplay] = useState(true); // 채팅창 보이기(초깃값: true)
   const [myProfileImg, setMyProFileImg] = useState(undefined); // 프로필 이미지
@@ -304,6 +305,14 @@ const VideoRoom = () => {
       });
   };
 
+  const countdownThirty = setInterval(() => {
+    setThSeconds((thSeconds) => thSeconds - 1);
+    if (thSeconds === 0) {
+      clearInterval(countdownThirty);
+      setTimerOpen(false);
+    }
+  }, 1000);
+
   // go! 버튼 눌렀을 때 count
   const countBidder = () => {
     session
@@ -366,14 +375,15 @@ const VideoRoom = () => {
   };
 
   const startAuction = () => {
-    // setTimerOpen(true);
+    setTimerOpen(true);
+    countdownThirty();
     setSellerCheck(true);
-    setSeconds(10);
+    // setSeconds(10);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(5);
+    // setSeconds(5);
   };
 
   useEffect(() => {
@@ -514,8 +524,8 @@ const VideoRoom = () => {
             }
           >
             <Timer
-              seconds={seconds}
-              setSeconds={setSeconds}
+              seconds={thSeconds}
+              setSeconds={setThSeconds}
               currentSession={session}
               bidders={bidders}
               setPriceOpen={setPriceOpen}
