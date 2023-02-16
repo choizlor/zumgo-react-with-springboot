@@ -84,6 +84,7 @@ const VideoRoom = () => {
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
   const [buyLimit, setBuyLimit] = useState(false);
+  const [goStart, setGoStart] = useState(false);
 
   let OV = undefined;
 
@@ -370,12 +371,13 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setSeconds(10);
+    setGoStart(true);
+    setSeconds(30);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(5);
+    setSeconds(10);
   };
 
   useEffect(() => {
@@ -485,7 +487,7 @@ const VideoRoom = () => {
                 onMessage={sendMsg}
                 currentSession={session}
               />
-              {isHost && !sellerCheck ? (
+              {/* {isHost && !sellerCheck ? (
                 <button onClick={startAuction} className={styles.gobtn}>
                   go?
                 </button>
@@ -501,9 +503,9 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : null}
+              ) : null} */}
 
-              {/* {isHost ? (
+              {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
@@ -511,29 +513,31 @@ const VideoRoom = () => {
                 ) : (
                   <button className={styles.nogobtn}>go?</button>
                 )
-              ) : !buyerCheck ? (
-                <button
-                  onClick={() => {
-                    countBidder();
-                    changeBuyerCheck();
-                  }}
-                  className={styles.gobtn}
-                >
-                  go!
-                </button>
-              ) : buyLimit || buyerCheck ? (
-                <button className={styles.nogobtn}>go!</button>
-              ) : (
-                <button
-                  onClick={() => {
-                    countBidder();
-                    changeBuyerCheck();
-                  }}
-                  className={styles.gobtn}
-                >
-                  go!
-                </button>
-              )} */}
+              ) : goStart ? (
+                !buyerCheck ? (
+                  <button
+                    onClick={() => {
+                      countBidder();
+                      changeBuyerCheck();
+                    }}
+                    className={styles.gobtn}
+                  >
+                    go!
+                  </button>
+                ) : buyLimit || buyerCheck ? (
+                  <button className={styles.nogobtn}>go!</button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      countBidder();
+                      changeBuyerCheck();
+                    }}
+                    className={styles.gobtn}
+                  >
+                    go!
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
 
