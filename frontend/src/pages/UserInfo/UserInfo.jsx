@@ -51,7 +51,7 @@ export default function UserInfo() {
       setUserInfo(res.data.user);
     });
     console.log('왠지 무한일 듯')
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.body}>
