@@ -1,6 +1,5 @@
 package com.isf6.backend.api.Response;
 
-import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.User;
@@ -10,12 +9,11 @@ import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @Getter
 @AllArgsConstructor
-public class ProductResponseDto {
+public class ProductResDto {
 
     private Long id;
     private String title;
@@ -33,7 +31,7 @@ public class ProductResponseDto {
     private boolean wishCheck;
     private boolean liveReqCheck;
 
-    public ProductResponseDto(Product entity, boolean wishCheck, boolean liveReqCheck, List<String> imgUrlList, User user) {
+    public ProductResDto(Product entity, boolean wishCheck, boolean liveReqCheck, List<String> imgUrlList, User user) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.price = entity.getPrice();

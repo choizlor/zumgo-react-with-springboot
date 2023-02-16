@@ -1,11 +1,11 @@
 package com.isf6.backend.service;
 
-import com.isf6.backend.api.Request.ProductSaveRequestDto;
+import com.isf6.backend.api.Request.ProductSaveReqDto;
 import com.isf6.backend.api.Request.ProductSearchReqDto;
-import com.isf6.backend.api.Request.ProductUpdateRequestDto;
+import com.isf6.backend.api.Request.ProductUpdateReqDto;
 import com.isf6.backend.api.Response.IndexProductsResDto;
-import com.isf6.backend.api.Response.ProductListResponseDto;
-import com.isf6.backend.api.Response.ProductResponseDto;
+import com.isf6.backend.api.Response.ProductListResDto;
+import com.isf6.backend.api.Response.ProductResDto;
 import com.isf6.backend.domain.entity.Img;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.ProductStatus;
@@ -46,7 +46,7 @@ public class ProductService {
 //    }
 
     @Transactional
-    public Long uploadProduct(ProductSaveRequestDto requestDto, List<String> imgPaths) {
+    public Long uploadProduct(ProductSaveReqDto requestDto, List<String> imgPaths) {
         postBlankCheck(imgPaths);
         Long id = productRepository.save(requestDto.toEntity()).getId();
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
@@ -66,7 +66,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long update(Long id, ProductUpdateRequestDto requestDto) {
+    public Long update(Long id, ProductUpdateReqDto requestDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
         product.update(
                 requestDto.getTitle(),
@@ -78,7 +78,7 @@ public class ProductService {
 
         return id;
     }
-    public ProductResponseDto findById (Long id, Long userCode) {
+    public ProductResDto findById (Long id, Long userCode) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + id));
 
 
@@ -106,7 +106,7 @@ public class ProductService {
         //판매자 userCode, nickname, profileImg 필요함...
         User user = userService.findUser(entity.getUser().getUserCode());
 
-        return new ProductResponseDto(entity, wishCheck, liveReqCheck, imgUrlList, user);
+        return new ProductResDto(entity, wishCheck, liveReqCheck, imgUrlList, user);
     }
 
     @Transactional
@@ -118,9 +118,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductListResponseDto> findAllDesc() {
+    public List<ProductListResDto> findAllDesc() {
         return productRepository.findAllDesc().stream()
-                .map(product -> new ProductListResponseDto(product))
+                .map(product -> new ProductListResDto(product))
                 .collect(Collectors.toList());
     }
 
