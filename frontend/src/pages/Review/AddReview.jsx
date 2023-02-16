@@ -46,7 +46,7 @@ export default function AddReview() {
      review,
    })
    .then((res) => {
-     navigate('/myreviewlist')
+     navigate('/')
    })
    .catch((err) => {
      console.log(err);
