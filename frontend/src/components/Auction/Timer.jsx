@@ -13,7 +13,6 @@ export default function Timer({
   sellerCheck,
   setTimerOpen,
   setBuyLimit,
-  setGoStart
 }) {
   const sendCount = () => {
     currentSession
@@ -29,7 +28,6 @@ export default function Timer({
 
   useEffect(() => {
     if (seconds > 0) {
-      setGoStart(true);
       sendCount();
     }
     const id = setInterval(() => {

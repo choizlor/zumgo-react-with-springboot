@@ -84,7 +84,6 @@ const VideoRoom = () => {
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
   const [buyLimit, setBuyLimit] = useState(false);
-  const [goStart, setGoStart] = useState(false);
 
   let OV = undefined;
 
@@ -512,31 +511,29 @@ const VideoRoom = () => {
                 ) : (
                   <button className={styles.nogobtn}>go?</button>
                 )
-              ) : goStart ? (
-                !buyerCheck ? (
-                  <button
-                    onClick={() => {
-                      countBidder();
-                      changeBuyerCheck();
-                    }}
-                    className={styles.gobtn}
-                  >
-                    go!
-                  </button>
-                ) : buyLimit || buyerCheck ? (
-                  <button className={styles.nogobtn}>go!</button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      countBidder();
-                      changeBuyerCheck();
-                    }}
-                    className={styles.gobtn}
-                  >
-                    go!
-                  </button>
-                )
-              ) : null}
+              ) : !buyerCheck ? (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              ) : buyLimit || buyerCheck ? (
+                <button className={styles.nogobtn}>go!</button>
+              ) : (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              )}
             </div>
           </div>
 
@@ -560,7 +557,6 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
               setBuyLimit={setBuyLimit}
-              setGoStart={setGoStart}
             />
 
             {priceOpen && !celebrity ? (
