@@ -23,18 +23,18 @@ export default function Timer({
         clearInterval(id);
         setSeconds(0);
 
-        // if (bidders === 0 && sellerCheck) {
-        //   setNonCelebrity(true);
-        // }
-        // if (bidders === 1) {
-        //   setCelebrity(true);
-        // }
-        // if (bidders >= 1) {
-        //   setPriceOpen(true);
-        // }
-        // if (bidCount > 0) {
-        //   setCelebrity(true);
-        // }
+        if (bidders === 0 && sellerCheck) {
+          setNonCelebrity(true);
+        }
+        if (bidders === 1) {
+          setCelebrity(true);
+        }
+        if (bidders >= 1) {
+          setPriceOpen(true);
+        }
+        if (bidCount > 0) {
+          setCelebrity(true);
+        }
       }
     }, 1000);
     console.log(count);

@@ -309,6 +309,20 @@ const VideoRoom = () => {
         data: 10,
         type: "timer",
       })
+      .then(() => {
+        setSellerCheck(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const tenCount = () => {
+    session
+      .signal({
+        data: 5,
+        type: "timer",
+      })
       .then(() => {})
       .catch((error) => {
         console.error(error);
@@ -390,7 +404,7 @@ const VideoRoom = () => {
   useEffect(() => {
     if (bidPrice > product.price) {
       // product 가격으로 바꿔야 함
-      startBidding();
+      tenCount();
     }
   }, [bidPrice]);
 
@@ -524,7 +538,7 @@ const VideoRoom = () => {
             //   !timerOpen ? { visibility: "hidden" } : { visibility: "visible" }
             // }
           >
-            {seconds !== 0 ? (
+            {seconds > 0 || seconds !== 0 ? (
               <Timer
                 seconds={seconds}
                 setSeconds={setSeconds}
@@ -541,10 +555,10 @@ const VideoRoom = () => {
                 sellerCheck={sellerCheck}
               />
             ) : null}
-            {priceOpen && !celebrity ? (
+            {seconds !==0 && priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
             ) : null}
-            {!priceOpen ? (
+            {seconds !== 0 && !priceOpen ? (
               <div className={styles.gotext}>
                 <div>GO! 버튼을 눌러</div>
                 <div>경매에 참여하세요!</div>
