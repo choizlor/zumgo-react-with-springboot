@@ -401,12 +401,12 @@ const VideoRoom = () => {
     setSeconds(5);
   };
 
-  useEffect(() => {
-    if (bidPrice > product.price) {
-      // product 가격으로 바꿔야 함
-      tenCount();
-    }
-  }, [bidPrice]);
+  // useEffect(() => {
+  //   if (bidPrice > product.price) {
+  //     // product 가격으로 바꿔야 함
+  //     tenCount();
+  //   }
+  // }, [bidPrice]);
 
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
@@ -576,6 +576,7 @@ const VideoRoom = () => {
                   className={styles.price}
                   myProfileImg={myProfileImg}
                   myUserCode={myUserCode}
+                  tenCount={tenCount}
                 />
               </div>
             ) : null}
