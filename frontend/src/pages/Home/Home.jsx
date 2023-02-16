@@ -29,7 +29,7 @@ export default function Home() {
   const productFetch = () => {
     axios
       .get(
-        `${process.env.REACT_APP_SERVER}/products/main?pageNo=${page}&pageSize=5`
+        `${process.env.REACT_APP_API_URL}/products/main?pageNo=${page}&pageSize=5`
       )
       .then((res) => {
         // 리스트 뒤로 붙여주기
