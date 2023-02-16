@@ -20,16 +20,13 @@ export default function Timer({
         data: seconds,
         type: "timer",
       })
-      .then(() => {
-        console.log("timer send")
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(error);
       });
   };
-                                             
-  useEffect(() => {
 
+  useEffect(() => {
     if (timerOpen) {
       sendCount();
     }
