@@ -41,11 +41,10 @@ export default function UserInfo() {
 
   const handleLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
-      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("recents");
+      persistor.purge();
     }
-    localStorage.removeItem("token");
-    localStorage.removeItem("recents");
-    persistor.purge();
   };
 
   //   사용자 정보를 불러오는 api
@@ -62,7 +61,7 @@ export default function UserInfo() {
           <ChevronLeftIcon
             className="w-6 h-6 text-black-100"
             onClick={() => {
-              navigate("/");
+              navigate(-1);
             }}
           />
           <div className={styles.title}>프로필</div>
@@ -77,9 +76,11 @@ export default function UserInfo() {
           <div
             className={styles.navright}
             onClick={() => {
-              navigate(`/report/${userInfo?.userCode}`,{ state : {
-                kakaoNickname: userInfo.kakaoNickname
-              }});
+              navigate(`/report/${userInfo?.userCode}`, {
+                state: {
+                  kakaoNickname: userInfo.kakaoNickname,
+                },
+              });
             }}
           >
             <div className={styles.logout}>신고하기</div>
@@ -89,15 +90,10 @@ export default function UserInfo() {
 
       <div className={styles.userinfo}>
         <div className={styles.userimg}>
-          <img
-            src={userInfo.kakaoProfileImg}
-            alt=""
-          />
+          <img src={userInfo.kakaoProfileImg} alt="" />
         </div>
         <div className={styles.userdiv}>
-          <div className={styles.username}>
-            {userInfo.kakaoNickname}
-          </div>
+          <div className={styles.username}>{userInfo.kakaoNickname}</div>
           {isMe ? (
             <PencilSquareIcon
               className={styles.updateicon}
