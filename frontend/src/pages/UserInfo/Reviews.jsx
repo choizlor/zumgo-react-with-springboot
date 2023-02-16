@@ -11,7 +11,6 @@ export default function Reviews({ userInfo }) {
   const userId = params.userId;
 
   useEffect(() => {
-    console.log("렌더링", "");
     axios
       .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
       .then((res) => {
@@ -25,7 +24,7 @@ export default function Reviews({ userInfo }) {
   return (
     <div className={styles.body}>
       <span className={styles.title}>
-        {userInfo?.kakaoNickname}님께 달린 리뷰
+        {userInfo?.kakaoNickname}님께 달린 리뷰 ({Number(reviews?.length)})
       </span>
 
       <div className={styles.reviewcontainer}>
