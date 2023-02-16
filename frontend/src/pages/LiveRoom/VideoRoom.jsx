@@ -197,6 +197,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
+      setPriceOpen(true)
       setSeconds(event.data); // 시간 세팅
     });
 
@@ -299,6 +300,19 @@ const VideoRoom = () => {
         type: "chat", // The type of message (optional)
       })
       .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const thirtyCount = () => {
+    session
+      .signal({
+        data: 10,
+        type: "timer",
+      })
+      .then(() => {
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -485,7 +499,7 @@ const VideoRoom = () => {
               />
               {isHost ? (
                 !sellerCheck ? (
-                  <button onClick={startAuction} className={styles.gobtn}>
+                  <button onClick={thirtyCount} className={styles.gobtn}>
                     go?
                   </button>
                 ) : (

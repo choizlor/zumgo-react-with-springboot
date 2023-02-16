@@ -13,55 +13,36 @@ export default function Timer({
   sellerCheck,
   setTimerOpen,
 }) {
-  const sendCount = () => {
-    currentSession
-      .signal({
-        data: seconds,
-        type: "timer",
-      })
-      .then(() => {
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const [count, setCount] = useState(seconds);
 
   useEffect(() => {
-    if (seconds > 0) {
-      setTimerOpen(true);
-      sendCount();
-    }
     const id = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds((prevSeconds) => {
-          return prevSeconds - 1;
-        });
-      }
+      setCount((count) => count - 1);
       // 0이 되면 카운트가 멈춤
-      if (seconds === 0) {
+      if (count === 0) {
         clearInterval(id);
-        setTimerOpen(false);
+        // setTimerOpen(false);
 
-        if (bidders === 0 && sellerCheck) {
-          setNonCelebrity(true);
-        }
-        if (bidders === 1) {
-          setCelebrity(true);
-        }
-        if (bidders >= 1) {
-          setPriceOpen(true);
-        }
-        if (bidCount > 0) {
-          setCelebrity(true);
-        }
+        // if (bidders === 0 && sellerCheck) {
+        //   setNonCelebrity(true);
+        // }
+        // if (bidders === 1) {
+        //   setCelebrity(true);
+        // }
+        // if (bidders >= 1) {
+        //   setPriceOpen(true);
+        // }
+        // if (bidCount > 0) {
+        //   setCelebrity(true);
+        // }
       }
     }, 1000);
     return () => clearInterval(id);
-  }, [seconds]);
+  }, [count]);
 
   return (
     <div className={styles.timer}>
-      <span className={styles.count}>{seconds}</span>
+      <span className={styles.count}>{count}</span>
     </div>
   );
 }
