@@ -20,7 +20,7 @@ export default function Reviews({ userInfo }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.body}>
