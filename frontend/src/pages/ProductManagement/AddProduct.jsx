@@ -32,7 +32,14 @@ export default function AddProduct() {
   // 상품등록 axios
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let files = e.target.imgurls.files;
 
+    if (files.length === 0) {
+      alert("상품 사진 등록은 필수입니다.");
+    }
+    if (files.length > 5) {
+      alert("상품 사진은 최대 5장 까지만 등록 가능합니다.");
+    }
     if (title === "") {
       alert("제목을 입력하세요.");
       return;
@@ -56,7 +63,6 @@ export default function AddProduct() {
     }
 
     let formData = new FormData();
-    let files = e.target.imgurls.files;
 
     for (let i = 0; i < files.length; i++) {
       formData.append("imgUrl", files[i]);
@@ -69,12 +75,18 @@ export default function AddProduct() {
     );
 
     await axios
-      .post("https://i8c110.p.ssafy.io/api/v1/product", formData, {
+      .post(`${process.env.REACT_APP_API_URL}/product`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
+        setTitle("")
+        setPrice("")
+        setDescription("")
+        setAvailableTime("")
+        setFileLen(0)
+
         navigate(`/`);
       })
       .catch((err) => {

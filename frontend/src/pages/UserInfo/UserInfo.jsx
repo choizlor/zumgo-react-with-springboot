@@ -21,6 +21,7 @@ export default function UserInfo() {
   const location = useLocation();
   const curLocation = location.pathname;
   const [userInfo, setUserInfo] = useState({});
+
   // 마이 페이지 인지 확인하기
   const param = useParams();
   const navigate = useNavigate();
@@ -34,22 +35,23 @@ export default function UserInfo() {
   const isMe = Number(userId) === me.userCode ? true : false;
 
   // 로그아웃
-  const REST_API_KEY = "b875d5c09e310962a4402f90c93aa19c";
-  const LOGOUT_REDIRECT_URI = "https://i8c110.p.ssafy.io/";
-  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("recents");
-    persistor.purge();
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("recents");
+      persistor.purge();
+    }
   };
 
   //   사용자 정보를 불러오는 api
   useEffect(() => {
-    axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_USER}/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-  }, []);
+    console.log('왠지 무한일 듯')
+  }, [userId]);
 
   return (
     <div className={styles.body}>
@@ -58,7 +60,7 @@ export default function UserInfo() {
           <ChevronLeftIcon
             className="w-6 h-6 text-black-100"
             onClick={() => {
-              navigate("/");
+              navigate(-1);
             }}
           />
           <div className={styles.title}>프로필</div>
@@ -69,20 +71,28 @@ export default function UserInfo() {
               로그아웃
             </a>
           </div>
-        ) : null}
+        ) : (
+          <div
+            className={styles.navright}
+            onClick={() => {
+              navigate(`/report/${userInfo?.userCode}`, {
+                state: {
+                  kakaoNickname: userInfo.kakaoNickname,
+                },
+              });
+            }}
+          >
+            <div className={styles.logout}>신고하기</div>
+          </div>
+        )}
       </div>
 
       <div className={styles.userinfo}>
         <div className={styles.userimg}>
-          <img
-            src={isMe ? me.kakaoProfileImg : userInfo.kakaoProfileImg}
-            alt=""
-          />
+          <img src={userInfo.kakaoProfileImg} alt="" />
         </div>
         <div className={styles.userdiv}>
-          <div className={styles.username}>
-            {isMe ? me.kakaoNickname : userInfo.kakaoNickname}
-          </div>
+          <div className={styles.username}>{userInfo.kakaoNickname}</div>
           {isMe ? (
             <PencilSquareIcon
               className={styles.updateicon}
@@ -92,6 +102,12 @@ export default function UserInfo() {
             />
           ) : null}
         </div>
+        {isMe ? (
+          <div className={styles.mypoint}>
+            <div className={styles.myptblack}>내 포인트</div>
+            <div className={styles.myptgreen}>{userInfo.point}pt</div>
+          </div>
+        ) : null}
       </div>
       {/* 목록 리스트 */}
       <div className={styles.menus}>

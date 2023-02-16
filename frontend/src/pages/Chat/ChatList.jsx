@@ -19,10 +19,15 @@ export default function ChatList() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .get(`${process.env.REACT_APP_API_URL}/socket/${userId}/all`)
       .then((res) => {
-        setChats(res.data);
-        console.log(res.data);
+        const sorted_list = res.data.sort(function (a, b) {
+          return (
+            new Date(b.lastChat.chat_date).getTime() -
+            new Date(a.lastChat.chat_date).getTime()
+          );
+        });
+        setChats(sorted_list);
       })
       .catch((err) => {
         console.log(err);
@@ -33,7 +38,7 @@ export default function ChatList() {
   const getChatHistory = (sellerId, buyerId) => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+      .post(`${process.env.REACT_APP_API_URL}/socket/room`, {
         buyerCode: buyerId,
         sellerCode: sellerId,
       })
@@ -85,10 +90,14 @@ export default function ChatList() {
                       ? chat.buyer.kakaoNickname
                       : chat.seller.kakaoNickname}
                   </div>
-                  <div className={styles.time}>
-                    {chat?.lastChat["chat_date"].slice(5, 7)}월 {chat?.lastChat["chat_date"].slice(8, 10)}
-                    일 {Number(chat?.lastChat["chat_date"]?.slice(11, 13)) + 9}:{chat?.lastChat["chat_date"].slice(14,16)}
-                  </div>
+                  { chats &&
+                    <div className={styles.time}>
+                      {chat?.lastChat["chat_date"]?.slice(5, 7)}월{" "}
+                      {chat?.lastChat["chat_date"]?.slice(8, 10)}일{" "}
+                      {Number(chat?.lastChat["chat_date"]?.slice(11, 13)) + 9}:
+                      {chat?.lastChat["chat_date"]?.slice(14, 16)}
+                    </div>
+                  }
                 </div>
                 <span className={styles.lastmsg}>
                   {chat.lastChat["chat_content"]}

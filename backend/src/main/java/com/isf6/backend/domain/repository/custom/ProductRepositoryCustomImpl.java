@@ -2,6 +2,7 @@ package com.isf6.backend.domain.repository.custom;
 
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.domain.entity.Img;
+import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.QImg;
 import com.isf6.backend.domain.entity.QProduct;
 import com.querydsl.core.BooleanBuilder;
@@ -80,6 +81,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                 ))
                 .from(product)
                 .join(img).on(product.id.eq(img.product.id))
+                .where(product.status.eq(ProductStatus.valueOf("ONSALE")))
                 .groupBy(img.product.id)
                 .orderBy(product.id.desc())
                 .limit(pageSize)

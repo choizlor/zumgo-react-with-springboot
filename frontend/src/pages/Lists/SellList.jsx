@@ -19,7 +19,7 @@ export default function SellList() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/products/sellList/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/products/sellList/${userId}`)
       .then((res) => {
         setProducts(res.data);
         setFiltered(res.data.filter((product) => product.status === filter))

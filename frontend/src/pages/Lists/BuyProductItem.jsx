@@ -5,6 +5,7 @@ import { HeartIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 
 export default function BuyProductItem({ product, clickProduct }) {
+  console.log(product)
   const navigate = useNavigate();
   return (
     <div className={styles.body}>
@@ -21,14 +22,16 @@ export default function BuyProductItem({ product, clickProduct }) {
           >
             {product.title}
           </div>
-          <div
-            className={styles.review}
-            onClick={() => {
-              navigate(`/review/${product.productId}/create`);
-            }}
-          >
-            리뷰쓰고 +2pt
-          </div>
+          {!product.review && (
+            <div
+              className={styles.review}
+              onClick={() => {
+                navigate(`/review/${product.productId}/create`);
+              }}
+            >
+              리뷰쓰고 +3pt
+            </div>
+          )}
         </div>
         <div className={styles.price}>{product.price}원</div>
         <div className={styles.bottom}>

@@ -23,7 +23,7 @@ export default function Search() {
 
   const searchProducts = (searchWord) => {
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
+      .post(`${process.env.REACT_APP_API_URL}/product/search`, {
         searchName: searchWord,
       })
       .then((res) => {

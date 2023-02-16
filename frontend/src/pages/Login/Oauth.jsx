@@ -23,13 +23,12 @@ export default function Oauth() {
 
           // 유저 정보를 불러오는 api
           axios
-            .get("http://i8c110.p.ssafy.io/api/me", {
+            .get(`${process.env.REACT_APP_API_ME}`, {
               headers: {
                 Authorization: token,
               },
             })
             .then((res) => {
-              console.log(res.data);
               dispatch(
                 login({
                   userCode: res.data.user.userCode,

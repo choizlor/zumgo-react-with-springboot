@@ -11,21 +11,21 @@ export default function Reviews({ userInfo }) {
   const userId = params.userId;
 
   useEffect(() => {
-    console.log("렌더링", "");
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/review/seller/${userId}`)
       .then((res) => {
-        setReviews(res.data.MyReview);
+        let tmpReviews = res.data.MyReview.filter((item) => {return item.review !== ''})
+        setReviews(tmpReviews);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.body}>
       <span className={styles.title}>
-        {userInfo?.kakaoNickname}님께 달린 리뷰
+        {userInfo?.kakaoNickname}님께 달린 리뷰 ({Number(reviews?.length)})
       </span>
 
       <div className={styles.reviewcontainer}>

@@ -22,7 +22,7 @@ export default function AddReview() {
     // 상품 정보 axios
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${buyerId}`
+        `${process.env.REACT_APP_API_URL}/product/${productId}?userCode=${buyerId}`
       )
       .then((res) => {
         setSellerId(res.data.userCode);
@@ -40,13 +40,13 @@ export default function AddReview() {
   const addReview = () => {
    // productId로 수정하기
    axios
-   .patch(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
+   .patch(`${process.env.REACT_APP_API_URL}/review/${productId}`, {
      seller: sellerId,
      buyer: buyerId,
      review,
    })
    .then((res) => {
-     navigate('/myreviewlist')
+     navigate('/')
    })
    .catch((err) => {
      console.log(err);

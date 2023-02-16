@@ -8,11 +8,7 @@ import kakaoBtn from "../../assets/images/kakao_login_medium_wide.png";
 export default function Login() {
   const navigate = useNavigate();
 
-  const REST_API_KEY = 'b875d5c09e310962a4402f90c93aa19c';
-
-  const REDIRECT_URI = "http://i8c110.p.ssafy.io/oauth";
-
-  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code`;
 
   return (
     <div className={styles.body}>
