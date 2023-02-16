@@ -25,7 +25,7 @@ export default function DetailModal({ setModalOpen, productId }) {
         review: "",
       })
       .then((res) => {
-        alert('거래 완료 처리 되었습니다!')
+        alert("거래 완료 처리 되었습니다!");
         closeModal();
       })
       .catch((err) => {
@@ -52,7 +52,17 @@ export default function DetailModal({ setModalOpen, productId }) {
       <span className={styles.title}>누구와 거래하셨나요?</span>
       <div className={styles.scrollbox}>
         {chats?.map((chat) => (
-          <div key={chat.roomId} className={styles.userbox}>
+          <div
+            key={chat.roomId}
+            className={styles.userbox}
+            onClick={() => {
+              addBuyList(
+                userId === chat.buyer.userCode
+                  ? chat.seller.userCode
+                  : chat.buyer.userCode
+              );
+            }}
+          >
             <img
               src={
                 userId === chat.buyer.userCode
@@ -61,16 +71,7 @@ export default function DetailModal({ setModalOpen, productId }) {
               }
               className={styles.userimg}
             />
-            <span
-              className={styles.username}
-              onClick={() => {
-                addBuyList(
-                  userId === chat.buyer.userCode
-                    ? chat.seller.userCode
-                    : chat.buyer.userCode
-                );
-              }}
-            >
+            <span className={styles.username}>
               {userId === chat.buyer.userCode
                 ? chat.seller.kakaoNickname
                 : chat.buyer.kakaoNickname}
