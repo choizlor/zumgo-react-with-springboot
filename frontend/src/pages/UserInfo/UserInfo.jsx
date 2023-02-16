@@ -40,7 +40,9 @@ export default function UserInfo() {
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
-    if(window.confirm('로그아웃 하시게?')) {alert('로그아웃 되었습니다.')}
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      alert("로그아웃 되었습니다.");
+    }
     localStorage.removeItem("token");
     localStorage.removeItem("recents");
     persistor.purge();
@@ -71,7 +73,18 @@ export default function UserInfo() {
               로그아웃
             </a>
           </div>
-        ) : null}
+        ) : (
+          <div
+            className={styles.navright}
+            onClick={() => {
+              navigate(`/report/${userInfo?.userCode}`,{ state : {
+                kakaoNickname: userInfo.kakaoNickname
+              }});
+            }}
+          >
+            <div className={styles.logout}>신고하기</div>
+          </div>
+        )}
       </div>
 
       <div className={styles.userinfo}>
