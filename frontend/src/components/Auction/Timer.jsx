@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../Auction/Timer.module.css";
 
 export default function Timer({
@@ -15,18 +15,15 @@ export default function Timer({
   buyerCheck,
 }) {
   const [count, setCount] = useState(seconds);
-  const countRef = useRef(0);
-
-  useEffect(() => {
-    if (seconds === 5) {
-      countRef.current = seconds;
-      setCount(countRef.current)
-    }
-  }, [seconds])
 
   useEffect(() => {
     const id = setInterval(() => {
       setCount((count) => count - 1);
+
+      if (seconds === 5 && bidCount > 1) {
+        clearInterval(id)
+      }
+
       // 0이 되면 카운트가 멈춤
       if (count === 0) {
         clearInterval(id);
@@ -48,7 +45,7 @@ export default function Timer({
     }, 1000);
     console.log(count);
     return () => clearInterval(id);
-  }, [count]);
+  }, [count, seconds]);
 
   return (
     <div className={styles.timer}>

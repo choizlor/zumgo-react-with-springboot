@@ -84,6 +84,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
+  const [countBid, setCountBid] = useState(0);
 
   let OV = undefined;
 
@@ -352,7 +353,7 @@ const VideoRoom = () => {
       .signal({
         data: `${
           Number(bidPrice) + price
-        } : ${bidder} : ${myProfileImg} : ${bidCount} : ${bidCode}`,
+        } : ${bidder} : ${myProfileImg} : ${Number(countBid) + bidCount} : ${bidCode}`,
         type: "bid",
       })
       .then(() => {})
@@ -401,12 +402,12 @@ const VideoRoom = () => {
     setSeconds(5);
   };
 
-  // useEffect(() => {
-  //   if (bidPrice > product.price) {
-  //     // product 가격으로 바꿔야 함
-  //     tenCount();
-  //   }
-  // }, [bidPrice]);
+  useEffect(() => {
+    if (bidPrice > product.price) {
+      // product 가격으로 바꿔야 함
+      
+    }
+  }, [bidPrice]);
 
   // 참가자를 배열에서 제거함
   const deleteSubscriber = useCallback(
