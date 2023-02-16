@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,22 +28,6 @@ import java.util.Map;
 @Service
 public class TalkService {
 
-    @Value("${Talk-api-key}")
-    private String TalkApiKey;
-    @Value("${Talk-user-id}")
-    private String TalkUserId;
-    @Value("${Talk-sender-key}")
-    private String TalkSenderKey;
-    @Value("${Reserve-tpl-code}")
-    private String ReserveTplCode;
-    @Value("${LiveStart-tpl-code}")
-    private String LiveStartTplCode;
-    @Value("${Talk-sender}")
-    private String TalkSender;
-    @Value("${zumgo-url}")
-    private String zumgoUrl;
-
-
     //알림톡 전송을 위한 token 발급
     public String createToken() throws JsonProcessingException, ParseException {
         RestTemplate rt = new RestTemplate();
@@ -53,8 +36,8 @@ public class TalkService {
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.add("apikey", TalkApiKey); //api key
-        params.add("userid", TalkUserId); //사이트 아이디
+        params.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
+        params.add("userid", "gyeoul98"); //사이트 아이디
         HttpEntity<MultiValueMap<String, Object>> TokenRequest = new HttpEntity<>(params);
 
         //7일 동안 사용 가능한 엑세스 토큰을 발급 받기
@@ -94,8 +77,8 @@ public class TalkService {
         buttonMap.put("name", "zum:go 바로가기"); //버튼명
         buttonMap.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
         buttonMap.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
-        buttonMap.put("linkM", zumgoUrl); //WL일때 필수
-        buttonMap.put("linkP", zumgoUrl); //WL일때 필수
+        buttonMap.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        buttonMap.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
         List<Map> button = new ArrayList<>();
         button.add(buttonMap);
         Map<String, List<Map>> buttonInfo = new HashMap<>(); //버튼 정보
@@ -108,12 +91,12 @@ public class TalkService {
         HttpHeaders headers = new HttpHeaders();
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-        body.add("apikey", TalkApiKey); //api key
-        body.add("userid", TalkUserId); //사이트 아이디
+        body.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
+        body.add("userid", "gyeoul98"); //사이트 아이디
         body.add("token", token); //발급받은 토큰
-        body.add("senderkey", TalkSenderKey); //발신프로파일 키
-        body.add("tpl_code", ReserveTplCode); //템플릿 코드
-        body.add("sender", TalkSender); //발신자 연락처
+        body.add("senderkey", "aed29693a2cb5db41813209853bf64be349aead8"); //발신프로파일 키
+        body.add("tpl_code", "TL_8062"); //템플릿 코드
+        body.add("sender", "01076100034"); //발신자 연락처
 
         int receiverSize = liveRequestUser.size();
         for (int i=0; i<receiverSize; i++) {
@@ -150,8 +133,8 @@ public class TalkService {
         buttonMap.put("name", "zum:go 바로가기"); //버튼명
         buttonMap.put("linkType", "WL"); //버튼 링크타입(DS:배송조회, WL:웹링크, AL:앱링크, BK:봇키워드, MD:메시지전달)
         buttonMap.put("linkTypeName", "웹링크"); //버튼 링크 타입네임, ( 배송조회, 웹링크, 앱링크, 봇키워드, 메시지전달 중에서 1개)
-        buttonMap.put("linkM", zumgoUrl); //WL일때 필수
-        buttonMap.put("linkP", zumgoUrl); //WL일때 필수
+        buttonMap.put("linkM", "https://i8c110.p.ssafy.io/"); //WL일때 필수
+        buttonMap.put("linkP", "https://i8c110.p.ssafy.io/"); //WL일때 필수
         List<Map> button = new ArrayList<>();
         button.add(buttonMap);
         Map<String, List<Map>> buttonInfo = new HashMap<>(); //버튼 정보
@@ -164,12 +147,12 @@ public class TalkService {
         HttpHeaders headers = new HttpHeaders();
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-        body.add("apikey", TalkApiKey); //api key
-        body.add("userid", TalkUserId); //사이트 아이디
+        body.add("apikey", "ivzxf96trcesudys8du2ib7pa3kizcij"); //api key
+        body.add("userid", "gyeoul98"); //사이트 아이디
         body.add("token", token); //발급받은 토큰
-        body.add("senderkey", TalkSenderKey); //발신프로파일 키
-        body.add("tpl_code", LiveStartTplCode); //템플릿 코드
-        body.add("sender", TalkSender); //발신자 연락처
+        body.add("senderkey", "aed29693a2cb5db41813209853bf64be349aead8"); //발신프로파일 키
+        body.add("tpl_code", "TL_8079"); //템플릿 코드
+        body.add("sender", "01076100034"); //발신자 연락처
 
         int receiverSize = liveRequestUser.size();
         for (int i=0; i<receiverSize; i++) {
