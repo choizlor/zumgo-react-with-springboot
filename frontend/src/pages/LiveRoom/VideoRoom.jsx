@@ -198,7 +198,8 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      setSeconds(event.data); // 시간 세팅
+      setTimerOpen(true)
+      // setSeconds(event.data); // 시간 세팅
     });
 
     mySession.on("signal:count", (event) => {
@@ -370,7 +371,7 @@ const VideoRoom = () => {
     setTotalUsers((prevTotalUsers) => {
       return 0;
     });
-    setSeconds(0);
+    // setSeconds(0);
     deleteRoomRequest(); // 방 삭제 요청
   };
 
