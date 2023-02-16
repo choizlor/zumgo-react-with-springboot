@@ -80,7 +80,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
           selected={reserve}
           onChange={(date) => setReserve(date)}
           showTimeInput
-          dateFormat="yyyy/MM/dd h:mm aa"
+          dateFormat="MM/dd h:mm aa"
           minDate={new Date()}
           popperModifiers={{
             // 모바일 web 환경에서 화면을 벗어나지 않도록 하는 설정
