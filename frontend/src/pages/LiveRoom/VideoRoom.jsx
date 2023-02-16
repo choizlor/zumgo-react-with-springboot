@@ -200,6 +200,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:count", (event) => {
+      console.log('왜안되냐고요')
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
@@ -284,7 +285,9 @@ const VideoRoom = () => {
         data: `${Number(bidders) + 1} : ${myUserName} : ${myProfileImg}`,
         type: "count",
       })
-      .then(() => {})
+      .then(() => {
+        console.log('count success')
+      })
       .catch((err) => {
         console.log(err);
       });
