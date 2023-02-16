@@ -70,8 +70,6 @@ export default function Detail() {
           setIsMine(false);
         }
 
-        window.location.replace(`/detail/${productId}`)
-
         // 로딩창 닫아주기
         setIsLoading(false)
       })
