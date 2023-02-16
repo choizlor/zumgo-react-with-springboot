@@ -197,7 +197,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      setPriceOpen(true)
+      setTimerOpen(true);
       setSeconds(event.data); // 시간 세팅
     });
 
