@@ -3,7 +3,6 @@ import styles from './Price.module.css';
 
 export default function Price({
   handleBidPrice,
-  setBidCount,
   myUserName,
   myProfileImg,
   myUserCode,
