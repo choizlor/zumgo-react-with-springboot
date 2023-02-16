@@ -32,13 +32,12 @@ export default function Timer({
       setTimerOpen(true);
     }
     const id = setInterval(() => {
-      if (seconds !== 0 && sellerCheck) {
-        sendCount();
-      }
       if (seconds > 0) {
         setSeconds((prevSeconds) => {
           return prevSeconds - 1;
         });
+        console.log(seconds)
+        sendCount();
       }
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
