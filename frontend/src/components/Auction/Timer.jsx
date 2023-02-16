@@ -15,19 +15,19 @@ export default function Timer({
   // setTimerOpen,
   // setSellerCheck,
 }) {
-  const sendCount = () => {
-    currentSession
-      .signal({
-        data: seconds,
-        type: "timer",
-      })
-      .then(() => {
-        console.log("timer send")
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  // const sendCount = () => {
+  //   currentSession
+  //     .signal({
+  //       data: seconds,
+  //       type: "timer",
+  //     })
+  //     .then(() => {
+  //       console.log("timer send")
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   // useEffect(() => {
   //   if (seconds > 0) {
