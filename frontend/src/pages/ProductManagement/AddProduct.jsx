@@ -81,6 +81,12 @@ export default function AddProduct() {
         },
       })
       .then((res) => {
+        setTitle("")
+        setPrice("")
+        setDescription("")
+        setAvailableTime("")
+        setFileLen(0)
+
         navigate(`/`);
       })
       .catch((err) => {
