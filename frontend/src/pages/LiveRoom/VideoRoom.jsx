@@ -370,12 +370,12 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setSeconds(5);
+    setSeconds(30);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(3);
+    setSeconds(10);
   };
 
   useEffect(() => {
@@ -521,7 +521,7 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : buyLimit ? (
+              ) : buyLimit || buyerCheck ? (
                 <button className={styles.nogobtn}>go!</button>
               ) : (
                 <button
