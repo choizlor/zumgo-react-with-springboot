@@ -370,12 +370,12 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setSeconds(30);
+    setSeconds(10);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(10);
+    setSeconds(5);
   };
 
   useEffect(() => {
@@ -485,7 +485,7 @@ const VideoRoom = () => {
                 onMessage={sendMsg}
                 currentSession={session}
               />
-              {/* {isHost && !sellerCheck ? (
+              {isHost && !sellerCheck ? (
                 <button onClick={startAuction} className={styles.gobtn}>
                   go?
                 </button>
@@ -501,9 +501,9 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              ) : null} */}
+              ) : null}
 
-              {isHost ? (
+              {/* {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
@@ -533,7 +533,7 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
-              )}
+              )} */}
             </div>
           </div>
 
