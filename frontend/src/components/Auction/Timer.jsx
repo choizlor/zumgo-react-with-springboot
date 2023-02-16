@@ -10,9 +10,8 @@ export default function Timer({
   bidCount,
   setCelebrity,
   setNonCelebrity,
-  setTimerOpen,
-  timerOpen,
   sellerCheck,
+  setTimerOpen,
 }) {
   const sendCount = () => {
     currentSession
@@ -20,21 +19,19 @@ export default function Timer({
         data: seconds,
         type: "timer",
       })
-      .then(() => {})
+      .then(() => {
+        console.log("timer send")
+      })
       .catch((error) => {
         console.error(error);
       });
   };
-
+                                             
   useEffect(() => {
-    if (timerOpen) {
-      sendCount();
-    }
-
     if (seconds > 0) {
       setTimerOpen(true);
+      sendCount();
     }
-
     const id = setInterval(() => {
       if (seconds > 0) {
         setSeconds((prevSeconds) => {
@@ -42,7 +39,7 @@ export default function Timer({
         });
       }
       // 0이 되면 카운트가 멈춤
-      if (seconds <= 0) {
+      if (seconds === 0) {
         clearInterval(id);
         setTimerOpen(false);
 
