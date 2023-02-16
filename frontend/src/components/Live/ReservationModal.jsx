@@ -44,7 +44,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
         ...product,
         reserve,
       })
-      .then((res) => console.log(res))
+      .then((res) => console.log(res, '😍'))
       .catch((err) => console.log(err));
 
     const body = JSON.stringify({
