@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "../Auction/Timer.module.css";
 
 export default function Timer({
@@ -12,8 +12,17 @@ export default function Timer({
   setNonCelebrity,
   sellerCheck,
   setTimerOpen,
+  buyerCheck,
 }) {
   const [count, setCount] = useState(seconds);
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (seconds === 5) {
+      countRef.current = seconds;
+      setCount(countRef.current)
+    }
+  }, [seconds])
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -23,7 +32,7 @@ export default function Timer({
         clearInterval(id);
         setSeconds(0);
 
-        if (bidders === 0 && sellerCheck) {
+        if (bidders === 0 && (sellerCheck || !buyerCheck)) {
           setNonCelebrity(true);
         }
         if (bidders === 1) {
@@ -39,7 +48,7 @@ export default function Timer({
     }, 1000);
     console.log(count);
     return () => clearInterval(id);
-  }, [count, seconds]);
+  }, [count]);
 
   return (
     <div className={styles.timer}>

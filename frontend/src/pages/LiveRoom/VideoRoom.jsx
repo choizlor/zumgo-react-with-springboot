@@ -553,6 +553,7 @@ const VideoRoom = () => {
                 setTimerOpen={setTimerOpen}
                 timerOpen={timerOpen}
                 sellerCheck={sellerCheck}
+                buyerCheck={buyerCheck}
               />
             ) : null}
             {seconds !==0 && priceOpen && !celebrity ? (
