@@ -313,6 +313,7 @@ const VideoRoom = () => {
 
   const countdownThirty = setInterval(() => {
     setThSeconds((thSeconds) => thSeconds - 1);
+    thCount();
     if (thSeconds === 0) {
       clearInterval(countdownThirty);
       setTimerOpen(false);
