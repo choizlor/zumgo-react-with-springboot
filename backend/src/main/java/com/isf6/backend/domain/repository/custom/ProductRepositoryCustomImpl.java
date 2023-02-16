@@ -81,7 +81,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                 ))
                 .from(product)
                 .join(img).on(product.id.eq(img.product.id))
-                .where(product.status.eq(ProductStatus.valueOf("ONSALE")).or(product.status.eq(ProductStatus.valueOf("BOOKING"))))
+                .where(product.status.eq(ProductStatus.valueOf("ONSALE")))
                 .groupBy(img.product.id)
                 .orderBy(product.id.desc())
                 .limit(pageSize)
