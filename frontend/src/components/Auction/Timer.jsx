@@ -19,7 +19,12 @@ export default function Timer({
   const savedCallback = useRef();
 
   const callback = () => {
-    setCount(count - 1);
+    if (count > 0) {
+      setCount(count - 1);
+    }
+    if (count === 0) {
+      setSeconds(0);
+    }
   }
 
   useEffect(() => {
