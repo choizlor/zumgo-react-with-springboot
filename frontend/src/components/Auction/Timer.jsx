@@ -20,7 +20,6 @@ export default function Timer({
         type: "timer",
       })
       .then(() => {
-        console.log("timer send");
       })
       .catch((error) => {
         console.error(error);
