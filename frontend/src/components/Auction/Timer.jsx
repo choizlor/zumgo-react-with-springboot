@@ -45,7 +45,7 @@ export default function Timer({
         });
       }
       // 0이 되면 카운트가 멈춤
-      if (seconds === 0) {
+      if (seconds <= 0) {
         clearInterval(id);
         setTimerOpen(false);
 
