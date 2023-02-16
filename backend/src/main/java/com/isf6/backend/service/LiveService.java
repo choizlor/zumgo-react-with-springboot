@@ -87,6 +87,7 @@ public class LiveService {
 
     public void updateStatus(long productId, String status) {
         LiveRoom liveRoom = liveRoomRepository.findByProductId(productId);
+        log.info("liveRoom : {}", liveRoom);
 
         if(status.equals("start")) {
             liveRoom.setLive_status(LiveStatus.valueOf("ONAIR"));
