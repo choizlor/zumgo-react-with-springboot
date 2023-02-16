@@ -3,11 +3,9 @@ import React, { useState } from "react";
 import styles from "./AddProduct.module.css"; 
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-// import { useSelector } from "react-redux";
 
 export default function UpdateProduct() {
   // redux 사용하기
-  // const user = useSelector((state) => { return state.user});
   const location = useLocation();
   const navigate = useNavigate();
   const product = location.state;
@@ -35,7 +33,7 @@ export default function UpdateProduct() {
 
   // 수정하기 api 요청
   const handleUpdate = () => {
-    axios.put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`,{
+    axios.put(`${process.env.REACT_APP_API_URL}/product/${product.id}`,{
         title,
         price,
         description,
@@ -53,17 +51,6 @@ export default function UpdateProduct() {
         <div className={styles.title}>상품 정보 수정하기</div>
       </div>
       <div className={styles.container}>
-        {/* <div className={styles.button}>
-          <CameraIcon className={styles.camera} />
-          <div className={styles.num}>0/5</div>
-        </div>
-        <input
-          className={styles.file}
-          type="file"
-          accept="image/*"
-          capture="camera"
-          multiple
-        /> */}
         <input
           className={`${styles.input} ${styles.titleinput}`}
           onChange={handleTitleChange}

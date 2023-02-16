@@ -19,7 +19,7 @@ export default function DetailModal({ setModalOpen, productId }) {
   // 리뷰 만들어주기 -> 판매 목록에 추가
   const addBuyList = (buyerId) => {
     axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`, {
+      .post(`${process.env.REACT_APP_API_URL}/review/${productId}`, {
         sellerUserCode: userId,
         buyerUserCode: buyerId,
         review: "",
@@ -35,7 +35,7 @@ export default function DetailModal({ setModalOpen, productId }) {
 
   useEffect(() => {
     axios // 채팅목록 불러오기
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .get(`${process.env.REACT_APP_API_URL}/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
       })

@@ -18,7 +18,7 @@ export default function Live() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/live/main?userCode=${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/live/main?userCode=${userId}`)
       .then((res) => {
         setSellLiveRequestList(res.data.sellLiveRequestList);
       })
@@ -27,7 +27,7 @@ export default function Live() {
       });
 
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/start/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/live/request/start/${userId}`)
       .then((res) => {
         setOnairList(res.data.myLiveRoomList);
       })
@@ -36,7 +36,7 @@ export default function Live() {
       });
 
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/live/request/wait/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/live/request/wait/${userId}`)
       .then((res) => {
         setWaitList(res.data.myLiveRoomList);
       })
@@ -50,7 +50,6 @@ export default function Live() {
   // toggle을 클릭하면 toggle 바꿔주기
   const toggleMode = () => {
     settoggle(!toggle);
-    console.log(toggle); // toggle 바꿔주는 함수  //toggle에 따라 컴포넌트 변하는 함수
   };
 
   return (

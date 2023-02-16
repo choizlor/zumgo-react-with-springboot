@@ -6,14 +6,13 @@ import ReviewItem from "./ReviewItem";
 
 export default function Reviews({ userInfo }) {
   const [reviews, setReviews] = useState([]);
-  const [count, setCount] = useState(0);
 
   const params= useParams()
   const userId = params.userId;
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/review/seller/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/review/seller/${userId}`)
       .then((res) => {
         let tmpReviews = res.data.MyReview.filter((item) => {return item.review !== ''})
         setReviews(tmpReviews);

@@ -35,9 +35,7 @@ export default function UserInfo() {
   const isMe = Number(userId) === me.userCode ? true : false;
 
   // 로그아웃
-  const REST_API_KEY = "b875d5c09e310962a4402f90c93aa19c";
-  const LOGOUT_REDIRECT_URI = "https://i8c110.p.ssafy.io/";
-  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_LOGOUT_REDIRECT_URI}`;
 
   const handleLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -49,7 +47,7 @@ export default function UserInfo() {
 
   //   사용자 정보를 불러오는 api
   useEffect(() => {
-    axios.get(`https://i8c110.p.ssafy.io/api/user/${userId}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_USER}/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
   }, []);

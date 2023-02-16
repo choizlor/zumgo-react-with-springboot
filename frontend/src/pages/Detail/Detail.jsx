@@ -55,7 +55,7 @@ export default function Detail() {
     // 상품 정보 axios
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${user?.userCode}`
+        `${process.env.REACT_APP_API_URL}/product/${productId}?userCode=${user?.userCode}`
       )
       .then((res) => {
         setProduct(res.data);
@@ -84,7 +84,7 @@ export default function Detail() {
       // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
-        .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user?.userCode}/all`)
+        .get(`${process.env.REACT_APP_API_URL}/socket/${user?.userCode}/all`)
         .then((res) => {
           ///soldout 이면 modal open 해주기
           setChats(res.data);
@@ -98,7 +98,7 @@ export default function Detail() {
 
     // 수정하기 api 요청
     axios
-      .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
+      .put(`${process.env.REACT_APP_API_URL}/product/${product.id}`, {
         ...product,
         status: e.target.value,
       })
@@ -114,7 +114,7 @@ export default function Detail() {
   const requestChat = () => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+      .post(`${process.env.REACT_APP_API_URL}/socket/room`, {
         // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         buyerCode: user?.userCode,
         sellerCode: product?.userCode,
@@ -146,7 +146,7 @@ export default function Detail() {
     if (wishCheck === false) {
       axios
         .post(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user?.userCode}&productId=${productId}`
+          `${process.env.REACT_APP_API_URL}/wish?userCode=${user?.userCode}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -160,7 +160,7 @@ export default function Detail() {
     else {
       axios
         .delete(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user?.userCode}&productId=${productId}`
+          `${process.env.REACT_APP_API_URL}/wish?userCode=${user?.userCode}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -182,7 +182,7 @@ export default function Detail() {
 
       axios
         .post(
-          `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${user?.userCode}&productId=${productId}`
+          `${process.env.REACT_APP_API_URL}/liveRequest?userCode=${user?.userCode}&productId=${productId}`
         )
         .then((res) => {
           setliveReqSize(res.data.liveRequestCnt);
@@ -193,7 +193,7 @@ export default function Detail() {
 
       // 채팅방으로 메시지 보내기
       axios
-        .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+        .post(`${process.env.REACT_APP_API_URL}/socket/room`, {
           buyerCode: user?.userCode,
           sellerCode: product?.userCode,
         })
@@ -218,7 +218,7 @@ export default function Detail() {
   //  상품 삭제하기
   const deleteproduct = async () => {
     await axios
-      .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
+      .delete(`${process.env.REACT_APP_API_URL}/product/${productId}`)
       .then((res) => {
         navigate(`/selllist/${user?.userCode}`);
       })

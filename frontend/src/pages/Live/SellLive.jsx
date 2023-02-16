@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./SellLive.module.css";
@@ -19,8 +19,6 @@ export default function SellLive({ sellLiveRequestList }) {
   const startList = sellLiveRequestList?.filter((product) => {
     return product.reserve !== null;
   });
-
-  console.log(reserveList, "😀");
 
   return (
     <div className={styles.body}>

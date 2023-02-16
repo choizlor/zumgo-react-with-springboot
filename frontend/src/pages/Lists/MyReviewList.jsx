@@ -18,7 +18,7 @@ export default function MyReviewList() {
   useEffect(() => {
     // 내가 쓴 리뷰 불러오는 api
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/review/buyer/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/review/buyer/${userId}`)
       .then((res) => {
         let tmpReviews = res.data.MyReview.filter((review) => { return review.review !== ''})
         setReviews(tmpReviews)

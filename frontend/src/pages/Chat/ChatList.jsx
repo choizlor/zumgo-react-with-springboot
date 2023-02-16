@@ -19,7 +19,7 @@ export default function ChatList() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
+      .get(`${process.env.REACT_APP_API_URL}/socket/${userId}/all`)
       .then((res) => {
         const sorted_list = res.data.sort(function (a, b) {
           return (
@@ -38,7 +38,7 @@ export default function ChatList() {
   const getChatHistory = (sellerId, buyerId) => {
     // 판매자 정보, 구매자 정보 보내주기
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+      .post(`${process.env.REACT_APP_API_URL}/socket/room`, {
         buyerCode: buyerId,
         sellerCode: sellerId,
       })

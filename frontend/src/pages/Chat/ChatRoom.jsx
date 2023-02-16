@@ -208,7 +208,7 @@ export default function ChatRoom() {
       alert("삭제되었습니다");
 
       axios
-        .delete(`https://i8c110.p.ssafy.io/api/v1/socket/exit?id=${chatroomId}`)
+        .delete(`${process.env.REACT_APP_API_URL}/socket/exit?id=${chatroomId}`)
         .then((res) => {
           disConnect();
           navigate("/chatlist");

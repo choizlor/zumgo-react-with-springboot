@@ -18,7 +18,7 @@ export default function BuyList() {
 
   useEffect(() => {
     axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/products/buyList/${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/products/buyList/${userId}`)
       .then((res) => {
         setProducts(res.data);
       })

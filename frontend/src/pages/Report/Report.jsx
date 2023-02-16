@@ -18,14 +18,14 @@ export default function Report() {
 
   useEffect(() => {
     // 신고 당하는 사람
-    axios.get(`https://i8c110.p.ssafy.io/api/user/${params.userId}`)
+    axios.get(`${process.env.REACT_APP_API_USER}/${params.userId}`)
     .then((res) => {setReported(res.data)})
     .catch((err) => {console.log(err)})
   }, [])
 
   const handleReport = () => {
     axios
-      .post(`https://i8c110.p.ssafy.io/api/user/report/${params.userCode}`, {
+      .post(`${process.env.REACT_APP_API_USER}/report/${params.userCode}`, {
         reporter,
         content,
       })
