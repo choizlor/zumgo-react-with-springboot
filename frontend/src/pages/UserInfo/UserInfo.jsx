@@ -90,13 +90,13 @@ export default function UserInfo() {
       <div className={styles.userinfo}>
         <div className={styles.userimg}>
           <img
-            src={isMe ? me.kakaoProfileImg : userInfo.kakaoProfileImg}
+            src={userInfo.kakaoProfileImg}
             alt=""
           />
         </div>
         <div className={styles.userdiv}>
           <div className={styles.username}>
-            {isMe ? me.kakaoNickname : userInfo.kakaoNickname}
+            {userInfo.kakaoNickname}
           </div>
           {isMe ? (
             <PencilSquareIcon
