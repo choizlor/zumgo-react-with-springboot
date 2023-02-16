@@ -16,12 +16,12 @@ import {
   CircleStackIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
-import user from "../../store/userSlice";
 
 export default function UserInfo() {
   const location = useLocation();
   const curLocation = location.pathname;
   const [userInfo, setUserInfo] = useState({});
+
   // 마이 페이지 인지 확인하기
   const param = useParams();
   const navigate = useNavigate();
@@ -50,7 +50,8 @@ export default function UserInfo() {
     axios.get(`${process.env.REACT_APP_API_USER}/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-  }, []);
+    console.log('왠지 무한일 듯')
+  }, [userInfo]);
 
   return (
     <div className={styles.body}>

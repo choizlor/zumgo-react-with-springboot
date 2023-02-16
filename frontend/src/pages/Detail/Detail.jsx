@@ -247,7 +247,6 @@ export default function Detail() {
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
-            console.log(productImg);
             return (
               <SwiperSlide key={idx} className={styles.swiperimg}>
                 <img src={productImg} alt="productimg" />
