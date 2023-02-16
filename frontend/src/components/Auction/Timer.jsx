@@ -27,40 +27,46 @@ export default function Timer({
         console.error(error);
       });
   };
-                                             
+
   useEffect(() => {
     if (seconds > 0) {
-      setTimerOpen(true);
-      setSellerCheck(true);
       sendCount();
     }
-    const id = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds((prevSeconds) => {
-          return prevSeconds - 1;
-        });
-      }
-      // 0이 되면 카운트가 멈춤
-      if (seconds === 0) {
-        clearInterval(id);
-        setTimerOpen(false);
+  }, [seconds])
+                                             
+  // useEffect(() => {
+  //   if (seconds > 0) {
+  //     setTimerOpen(true);
+  //     setSellerCheck(true);
+  //     sendCount();
+  //   }
+  //   const countdown = setInterval(() => {
+  //     if (seconds > 0) {
+  //       setSeconds((prevSeconds) => {
+  //         return prevSeconds - 1;
+  //       });
+  //     }
+  //     // 0이 되면 카운트가 멈춤
+  //     if (seconds === 0) {
+  //       clearInterval(countdown);
+  //       setTimerOpen(false);
 
-        if (bidders === 0 && sellerCheck) {
-          setNonCelebrity(true);
-        }
-        if (bidders === 1) {
-          setCelebrity(true);
-        }
-        if (bidders >= 1) {
-          setPriceOpen(true);
-        }
-        if (bidCount > 0) {
-          setCelebrity(true);
-        }
-      }
-    }, 1000);
-    return () => clearInterval(id);
-  }, [seconds]);
+  //       if (bidders === 0 && sellerCheck) {
+  //         setNonCelebrity(true);
+  //       }
+  //       if (bidders === 1) {
+  //         setCelebrity(true);
+  //       }
+  //       if (bidders >= 1) {
+  //         setPriceOpen(true);
+  //       }
+  //       if (bidCount > 0) {
+  //         setCelebrity(true);
+  //       }
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(countdown);
+  // }, [seconds]);
 
   return (
     <div className={styles.timer}>
