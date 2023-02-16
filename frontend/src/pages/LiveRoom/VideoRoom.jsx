@@ -197,8 +197,6 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      
-      // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
     });
 
@@ -370,12 +368,14 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setSeconds(30);
+    setSellerCheck(true);
+    setSeconds(15);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(10);
+    setBuyerCheck(true)
+    setSeconds(5);
   };
 
   useEffect(() => {
@@ -547,7 +547,9 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
               setBuyLimit={setBuyLimit}
+              buyerCheck={buyerCheck}
               setSellerCheck={setSellerCheck}
+              setBuyerCheck={setBuyerCheck}
             />
 
             {priceOpen && !celebrity ? (
