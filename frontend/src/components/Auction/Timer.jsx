@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import styles from "../Auction/Timer.module.css";
 
 export default function Timer({
-  seconds,
-  setSeconds,
-  currentSession,
-  bidders,
-  setPriceOpen,
-  bidCount,
-  setCelebrity,
-  setNonCelebrity,
-  sellerCheck,
-  setTimerOpen,
-  setSellerCheck,
+  realSeconds
+  // seconds,
+  // setSeconds,
+  // currentSession,
+  // bidders,
+  // setPriceOpen,
+  // bidCount,
+  // setCelebrity,
+  // setNonCelebrity,
+  // sellerCheck,
+  // setTimerOpen,
+  // setSellerCheck,
 }) {
   const sendCount = () => {
     currentSession
@@ -28,11 +29,11 @@ export default function Timer({
       });
   };
 
-  useEffect(() => {
-    if (seconds > 0) {
-      sendCount();
-    }
-  }, [seconds])
+  // useEffect(() => {
+  //   if (seconds > 0) {
+  //     sendCount();
+  //   }
+  // }, [seconds])
                                              
   // useEffect(() => {
   //   if (seconds > 0) {
@@ -70,7 +71,7 @@ export default function Timer({
 
   return (
     <div className={styles.timer}>
-      <span className={styles.count}>{seconds}</span>
+      <span className={styles.count}>{realSeconds}</span>
     </div>
   );
 }
