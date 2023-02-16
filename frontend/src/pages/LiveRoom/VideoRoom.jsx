@@ -32,6 +32,7 @@ const VideoRoom = () => {
   useEffect(() => {
     setMyUserName(user.kakaoNickname);
     setMyProFileImg(user.kakaoProfileImg);
+    setMyUserCode(user.userCode);
 
     (async () => {
       try {
@@ -61,6 +62,7 @@ const VideoRoom = () => {
   const [myUserName, setMyUserName] = useState(
     "Participant" + Math.floor(Math.random() * 100)
   );
+  const [myUserCode, setMyUserCode] = useState(0);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined); // 페이지의 메인 비디오 화면(퍼블리셔 또는 참가자의 화면 중 하나)
   const [publisher, setPublisher] = useState(undefined); // 자기 자신의 캠
@@ -79,12 +81,11 @@ const VideoRoom = () => {
   const [bidCount, setBidCount] = useState(0);
   const [bestBidder, setBestBidder] = useState("");
   const [bestBidderImg, setBestBidderImg] = useState(undefined);
+  const [bestBidderCode, setBestBidderCode] = useState(0);
   const [celebrity, setCelebrity] = useState(false);
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
-  const [buyLimit, setBuyLimit] = useState(false);
-  const [timerStart, setTimerStart] = useState(false);
 
   let OV = undefined;
 
@@ -204,6 +205,7 @@ const VideoRoom = () => {
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
       setBestBidderImg(tmp[2]);
+      setBestBidderCode(tmp[3]);
     });
 
     mySession.on("signal:bid", (event) => {
@@ -212,6 +214,7 @@ const VideoRoom = () => {
       setBestBidder(tmp[1]);
       setBestBidderImg(tmp[2]);
       setBidCount(tmp[3]);
+      setBestBidderCode(tmp[4]);
     });
 
     // 유효한 토큰으로 세션에 접속하기
@@ -255,7 +258,32 @@ const VideoRoom = () => {
             "Content-Type": "application/json",
           },
         })
-        .then((res) => {})
+        .then((res) => {
+          // 판매자, 낙찰자 채팅방 연결
+          if (bestBidder !== "") {
+            axios
+              .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+                buyerCode: bestBidderCode,
+                sellerCode: product.userCode,
+              })
+              .then((res) => {
+                console.log(res.data);
+                navigate(`/chatroom/${res.data.chatRoomId}`, {
+                  state: {
+                    chats: res.data.chatList,
+                    seller: res.data.seller,
+                    buyer: res.data.buyer,
+                    type: "",
+                    title: product.title,
+                    productId: productId,
+                  },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -280,11 +308,13 @@ const VideoRoom = () => {
   const countBidder = () => {
     session
       .signal({
-        data: `${Number(bidders) + 1} : ${myUserName} : ${myProfileImg}`,
+        data: `${
+          Number(bidders) + 1
+        } : ${myUserName} : ${myProfileImg} : ${myUserCode}`,
         type: "count",
       })
       .then(() => {
-        console.log('count success')
+        console.log("count success");
       })
       .catch((err) => {
         console.log(err);
@@ -292,12 +322,12 @@ const VideoRoom = () => {
   };
 
   // bidPrice가 갱신될 때마다 signal 보내서 동기화
-  const bidding = (price, bidder, myProfileImg, bidCount) => {
+  const bidding = (price, bidder, myProfileImg, bidCount, bidCode) => {
     session
       .signal({
         data: `${
           Number(bidPrice) + price
-        } : ${bidder} : ${myProfileImg} : ${bidCount}`,
+        } : ${bidder} : ${myProfileImg} : ${bidCount} : ${bidCode}`,
         type: "bid",
       })
       .then(() => {})
@@ -307,8 +337,8 @@ const VideoRoom = () => {
   };
 
   // price가 변경될 때마다 bidding 실행
-  const handleBidPrice = (price, bidder, myProfileImg, bidCount) => {
-    bidding(price, bidder, myProfileImg, bidCount);
+  const handleBidPrice = (price, bidder, myProfileImg, bidCount, bidCode) => {
+    bidding(price, bidder, myProfileImg, bidCount, bidCode);
   };
 
   // 세션 떠나기 --- disconnect함수를 호출하여 세션을 떠남
@@ -338,12 +368,12 @@ const VideoRoom = () => {
   const startAuction = () => {
     // setTimerOpen(true);
     setSellerCheck(true);
-    setSeconds(30);
+    setSeconds(10);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(10);
+    setSeconds(5);
   };
 
   useEffect(() => {
@@ -521,6 +551,7 @@ const VideoRoom = () => {
                   myUserName={myUserName}
                   className={styles.price}
                   myProfileImg={myProfileImg}
+                  myUserCode={myUserCode}
                 />
               </div>
             ) : null}
