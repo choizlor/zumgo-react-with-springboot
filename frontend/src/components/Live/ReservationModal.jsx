@@ -62,7 +62,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
       })
       .then((res) => {
         console.log(res.data)
-        // window.location.replace("/live")
+        window.location.replace("/live")
       })
       .catch((err) => console.log(err));
   };
