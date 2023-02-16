@@ -302,6 +302,8 @@ backend/src/main/resources/application-credentials.properties
 
 *.rdb
 
+#application-API-KEY.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,react,node,redis
 
-application-API-KEY.properties
+
