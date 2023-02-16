@@ -547,6 +547,7 @@ const VideoRoom = () => {
               setTimerOpen={setTimerOpen}
               setBuyLimit={setBuyLimit}
               timerOpen={timerOpen}
+              sellerCheck={sellerCheck}
             />
 
             {priceOpen && !celebrity ? (
