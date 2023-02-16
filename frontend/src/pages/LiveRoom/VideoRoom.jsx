@@ -368,12 +368,12 @@ const VideoRoom = () => {
   const startAuction = () => {
     // setTimerOpen(true);
     setSellerCheck(true);
-    setSeconds(30);
+    setSeconds(10);
   };
 
   const startBidding = () => {
     // setTimerOpen(true);
-    setSeconds(10);
+    setSeconds(5);
   };
 
   useEffect(() => {
