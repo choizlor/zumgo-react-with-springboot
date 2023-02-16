@@ -6,13 +6,14 @@ export default function Price({
   setBidCount,
   myUserName,
   myProfileImg,
+  myUserCode,
 }) {
   return (
     <div className={styles.prices}>
       <button
         onClick={() => {
           // setBidCount(1);
-          handleBidPrice(100, myUserName, myProfileImg, 1);
+          handleBidPrice(100, myUserName, myProfileImg, 1, myUserCode);
         }}
       >
         +100
@@ -20,7 +21,7 @@ export default function Price({
       <button
         onClick={() => {
           // setBidCount(1);
-          handleBidPrice(500, myUserName, myProfileImg, 1);
+          handleBidPrice(500, myUserName, myProfileImg, 1, myUserCode);
         }}
       >
         +500
@@ -28,7 +29,7 @@ export default function Price({
       <button
         onClick={() => {
           // setBidCount(1);
-          handleBidPrice(1000, myUserName, myProfileImg, 1);
+          handleBidPrice(1000, myUserName, myProfileImg, 1, myUserCode);
         }}
       >
         +1000
