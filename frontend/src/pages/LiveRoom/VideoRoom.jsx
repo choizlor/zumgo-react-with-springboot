@@ -232,10 +232,10 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "1280x720", // The resolution of your video
+            resolution: "360x740", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-            mirror: false, // Whether to mirror your local video or not
+            mirror: true, // Whether to mirror your local video or not
           });
           mySession.publish(publisher); // 자신의 화면을 송출
           setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
