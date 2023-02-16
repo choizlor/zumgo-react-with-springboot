@@ -50,7 +50,6 @@ export default function UserInfo() {
     axios.get(`${process.env.REACT_APP_API_USER}/${userId}`).then((res) => {
       setUserInfo(res.data.user);
     });
-    console.log('왠지 무한일 듯')
   }, [userId]);
 
   return (
