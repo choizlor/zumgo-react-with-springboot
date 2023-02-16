@@ -13,6 +13,7 @@ export default function Timer({
   sellerCheck,
   setTimerOpen,
   setBuyLimit,
+  setGoStart
 }) {
   const sendCount = () => {
     currentSession
