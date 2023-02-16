@@ -20,23 +20,23 @@ export default function Timer({
         type: "timer",
       })
       .then(() => {
-        console.log("timer send")
+        console.log("timer send");
       })
       .catch((error) => {
         console.error(error);
       });
   };
-                                             
+
   useEffect(() => {
     if (seconds > 0) {
       setTimerOpen(true);
-      sendCount();
     }
     const id = setInterval(() => {
       if (seconds > 0) {
         setSeconds((prevSeconds) => {
           return prevSeconds - 1;
         });
+        sendCount();
       }
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
