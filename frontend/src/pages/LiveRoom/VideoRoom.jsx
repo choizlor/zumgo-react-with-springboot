@@ -275,7 +275,7 @@ const VideoRoom = () => {
                     buyer: res.data.buyer,
                     type: "",
                     title: product.title,
-                    productId: productId,
+                    productId: product.productId,
                   },
                 });
               })
@@ -525,7 +525,6 @@ const VideoRoom = () => {
               setCelebrity={setCelebrity}
               setNonCelebrity={setNonCelebrity}
               setTimerOpen={setTimerOpen}
-              setBuyLimit={setBuyLimit}
               timerOpen={timerOpen}
               sellerCheck={sellerCheck}
             />
