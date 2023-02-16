@@ -24,21 +24,33 @@ export default function Timer({
     }
     if (count === 0) {
       setSeconds(0);
+      if (bidders === 0 && (sellerCheck || !buyerCheck)) {
+        setNonCelebrity(true);
+      }
+      if (bidders === 1) {
+        setCelebrity(true);
+      }
+      if (bidders >= 1) {
+        setPriceOpen(true);
+      }
+      if (bidCount > 0) {
+        setCelebrity(true);
+      }
     }
-  }
+  };
 
   useEffect(() => {
     savedCallback.current = callback;
-  })
+  });
 
   useEffect(() => {
     const tick = () => {
       savedCallback.current();
-    } 
+    };
 
     const timer = setInterval(tick, 1000);
     return () => clearInterval(timer);
-  })
+  });
 
   // useEffect(() => {
   //   const id = setInterval(() => {
