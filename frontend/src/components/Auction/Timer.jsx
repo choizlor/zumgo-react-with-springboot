@@ -34,14 +34,14 @@ export default function Timer({
     }
     const id = setInterval(() => {
       if (seconds > 0) {
-        setSeconds((seconds) => {
-          return seconds - 1;
+        setSeconds((prevSeconds) => {
+          return prevSeconds - 1;
         });
       }
       // 0이 되면 카운트가 멈춤
       if (seconds === 0) {
         clearInterval(id);
-        setTimerOpen(false);
+        // setTimerOpen(false);
 
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);

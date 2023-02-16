@@ -195,7 +195,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      setTimerOpen(true);
+      // setTimerOpen(true);
       setSellerCheck(true);
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
