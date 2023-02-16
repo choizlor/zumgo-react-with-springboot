@@ -12,7 +12,7 @@ export default function SellerLoading({ joinSession, roomId, title }) {
   const onairSession = () => {
     axios
       .patch(`https://i8c110.p.ssafy.io/api/v1/talk/start/${roomId}`)
-      .then((res) => console.log(res))
+      .then((res) => console.log(res, "😀"))
       .catch((err) => console.log(err));
 
     //   .catch((err) => console.log(err));
