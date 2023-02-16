@@ -39,7 +39,7 @@ export default function Timer({
     }, 1000);
     console.log(count);
     return () => clearInterval(id);
-  }, [count]);
+  }, [count, seconds]);
 
   return (
     <div className={styles.timer}>
