@@ -12,6 +12,7 @@ export default function Timer({
   setNonCelebrity,
   setTimerOpen,
   timerOpen,
+  sellerCheck,
 }) {
   const sendCount = () => {
     currentSession
