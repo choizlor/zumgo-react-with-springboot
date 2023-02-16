@@ -55,10 +55,10 @@ public class TalkController {
         List<User> liveRequestUser = userService.getLiveRequestUser(id);
 
         //토큰 생성
-        //String token = talkService.createToken();
+        String token = talkService.createToken();
 
         //알림톡 전송 -> 테스트모드 아님
-        //ResponseEntity<String> result = talkService.LiveReserveTalk(requestDto, liveRequestUser, token);
+        ResponseEntity<String> result = talkService.LiveReserveTalk(requestDto, liveRequestUser, token);
 
         //안될때를 대비해서 예비로 남겨두기....
 //        //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
@@ -125,8 +125,8 @@ public class TalkController {
 //
 //        return ResponseEntity.ok().body(LiveReserveResponse);
 
-        //return ResponseEntity.ok().body(result);
-        return ResponseEntity.ok().body("");
+        return ResponseEntity.ok().body(result);
+        //return ResponseEntity.ok().body("");
     }
 
 
@@ -147,10 +147,10 @@ public class TalkController {
         Product product = productService.getProduct(productId);
 
         //토큰 생성
-        //String token = talkService.createToken();
+        String token = talkService.createToken();
 
         //알림톡 전송 -> 테스트모드 아님
-        //ResponseEntity<String> result = talkService.LiveStartTalk(product, liveRequestUser, token);
+        ResponseEntity<String> result = talkService.LiveStartTalk(product, liveRequestUser, token);
 
         //혹시 몰라서 남겨두는 예비용,,,
 //        //알림톡 전송을 위해 정보 받아오기 -> 나중에 talkService으로 빼기 일단은 test 해보고,,,
@@ -217,8 +217,8 @@ public class TalkController {
 //
 //        return ResponseEntity.status(200).body(response);
 
-        //return ResponseEntity.ok().body(result);
-        return ResponseEntity.status(200).body("");
+        return ResponseEntity.ok().body(result);
+        //return ResponseEntity.status(200).body("");
     }
 
 
