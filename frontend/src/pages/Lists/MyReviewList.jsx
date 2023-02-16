@@ -31,7 +31,8 @@ export default function MyReviewList() {
     axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`)
       .then((res) => {
-        navigate('/myreviewlist');
+        window.location.replace("/myreviewlist")
+        // navigate('/myreviewlist');
 
         console.log(res);
       })
