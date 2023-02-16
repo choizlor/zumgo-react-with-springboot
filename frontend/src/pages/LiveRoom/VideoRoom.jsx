@@ -124,7 +124,6 @@ const VideoRoom = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
-    console.log(myRole, "🙄내역할");
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -503,7 +502,7 @@ const VideoRoom = () => {
                 </button>
               ) : null} */}
 
-              {isHost ? (
+              {/* {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
                     go?
@@ -533,6 +532,28 @@ const VideoRoom = () => {
                 >
                   go!
                 </button>
+              )} */}
+              
+              {isHost ? (
+                !sellerCheck ? (
+                  <button onClick={startAuction} className={styles.gobtn}>
+                    go?
+                  </button>
+                ) : (
+                  <button className={styles.nogobtn}>go?</button>
+                )
+              ) : !buyerCheck ? (
+                <button
+                  onClick={() => {
+                    countBidder();
+                    changeBuyerCheck();
+                  }}
+                  className={styles.gobtn}
+                >
+                  go!
+                </button>
+              ) : (
+                <button className={styles.nogobtn}>go!</button>
               )}
             </div>
           </div>

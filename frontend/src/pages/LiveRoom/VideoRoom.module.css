@@ -131,6 +131,7 @@
 .xicon {
   width: 25px;
   color: white;
+  z-index: 999;
 }
 
 .bottombottom {
@@ -196,7 +197,7 @@
 .celediv {
   /* position: absolute; */
   top: 15%;
-  z-index: 999;
+  z-index: 50;
 }
 
 .pricediv {
