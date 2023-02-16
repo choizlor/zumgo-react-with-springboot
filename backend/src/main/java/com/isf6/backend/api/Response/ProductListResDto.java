@@ -6,14 +6,14 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class ProductListResponseDto {
+public class ProductListResDto {
 
     private Long id;
     private String title;
     private int price;
     private LocalDateTime createdDate;
 
-    public ProductListResponseDto(Product entity) {
+    public ProductListResDto(Product entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.price = entity.getPrice();

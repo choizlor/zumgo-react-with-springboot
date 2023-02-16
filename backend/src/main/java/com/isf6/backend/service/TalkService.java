@@ -1,12 +1,11 @@
 package com.isf6.backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.isf6.backend.api.Request.ProductUpdateRequestDto;
+import com.isf6.backend.api.Request.ProductUpdateReqDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -67,7 +66,7 @@ public class TalkService {
     }
 
     //라이브 예약시 전송되는 알림톡
-    public ResponseEntity<String> LiveReserveTalk(ProductUpdateRequestDto requestDto, List<User> liveRequestUser, String token) {
+    public ResponseEntity<String> LiveReserveTalk(ProductUpdateReqDto requestDto, List<User> liveRequestUser, String token) {
 
         //알림톡 전송을 위해 정보 받아오기
         String productName = requestDto.getTitle();

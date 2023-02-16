@@ -1,8 +1,7 @@
 package com.isf6.backend.api.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.isf6.backend.api.Request.ProductSaveRequestDto;
-import com.isf6.backend.api.Request.ProductUpdateRequestDto;
+import com.isf6.backend.api.Request.ProductUpdateReqDto;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
 import com.isf6.backend.service.*;
@@ -10,20 +9,9 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +46,7 @@ public class TalkController {
     @ApiOperation(value = "상품 예약시간 업데이트 및 알림톡 전송", notes = "상품을 등록을 위해 DB에 저장하고 정보를 반환")
     @PostMapping("/reserve/{id}")
     public ResponseEntity uploadProduct(@ApiParam(value = "상품 Id", required = true) @PathVariable Long id,
-                                        @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateRequestDto requestDto) throws ParseException, JsonProcessingException {
+                                        @ApiParam(value = "상품 정보", required = true) @RequestBody ProductUpdateReqDto requestDto) throws ParseException, JsonProcessingException {
 
         //상품 예약시간을 업데이트 하기
         long productId = productService.update(id, requestDto);
