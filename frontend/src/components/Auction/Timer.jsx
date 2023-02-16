@@ -12,7 +12,6 @@ export default function Timer({
   setNonCelebrity,
   sellerCheck,
   setTimerOpen,
-  setSellerCheck,
 }) {
   const sendCount = () => {
     currentSession
@@ -21,17 +20,16 @@ export default function Timer({
         type: "timer",
       })
       .then(() => {
-        console.log("timer send")
+        console.log("timer send");
       })
       .catch((error) => {
         console.error(error);
       });
   };
-                                             
+
   useEffect(() => {
     if (seconds > 0) {
       setTimerOpen(true);
-      setSellerCheck(true);
       sendCount();
     }
     const id = setInterval(() => {
