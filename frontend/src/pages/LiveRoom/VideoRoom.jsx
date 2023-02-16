@@ -83,7 +83,8 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
-  // const [buyLimit, setBuyLimit] = useState(false);
+  const [buyLimit, setBuyLimit] = useState(false);
+  // const [goStart, setGoStart] = useState(false);
 
   let OV = undefined;
 
@@ -124,6 +125,7 @@ const VideoRoom = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
+    // console.log(myRole, "🙄내역할");
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -195,7 +197,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
-      // setTimerOpen(true);
+      setTimerOpen(true);
       setSellerCheck(true);
       // "timer"라는 시그널 받아서 시간 초기 세팅
       setSeconds(event.data); // 시간 세팅
@@ -502,38 +504,6 @@ const VideoRoom = () => {
                 </button>
               ) : null} */}
 
-              {/* {isHost ? (
-                !sellerCheck ? (
-                  <button onClick={startAuction} className={styles.gobtn}>
-                    go?
-                  </button>
-                ) : (
-                  <button className={styles.nogobtn}>go?</button>
-                )
-              ) : !buyerCheck ? (
-                <button
-                  onClick={() => {
-                    countBidder();
-                    changeBuyerCheck();
-                  }}
-                  className={styles.gobtn}
-                >
-                  go!
-                </button>
-              ) : buyLimit || buyerCheck ? (
-                <button className={styles.nogobtn}>go!</button>
-              ) : (
-                <button
-                  onClick={() => {
-                    countBidder();
-                    changeBuyerCheck();
-                  }}
-                  className={styles.gobtn}
-                >
-                  go!
-                </button>
-              )} */}
-              
               {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
@@ -577,7 +547,7 @@ const VideoRoom = () => {
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
-              // setBuyLimit={setBuyLimit}
+              setBuyLimit={setBuyLimit}
             />
 
             {priceOpen && !celebrity ? (
