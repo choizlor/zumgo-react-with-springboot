@@ -108,7 +108,6 @@ const VideoRoom = () => {
           },
         })
         .then((res) => {
-          console.log("CREATE SESSION", res);
           resolve(res.data.id);
         })
         .catch((res) => {
@@ -125,7 +124,7 @@ const VideoRoom = () => {
   // 토큰 생성
   const createToken = (sessionId) => {
     let myRole = isHost ? "PUBLISHER" : "SUBSCRIBER";
-    // console.log(myRole, "🙄내역할");
+    // console.log(myRole, "내 역할");
     return new Promise((resolve, reject) => {
       const data = { role: myRole };
       axios
@@ -201,6 +200,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:count", (event) => {
+      console.log('왜안되냐고요')
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
       setBestBidder(tmp[1]);
@@ -224,29 +224,6 @@ const VideoRoom = () => {
           let videoDevices = devices.filter(
             (device) => device.kind === "videoinput"
           );
-          // 전면 카메라(웹 내부에서 실험해볼 때)
-          // .then(async () => {
-          //   OV.getUserMedia({
-          //     audioSource: false,
-          //     videoSource: undefined,
-          //     resolution: "1280x720",
-          //     frameRate: 30,
-          //     video: { facingMode: { exact: "environment" } },
-          //   }).then((mediaStream) => {
-          //     var videoTrack = mediaStream.getVideoTracks()[0];
-
-          //     var publisher = OV.initPublisher(undefined, {
-          //       audioSource: undefined,
-          //       videoSource: videoTrack,
-          //       publishAudio: true,
-          //       publishVideo: true,
-          //       insertMode: "APPEND",
-          //       mirror: true,
-          //     });
-          //     mySession.publish(publisher); // 자신의 화면을 송출
-          //     setPublisher(publisher); // 퍼블리셔(스트림 객체)를 담음
-          //     setMainStreamManager(publisher); // 퍼블리셔(스트림 객체)를 담음
-          //   });
           // Get your own camera stream ---(퍼블리셔)
           let publisher = OV.initPublisher(undefined, {
             audioSource: undefined, // The source of audio. If undefined default microphone
@@ -279,9 +256,7 @@ const VideoRoom = () => {
             "Content-Type": "application/json",
           },
         })
-        .then((res) => {
-          console.log(res);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -296,9 +271,7 @@ const VideoRoom = () => {
         to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
         type: "chat", // The type of message (optional)
       })
-      .then(() => {
-        console.log("Message successfully sent");
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(error);
       });
@@ -313,7 +286,7 @@ const VideoRoom = () => {
         type: "count",
       })
       .then(() => {
-        console.log("Success count");
+        console.log('count success')
       })
       .catch((err) => {
         console.log(err);
@@ -329,9 +302,7 @@ const VideoRoom = () => {
         } : ${bidder} : ${myProfileImg} : ${bidCount}`,
         type: "bid",
       })
-      .then(() => {
-        console.log("Success count");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -484,24 +455,6 @@ const VideoRoom = () => {
                 onMessage={sendMsg}
                 currentSession={session}
               />
-              {/* {isHost && !sellerCheck ? (
-                <button onClick={startAuction} className={styles.gobtn}>
-                  go?
-                </button>
-              ) : null}
-
-              {!isHost && !buyerCheck && !buyLimit ? (
-                <button
-                  onClick={() => {
-                    countBidder();
-                    changeBuyerCheck();
-                  }}
-                  className={styles.gobtn}
-                >
-                  go!
-                </button>
-              ) : null} */}
-
               {isHost ? (
                 !sellerCheck ? (
                   <button onClick={startAuction} className={styles.gobtn}>
@@ -560,9 +513,6 @@ const VideoRoom = () => {
               </div>
             ) : null}
           </div>
-
-          {/* <div>구매의사 수: {bidders}</div>
-          <div>입찰가: {bidPrice}</div> */}
 
           <div className={styles.pricediv}>
             {buyerCheck && priceOpen && !celebrity ? (
