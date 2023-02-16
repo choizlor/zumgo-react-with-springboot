@@ -22,7 +22,7 @@ export default function BuyProductItem({ product, clickProduct }) {
           >
             {product.title}
           </div>
-          {!product.reveiw && (
+          {!product.review && (
             <div
               className={styles.review}
               onClick={() => {

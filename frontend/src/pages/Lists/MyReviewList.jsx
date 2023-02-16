@@ -3,11 +3,10 @@ import styles from "./MyReviewList.module.css";
 import {
   ChevronLeftIcon,
   ArrowRightIcon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function MyReviewList() {
   const navigate = useNavigate();
@@ -25,21 +24,6 @@ export default function MyReviewList() {
         setReviews(tmpReviews)
       });
   }, []);
-
-  const handleDeleteReview = (productId) => {
-    // 리뷰 삭제 요청은 제품 아이디로 보내기
-    axios
-      .delete(`https://i8c110.p.ssafy.io/api/v1/review/${productId}`)
-      .then((res) => {
-        window.location.replace("/myreviewlist")
-        // navigate('/myreviewlist');
-
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <div className={styles.body}>
@@ -78,9 +62,6 @@ export default function MyReviewList() {
                     <ArrowRightIcon />
                     <div className={styles.comment}>{review?.review}</div>
                   </div>
-                </div>
-                <div className={styles.icons}>
-                  <TrashIcon onClick={() => {handleDeleteReview(review.product.id)}} />
                 </div>
               </div>
             </div>

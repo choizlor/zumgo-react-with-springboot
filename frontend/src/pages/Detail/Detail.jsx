@@ -22,14 +22,14 @@ import { Navigation, Pagination } from "swiper";
 import { useSelector } from "react-redux";
 
 export default function Detail() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
   // 로그인된 유저 아이디
-  const userId = useSelector((state) => {
-    return state.user.userCode;
+  const user = useSelector((state) => {
+    return state.user;
   });
 
   // 상품 ID
@@ -43,19 +43,19 @@ export default function Detail() {
   const [liveReqSize, setliveReqSize] = useState(product.liveReqSize);
   const [productImgs, setproductImgs] = useState([]);
   const [isMine, setIsMine] = useState(true);
-  const [status,setStatus] = useState('');
+  const [status, setStatus] = useState("");
   const [chats, setChats] = useState([]);
   const date = new Date(product.reserve);
   var month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
   var day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
   var hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
-  var minute = ("0" + date.getMinutes()).slice(-2);                                                                                                                                                                                                    
-  
+  var minute = ("0" + date.getMinutes()).slice(-2);
+
   useEffect(() => {
     // 상품 정보 axios
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${user?.userCode}`
       )
       .then((res) => {
         setProduct(res.data);
@@ -63,39 +63,39 @@ export default function Detail() {
         setwishcheck(res.data.wishCheck);
         setliveReqSize(res.data.liveReqSize);
         setproductImgs(res.data.imgUrlList);
-        setStatus(res.data.status)
+        setStatus(res.data.status);
         // 같으면 판매자, 다르면 구매자
 
-        if (userId !== res.data.userCode) {
+        if (user?.userCode !== res.data.userCode) {
           setIsMine(false);
         }
 
         // 로딩창 닫아주기
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  
+
   const changeStatus = (e) => {
     setStatus(e.target.value);
-    if (e.target.value === 'SOLDOUT') { // 거래완료 버튼을 눌렀을 때
+    if (e.target.value === "SOLDOUT") {
+      // 거래완료 버튼을 눌렀을 때
       // 채팅중인 사용자 불러오기
       axios
-      .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
-      .then((res) => {
-        ///soldout 이면 modal open 해주기
-        setChats(res.data);
-        setModalOpen(true);
-        /// 아니면 status 업데이트
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .get(`https://i8c110.p.ssafy.io/api/v1/socket/${user?.userCode}/all`)
+        .then((res) => {
+          ///soldout 이면 modal open 해주기
+          setChats(res.data);
+          setModalOpen(true);
+          /// 아니면 status 업데이트
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    
-    
+
     // 수정하기 api 요청
     axios
       .put(`https://i8c110.p.ssafy.io/api/v1/product/${product.id}`, {
@@ -116,7 +116,7 @@ export default function Detail() {
     axios
       .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
         // .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        buyerCode: userId,
+        buyerCode: user?.userCode,
         sellerCode: product?.userCode,
       })
       .then((res) => {
@@ -138,7 +138,7 @@ export default function Detail() {
 
   // 찜 추가하기
   const addwish = () => {
-    if (userId == 0) {
+    if (user?.userCode === 0) {
       alert("로그인이 필요한 서비스 입니다.");
       return;
     }
@@ -146,7 +146,7 @@ export default function Detail() {
     if (wishCheck === false) {
       axios
         .post(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user?.userCode}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -160,7 +160,7 @@ export default function Detail() {
     else {
       axios
         .delete(
-          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${userId}&productId=${productId}`
+          `https://i8c110.p.ssafy.io/api/v1/wish?userCode=${user?.userCode}&productId=${productId}`
         )
         .then((res) => {
           setwishcheck(res.data.wishCheck);
@@ -173,48 +173,54 @@ export default function Detail() {
   };
   //라이브 요청
   const handleAddRequest = () => {
-    alert("2 point가 차감되었습니다.");
+    
+    if (user.point < 2) {
+      alert("포인트가 부족합니다!");
+      return;
+    } else {
+      alert("2 point가 차감되었습니다.");
 
-    axios
-      .post(
-        `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${userId}&productId=${productId}`
-      )
-      .then((res) => {
-        setliveReqSize(res.data.liveRequestCnt);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // 채팅방으로 메시지 보내기
-    axios
-      .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
-        buyerCode: userId,
-        sellerCode: product?.userCode,
-      })
-      .then((res) => {
-        navigate(`/chatroom/${res.data.chatRoomId}`, {
-          state: {
-            chats: res.data.chatList,
-            seller: res.data.seller,
-            buyer: res.data.buyer,
-            type: "live",
-            title: product.title,
-            productId: productId,
-          },
+      axios
+        .post(
+          `https://i8c110.p.ssafy.io/api/v1/liveRequest?userCode=${user?.userCode}&productId=${productId}`
+        )
+        .then((res) => {
+          setliveReqSize(res.data.liveRequestCnt);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+      // 채팅방으로 메시지 보내기
+      axios
+        .post("https://i8c110.p.ssafy.io/api/v1/socket/room", {
+          buyerCode: user?.userCode,
+          sellerCode: product?.userCode,
+        })
+        .then((res) => {
+          navigate(`/chatroom/${res.data.chatRoomId}`, {
+            state: {
+              chats: res.data.chatList,
+              seller: res.data.seller,
+              buyer: res.data.buyer,
+              type: "live",
+              title: product.title,
+              productId: productId,
+            },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   //  상품 삭제하기
-  const deleteproduct = async() => {
+  const deleteproduct = async () => {
     await axios
       .delete(`https://i8c110.p.ssafy.io/api/v1/product/${productId}`)
       .then((res) => {
-        navigate(`/selllist/${userId}`)
+        navigate(`/selllist/${user?.userCode}`);
       })
       .catch((err) => {
         console.log(err);
@@ -223,7 +229,7 @@ export default function Detail() {
 
   return (
     <div className={styles.body}>
-      { isLoading && <Loading/>}
+      {isLoading && <Loading />}
       {/* 상품 이미지 배너 */}
       <div className={styles.swiperbox}>
         <ChevronLeftIcon
@@ -241,7 +247,7 @@ export default function Detail() {
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
-            console.log(productImg)
+            console.log(productImg);
             return (
               <SwiperSlide key={idx} className={styles.swiperimg}>
                 <img src={productImg} alt="productimg" />
@@ -290,17 +296,19 @@ export default function Detail() {
             <option value="SOLDOUT">거래완료</option>
           </select>
           {isMine && (
-            <div className={styles.delete} onClick= {() => {
-              deleteproduct();
-              navigate(`/selllist/${userId}`);
-
-            }}>
+            <div
+              className={styles.delete}
+              onClick={() => {
+                deleteproduct();
+                navigate(`/selllist/${user?.userCode}`);
+              }}
+            >
               삭제하기
             </div>
           )}
         </div>
         {/*  판매자에게만 수정하기 버튼이 보임*/}
-        {userId !== 0 && isMine ? (
+        {user?.userCode !== 0 && isMine ? (
           <div className={styles.canedit}>
             <div className={styles.title}>{product.title}</div>
             <PencilSquareIcon
@@ -336,7 +344,7 @@ export default function Detail() {
             <span className={styles.time}>{product.availableTime}</span>
           </div>
         </div>
-        {userId !== 0 && !isMine ? (
+        {user?.userCode !== 0 && !isMine ? (
           <LiveBtn
             handleAddRequest={handleAddRequest}
             requestChat={requestChat}
