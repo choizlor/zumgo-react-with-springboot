@@ -3,11 +3,9 @@ import styles from "./DetailModal.module.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export default function DetailModal({ setModalOpen, productId }) {
   const [chats, setChats] = useState([]);
-  const navigate = useNavigate();
 
   const userId = useSelector((state) => {
     // 현재 로그인된 사용자 === 판매자
@@ -27,7 +25,7 @@ export default function DetailModal({ setModalOpen, productId }) {
         review: "",
       })
       .then((res) => {
-        console.log(res);
+        alert('거래 완료 처리 되었습니다!')
         closeModal();
       })
       .catch((err) => {
@@ -40,7 +38,6 @@ export default function DetailModal({ setModalOpen, productId }) {
       .get(`https://i8c110.p.ssafy.io/api/v1/socket/${userId}/all`)
       .then((res) => {
         setChats(res.data);
-        console.log(res.data, "detail 모달 채팅 리스트 🎄");
       })
       .catch((err) => {
         console.log(err);

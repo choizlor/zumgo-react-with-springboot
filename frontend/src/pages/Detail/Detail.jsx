@@ -70,6 +70,8 @@ export default function Detail() {
           setIsMine(false);
         }
 
+        window.location.replace(`/detail/${productId}`)
+
         // 로딩창 닫아주기
         setIsLoading(false)
       })
@@ -241,6 +243,7 @@ export default function Detail() {
           modules={[Navigation, Pagination]}
         >
           {productImgs?.map((productImg, idx) => {
+            console.log(productImg)
             return (
               <SwiperSlide key={idx} className={styles.swiperimg}>
                 <img src={productImg} alt="productimg" />
