@@ -10,11 +10,8 @@ export default function Timer({
   bidCount,
   setCelebrity,
   setNonCelebrity,
-  sellerCheck,
-  buyerCheck,
   setTimerOpen,
-  setSellerCheck,
-  setBuyerCheck,
+  timerOpen,
 }) {
   const sendCount = () => {
     currentSession
@@ -32,7 +29,7 @@ export default function Timer({
                                              
   useEffect(() => {
 
-    if (sellerCheck || buyerCheck) {
+    if (timerOpen) {
       sendCount();
     }
 
@@ -50,8 +47,6 @@ export default function Timer({
       if (seconds === 0) {
         clearInterval(id);
         setTimerOpen(false);
-        setSellerCheck(false);
-        setBuyerCheck(false);
 
         if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
