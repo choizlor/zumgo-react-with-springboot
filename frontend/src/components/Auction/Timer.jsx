@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import styles from "../Auction/Timer.module.css";
 
 export default function Timer({
@@ -15,37 +16,55 @@ export default function Timer({
   buyerCheck,
 }) {
   const [count, setCount] = useState(seconds);
+  const savedCallback = useRef();
+
+  const callback = () => {
+    setCount(count - 1);
+  }
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setCount((count) => count - 1);
+    savedCallback.current = callback;
+  })
 
-      if (seconds === 5 && bidCount > 1) {
-        clearInterval(id)
-      }
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current();
+    } 
 
-      // 0이 되면 카운트가 멈춤
-      if (count === 0) {
-        clearInterval(id);
-        setSeconds(0);
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  })
 
-        if (bidders === 0 && (sellerCheck || !buyerCheck)) {
-          setNonCelebrity(true);
-        }
-        if (bidders === 1) {
-          setCelebrity(true);
-        }
-        if (bidders >= 1) {
-          setPriceOpen(true);
-        }
-        if (bidCount > 0) {
-          setCelebrity(true);
-        }
-      }
-    }, 1000);
-    console.log(count);
-    return () => clearInterval(id);
-  }, [count, seconds]);
+  // useEffect(() => {
+  //   const id = setInterval(() => {
+  //     setCount((count) => count - 1);
+
+  //     if (bidCount > 1) {
+  //       clearInterval(id)
+  //     }
+
+  //     // 0이 되면 카운트가 멈춤
+  //     if (count === 0) {
+  //       clearInterval(id);
+  //       setSeconds(0);
+
+  //       if (bidders === 0 && (sellerCheck || !buyerCheck)) {
+  //         setNonCelebrity(true);
+  //       }
+  //       if (bidders === 1) {
+  //         setCelebrity(true);
+  //       }
+  //       if (bidders >= 1) {
+  //         setPriceOpen(true);
+  //       }
+  //       if (bidCount > 0) {
+  //         setCelebrity(true);
+  //       }
+  //     }
+  //   }, 1000);
+  //   console.log(count);
+  //   return () => clearInterval(id);
+  // }, [count, seconds]);
 
   return (
     <div className={styles.timer}>
