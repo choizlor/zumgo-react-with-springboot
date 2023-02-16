@@ -21,7 +21,7 @@ export default function Timer({
       // 0이 되면 카운트가 멈춤
       if (count === 0) {
         clearInterval(id);
-        // setTimerOpen(false);
+        setSeconds(0);
 
         // if (bidders === 0 && sellerCheck) {
         //   setNonCelebrity(true);
