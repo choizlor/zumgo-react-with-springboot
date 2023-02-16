@@ -25,11 +25,10 @@ export default function ReservationModal({ setModalOpen, productId }) {
   useEffect(() => {
     axios
       .get(
-        `https://i8c110.p.ssafy.io/api/v1/product/${productId}?userCode=${userId}`
+        `${process.env.REACT_APP_API_URL}/product/${productId}?userCode=${userId}`
       )
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -40,7 +39,7 @@ export default function ReservationModal({ setModalOpen, productId }) {
     setModalOpen(false);
 
     axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/talk/reserve/${productId}`, {
+      .post(`${process.env.REACT_APP_API_URL}/talk/reserve/${productId}`, {
         ...product,
         reserve,
       })
@@ -54,14 +53,13 @@ export default function ReservationModal({ setModalOpen, productId }) {
     });
 
     axios
-      .post(`https://i8c110.p.ssafy.io/api/v1/live/room`, body, {
+      .post(`${process.env.REACT_APP_API_URL}/live/room`, body, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        console.log(res.data)
         window.location.replace("/live")
       })
       .catch((err) => console.log(err));

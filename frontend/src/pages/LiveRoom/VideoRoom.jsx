@@ -38,7 +38,7 @@ const VideoRoom = () => {
       try {
         await axios
           .get(
-            `https://i8c110.p.ssafy.io/api/v1/product/${roomId}?userCode=${user.userCode}`
+            `${process.env.REACT_APP_API_URL}/product/${roomId}?userCode=${user.userCode}`
           )
           .then((res) => {
             setProduct(res.data);
@@ -46,7 +46,7 @@ const VideoRoom = () => {
             const id = res.data.userCode;
 
             axios
-              .get(`https://i8c110.p.ssafy.io/api/user/${id}`)
+              .get(`${process.env.REACT_APP_API_USER}/${id}`)
               .then((res) => {
                 setHostName(res.data.user.kakaoNickname);
                 setHostImg(res.data.user.kakaoProfileImg);
