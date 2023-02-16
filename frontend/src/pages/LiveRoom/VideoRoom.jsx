@@ -369,7 +369,7 @@ const VideoRoom = () => {
   const startAuction = () => {
     // setTimerOpen(true);
     setSellerCheck(true);
-    setSeconds(15);
+    setSeconds(30);
   };
 
   const startBidding = () => {
