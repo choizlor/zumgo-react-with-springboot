@@ -83,7 +83,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
-  const [buyLimit, setBuyLimit] = useState(false);
+  // const [buyLimit, setBuyLimit] = useState(false);
 
   let OV = undefined;
 
@@ -577,7 +577,7 @@ const VideoRoom = () => {
               setNonCelebrity={setNonCelebrity}
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
-              setBuyLimit={setBuyLimit}
+              // setBuyLimit={setBuyLimit}
             />
 
             {priceOpen && !celebrity ? (

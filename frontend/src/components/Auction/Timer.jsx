@@ -12,7 +12,7 @@ export default function Timer({
   setNonCelebrity,
   sellerCheck,
   setTimerOpen,
-  setBuyLimit,
+  // setBuyLimit,
 }) {
   const sendCount = () => {
     currentSession
@@ -51,7 +51,7 @@ export default function Timer({
         }
         if (bidders >= 1) {
           setPriceOpen(true);
-          setBuyLimit(true);
+          // setBuyLimit(true);
         }
         if (bidCount > 0) {
           setCelebrity(true);
