@@ -28,6 +28,7 @@ export default function Timer({
 
   useEffect(() => {
     if (seconds > 0) {
+      setGoStart(true);
       sendCount();
     }
     const id = setInterval(() => {

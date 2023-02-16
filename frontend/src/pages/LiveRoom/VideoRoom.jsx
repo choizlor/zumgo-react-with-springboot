@@ -371,7 +371,6 @@ const VideoRoom = () => {
 
   const startAuction = () => {
     // setTimerOpen(true);
-    setGoStart(true);
     setSeconds(30);
   };
 
@@ -561,6 +560,7 @@ const VideoRoom = () => {
               sellerCheck={sellerCheck}
               setTimerOpen={setTimerOpen}
               setBuyLimit={setBuyLimit}
+              setGoStart={setGoStart}
             />
 
             {priceOpen && !celebrity ? (
