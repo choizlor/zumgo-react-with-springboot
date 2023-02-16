@@ -87,6 +87,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
+  const [realSeconds, setRealSeconds] = useState(0);
 
   let OV = undefined;
 
@@ -202,6 +203,10 @@ const VideoRoom = () => {
       // setSeconds(event.data); // 시간 세팅
     });
 
+    mySession.on("signal:thirty", (event) => {
+      setRealSeconds(event.data)
+    })
+
     mySession.on("signal:count", (event) => {
       const tmp = event.data.split(" : ");
       setBidders(Number(tmp[0]));
@@ -313,6 +318,20 @@ const VideoRoom = () => {
       setTimerOpen(false);
     }
   }, 1000);
+
+  const thCount = () => {
+    session
+    .signal({
+      data: thSeconds,
+      type: "thirty",
+    })
+    .then(() => {
+      console.log("timer send")
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
 
   // go! 버튼 눌렀을 때 count
   const countBidder = () => {
@@ -525,20 +544,21 @@ const VideoRoom = () => {
             }
           >
             <Timer
-              seconds={thSeconds}
-              setSeconds={setThSeconds}
-              currentSession={session}
-              bidders={bidders}
-              setPriceOpen={setPriceOpen}
-              bidCount={bidCount}
-              bidPrice={bidPrice}
-              bestBidder={bestBidder}
-              setCelebrity={setCelebrity}
-              setNonCelebrity={setNonCelebrity}
-              setTimerOpen={setTimerOpen}
-              timerOpen={timerOpen}
-              sellerCheck={sellerCheck}
-              setSellerCheck={setSellerCheck}
+            realSeconds={realSeconds}
+              // seconds={thSeconds}
+              // setSeconds={setThSeconds}
+              // currentSession={session}
+              // bidders={bidders}
+              // setPriceOpen={setPriceOpen}
+              // bidCount={bidCount}
+              // bidPrice={bidPrice}
+              // bestBidder={bestBidder}
+              // setCelebrity={setCelebrity}
+              // setNonCelebrity={setNonCelebrity}
+              // setTimerOpen={setTimerOpen}
+              // timerOpen={timerOpen}
+              // sellerCheck={sellerCheck}
+              // setSellerCheck={setSellerCheck}
             />
 
             {priceOpen && !celebrity ? (
