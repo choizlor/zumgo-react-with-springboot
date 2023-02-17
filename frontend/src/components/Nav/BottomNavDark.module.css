@@ -1,11 +1,18 @@
+.navbody {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  padding-bottom: 1px;
+}
+
 .body {
-  background-color: #222222;
+  border-top: 0.5px solid white;
   display: flex;
   justify-content: space-between;
-  clear: both;
-  position: absolute;
-  width: 100%;
-  bottom : 0;
+  align-items: center;
 }
 
 .icon {
@@ -17,5 +24,10 @@
 .liveicon {
   width: 52px;
   height: 52px;
-  margin-top: 20%;
+}
+
+.company {
+  font-size: 9px;
+  margin: auto;
+  color: white;
 }

@@ -1,20 +1,54 @@
 import React, { useEffect, useState } from "react";
-import styles from '../Auction/Timer.module.css';
+import { useRef } from "react";
+import styles from "../Auction/Timer.module.css";
 
-
-export default function Timer() {
-  const [count, setCount] = useState(30);
+export default function Timer({
+  seconds,
+  setSeconds,
+  currentSession,
+  bidders,
+  setPriceOpen,
+  bidCount,
+  setCelebrity,
+  setNonCelebrity,
+  sellerCheck,
+  setTimerOpen,
+  buyerCheck,
+}) {
+  // const [count, setCount] = useState(seconds);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCount((count) => count - 1);
-    }, 1000);
-    // 0이 되면 카운트가 멈춤
-    if(count === 0) {
+      if (seconds > 0) {
+        setSeconds((prevSeconds) => {
+          return prevSeconds - 1;
+        });
+      }
+      // 0이 되면 카운트가 멈춤
+      if (seconds === 0) {
         clearInterval(id);
-    }
-    return () => clearInterval(id);
-  }, [count]);
+        setTimerOpen(false);
 
-  return <div className={styles.timer}><span className={styles.count}>{count}</span></div>;
+        if (bidders === 0 && sellerCheck) {
+          setNonCelebrity(true);
+        }
+        if (bidders === 1) {
+          setCelebrity(true);
+        }
+        if (bidders >= 1) {
+          setPriceOpen(true);
+        }
+        if (bidCount > 0) {
+          setCelebrity(true);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [seconds]);
+
+  return (
+    <div className={styles.timer}>
+      <span className={styles.count}>{seconds}</span>
+    </div>
+  );
 }

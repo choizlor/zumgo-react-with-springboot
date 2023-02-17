@@ -1,45 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/userSlice.js'
+import React, { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../store/userSlice.js";
+import axios from "axios";
 
 export default function Root() {
-    const dispatch = useDispatch();
-    const [userInfo, setUserInfo] = useState({});
+  const token = window.localStorage.getItem("token");
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        //state는 기존 값
-        const token = window.localStorage.getItem('token')
-        try {
-            const res = axios.get('http://i8c110.p.ssafy.io:8080/api/me', {
-                headers: {
-                    Authorization: token,
-                }
-            }
-            );
-            res.then((user) => {
-                console.log('로그인된 유저 : ', user.data.user)
-                dispatch(login({
-                    userCode: user.data.user.userCode,
-                    kakaoId : user.data.user.kakaoId,
-                    kakaoNickname: user.data.user.kakaoNickname,
-                    kakaoProfileImg : user.data.user.kakaoProfileImg,
-                }))
+  useEffect(() => {
+    // 유저 정보를 불러오는 api
+    if (!token) {
+      return
+    }
+    
+    axios
+      .get(`${process.env.REACT_APP_API_ME}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        dispatch(
+          login({
+            userCode: res.data.user.userCode,
+            point: res.data.user.point,
+            kakaoNickname: res.data.user.kakaoNickname,
+            kakaoProfileImg: res.data.user.kakaoProfileImg,
+          })
+        );
+      });
+  }, [token]);
 
-                setUserInfo(user.data.user)
-
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    }, [])
-
-    return (
-        <div>
-            {/* {JSON.stringify(userInfo)} */}
-            <Outlet userInfo={userInfo}/>
-        </div>
-    );
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 }
-

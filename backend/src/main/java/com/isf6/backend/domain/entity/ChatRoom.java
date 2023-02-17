@@ -18,20 +18,30 @@ public class ChatRoom {
     @Column(name="chatRoom_id")
     private Long id;
 
+    @Column(name="chatRoom_code")
     private String chatRoomCode;
 
     @JsonIgnore
     // 구매자, 판매자 단반향 매핑?????
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="buyer_id")
     private User buyer;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="seller_id")
     private User seller;
 
     @JsonIgnore
     @OneToMany(mappedBy = "chatRoom")
     private List<Chat> chats = new ArrayList<>();
+
+    public ChatRoom toChatRoom(String chatRoomCode, User buyer, User seller) {
+        ChatRoom chatRoom = new ChatRoom();
+
+        chatRoom.setChatRoomCode(chatRoomCode);
+        chatRoom.setBuyer(buyer);
+        chatRoom.setSeller(seller);
+        return chatRoom;
+    }
 }

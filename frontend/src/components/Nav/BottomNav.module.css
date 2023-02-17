@@ -1,13 +1,20 @@
+.navbody {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  position: fixed;
+  width : 100%;
+bottom : 0;
+box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
+-webkit-box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
+-moz-box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
+
+}
+
 .body {
-  border-top: 0.5px solid #000000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  clear: both;
-  position: fixed;
-  width : 100%;
-  bottom : 0;
-  background-color: white;
 }
 
 .icon {
@@ -18,4 +25,10 @@
 .liveicon {
   width: 52px;
   height: 52px;
+  margin : 0 8px;
+}
+
+.company {
+  font-size: 9px;
+  margin : auto;
 }
