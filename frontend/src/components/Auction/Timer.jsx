@@ -16,72 +16,37 @@ export default function Timer({
   buyerCheck,
 }) {
   const [count, setCount] = useState(seconds);
-  const savedCallback = useRef();
-
-  const callback = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-    if (count === 0) {
-      setSeconds(0);
-      if (bidders === 0 && (sellerCheck || !buyerCheck)) {
-        setNonCelebrity(true);
-      }
-      if (bidders === 1) {
-        setCelebrity(true);
-      }
-      if (bidders >= 1) {
-        setPriceOpen(true);
-      }
-      if (bidCount > 0) {
-        setCelebrity(true);
-      }
-    }
-  };
 
   useEffect(() => {
-    savedCallback.current = callback;
-  });
+    const id = setInterval(() => {
+      setCount((count) => count - 1);
 
-  useEffect(() => {
-    const tick = () => {
-      savedCallback.current();
-    };
+      if (bidCount > 1) {
+        clearInterval(id)
+      }
 
-    const timer = setInterval(tick, 1000);
-    return () => clearInterval(timer);
-  });
+      // 0이 되면 카운트가 멈춤
+      if (count === 0) {
+        clearInterval(id);
+        setSeconds(0);
 
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     setCount((count) => count - 1);
-
-  //     if (bidCount > 1) {
-  //       clearInterval(id)
-  //     }
-
-  //     // 0이 되면 카운트가 멈춤
-  //     if (count === 0) {
-  //       clearInterval(id);
-  //       setSeconds(0);
-
-  //       if (bidders === 0 && (sellerCheck || !buyerCheck)) {
-  //         setNonCelebrity(true);
-  //       }
-  //       if (bidders === 1) {
-  //         setCelebrity(true);
-  //       }
-  //       if (bidders >= 1) {
-  //         setPriceOpen(true);
-  //       }
-  //       if (bidCount > 0) {
-  //         setCelebrity(true);
-  //       }
-  //     }
-  //   }, 1000);
-  //   console.log(count);
-  //   return () => clearInterval(id);
-  // }, [count, seconds]);
+        if (bidders === 0 && (sellerCheck || !buyerCheck)) {
+          setNonCelebrity(true);
+        }
+        if (bidders === 1) {
+          setCelebrity(true);
+        }
+        if (bidders >= 1) {
+          setPriceOpen(true);
+        }
+        if (bidCount > 0) {
+          setCelebrity(true);
+        }
+      }
+    }, 1000);
+    console.log(count);
+    return () => clearInterval(id);
+  }, [count, bidCount]);
 
   return (
     <div className={styles.timer}>
