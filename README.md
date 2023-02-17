@@ -161,10 +161,12 @@ master: 매주 금요일
 develop: 필요 시   
 
 * Git Flow
-![gitflow](/images/gitflow_gif.gif)
+
+  ![gitflow](/images/gitflow_gif.gif)
 
 <br/><br/>
 
 # :pushpin: Jira
  매주 월요일 오전 회의에서 금주의 진행 이슈를 백로그에 등록했습니다. 전주에 완료하지 못한 이슈나, 앞으로 진행할 이슈들을 추가합니다.
- ![jira](/images/jira_gif.gif)
+
+![jira](/images/jira_gif.gif)
