@@ -351,9 +351,9 @@ const VideoRoom = () => {
   const bidding = (price, bidder, myProfileImg, bidCount, bidCode) => {
     session
       .signal({
-        data: `${
-          Number(bidPrice) + price
-        } : ${bidder} : ${myProfileImg} : ${Number(countBid) + bidCount} : ${bidCode}`,
+        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg} : ${
+          Number(countBid) + bidCount
+        } : ${bidCode}`,
         type: "bid",
       })
       .then(() => {})
@@ -405,7 +405,6 @@ const VideoRoom = () => {
   useEffect(() => {
     if (bidPrice > product.price) {
       // product 가격으로 바꿔야 함
-      
     }
   }, [bidPrice]);
 
@@ -535,32 +534,31 @@ const VideoRoom = () => {
 
           <div
             className={styles.timer}
-            // style={
-            //   !timerOpen ? { visibility: "hidden" } : { visibility: "visible" }
-            // }
+            style={
+              !timerOpen ? { visibility: "hidden" } : { visibility: "visible" }
+            }
           >
-            {seconds > 0 || seconds !== 0 ? (
-              <Timer
-                seconds={seconds}
-                setSeconds={setSeconds}
-                currentSession={session}
-                bidders={bidders}
-                setPriceOpen={setPriceOpen}
-                bidCount={bidCount}
-                bidPrice={bidPrice}
-                bestBidder={bestBidder}
-                setCelebrity={setCelebrity}
-                setNonCelebrity={setNonCelebrity}
-                setTimerOpen={setTimerOpen}
-                timerOpen={timerOpen}
-                sellerCheck={sellerCheck}
-                buyerCheck={buyerCheck}
-              />
-            ) : null}
-            {seconds !==0 && priceOpen && !celebrity ? (
+            <Timer
+              seconds={seconds}
+              setSeconds={setSeconds}
+              currentSession={session}
+              bidders={bidders}
+              setPriceOpen={setPriceOpen}
+              bidCount={bidCount}
+              bidPrice={bidPrice}
+              bestBidder={bestBidder}
+              setCelebrity={setCelebrity}
+              setNonCelebrity={setNonCelebrity}
+              setTimerOpen={setTimerOpen}
+              timerOpen={timerOpen}
+              sellerCheck={sellerCheck}
+              buyerCheck={buyerCheck}
+            />
+
+            {priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
             ) : null}
-            {seconds !== 0 && !priceOpen ? (
+            {!priceOpen ? (
               <div className={styles.gotext}>
                 <div>GO! 버튼을 눌러</div>
                 <div>경매에 참여하세요!</div>
