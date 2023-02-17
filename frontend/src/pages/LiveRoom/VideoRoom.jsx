@@ -339,9 +339,7 @@ const VideoRoom = () => {
         } : ${myUserName} : ${myProfileImg} : ${myUserCode}`,
         type: "count",
       })
-      .then(() => {
-        console.log("count success");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -389,17 +387,6 @@ const VideoRoom = () => {
     });
     setSeconds(0);
     deleteRoomRequest(); // 방 삭제 요청
-  };
-
-  const startAuction = () => {
-    // setTimerOpen(true);
-    setSellerCheck(true);
-    setSeconds(10);
-  };
-
-  const startBidding = () => {
-    // setTimerOpen(true);
-    setSeconds(5);
   };
 
   useEffect(() => {
