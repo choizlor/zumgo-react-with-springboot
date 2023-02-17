@@ -45,12 +45,10 @@ const VideoRoom = () => {
             setBidPrice(res.data.price);
             const id = res.data.userCode;
 
-            axios
-              .get(`${process.env.REACT_APP_API_USER}/${id}`)
-              .then((res) => {
-                setHostName(res.data.user.kakaoNickname);
-                setHostImg(res.data.user.kakaoProfileImg);
-              });
+            axios.get(`${process.env.REACT_APP_API_USER}/${id}`).then((res) => {
+              setHostName(res.data.user.kakaoNickname);
+              setHostImg(res.data.user.kakaoProfileImg);
+            });
           });
       } catch (err) {
         console.error(err);
@@ -86,6 +84,7 @@ const VideoRoom = () => {
   const [noncelebrity, setNonCelebrity] = useState(false);
   const [sellerCheck, setSellerCheck] = useState(false); // go? 버튼 눌렀는지 확인
   const [buyerCheck, setBuyerCheck] = useState(false); // go! 버튼 눌렀는지 확인
+  const [countBid, setCountBid] = useState(0);
 
   let OV = undefined;
 
@@ -197,6 +196,7 @@ const VideoRoom = () => {
     });
 
     mySession.on("signal:timer", (event) => {
+      setTimerOpen(true);
       setSeconds(event.data); // 시간 세팅
     });
 
@@ -232,7 +232,7 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "360x740", // The resolution of your video
+            resolution: "1280x720", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: true, // Whether to mirror your local video or not
@@ -304,6 +304,32 @@ const VideoRoom = () => {
       });
   };
 
+  const thirtyCount = () => {
+    session
+      .signal({
+        data: 30,
+        type: "timer",
+      })
+      .then(() => {
+        setSellerCheck(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const tenCount = () => {
+    session
+      .signal({
+        data: 10,
+        type: "timer",
+      })
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   // go! 버튼 눌렀을 때 count
   const countBidder = () => {
     session
@@ -313,9 +339,7 @@ const VideoRoom = () => {
         } : ${myUserName} : ${myProfileImg} : ${myUserCode}`,
         type: "count",
       })
-      .then(() => {
-        console.log("count success");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -325,9 +349,9 @@ const VideoRoom = () => {
   const bidding = (price, bidder, myProfileImg, bidCount, bidCode) => {
     session
       .signal({
-        data: `${
-          Number(bidPrice) + price
-        } : ${bidder} : ${myProfileImg} : ${bidCount} : ${bidCode}`,
+        data: `${Number(bidPrice) + price} : ${bidder} : ${myProfileImg} : ${
+          Number(countBid) + bidCount
+        } : ${bidCode}`,
         type: "bid",
       })
       .then(() => {})
@@ -365,21 +389,9 @@ const VideoRoom = () => {
     deleteRoomRequest(); // 방 삭제 요청
   };
 
-  const startAuction = () => {
-    // setTimerOpen(true);
-    setSellerCheck(true);
-    setSeconds(10);
-  };
-
-  const startBidding = () => {
-    // setTimerOpen(true);
-    setSeconds(5);
-  };
-
   useEffect(() => {
     if (bidPrice > product.price) {
       // product 가격으로 바꿔야 함
-      startBidding();
     }
   }, [bidPrice]);
 
@@ -485,7 +497,7 @@ const VideoRoom = () => {
               />
               {isHost ? (
                 !sellerCheck ? (
-                  <button onClick={startAuction} className={styles.gobtn}>
+                  <button onClick={thirtyCount} className={styles.gobtn}>
                     go?
                   </button>
                 ) : (
@@ -527,12 +539,12 @@ const VideoRoom = () => {
               setTimerOpen={setTimerOpen}
               timerOpen={timerOpen}
               sellerCheck={sellerCheck}
+              buyerCheck={buyerCheck}
             />
 
             {priceOpen && !celebrity ? (
               <div className={styles.bidtext}>최고 {bidPrice}원!</div>
             ) : null}
-
             {!priceOpen ? (
               <div className={styles.gotext}>
                 <div>GO! 버튼을 눌러</div>
@@ -551,6 +563,7 @@ const VideoRoom = () => {
                   className={styles.price}
                   myProfileImg={myProfileImg}
                   myUserCode={myUserCode}
+                  tenCount={tenCount}
                 />
               </div>
             ) : null}

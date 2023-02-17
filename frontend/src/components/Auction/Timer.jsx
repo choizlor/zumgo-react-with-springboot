@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import styles from "../Auction/Timer.module.css";
 
 export default function Timer({
@@ -12,25 +13,11 @@ export default function Timer({
   setNonCelebrity,
   sellerCheck,
   setTimerOpen,
+  buyerCheck,
 }) {
-  const sendCount = () => {
-    currentSession
-      .signal({
-        data: seconds,
-        type: "timer",
-      })
-      .then(() => {
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  // const [count, setCount] = useState(seconds);
 
   useEffect(() => {
-    if (seconds > 0) {
-      setTimerOpen(true);
-      sendCount();
-    }
     const id = setInterval(() => {
       if (seconds > 0) {
         setSeconds((prevSeconds) => {
