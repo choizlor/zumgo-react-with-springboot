@@ -232,7 +232,7 @@ const VideoRoom = () => {
             videoSource: videoDevices.slice(-1)[0].deviceId, // 후면 카메라(갤럭시만,,)
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-            resolution: "360x740", // The resolution of your video
+            resolution: "1280x720", // The resolution of your video
             frameRate: 30, // The frame rate of your video
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: true, // Whether to mirror your local video or not
@@ -307,7 +307,7 @@ const VideoRoom = () => {
   const thirtyCount = () => {
     session
       .signal({
-        data: 10,
+        data: 30,
         type: "timer",
       })
       .then(() => {
@@ -321,7 +321,7 @@ const VideoRoom = () => {
   const tenCount = () => {
     session
       .signal({
-        data: 5,
+        data: 10,
         type: "timer",
       })
       .then(() => {})
@@ -339,9 +339,7 @@ const VideoRoom = () => {
         } : ${myUserName} : ${myProfileImg} : ${myUserCode}`,
         type: "count",
       })
-      .then(() => {
-        console.log("count success");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -389,17 +387,6 @@ const VideoRoom = () => {
     });
     setSeconds(0);
     deleteRoomRequest(); // 방 삭제 요청
-  };
-
-  const startAuction = () => {
-    // setTimerOpen(true);
-    setSellerCheck(true);
-    setSeconds(10);
-  };
-
-  const startBidding = () => {
-    // setTimerOpen(true);
-    setSeconds(5);
   };
 
   useEffect(() => {
