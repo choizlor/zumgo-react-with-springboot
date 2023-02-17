@@ -15,22 +15,21 @@ export default function Timer({
   setTimerOpen,
   buyerCheck,
 }) {
-  const [count, setCount] = useState(seconds);
+  // const [count, setCount] = useState(seconds);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCount((count) => count - 1);
-
-      if (bidCount > 1) {
-        clearInterval(id)
+      if (seconds > 0) {
+        setSeconds((prevSeconds) => {
+          return prevSeconds - 1;
+        });
       }
-
       // 0이 되면 카운트가 멈춤
-      if (count === 0) {
+      if (seconds === 0) {
         clearInterval(id);
-        setSeconds(0);
+        setTimerOpen(false);
 
-        if (bidders === 0 && (sellerCheck || !buyerCheck)) {
+        if (bidders === 0 && sellerCheck) {
           setNonCelebrity(true);
         }
         if (bidders === 1) {
@@ -44,13 +43,12 @@ export default function Timer({
         }
       }
     }, 1000);
-    console.log(count);
     return () => clearInterval(id);
-  }, [count, bidCount]);
+  }, [seconds]);
 
   return (
     <div className={styles.timer}>
-      <span className={styles.count}>{count}</span>
+      <span className={styles.count}>{seconds}</span>
     </div>
   );
 }
