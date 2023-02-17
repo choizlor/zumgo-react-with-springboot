@@ -1,3 +1,7 @@
+.box {
+  margin-right: 7%;
+}
+
 .image {
     width: 121px;
     height: 196px;
@@ -38,10 +42,10 @@
     font-size: 0.8rem;
     border-radius: 18px;
     padding: 5px;
-    /* background-color: #BCFF5E; */
     background-color: #d9d9d9;
     text-align: center;
     position: absolute;
     top: 72%;
     width: 90%;
+    margin-left: 3%;
   }

@@ -1,16 +1,15 @@
 .navbody {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: black;
   position: fixed;
-  width : 100%;
-bottom : 0;
-padding-bottom : 1px;
-
+  width: 100%;
+  bottom: 0;
+  padding-bottom: 1px;
 }
 
 .body {
-  border-top: 0.5px solid #000000;
+  border-top: 0.5px solid white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +18,7 @@ padding-bottom : 1px;
 .icon {
   width: 60px;
   height: 60px;
+  color: white;
 }
 
 .liveicon {
@@ -28,5 +28,6 @@ padding-bottom : 1px;
 
 .company {
   font-size: 9px;
-  margin : auto;
+  margin: auto;
+  color: white;
 }

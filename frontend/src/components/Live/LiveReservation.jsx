@@ -10,20 +10,28 @@ export default function LiveReservation({ product }) {
   };
 
   return (
-    <div>
+    <div className={styles.box}>
       <div
         className={styles.image}
         style={{
-          backgroundImage:
-            "url('https://search.pstatic.net/common/?src=http%3A%2F%2Fshopping.phinf.naver.net%2Fmain_3218672%2F32186720809.20220505182637.jpg&type=a340')",
+          backgroundImage: "url(" + `${product.thumbnail}` + ")",
         }}
       >
         <p className={styles.title}>{product.title}</p>
-        <button className={styles.btn} onClick={showModal}>
-          시간 예약하기
-        </button>
+        {product.reserve === null ? (
+          <button className={styles.btn} onClick={showModal}>
+            시간 예약하기
+          </button>
+        ) : (
+          <button className={styles.btn}>예약되었습니다.</button>
+        )}
       </div>
-      {modalOpen && <ReservationModal setModalOpen={setModalOpen} productId={product.id}/>}
+      {modalOpen && (
+        <ReservationModal
+          setModalOpen={setModalOpen}
+          productId={product.productId}
+        />
+      )}
     </div>
   );
 }

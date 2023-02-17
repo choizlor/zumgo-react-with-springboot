@@ -24,7 +24,7 @@ public class Chat {
 
     private String chat_content;
 
-    private String chatter;
+    private Long chatterId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +35,7 @@ public class Chat {
         Chat chat = new Chat();
 
         chat.setChatRoom(chatRoom);
-        chat.setChatter(chatMessageSaveReqDto.getChatter());
+        chat.setChatterId(chatMessageSaveReqDto.getChatterId());
         chat.setChat_content(chatMessageSaveReqDto.getChat_content());
 
         return chat;

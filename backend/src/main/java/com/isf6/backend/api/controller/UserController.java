@@ -46,15 +46,15 @@ public class UserController {
     @ApiOperation(value = "인가코드으로 로그인", notes = "카카오를 통해 발급받은 인가코드로 로그인하고, 받아온 정보로 DB 저장")
     @GetMapping("/oauth/token")
     public ResponseEntity getLogin(@ApiParam(value = "카카오 인가코드", required = true) @RequestParam("code") String code) {
-        //log.info("code : {} ", code);
+        log.info("code : {} ", code);
 
         // 1. 넘어온 인가 코드를 통해 access_token 발급
         OauthToken oauthToken = userService.getAccessToken(code);
-        //log.info("oauthToken : {} ", oauthToken);
+        log.info("oauthToken : {} ", oauthToken);
 
         // 2. 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장 후 JWT 를 생성
         String jwtToken = userService.saveUserAndGetToken(oauthToken.getAccess_token());
-        //log.info("jwtToken : {} ", jwtToken);
+        log.info("jwtToken : {} ", jwtToken);
 
         // 3. 헤더에 JWT 토근 정보 담기
         HttpHeaders headers = new HttpHeaders();
@@ -158,5 +158,10 @@ public class UserController {
         response.put("reason", "신고 성공");
 
         return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/user/{nickname}/exists")
+    public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname) {
+        return ResponseEntity.ok(userService.checkNicknameDuplicate(nickname));
     }
 }

@@ -15,18 +15,4 @@
     margin : 2% 0;
 }
 
-.review {
-    border-radius: 15px;
-    height : 75px;
-    background-color: #DFDFDF;
-    margin : 5px;
-}
 
-.writer {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.comment {
-    font-size: 12px;
-}

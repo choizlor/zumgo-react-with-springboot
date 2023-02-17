@@ -2,6 +2,7 @@ package com.isf6.backend.domain.repository.custom;
 
 import com.isf6.backend.api.Response.IndexProductsResDto;
 import com.isf6.backend.domain.entity.Img;
+import com.isf6.backend.domain.entity.ProductStatus;
 import com.isf6.backend.domain.entity.QImg;
 import com.isf6.backend.domain.entity.QProduct;
 import com.querydsl.core.BooleanBuilder;
@@ -68,7 +69,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
     @Override
     public List<IndexProductsResDto> findAllOffSet(int pageNo, int pageSize) {
         return queryFactory
-                .select(Projections.fields(IndexProductsResDto.class,
+                .selectDistinct(Projections.fields(IndexProductsResDto.class,
                         product.id.as("productId"),
                         product.title,
                         product.price,
@@ -80,9 +81,12 @@ public class ProductRepositoryCustomImpl implements ProductRepositroyCustom {
                 ))
                 .from(product)
                 .join(img).on(product.id.eq(img.product.id))
+                .where(product.status.eq(ProductStatus.valueOf("ONSALE")))
+                .groupBy(img.product.id)
                 .orderBy(product.id.desc())
                 .limit(pageSize)
                 .offset(pageNo * pageSize)
+                .distinct()
                 .fetch();
     }
 

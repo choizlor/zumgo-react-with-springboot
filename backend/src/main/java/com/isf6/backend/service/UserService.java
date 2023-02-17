@@ -15,6 +15,7 @@ import com.isf6.backend.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,6 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +35,14 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    @Value("${kakao-client-id}")
+    private String kakaoClientId;
+    @Value("${kakao-redirect-uri}")
+    private String kakaoRedirectUri;
+    @Value("${kakao-client-secret}")
+    private String kakaoClientSecret;
+
+    private final UserRepository userRepository;
 
     public OauthToken getAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
@@ -46,10 +54,10 @@ public class UserService {
         //2.
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "b875d5c09e310962a4402f90c93aa19c"); //REST API KEY
-        params.add("redirect_uri", "http://i8c110.p.ssafy.io/oauth"); //REDIRECT URI
+        params.add("client_id", kakaoClientId); //REST API KEY
+        params.add("redirect_uri", kakaoRedirectUri); //REDIRECT URI
         params.add("code", code);
-        params.add("client_secret", "QMJmsfyHMzlMcApqls4Txlhk7CrjE3LU"); // 생략 가능!
+        params.add("client_secret", kakaoClientSecret); // 생략 가능!
 
         //3.
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
@@ -126,6 +134,7 @@ public class UserService {
                     .kakaoProfileImg(profile.getKakao_account().getProfile().getProfile_image_url())
                     .kakaoNickname(profile.getKakao_account().getProfile().getNickname())
                     .kakaoEmail(profile.getKakao_account().getEmail())
+                    .kakaoPhoneNumber(profile.kakao_account.getPhone_number())
                     .point(5) //기본 포인트 5로 설정
                     //.userRole("ROLE_USER")
                     .build();
@@ -197,7 +206,17 @@ public class UserService {
         return user;
     }
 
+    public boolean checkNicknameDuplicate(String nickname) {
 
+        return userRepository.existsByKakaoNickname(nickname);
+    }
 
+    //해당 상품에 라이브 요청한 유저들 정보 가져오기
+    public List<User> getLiveRequestUser(Long productId) {
+        List<User> liveRequestUserList = new ArrayList<>();
 
+        liveRequestUserList = userRepository.getLiveRequestUser(productId);
+
+        return liveRequestUserList;
+    }
 }

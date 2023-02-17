@@ -5,12 +5,13 @@
   position: fixed;
   width : 100%;
 bottom : 0;
-padding-bottom : 1px;
+box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
+-webkit-box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
+-moz-box-shadow: 0px -2px 12px 0px rgba(167,167,167,0.75);
 
 }
 
 .body {
-  border-top: 0.5px solid #000000;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +25,7 @@ padding-bottom : 1px;
 .liveicon {
   width: 52px;
   height: 52px;
+  margin : 0 8px;
 }
 
 .company {

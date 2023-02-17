@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import _ from 'lodash';
+import styles from "./ChattingList.module.css";
+import _ from "lodash";
 
 const ChattingList = (props) => {
-  const scrollRef = useRef()
-  const boxRef = useRef(null)
+  const scrollRef = useRef();
+  const boxRef = useRef(null);
 
   const [scrollState, setScrollState] = useState(true);
 
@@ -13,35 +14,41 @@ const ChattingList = (props) => {
     const scrollHeight = boxRef.current.scrollHeight; // 스크롤의 높이
 
     // 스크롤이 맨 아래에 있을때
-    setScrollState(scrollTop + clientHeight >= scrollHeight - 100 ? true : false);
+    setScrollState(
+      scrollTop + clientHeight >= scrollHeight - 100 ? true : false
+    );
   }, 100);
 
   const scroll = useCallback(() => {
-    scrollEvent()
-  }, [])
+    scrollEvent();
+  }, []);
 
   useEffect(() => {
     if (scrollState) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" })
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [props.messageList])
+  }, [props.messageList]);
 
   useEffect(() => {
-    boxRef.current.addEventListener("scroll", scroll)
-  })
+    boxRef.current.addEventListener("scroll", scroll);
+  });
 
   return (
-    <div ref={boxRef}>
+    <div ref={boxRef} className={styles.chattinglist}>
       <div>
         {props.messageList.map((msg, i) => (
           <div key={i}>
-            <div>
-              {/* <div>
-                <img src={temp_logo}></img>
-              </div> */}
-              <div>
-                <div>{msg.split(":")[0]}</div>
-                <div>{msg.split(":")[1]}</div>
+            <div className={styles.chat}>
+              <div className={styles.profile}>
+                <img
+                  src={msg.split(":")[1]}
+                  className={styles.profileimg}
+                  alt="img"
+                />
+              </div>
+              <div className={styles.chatcontent}>
+                <div className={styles.sender}>{msg.split(":")[2]}</div>
+                <div className={styles.content}>{msg.split(":")[3]}</div>
               </div>
             </div>
           </div>
@@ -49,7 +56,7 @@ const ChattingList = (props) => {
       </div>
       <div ref={scrollRef}></div>
     </div>
-  )
-}
+  );
+};
 
 export default ChattingList;

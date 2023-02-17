@@ -1,5 +1,6 @@
 package com.isf6.backend.service;
 
+import com.isf6.backend.api.Response.LiveProductResDto;
 import com.isf6.backend.domain.entity.LiveRequest;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.domain.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class LiveRequestService {
         LiveRequest liveRequest = new LiveRequest();
 
         User user = userRepository.findByUserCode(userCode);
-        if(user.getPoint()-2 <= 0) {
+        if(user.getPoint()-2 < 0) {
             //포인트가 없으면 라이브 요청이 안되도록 변경
             return false;
         } else {
@@ -53,22 +55,27 @@ public class LiveRequestService {
     }
 
     //내가 라이브 요청한 상품들의 목록
-    public List<Product> getMyLiveRequestProductList(Long userCode) {
+    public List<LiveProductResDto> getMyLiveRequestProductList(Long userCode) {
         log.info("getMyLiveRequestList : true ");
-        List<Product> liveRequestList = new ArrayList<>();
-        liveRequestList = productRepository.getMyLiveRequestList(userCode);
+//        List<Product> liveRequestList = new ArrayList<>();
+//        liveRequestList = productRepository.getMyLiveRequestList(userCode);
 
-        return liveRequestList;
+        return productRepository.getMyLiveRequestList(userCode).stream()
+                .map(product -> new LiveProductResDto(product))
+                .collect(Collectors.toList());
     }
 
     //내가 판매중인 상품 중에서 라이브요청의 개수가 1개 이상인 상품의 목록
-    public List<Product> getSellLiveRequestList(Long userCode) {
+    public List<LiveProductResDto> getSellLiveRequestList(Long userCode) {
         log.info("getSellLiveRequestList : true ");
-        List<Product> liveRequestList = new ArrayList<>();
-        liveRequestList = productRepository.getSellLiveRequestList(userCode);
-        log.info("size : {}", liveRequestList.size());
+//        List<Product> liveRequestList = new ArrayList<>();
+//        liveRequestList = productRepository.getSellLiveRequestList(userCode);
+//        log.info("size : {}", liveRequestList.size());
 
-        return liveRequestList;
+//        return liveRequestList;
+        return productRepository.getSellLiveRequestList(userCode).stream()
+                .map(product -> new LiveProductResDto(product))
+                .collect(Collectors.toList());
     }
 
     public boolean getUserLiveReqChk(Long productId, Long userCode) {
@@ -91,6 +98,7 @@ public class LiveRequestService {
     //상품에 대한 라이브 요청 삭제하기
     @Transactional
     public void deleteProductLiveRequest(Long productId){
+
         liveRequestRepository.deleteLiveRequest(productId);
     }
 

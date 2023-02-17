@@ -1,10 +1,13 @@
 package com.isf6.backend.api.controller;
 
+import com.isf6.backend.api.Response.LiveRoomResDto;
 import com.isf6.backend.api.Request.LiveRoomSaveReqDto;
+import com.isf6.backend.api.Response.LiveProductResDto;
 import com.isf6.backend.domain.entity.LiveRoom;
 import com.isf6.backend.domain.entity.Product;
 import com.isf6.backend.service.LiveRequestService;
 import com.isf6.backend.service.LiveService;
+import com.isf6.backend.service.ProductService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,7 @@ public class LiveController {
 
     private final LiveService liveService;
     private final LiveRequestService liveRequestService;
+    private final ProductService productService;
 
     @ApiOperation(value = "라이브 방 생성", notes = "라이브 방을 생성하여 DB에 저장하고 정보를 반환")
     @PostMapping("/room")
@@ -124,22 +128,27 @@ public class LiveController {
     @DeleteMapping("/{productId}")
     public ResponseEntity deleteLiveRoom(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
         Map<String, Object> response = new HashMap<>();
+        //상품에 라이브 예약 시간 삭제
+        productService.deleteProductReserveTime(productId);
+
+        //라이브 방 삭제
         liveService.deleteLiveRoom(productId);
         response.put("result", "SUCCESS");
 
         return ResponseEntity.status(200).body(response);
     }
 
-    @ApiOperation(value = "라이브방 시작 상태 변경", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
-    @PatchMapping("/start/{productId}")
-    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
-        Map<String, Object> response = new HashMap<>();
-        liveService.updateStatus(productId, "start");
-        response.put("status", "ONAIR");
-        response.put("result", "SUCCESS");
-
-        return ResponseEntity.status(200).body(response);
-    }
+//    @ApiOperation(value = "라이브방 시작 상태 변경", notes = "DB에서 라이브 방의 상태를 시작으로 변경")
+//    @PatchMapping("/start/{productId}")
+//    public ResponseEntity startLive(@ApiParam(value = "상품 번호", required = true) @PathVariable long productId) {
+//        Map<String, Object> response = new HashMap<>();
+//        liveService.updateStatus(productId, "start");
+//        response.put("status", "ONAIR");
+//        response.put("result", "SUCCESS");
+//
+//        return ResponseEntity.status(200).body(response);
+//    }
+    //시작하기 누르면 바뀜 여기에 알림톡 추가
 
     @ApiOperation(value = "라이브방 종료 상태 변경", notes = "DB에서 라이브 방의 상태를 종료로 변경")
     @PatchMapping("/end/{productId}")
@@ -158,29 +167,43 @@ public class LiveController {
         Map<String, Object> result = new HashMap<>();
 
         //판매하고 있는 상품 중에서 라이브 요청이 1개 이상인 상품 목록
-        List<Product> sellLiveRequestList = new ArrayList<>();
+        List<LiveProductResDto> sellLiveRequestList = new ArrayList<>();
         sellLiveRequestList = liveRequestService.getSellLiveRequestList(userCode);
-        log.info("sellListSize", sellLiveRequestList.size());
+        log.info("sellListSize : {}", sellLiveRequestList.size());
         result.put("sellLiveRequestList", sellLiveRequestList);
 
         //내가 라이브 요청을 한 상품 목록
-        List<Product> MyLiveRequestList = new ArrayList<>();
+        List<LiveProductResDto> MyLiveRequestList = new ArrayList<>();
         MyLiveRequestList = liveRequestService.getMyLiveRequestProductList(userCode);
-        log.info("listSize", MyLiveRequestList.size()); //확인용
+        log.info("listSize : {}", MyLiveRequestList.size()); //확인용
         result.put("MyLiveRequestList", MyLiveRequestList);
 
         return ResponseEntity.status(200).body(result);
     }
 
     //유저가 라이브 요청한 상품에 대한 라이브방 목록 조회(시작한 것만)
-    @ApiOperation(value = "라이브 요청한 상품에 대한 라이브방 목록 조회", notes = "라이브 요청한 상품에 대한 라이브방 목록 조회")
-    @GetMapping("/request/{userCode}")
-    public ResponseEntity getRequestLiveRoomList(@PathVariable long userCode) {
+    @ApiOperation(value = "라이브 요청한 상품 중 시작한 라이브방 목록 조회", notes = "라이브 요청한 상품 중 시작한 라이브방 목록 조회")
+    @GetMapping("/request/start/{userCode}")
+    public ResponseEntity getStartRequestLiveRoomList(@PathVariable long userCode) {
         Map<String, Object> result = new HashMap<>();
 
         //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
-        List<LiveRoom> liveRoomList = new ArrayList<>();
-        liveRoomList = liveService.getRequestLiveRoomList(userCode);
+        List<LiveRoomResDto> liveRoomList = new ArrayList<>();
+        liveRoomList = liveService.getStartRequestLiveRoomList(userCode);
+        log.info("liveRoomList : {}", liveRoomList.size());
+        result.put("myLiveRoomList", liveRoomList);
+
+        return ResponseEntity.status(200).body(result);
+    }
+
+    @ApiOperation(value = "라이브 요청한 상품 중 대기 상태인 라이브방 목록 조회", notes = "라이브 요청한 상품 중 대기 상태인 라이브방 목록 조회")
+    @GetMapping("/request/wait/{userCode}")
+    public ResponseEntity getWaitRequestLiveRoomList(@PathVariable long userCode) {
+        Map<String, Object> result = new HashMap<>();
+
+        //내가 라이브요청한 상품의 라이브 방이 생성되었는지 확인하고 조회....
+        List<LiveRoomResDto> liveRoomList = new ArrayList<>();
+        liveRoomList = liveService.getWaitRequestLiveRoomList(userCode);
         log.info("liveRoomList : {}", liveRoomList.size());
         result.put("myLiveRoomList", liveRoomList);
 

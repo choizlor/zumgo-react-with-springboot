@@ -108,9 +108,10 @@ public class ReviewController {
                                        @ApiParam(value = "리뷰 정보", required = true) @RequestBody ReviewSaveReqDto reviewSaveReqDto) {
         Map<String, Object> response = new HashMap<>();
         Bill bill = reviewService.getReviewByProductId(productId);
+        Bill updateBill;
 
         try{
-            bill = reviewService.updateReview(productId, reviewSaveReqDto, bill);
+            updateBill = reviewService.updateReview(reviewSaveReqDto, bill);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -120,7 +121,7 @@ public class ReviewController {
         }
 
         response.put("result", "SUCCESS");
-        response.put("reason", "리뷰 수정 성공");
+        response.put("review", updateBill);
         return ResponseEntity.status(200).body(response);
     }
 

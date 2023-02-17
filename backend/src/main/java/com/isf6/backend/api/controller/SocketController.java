@@ -42,6 +42,7 @@ public class SocketController {
 
     private final SocketService socketService;
     private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
     private final ChatRepository chatRepository;
     private static Set<Integer> userList = new HashSet<>();
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -90,29 +91,41 @@ public class SocketController {
         //채팅방이 null이면 채팅방 만들어주고 아니면 채팅 내역 함께 넘겨주기
         if(chatRoomInfo == null) {
             //String chatRoomCode = socketService.createRoom(buyerCode, sellerCode);
-            chatRoomId = socketService.createRoom(buyerCode, sellerCode);
-            chatInfo.setChatRoomId(chatRoomId);
-            chatInfo.setChatList(new ArrayList<>());
+            chatRoomInfo = socketService.createRoom(buyerCode, sellerCode);
+            chatInfo.setChatRoomId(chatRoomId); //채팅방 id
+            chatInfo.setBuyer(chatRoomInfo.getBuyer()); //구매자 정보
+            chatInfo.setSeller(chatRoomInfo.getSeller()); //판매자 정보
+            chatInfo.setChatList(new ArrayList<>()); //채팅내역은 빈 리스트
+
+            chatInfo.setChatRoomId(chatRoomInfo.getId()); //채팅방 id
+
         } else {
             //채팅 내역 가져오기
             log.info("채팅방 존재");
-            chatList = chatRepository.getChatList(chatRoomInfo.getId());
-            chatInfo.setChatList(chatList);
 
-            chatRoomId = chatRoomInfo.getId();
-            chatInfo.setChatRoomId(chatRoomId);
+            chatInfo.setBuyer(chatRoomInfo.getBuyer()); //구매자 정보
+            chatInfo.setSeller(chatRoomInfo.getSeller()); //판매자 정보
+
+            chatList = chatRepository.getChatList(chatRoomInfo.getId());
+            chatInfo.setChatList(chatList); //채팅내역
+
+            chatInfo.setChatRoomId(chatRoomInfo.getId()); //채팅방 id
         }
 
-        // 프로필 이미지 추가
-        chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
-        chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
+//        // 프로필 이미지 추가
+//        chatInfo.setSellerImg(chatRoomInfo.getSeller().getKakaoProfileImg());
+//        chatInfo.setBuyerImg(chatRoomInfo.getBuyer().getKakaoProfileImg());
+//
+//        // 유저 닉네임 추가
+//        chatInfo.setSellerNickname(chatRoomInfo.getSeller().getKakaoNickname());
+//        chatInfo.setBuyerNickname(chatRoomInfo.getBuyer().getKakaoNickname());
         
         return chatInfo;
     }
 
     @ApiOperation(value = "채팅방 나가기(삭제)", notes = "채팅방 Id로 채팅방 삭제")
     @DeleteMapping("/exit")
-    public ResponseEntity deleteChatRoom(@ApiParam(value = "채팅방 Id", required = true) @RequestBody long id) {
+    public ResponseEntity deleteChatRoom(@ApiParam(value = "채팅방 Id", required = true) @RequestParam long id) {
         log.info("chatRoomCode : {}", id);
         String result = socketService.deleteRoom(id);
         if(result.equals("null")) {

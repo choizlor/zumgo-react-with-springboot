@@ -15,7 +15,7 @@ export default function Root() {
     }
     
     axios
-      .get("http://i8c110.p.ssafy.io/api/me", {
+      .get(`${process.env.REACT_APP_API_ME}`, {
         headers: {
           Authorization: token,
         },

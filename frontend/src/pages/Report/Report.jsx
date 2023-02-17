@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 export default function Report() {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  
   // 신고하는 사람
   const reporter = useSelector((state) => {return state.user.userCode;});
   const [reported, setReported] = useState();
@@ -16,14 +18,14 @@ export default function Report() {
 
   useEffect(() => {
     // 신고 당하는 사람
-    axios.get(`https://i8c110.p.ssafy.io/api/user/${params.userId}`)
+    axios.get(`${process.env.REACT_APP_API_USER}/${params.userId}`)
     .then((res) => {setReported(res.data)})
     .catch((err) => {console.log(err)})
   }, [])
 
   const handleReport = () => {
     axios
-      .post(`https://i8c110.p.ssafy.io/api/user/report/${params.userCode}`, {
+      .post(`${process.env.REACT_APP_API_USER}/report/${params.userCode}`, {
         reporter,
         content,
       })
@@ -43,7 +45,7 @@ export default function Report() {
       </div>
       <div className={styles.reportform}>
         <div className={styles.title}>
-          {reported?.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
+          {location?.state.kakaoNickname} 님을 신고하는 이유를 작성해주세요.
         </div>
         <textarea
           className={styles.contents}

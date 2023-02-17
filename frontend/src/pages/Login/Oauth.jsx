@@ -17,26 +17,25 @@ export default function Oauth() {
         // 토큰 axios 요청
         await axios.get(`api/oauth/token?code=${code}`).then((res) => {
           const token = res.headers.authorization;
-          console.log(token,'🖼')
-          
+
           // 받아온 토큰을 로컬 스토리지에 token으로 저장
           localStorage.setItem("token", token);
 
           // 유저 정보를 불러오는 api
           axios
-            .get("http://i8c110.p.ssafy.io/api/me", {
+            .get(`${process.env.REACT_APP_API_ME}`, {
               headers: {
                 Authorization: token,
               },
             })
             .then((res) => {
-              console.log(res.data)
               dispatch(
                 login({
                   userCode: res.data.user.userCode,
                   point: res.data.user.point,
                   kakaoNickname: res.data.user.kakaoNickname,
                   kakaoProfileImg: res.data.user.kakaoProfileImg,
+                  kakaoId: res.data.user.kakaoId,
                 })
               );
 

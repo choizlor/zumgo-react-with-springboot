@@ -4,7 +4,6 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import styles from "./Search.module.css";
 import axios from "axios";
-import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import ProductItem from "../../components/Product/ProductItem";
 
@@ -12,9 +11,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [searchName, setSearchName] = useState("");
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
   const [recentOpen, setRecentOpen] = useState(true);
-  const [ref, inView] = useInView();
   const loadedRecents = localStorage.getItem("recents")
     ? JSON.parse(window.localStorage.getItem("recents"))
     : window.localStorage.setItem("recents", JSON.stringify([]));
@@ -24,20 +21,15 @@ export default function Search() {
     setSearchName(e.target.value);
   };
 
-  // 무한 스크롤 요청
   const searchProducts = (searchWord) => {
     axios
-      .post("https://i8c110.p.ssafy.io/api/v1/product/search", {
+      .post(`${process.env.REACT_APP_API_URL}/product/search`, {
         searchName: searchWord,
       })
       .then((res) => {
-        console.log(res.data);
         setProducts([...res.data]);
-
-        // 현재 불러온 데이터가 존재하면 다음 페이지로 이동
-        if (res.data) {
-          setPage(() => page + 1);
-          setRecentOpen(false);
+        if (res.data !== []) {
+          setRecentOpen(false)
         }
       })
       .catch((err) => {
@@ -67,6 +59,7 @@ export default function Search() {
     setSearchName("");
   };
 
+  // 검색한 상품을 클릭하면 상세페이지로 이동
   const handleClickProduct = (id) => {
     navigate(`/detail/${id}`);
   };
@@ -92,10 +85,13 @@ export default function Search() {
       </div>
       {/* 최근 검색어 & 검색된 내용 리스트*/}
       {recentOpen ? (
-        <SearchItems recents={recents} searchProducts={searchProducts}/>
+        <SearchItems
+          recents={recents}
+          searchProducts={searchProducts}
+        />
       ) : (
         <div className={styles.searchlist}>
-          {products.length > 0 ? (
+          {products?.length > 0 ? (
             products?.map((product) => (
               <ProductItem
                 key={product.productId}
@@ -106,7 +102,6 @@ export default function Search() {
           ) : (
             <div className={styles.noresults}>검색 결과가 없습니다.</div>
           )}
-          <div className={styles.ref} ref={ref}></div>
         </div>
       )}
     </div>
