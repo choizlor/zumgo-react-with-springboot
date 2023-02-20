@@ -1,6 +1,6 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import React, { Component, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
 import ChattingForm from "../../components/LiveRoom/ChattingForm";
 import ChattingList from "../../components/LiveRoom/ChattingList";
